@@ -188,13 +188,13 @@ export default function productoReducer(state, action) {
         case ORDENAR_CODIGO:
             return {
                 ...state,
-                //ordeno el state. El primer payload es null(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true tambien. Si es false, lo devuelve de mayor a menor
-                productos: action.payload === true ? state.productos.sort((a,b) => a.codigo - b.codigo) : action.payload === false ? state.productos.sort((a,b) => b.codigo - a.codigo ) : state.productos.sort((a,b) => b.codigo - a.codigo )
+                //ordeno el state. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor
+                productos: action.payload === true ? state.productos.sort((a,b) => b.codigo - a.codigo) : action.payload === false ? state.productos.sort((a,b) => a.codigo - b.codigo ) : state.productos
             }
         case ORDENAR_PRECIO: 
             return {
                 ...state,
-                productos: action.payload === true ? state.productos.sort((a,b) => a.precio_venta_recomendado - b.precio_venta_recomendado) : action.payload === false ? state.productos.sort((a,b) => b.precio_venta_recomendado - a.precio_venta_recomendado ) : state.productos.sort((a,b) => a.precio_venta_recomendado - b.precio_venta_recomendado)
+                productos: action.payload === true ? state.productos.sort((a,b) => b.precio_venta_recomendado - a.precio_venta_recomendado) : action.payload === false ? state.productos.sort((a,b) => a.precio_venta_recomendado - b.precio_venta_recomendado ) : state.productos
             }
     default:
         return state

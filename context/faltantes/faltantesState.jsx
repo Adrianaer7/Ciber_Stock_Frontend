@@ -1,7 +1,7 @@
 import faltantesReducer from "./faltantesReducer"
 import faltantesContext from "./faltantesContext"
 import { useReducer } from "react"
-import { AGREGAR_FALTANTE, ELIMINAR_FALTANTE, TRAER_FALTANTES } from "../../types"
+import { AGREGAR_FALTANTE, ELIMINAR_FALTANTE, ORDENAR_CODIGO_FALTANTE, TRAER_FALTANTES } from "../../types"
 import clienteAxios from "../../config/axios"
 
 const FaltanteState = ({children}) => {
@@ -40,10 +40,10 @@ const FaltanteState = ({children}) => {
         const resultado = confirm("¿Desea eliminar el producto con faltante de stock?")
         if(resultado) {
             try {
-                await clienteAxios.delete(`/api/faltantes/:${id}`)
+                await clienteAxios.delete(`/api/faltantes/${id}`)
                 dispatch({
                     type: ELIMINAR_FALTANTE,
-                    payload: producto
+                    payload: id
                 })
             } catch (error) {
                 console.log(error)
@@ -53,7 +53,11 @@ const FaltanteState = ({children}) => {
     }
 
     const orderCodigo = (ordenCodigo) => {
-
+        console.log(ordenCodigo)
+        dispatch({
+            type: ORDENAR_CODIGO_FALTANTE,
+            payload: ordenCodigo
+        })
     }
 
   return (

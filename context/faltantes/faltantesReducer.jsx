@@ -1,4 +1,4 @@
-import { AGREGAR_FALTANTE, ELIMINAR_FALTANTE, TRAER_FALTANTES } from "../../types";
+import { AGREGAR_FALTANTE, ELIMINAR_FALTANTE, ORDENAR_CODIGO_FALTANTE, TRAER_FALTANTES } from "../../types";
 
 
 export default function  faltantesReducer(state, action) {
@@ -16,8 +16,12 @@ export default function  faltantesReducer(state, action) {
         case TRAER_FALTANTES:
             return {
                 ...state,
-                faltantes: [...state.faltantes, action.payload]
+                faltantes: action.payload
             }
+        case ORDENAR_CODIGO_FALTANTE: 
+            return {
+                ...state,
+                faltantes: action.payload === true ? state.faltantes.sort((a,b) => b.codigo - a.codigo) : action.payload === false ? state.faltantes.sort((a,b) => a.codigo - b.codigo ) : state.faltantes}
     default : 
         return state;
     }

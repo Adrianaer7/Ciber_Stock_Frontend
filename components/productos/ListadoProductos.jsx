@@ -12,8 +12,8 @@ const ListadoProductos = () => {
 
     const [filtrando, setFiltrando] = useState()    //contiene lo que voy escribiendo
     const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
-    const [ordenCodigo, setOrdenCodigo] = useState(null)
-    const [ordenPrecio, setOrdenPrecio] = useState(null)
+    const [ordenCodigo, setOrdenCodigo] = useState(false)
+    const [ordenPrecio, setOrdenPrecio] = useState(false)
 
     /*useEffect(() => {
         socket = io(process.env.backendURL) //me conecto con el backend
@@ -57,26 +57,10 @@ const ListadoProductos = () => {
     }
 
     const ordenarCodigo = () => {
-        if(ordenCodigo === null) {
-            setOrdenCodigo(true)
-        } 
-        if(ordenCodigo) {
-            setOrdenCodigo(!ordenCodigo)
-        }
-        if(!ordenCodigo) {
-            setOrdenCodigo(!ordenCodigo)
-        }
+        setOrdenCodigo(!ordenCodigo)
     }
     const ordenarPrecio = () => {
-        if(ordenPrecio === null) {
-            setOrdenPrecio(true)
-        }
-        if(ordenPrecio) {
-            setOrdenPrecio(!ordenPrecio)
-        }
-        if(!ordenPrecio) {
-            setOrdenPrecio(!ordenPrecio)
-        }
+        setOrdenPrecio(!ordenPrecio)
     }
     
     

@@ -13,7 +13,7 @@ const ListadoFaltantes = () => {
 
     const [filtrando, setFiltrando] = useState()    //contiene lo que voy escribiendo
     const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
-    const [ordenCodigo, setOrdenCodigo] = useState(null)
+    const [ordenCodigo, setOrdenCodigo] = useState(false)
 
 
     const AuthContext = useContext(authContext)
@@ -45,12 +45,7 @@ const ListadoFaltantes = () => {
     }
 
     const ordenarCodigo = () => {
-        if(ordenCodigo === null) {
-            setOrdenCodigo(true)
-        }
-        if(ordenCodigo) {
-            setOrdenCodigo(!ordenCodigo)
-        }
+        setOrdenCodigo(!ordenCodigo)
     }
 
   return (
@@ -62,12 +57,12 @@ const ListadoFaltantes = () => {
                 <input 
                     type="text" 
                     className="lg:w-2/6  p-4 shadow dark:bg-gray-900  focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 rounded-lg" //outline-none le quita el borde default, focus-ring le pone borde
-                    placeholder="Buscar algún producto" 
+                    placeholder="Buscar algún producto faltante" 
                     onChange={onChangeFiltro}
                 />
                 <input 
                     type="button" 
-                    value="Eliminar Productos" 
+                    value="Eliminar Faltantes" 
                     className="bg-red-600 p-2 mt-2 text-white font-bold rounded-lg hover:cursor-pointer " 
                     onClick={() => eliminarFaltante()} 
                 />
