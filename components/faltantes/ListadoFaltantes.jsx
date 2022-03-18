@@ -56,7 +56,7 @@ const ListadoFaltantes = () => {
   return (
     <>   
         <div className="  absolute  lg:relative">
-            <h1 className="text-red-700 font-black text-4xl  dark:text-red-500 text-center">Faltantes</h1>
+            <h1 className="text-red-700 font-black text-4xl  dark:text-red-500 text-center">Falta</h1>
             <p className="mt-3 text-center text-black dark:text-gray-50">Lista de todos los productos con poco stock</p>
             <div className="flex flex-col lg:flex-row justify-between w-4/4">
                 <input 
