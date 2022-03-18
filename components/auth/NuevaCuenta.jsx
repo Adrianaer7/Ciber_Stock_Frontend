@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Head from 'next/head';
+import Link from "next/link"
 import Alerta from '../productos/Alerta';
 import authContext from '../../context/auth/authContext';
 
@@ -33,7 +34,6 @@ const NuevaCuenta = () => {
             setError("Todos los campos son obligatorios")
             setTimeout(() => {
                 setError("")
-                
             }, 3000);
             return
         }
@@ -42,7 +42,6 @@ const NuevaCuenta = () => {
             setError("La contraseña debe tener al menos 6 caracteres")
             setTimeout(() => {
                 setError("")
-                
             }, 3000);
             return
         }
@@ -51,7 +50,6 @@ const NuevaCuenta = () => {
             setError("La contraseñas deben coincidir")
             setTimeout(() => {
                 setError("")
-                
             }, 3000);
             return
         }
@@ -134,11 +132,13 @@ const NuevaCuenta = () => {
                             />
                             <p className="text-center mx-auto mt-2">¿Tienes cuenta?</p>
                         </form>
-                        <button 
-                            className="mt-3 w-full bg-green-700  p-3  text-white uppercase font-bold text-lg rounded-md cursor-pointer"
-                        >
-                            <a href="/">Iniciar sesion</a>
-                        </button>
+                        <Link href="/">
+                                <button
+                                    className="mt-3 w-full bg-green-700  p-3  text-white uppercase font-bold text-lg rounded-md cursor-pointer"
+                                >
+                                    Iniciar Sesion
+                                </button>
+                            </Link>
                 </div>
         </div>
     </>

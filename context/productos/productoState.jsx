@@ -2,23 +2,34 @@ import { useReducer } from "react";
 import productoContext from "./productoContext"
 import productoReducer from "./productoReducer";
 import clienteAxios from "../../config/axios"
+import axios from "axios"
 
 import {
     AGREGAR_PRODUCTO, 
+    AGREGAR_PROVEEDOR, 
     AGREGAR_RUBRO, 
     EDITAR_PRODUCTO, 
     ELIMINAR_PRODUCTO, 
     ELIMINAR_PRODUCTOS, 
+    ELIMINAR_PROVEEDORES, 
     ELIMINAR_RUBROS, 
     ERROR_AGREGAR_PRODUCTO, 
+    ERROR_AGREGAR_PROVEEDOR, 
     ERROR_AGREGAR_RUBRO, 
     FILTRAR_PRODUCTO, 
+    LIMPIAR_APP, 
     LIMPIAR_SELECCIONADO, 
+    LIMPIAR_VENTA, 
     OBTENER_PRODUCTOS, 
     OBTENER_PROVEEDORES, 
     OBTENER_RUBROS, 
     OCULTAR_ALERTA, 
-    PRODUCTO_ACTUAL, 
+    ORDENAR_CODIGO, 
+    ORDENAR_PRECIO, 
+    PRECIO_VENTA, 
+    PRODUCTOS_CAMBIADOS, 
+    PRODUCTO_ACTUAL,
+    TRAER_DOLAR_BD, 
 } from "../../types";
 
 const ProductoState = ({children}) => {
@@ -26,13 +37,14 @@ const ProductoState = ({children}) => {
     const initialState = {
         productos: [],
         productoSeleccionado: null,
-        mensajeCodigo: null,
         mensajeRubro: null,
         mensajeCodigo: null,
         mensajeProveedor: null,
         filtrados: [],  //guarda los productos filtrados
         rubros: [], //guarda todos los rubros
-        proveedores: []
+        proveedores: [],
+        valorDeVenta: "",
+        dolarBD: "",
     }
 
     const [state, dispatch] = useReducer(productoReducer, initialState) // se renombra initialState como state
@@ -68,7 +80,6 @@ const ProductoState = ({children}) => {
             dispatch({
                 type: AGREGAR_RUBRO,
                 payload: respuesta.data.rubro.nombre
-                
             })
         } catch (error) {
             dispatch({
@@ -87,19 +98,54 @@ const ProductoState = ({children}) => {
         try {
             const proveedor = {nombre: elProveedor}
             const respuesta = await clienteAxios.post("/api/proveedores", proveedor)
+            dispatch({
+                type: AGREGAR_PROVEEDOR,
+                payload: respuesta.data.proveedor
+            })
         } catch (error) {
-            console.log(error)
+            dispatch({
+                type: ERROR_AGREGAR_PROVEEDOR,
+                payload: error.response.data.msg
+            })
+            setTimeout(() => {
+                dispatch({
+                    type: OCULTAR_ALERTA
+                })
+            }, 3000);
         }
     }
 
     //modifico el producto
     const editarProducto = async producto => {
-        const respuesta = await clienteAxios.put(`/api/productos/${producto._id}`, producto)
+        try {
+            const respuesta = await clienteAxios.put(`/api/productos/${producto._id}`, producto)
+            dispatch({
+                type: EDITAR_PRODUCTO,
+                payload: respuesta.data.producto
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const editarProductos = async (dolar) => {
+        try {
+            if(dolar) {
+                const dolares = {precio: dolar}
+                const respuesta = await clienteAxios.put("/api/productos", dolares)
+                dispatch({
+                    type: PRODUCTOS_CAMBIADOS,
+                    payload: respuesta.data.productos
+                })
+                respuesta.data.productos.map(producto => {
+                    editarProducto(producto)
+                })
+                
+            }
+        } catch (error) {
+            console.log(error)
+        }
         
-        dispatch({
-            type: EDITAR_PRODUCTO,
-            payload: respuesta.data.producto
-        })
     }
 
     //trae todos los productos creados
@@ -109,7 +155,7 @@ const ProductoState = ({children}) => {
             dispatch({
                 type: OBTENER_PRODUCTOS,
                 payload: respuesta.data.productos
-            })  
+            })
         } catch (error) {
             console.log(error)
         }
@@ -134,7 +180,7 @@ const ProductoState = ({children}) => {
             const respuesta = await clienteAxios.get("/api/proveedores")
             dispatch({
                 type: OBTENER_PROVEEDORES,
-                payload: respuesta.data.proveedor
+                payload: respuesta.data.proveedores
             })
         } catch (error) {
             console.log(error)
@@ -194,6 +240,12 @@ const ProductoState = ({children}) => {
         })
     }
 
+    const eliminarProveedores = async () => {
+        await clienteAxios.delete("/api/proveedores")
+        dispatch({
+            type: ELIMINAR_PROVEEDORES
+        })
+    }
     //filtro en el listado segun propiedades del producto
     const filtro = valor => {
         try {
@@ -218,7 +270,93 @@ const ProductoState = ({children}) => {
             console.log(error)
         }
     }
+
+    const precioVenta = (valor1, valor2, valor3, valor4) => {
+        if(valor1>0 && valor2>0 && valor3>0 && valor4 === "") {
+            const val1 = parseFloat(valor1)
+            const val2 = parseFloat(valor2)
+            const res1 = (val1 * val2)
+            const res2 = parseInt(valor3)+100
+            const res3 = res1 *  res2
+            const res4 = (res3 / 100).toFixed(2)
+            try {
+                dispatch({
+                    type: PRECIO_VENTA,
+                    payload: res4
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        } else {
+            limpiarPrecioVenta()
+        }
+
+        if(valor3>0 && valor4>0 && valor1==="") {
+            const res3 = parseInt((valor4 * (parseInt(valor3)+100)) / 100).toFixed(2)
+            try {
+                dispatch({
+                    type: PRECIO_VENTA,
+                    payload: res3
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        } 
+    }
+
+    const limpiarPrecioVenta = () => {
+        dispatch({
+            type: LIMPIAR_VENTA
+        })
+    }
+
+    const traerDolarAPI = async () => {
+        try {
+            const url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
+            const respuesta = await fetch(url)
+            const resultado = await respuesta.json()
+            const valor = {precio: parseInt(resultado[0].casa.venta)}
+            await clienteAxios.post("/api/dolares", valor)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const traerDolarBD = async () => {
+        try {
+            const respuesta = await clienteAxios.get("/api/dolares")
+            if(respuesta.data.dolar.length !== 0) {
+                const dolar = respuesta.data.dolar[0].precio
+                dispatch({
+                type: TRAER_DOLAR_BD,
+                payload: dolar
+            })
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const orderCodigo = (ordenCodigo) => {
+        dispatch({
+            type: ORDENAR_CODIGO,
+            payload: ordenCodigo
+        })
+    }
+    const orderPrecio = (ordenPrecio) => {
+        dispatch({
+            type: ORDENAR_PRECIO,
+            payload: ordenPrecio
+        })
+    }
     
+    
+
+    const limpiarApp = () => {
+        dispatch({
+            type: LIMPIAR_APP
+        })
+    }
     
     return (
         <productoContext.Provider
@@ -231,6 +369,8 @@ const ProductoState = ({children}) => {
                 filtrados: state.filtrados,
                 rubros: state.rubros,
                 proveedores: state.proveedores,
+                valorDeVenta: state.valorDeVenta,
+                dolarBD: state.dolarBD,
                 agregarProducto,
                 traerProductos,
                 traerRubros,
@@ -244,7 +384,16 @@ const ProductoState = ({children}) => {
                 venderProducto,
                 agregarProveedor,
                 eliminarProductos,
-                eliminarRubros
+                eliminarRubros,
+                eliminarProveedores,
+                precioVenta,
+                limpiarPrecioVenta,
+                traerDolarAPI,
+                traerDolarBD,
+                editarProductos,
+                orderCodigo,
+                orderPrecio,
+                limpiarApp
             }}
         >
             {children}

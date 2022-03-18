@@ -6,8 +6,9 @@ import { useContext, useEffect } from "react"
 const Productos = () => {
 
     const AuthContext = useContext(authContext)
-    const {usuarioAutenticado} = AuthContext
+    const {usuarioAutenticado, usuario} = AuthContext
 
+    //si no inicie sesion, no hay token. Si no hay token no me puedo autenticar. La consola del navegador tirará error si se intenta acceder a esta pagina sin autenticacion.
     useEffect(() => {
       usuarioAutenticado()
     },[])
@@ -17,7 +18,7 @@ const Productos = () => {
         <Layout
            pagina="Todos los productos" 
         >
-            <ListadoProductos/>
+            {usuario && <ListadoProductos/>}
         </Layout>
     )
 }

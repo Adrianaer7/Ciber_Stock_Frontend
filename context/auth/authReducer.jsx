@@ -36,9 +36,14 @@ export default function authReducer(state, action) {
             }
         case REGISTRO_ERROR:
         case LOGIN_ERROR:
+            localStorage.removeItem("token")    //se elimina el token generado al querer iniciar sesion o crear usuario con datos incorrectos
             return {
                 ...state,
+                token: null,
+                usuario: null,
+                autenticado: null,
                 mensaje: action.payload,
+                cargando: false
             }
         case USUARIO_AUTENTICADO:
             return {

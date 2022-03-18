@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import Head from "next/head"
+import Link from "next/link"
 import Alerta from "../productos/Alerta";
 import authContext from "../../context/auth/authContext";
 
@@ -86,11 +87,13 @@ const Login = () => {
                                 <p className="text-center mx-auto mt-2">¿No tenes cuenta?</p>
                             </form>
                             
-                            <button 
-                                className="mt-3 w-full bg-green-700  p-3  text-white uppercase font-bold text-lg rounded-md cursor-pointer"
-                            >
-                                <a href="/crear-cuenta">Registrarse</a>
-                            </button>
+                            <Link href="/crear-cuenta">
+                                <button
+                                    className="mt-3 w-full bg-green-700  p-3  text-white uppercase font-bold text-lg rounded-md cursor-pointer"
+                                >
+                                    Registrarse
+                                </button>
+                            </Link>
                     </div>
             </div>
         </>
