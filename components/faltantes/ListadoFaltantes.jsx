@@ -6,7 +6,7 @@ import authContext from "../../context/auth/authContext";
 const ListadoFaltantes = () => {
 
     const productosContext = useContext(productoContext)
-    const { productos} = productosContext
+    const { productos, traerProductos} = productosContext
 
     const faltantesContext = useContext(faltanteContext)
     const {faltantes, traerFaltantes, eliminarFaltante, orderCodigo} = faltantesContext
@@ -59,12 +59,6 @@ const ListadoFaltantes = () => {
                     className="lg:w-2/6  p-4 shadow dark:bg-gray-900  focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 rounded-lg" //outline-none le quita el borde default, focus-ring le pone borde
                     placeholder="Buscar algún producto faltante" 
                     onChange={onChangeFiltro}
-                />
-                <input 
-                    type="button" 
-                    value="Eliminar Faltantes" 
-                    className="bg-red-600 p-2 mt-2 text-white font-bold rounded-lg hover:cursor-pointer " 
-                    onClick={() => eliminarFaltante()} 
                 />
             </div>
     </div>

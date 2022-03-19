@@ -1,9 +1,12 @@
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import productoContext from "../../context/productos/productoContext";
 import faltanteContext from "../../context/faltantes/faltantesContext";
+
+
 const Producto = ({producto}) => {
-    const {nombre, marca, codigo, precio_venta_recomendado, disponibles, modelo, _id} = producto
+    const [colorFaltante, setColorFaltante] = useState(false)
+    const {nombre, marca, codigo, precio_venta_recomendado, disponibles, modelo, _id, faltante} = producto
     if(isNaN(precio_venta_recomendado)) {
         precio_venta_recomendado = 0
     }
@@ -15,13 +18,24 @@ const Producto = ({producto}) => {
     const faltantesContext = useContext(faltanteContext)
     const {agregarFaltante} = faltantesContext
 
+
+    const añadirFaltante = (producto) => {
+        if(!colorFaltante) {
+            setColorFaltante(true)
+        } else {
+            setColorFaltante(false)
+        }
+    }
+    useEffect(() => {
+        console.log("ola")
+    }, [colorFaltante])
     return (
         <tr className="border-b dark:border-none hover:bg-gray-50 dark:hover:bg-gray-700">
             <td className="p-3 dark:text-gray-50 text-center">{codigo}</td>
             <td className="dark:text-gray-50 p-3 w-1">{nombre}</td>
             <td className="p-3 dark:text-gray-50 text-center">{marca}</td>
             <td className="p-3 dark:text-gray-50 text-center">{modelo}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{disponibles ? disponibles : <span className="font-bold text-white bg-red-600 p-1 uppercase">Sin stock</span>}</td>
+            <td className="p-3 dark:text-gray-50 text-center uppercase">{disponibles && faltante && colorFaltante ? <span className="font-bold text-red-600 p-1">{disponibles}</span> : disponibles && faltante ? <span className="font-bold text-red-600 p-1">{disponibles}</span> : disponibles ? disponibles : <span className="font-bold text-white bg-red-600 p-1 uppercase">Sin stock</span>}</td>
             <td className="p-3 dark:text-gray-50 text-center font-bold text-lg hover:cursor-pointer" onClick={() => navigator.clipboard.writeText(`${resumen}`)}>${precio_venta_recomendado}</td>
 
             <td className="p-3 w-40 mt-2  ">
@@ -50,7 +64,7 @@ const Producto = ({producto}) => {
                     <button
                         type="button"
                         className="bg-red-600 hover:bg-red-900 mb-2 w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
-                        onClick={() => agregarFaltante(producto)}
+                        onClick={() => añadirFaltante(producto)}
                     >Añadir a faltante</button>
                 </Link>
                 

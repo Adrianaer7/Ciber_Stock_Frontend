@@ -330,7 +330,8 @@ const Formulario = ({productoEditar}) => {
                 proveedor: "", 
                 disponibles: "", 
                 rentabilidad: "", 
-                notas: ""
+                notas: "",
+                faltante: false
                 })
             setValoresR("")
             setValoresP("")

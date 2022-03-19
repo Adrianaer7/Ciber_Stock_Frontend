@@ -14,10 +14,10 @@ const FaltanteState = ({children}) => {
 
     const agregarFaltante = async (producto) => {
         try {
-            const resultado = await clienteAxios.post("/api/faltantes", producto)
+            const resultado = await clienteAxios.put(`/api/faltantes/${producto._id}`)
             dispatch({
                 type: AGREGAR_FALTANTE,
-                payload: resultado.data.faltante
+                payload: resultado.data.producto
             })
         } catch (error) {
             console.log(error)
@@ -40,7 +40,7 @@ const FaltanteState = ({children}) => {
         const resultado = confirm("¿Desea eliminar el producto con faltante de stock?")
         if(resultado) {
             try {
-                await clienteAxios.delete(`/api/faltantes/${id}`)
+                await clienteAxios.put(`/api/faltantes/${id}`)
                 dispatch({
                     type: ELIMINAR_FALTANTE,
                     payload: id
@@ -53,7 +53,6 @@ const FaltanteState = ({children}) => {
     }
 
     const orderCodigo = (ordenCodigo) => {
-        console.log(ordenCodigo)
         dispatch({
             type: ORDENAR_CODIGO_FALTANTE,
             payload: ordenCodigo

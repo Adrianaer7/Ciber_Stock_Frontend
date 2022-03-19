@@ -5,7 +5,7 @@ import faltanteContext from "../../context/faltantes/faltantesContext";
 
 
 const ProductoFaltante = ({producto}) => {
-    const {nombre, marca, codigo, precio_venta_recomendado, disponibles, modelo, _id} = producto
+    const {nombre, marca, codigo, disponibles, modelo, _id, faltante} = producto
    
     const productosContext = useContext(productoContext)
     const {productoActual, venderProducto} = productosContext
@@ -19,8 +19,8 @@ const ProductoFaltante = ({producto}) => {
             <td className="dark:text-gray-50 p-3 w-1">{nombre}</td>
             <td className="p-3 dark:text-gray-50 text-center">{marca}</td>
             <td className="p-3 dark:text-gray-50 text-center">{modelo}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{disponibles ? disponibles : <span className="font-bold text-white bg-red-600 p-1 uppercase">Sin stock</span>}</td>
-
+            {/*<td className="p-3 dark:text-gray-50 text-center">{disponibles ? disponibles : <span className="font-bold text-white bg-red-600 p-1 uppercase">Sin stock</span>}</td>*/}
+            <td className="p-3 dark:text-gray-50 text-center uppercase">{disponibles && faltante ? <span className="font-bold text-red-600 p-1">{disponibles}</span> : disponibles && !faltante ? disponibles : <span className="font-bold text-white bg-red-600 p-1 uppercase">Sin stock</span>}</td>
             <td className="p-3 w-40 mt-2  ">
                 
                 <Link href="">
