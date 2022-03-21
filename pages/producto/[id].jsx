@@ -38,7 +38,7 @@ const Ver = ({producto}) => {
   return (
     <>
       {producto ? (
-        <Layout pagina={producto.nombre}>
+        <Layout pagina={`Ver - ${producto.nombre}`}>
           <VerProducto
             key={producto._id}
             producto={producto}

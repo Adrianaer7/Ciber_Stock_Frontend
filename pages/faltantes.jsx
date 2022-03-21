@@ -5,7 +5,7 @@ const Faltantes = () => {
 
   return (
     <>
-        <Layout>
+        <Layout pagina="Faltantes">
           <ListadoFaltantes/>
         </Layout>      
     </>        

@@ -35,7 +35,7 @@ const Edicion = ({productoEditar}) => {
 
 
   return (
-    <Layout>
+    <Layout pagina={`Editar - ${productoEditar.nombre}`}>
       {usuario && (
         productoEditar ? (
           <Formulario
