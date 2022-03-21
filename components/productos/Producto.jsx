@@ -53,7 +53,7 @@ const Producto = ({producto}) => {
                 <Link href="">
                     <button
                         type="button"
-                        className="bg-red-600 hover:bg-red-900 mb-2 w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
+                        className="bg-red-600 hover:bg-red-900 mb-2 w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md  "
                         onClick={!faltante ? () => agregarFaltante(_id) : () => eliminarFaltante(_id)}
                     >{faltante ? "Quitar faltante" : "Agregar faltante"}</button>
                 </Link>
