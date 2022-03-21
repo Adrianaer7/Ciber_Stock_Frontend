@@ -12,9 +12,9 @@ const FaltanteState = ({children}) => {
 
     const [state, dispatch] = useReducer(faltantesReducer, initialState)
 
-    const agregarFaltante = async (producto) => {
+    const agregarFaltante = async (id) => {   //modifico el valor de faltante a true y agrego el producto al state
         try {
-            const resultado = await clienteAxios.put(`/api/faltantes/${producto._id}`)
+            const resultado = await clienteAxios.put(`/api/faltantes/${id}`)
             dispatch({
                 type: AGREGAR_FALTANTE,
                 payload: resultado.data.producto
@@ -36,7 +36,7 @@ const FaltanteState = ({children}) => {
         }
     }
 
-    const eliminarFaltante = async (id) => {
+    const eliminarFaltante = async (id) => {    //modifico el valor de faltante a false y elimino el producto del state
         const resultado = confirm("¿Desea eliminar el producto con faltante de stock?")
         if(resultado) {
             try {

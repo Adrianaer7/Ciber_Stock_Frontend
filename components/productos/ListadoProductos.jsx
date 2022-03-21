@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import Producto from "./Producto";
-//import io from "socket.io-client"
 import productoContext from "../../context/productos/productoContext"
-import faltanteContext from "../../context/faltantes/faltantesContext";
+
+//import io from "socket.io-client"
 //let socket;
 
 const ListadoProductos = () => {
@@ -10,8 +10,6 @@ const ListadoProductos = () => {
     const productosContext = useContext(productoContext)
     const {traerProductos, productos, eliminarProductos, eliminarProveedores, eliminarRubros, limpiarSeleccionado, filtro, filtrados, traerDolarAPI, traerDolarBD, dolarBD, editarProductos, orderCodigo, orderPrecio} = productosContext
 
-    const faltantesContext = useContext(faltanteContext)
-    const {faltantes} = faltantesContext
 
     const [filtrando, setFiltrando] = useState()    //contiene lo que voy escribiendo
     const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
@@ -29,9 +27,7 @@ const ListadoProductos = () => {
     useEffect(() => {
         traerProductos()
     }, [productos])
-   useEffect(() => {
-       traerProductos()
-   }, [faltantes])
+   
 
     useEffect(() => {
         limpiarSeleccionado()

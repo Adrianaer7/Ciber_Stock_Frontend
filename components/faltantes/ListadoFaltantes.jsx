@@ -1,15 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import ProductoFaltante from "./ProductoFaltante";
-import productoContext from "../../context/productos/productoContext"
 import faltanteContext from "../../context/faltantes/faltantesContext";
 import authContext from "../../context/auth/authContext";
 const ListadoFaltantes = () => {
 
-    const productosContext = useContext(productoContext)
-    const { productos, traerProductos} = productosContext
 
     const faltantesContext = useContext(faltanteContext)
-    const {faltantes, traerFaltantes, eliminarFaltante, orderCodigo} = faltantesContext
+    const {faltantes, traerFaltantes, orderCodigo} = faltantesContext
 
     const [filtrando, setFiltrando] = useState()    //contiene lo que voy escribiendo
     const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
