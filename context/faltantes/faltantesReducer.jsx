@@ -21,7 +21,7 @@ export default function  faltantesReducer(state, action) {
         case ORDENAR_CODIGO_FALTANTE: 
             return {
                 ...state,
-                faltantes: action.payload === true ? state.faltantes.sort((a,b) => b.codigo - a.codigo) : action.payload === false ? state.faltantes.sort((a,b) => a.codigo - b.codigo ) : state.faltantes}
+                faltantes: action.payload ? state.faltantes.sort((a,b) => b.codigo - a.codigo) : !action.payload ? state.faltantes.sort((a,b) => a.codigo - b.codigo ) : state.faltantes}
     default : 
         return state;
     }

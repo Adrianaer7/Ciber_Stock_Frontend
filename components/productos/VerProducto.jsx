@@ -62,7 +62,7 @@ const VerProducto = ({producto}) => {
                         <span className="text-blue-900 uppercase font-bold">Precio de venta: </span>${precio_venta}
                     </p>
                 )}
-                {precio_venta_recomendado && (
+                {precio_venta_recomendado > 0 && (
                     <p className="text-3xl text-red-600 font-bold dark:text-gray-50 mt-6">
                         <span className="text-blue-900 text-2xl uppercase font-bold">Precio de venta recomendado: </span>${precio_venta_recomendado}
                     </p>

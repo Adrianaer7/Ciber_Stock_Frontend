@@ -23,7 +23,9 @@ import {
     PRODUCTOS_CAMBIADOS,
     LIMPIAR_APP,
     ORDENAR_CODIGO,
-    ORDENAR_PRECIO
+    ORDENAR_PRECIO,
+    ORDENAR_CODIGO_FILTRADO,
+    ORDENAR_PRECIO_FILTRADO
 } from "../../types"
 
 export default function productoReducer(state, action) {
@@ -189,12 +191,24 @@ export default function productoReducer(state, action) {
             return {
                 ...state,
                 //ordeno el state. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor
-                productos: action.payload === true ? state.productos.sort((a,b) => b.codigo - a.codigo) : action.payload === false ? state.productos.sort((a,b) => a.codigo - b.codigo ) : state.productos
+                productos: action.payload ? state.productos.sort((a,b) => b.codigo - a.codigo) : !action.payload ? state.productos.sort((a,b) => a.codigo - b.codigo ) : state.productos
             }
         case ORDENAR_PRECIO: 
             return {
                 ...state,
-                productos: action.payload === true ? state.productos.sort((a,b) => b.precio_venta_recomendado - a.precio_venta_recomendado) : action.payload === false ? state.productos.sort((a,b) => a.precio_venta_recomendado - b.precio_venta_recomendado ) : state.productos
+                productos: action.payload ? state.productos.sort((a,b) => b.precio_venta_recomendado - a.precio_venta_recomendado) : !action.payload ? state.productos.sort((a,b) => a.precio_venta_recomendado - b.precio_venta_recomendado ) : state.productos
+            }
+        case ORDENAR_CODIGO_FILTRADO: 
+            return {
+                ...state,
+                filtrados: action.payload ? state.filtrados.sort((a,b) => b.codigo - a.codigo) : !action.payload ? state.filtrados.sort((a,b) => a.codigo - b.codigo ) : state.filtrados
+
+            }
+        case ORDENAR_PRECIO_FILTRADO:
+            return {
+                ...state,
+                filtrados: action.payload ? state.filtrados.sort((a,b) => b.precio_venta_recomendado - a.precio_venta_recomendado) : !action.payload ? state.filtrados.sort((a,b) => a.precio_venta_recomendado - b.precio_venta_recomendado ) : state.filtrados
+
             }
     default:
         return state

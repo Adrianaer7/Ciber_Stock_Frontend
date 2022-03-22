@@ -9,12 +9,12 @@ import faltanteContext from "../../context/faltantes/faltantesContext";
 const ListadoProductos = () => {
 
     const productosContext = useContext(productoContext)
-    const {traerProductos, productos, eliminarProductos, eliminarProveedores, eliminarRubros, limpiarSeleccionado, filtro, filtrados, traerDolarAPI, traerDolarBD, dolarBD, editarProductos, orderCodigo, orderPrecio} = productosContext
+    const {traerProductos, productos, eliminarProductos, eliminarProveedores, eliminarRubros, limpiarSeleccionado, filtro, filtrados, traerDolarAPI, traerDolarBD, dolarBD, editarProductos, orderCodigo, orderCodigoFiltrados, orderPrecio, orderPrecioFiltrados} = productosContext
 
     const faltantesContext = useContext(faltanteContext)
     const {faltantes} = faltantesContext
 
-    const [filtrando, setFiltrando] = useState()    //contiene lo que voy escribiendo
+    const [filtrando, setFiltrando] = useState("")    //contiene lo que voy escribiendo
     const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
     const [ordenCodigo, setOrdenCodigo] = useState(false)
     const [ordenPrecio, setOrdenPrecio] = useState(false)
@@ -43,9 +43,16 @@ const ListadoProductos = () => {
     }, [dolarBD])
 
     useEffect(() => {
+        if(filtrando) {
+            orderCodigoFiltrados(ordenCodigo)
+        }
         orderCodigo(ordenCodigo)
+
     }, [ordenCodigo])
     useEffect(() => {
+        if(filtrando) {
+            orderPrecioFiltrados(ordenPrecio)
+        }
         orderPrecio(ordenPrecio)
     },[ordenPrecio])
 

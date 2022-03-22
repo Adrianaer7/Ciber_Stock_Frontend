@@ -25,7 +25,9 @@ import {
     OBTENER_RUBROS, 
     OCULTAR_ALERTA, 
     ORDENAR_CODIGO, 
+    ORDENAR_CODIGO_FILTRADO, 
     ORDENAR_PRECIO, 
+    ORDENAR_PRECIO_FILTRADO, 
     PRECIO_VENTA, 
     PRODUCTOS_CAMBIADOS, 
     PRODUCTO_ACTUAL,
@@ -41,7 +43,6 @@ const ProductoState = ({children}) => {
         mensajeCodigo: null,
         mensajeProveedor: null,
         filtrados: [],  //guarda los productos filtrados,
-        ordenados: [],
         rubros: [], //guarda todos los rubros
         proveedores: [],
         valorDeVenta: "",
@@ -344,13 +345,24 @@ const ProductoState = ({children}) => {
             payload: ordenCodigo
         })
     }
+    const orderCodigoFiltrados = (ordenCodigo) => {
+        dispatch({
+            type: ORDENAR_CODIGO_FILTRADO,
+            payload: ordenCodigo
+        })
+    }
     const orderPrecio = (ordenPrecio) => {
         dispatch({
             type: ORDENAR_PRECIO,
             payload: ordenPrecio
         })
     }
-    
+    const orderPrecioFiltrados = (ordenPrecio) => {
+        dispatch({
+            type: ORDENAR_PRECIO_FILTRADO,
+            payload: ordenPrecio
+        })
+    }
     
 
     const limpiarApp = () => {
@@ -368,7 +380,6 @@ const ProductoState = ({children}) => {
                 mensajeRubro: state.mensajeRubro,
                 mensajeProveedor: state.mensajeProveedor,
                 filtrados: state.filtrados,
-                ordenados: state.ordenados,
                 rubros: state.rubros,
                 proveedores: state.proveedores,
                 valorDeVenta: state.valorDeVenta,
@@ -394,7 +405,9 @@ const ProductoState = ({children}) => {
                 traerDolarBD,
                 editarProductos,
                 orderCodigo,
+                orderCodigoFiltrados,
                 orderPrecio,
+                orderPrecioFiltrados,
                 limpiarApp
             }}
         >

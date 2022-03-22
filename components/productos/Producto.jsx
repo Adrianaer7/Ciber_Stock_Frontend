@@ -5,12 +5,9 @@ import faltanteContext from "../../context/faltantes/faltantesContext";
 
 
 const Producto = ({producto}) => {
-    const [cambiarColor, setCambiarColor] = useState(false)
+    const [cambiarColor, setCambiarColor] = useState(null)
     const {nombre, marca, codigo, precio_venta_recomendado, disponibles, modelo, _id, faltante} = producto
 
-    if(isNaN(precio_venta_recomendado)) {
-        precio_venta_recomendado = 0
-    }
     const resumen = nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_recomendado)   //datos que se copian al hacer click en el precio
 
     const productosContext = useContext(productoContext)
@@ -20,14 +17,21 @@ const Producto = ({producto}) => {
     const {agregarFaltante, eliminarFaltante} = faltantesContext
 
     const crearFaltante = () => {
-        if(!cambiarColor) {
-            setCambiarColor(true)
+        setCambiarColor(!cambiarColor)
+    }
+    const quitarFaltante = () => {
+        setCambiarColor(!cambiarColor)
+
+    }
+    useEffect(() => {
+        if(cambiarColor) {
             agregarFaltante(_id)
-        } else {
-            setCambiarColor(false)
+        }
+        if(cambiarColor === false) {
             eliminarFaltante(_id)
         }
-    }
+    }, [cambiarColor])
+    
 
     return (
         <tr className="border-b dark:border-none hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -64,7 +68,7 @@ const Producto = ({producto}) => {
                     <button
                         type="button"
                         className="bg-red-600 hover:bg-red-900 mb-2 w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md  "
-                        onClick={() => crearFaltante()}
+                        onClick={!cambiarColor || !faltante ? () => crearFaltante() : cambiarColor || faltante ? () => quitarFaltante() : null}
                     >{faltante || cambiarColor ? "Quitar faltante" : "Agregar faltante"}</button>
                 </Link>
                 

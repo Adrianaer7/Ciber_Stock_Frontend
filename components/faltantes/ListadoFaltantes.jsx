@@ -22,7 +22,7 @@ const ListadoFaltantes = () => {
 
     useEffect(() => {
         traerFaltantes()
-    }, [faltantes])
+    }, [])
 
     useEffect(() => {
         orderCodigo(ordenCodigo)
