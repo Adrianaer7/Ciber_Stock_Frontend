@@ -41,7 +41,7 @@ const Producto = ({producto}) => {
             <td className="dark:text-gray-50 p-3 w-1">{nombre}</td>
             <td className="p-3 dark:text-gray-50 text-center">{marca}</td>
             <td className="p-3 dark:text-gray-50 text-center">{modelo}</td>
-            <td className="p-3 dark:text-gray-50 text-center uppercase">{disponibles && faltante && colorFaltante ? <span className="font-bold text-red-600 p-1">{disponibles}</span> : disponibles && colorFaltante ? <span className="font-bold text-red-600 p-1">{disponibles}</span> : faltante && colorFaltante === null ? <span className="font-bold text-red-600 p-1">{disponibles}</span>  : disponibles ? disponibles : <span className="font-bold text-white bg-red-600 p-1 uppercase">Sin stock</span>}</td>
+            <td className="p-3 dark:text-gray-50 text-center uppercase">{!disponibles ? <span className="bg-red-600 font-bold p-1 rounded-sm">Sin stock</span> : disponibles && !faltante && colorFaltante === null || disponibles && colorFaltante === false ? disponibles : disponibles && faltante || disponibles && colorFaltante || disponibles && faltante && colorFaltante === false ? <span className="text-red-600 font-bold">{disponibles}</span> : null}</td>
             <td className="p-3 dark:text-gray-50 text-center font-bold text-lg hover:cursor-pointer" onClick={() => navigator.clipboard.writeText(`${resumen}`)}>${precio_venta_recomendado}</td>
 
             <td className="p-3 w-40 mt-2  ">

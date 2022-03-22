@@ -71,26 +71,26 @@ const ListadoFaltantes = () => {
                 </tr>
             </thead>
             <tbody>
-                {Object.keys(faltantes).length === 0 && escribiendo ? (
+                {Object.keys(filtrados).length === 0 && escribiendo ? (
                     <>
                         <tr className="relative p-3 text-2xl dark:text-gray-50">
                             <td>No hay resultados</td>
                         </tr>
                     </>) 
-                : Object.keys(faltantes).length > 0 && escribiendo ?(
+                : Object.keys(filtrados).length > 0 && escribiendo ?(
                     <>
-                        {filtrados.map((producto, i) => (
+                        {filtrados.map(producto => (
                             <ProductoFaltante
-                                key={i}
+                                key={producto._id}
                                 producto={producto}
                             />
                         ))}
                     </>)
                 : (
                 <>
-                    {faltantes.map((producto, i) => (
+                    {faltantes.map(producto => (
                         <ProductoFaltante
-                            key={i}
+                            key={producto._id}
                             producto={producto}
                         />
                     ))}
