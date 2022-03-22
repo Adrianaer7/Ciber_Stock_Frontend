@@ -132,30 +132,30 @@ export default function productoReducer(state, action) {
                                 .toString()
                                 .toLowerCase()  //convierto el campo a string minuscula
                                 .includes(action.payload.toLowerCase() ? action.payload  : producto) //trato de encontrar un producto que contenga lo que escribo en el buscador. Convierto el input a minusculas para comparar
-                    || producto.modelo
-                                .toString()
-                                .toLowerCase()
-                                .includes(action.payload.toLowerCase() ? action.payload  : producto)
-                    || producto.marca
-                                .toString()
-                                .toLowerCase()
-                                .includes(action.payload.toLowerCase() ? action.payload  : producto)
-                    || producto.codigo
-                                .toString()
-                                .toLowerCase()
-                                .includes(action.payload.toLowerCase() ? action.payload  : producto)
-                    || producto.proveedor
-                                .toString()
-                                .toLowerCase()
-                                .includes(action.payload.toLowerCase() ? action.payload  : producto)
-                    || producto.rubro
-                                .toString()
-                                .toLowerCase()
-                                .includes(action.payload.toLowerCase() ? action.payload  : producto)
-                    || producto.notas
-                                .toString()
-                                .toLowerCase()
-                                .includes(action.payload.toLowerCase() ? action.payload  : producto)
+                        || producto.modelo
+                                    .toString()
+                                    .toLowerCase()
+                                    .includes(action.payload.toLowerCase() ? action.payload  : producto)
+                        || producto.marca
+                                    .toString()
+                                    .toLowerCase()
+                                    .includes(action.payload.toLowerCase() ? action.payload  : producto)
+                        || producto.codigo
+                                    .toString()
+                                    .toLowerCase()
+                                    .includes(action.payload.toLowerCase() ? action.payload  : producto)
+                        || producto.proveedor
+                                    .toString()
+                                    .toLowerCase()
+                                    .includes(action.payload.toLowerCase() ? action.payload  : producto)
+                        || producto.rubro
+                                    .toString()
+                                    .toLowerCase()
+                                    .includes(action.payload.toLowerCase() ? action.payload  : producto)
+                        || producto.notas
+                                    .toString()
+                                    .toLowerCase()
+                                    .includes(action.payload.toLowerCase() ? action.payload  : producto)
                 )
             }
         case PRECIO_VENTA:

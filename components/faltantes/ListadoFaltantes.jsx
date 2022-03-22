@@ -6,9 +6,9 @@ const ListadoFaltantes = () => {
 
 
     const faltantesContext = useContext(faltanteContext)
-    const {faltantes, traerFaltantes, orderCodigo} = faltantesContext
+    const {faltantes, traerFaltantes, orderCodigo, filtroFaltante, filtrados} = faltantesContext
 
-    const [filtrando, setFiltrando] = useState()    //contiene lo que voy escribiendo
+    const [filtrando, setFiltrando] = useState("")    //contiene lo que voy escribiendo
     const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
     const [ordenCodigo, setOrdenCodigo] = useState(false)
 
@@ -38,7 +38,7 @@ const ListadoFaltantes = () => {
 
     const onChangeFiltro = e => {
         setFiltrando(e.target.value)
-        filtro(e.target.value)  //envio al productoState
+        filtroFaltante(e.target.value)  //envio al productoState
     }
 
     const ordenarCodigo = () => {
@@ -79,7 +79,7 @@ const ListadoFaltantes = () => {
                     </>) 
                 : Object.keys(faltantes).length > 0 && escribiendo ?(
                     <>
-                        {faltantes.map((producto, i) => (
+                        {filtrados.map((producto, i) => (
                             <ProductoFaltante
                                 key={i}
                                 producto={producto}

@@ -5,9 +5,9 @@ import faltanteContext from "../../context/faltantes/faltantesContext";
 
 
 const Producto = ({producto}) => {
-    const [cambiarColor, setCambiarColor] = useState(null)
+    const [colorFaltante, setColorFaltante] = useState(null)
     const {nombre, marca, codigo, precio_venta_recomendado, disponibles, modelo, _id, faltante} = producto
-
+    
     const resumen = nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_recomendado)   //datos que se copian al hacer click en el precio
 
     const productosContext = useContext(productoContext)
@@ -16,22 +16,24 @@ const Producto = ({producto}) => {
     const faltantesContext = useContext(faltanteContext)
     const {agregarFaltante, eliminarFaltante} = faltantesContext
 
-    const crearFaltante = () => {
-        setCambiarColor(!cambiarColor)
-    }
-    const quitarFaltante = () => {
-        setCambiarColor(!cambiarColor)
 
+    const añadirFaltante = () => {
+        setColorFaltante(!colorFaltante)
+        if(colorFaltante === null && faltante) {
+            setColorFaltante(false)
+        }
     }
     useEffect(() => {
-        if(cambiarColor) {
+        if(colorFaltante) {
             agregarFaltante(_id)
         }
-        if(cambiarColor === false) {
+        
+        if(colorFaltante === false) {
             eliminarFaltante(_id)
         }
-    }, [cambiarColor])
-    
+    }, [colorFaltante])
+
+
 
     return (
         <tr className="border-b dark:border-none hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -39,7 +41,7 @@ const Producto = ({producto}) => {
             <td className="dark:text-gray-50 p-3 w-1">{nombre}</td>
             <td className="p-3 dark:text-gray-50 text-center">{marca}</td>
             <td className="p-3 dark:text-gray-50 text-center">{modelo}</td>
-            <td className="p-3 dark:text-gray-50 text-center uppercase">{!disponibles ? <span className="bg-red-500 font-bold text-white p-1 rounded-sm">Sin stock</span> : faltante || cambiarColor ? <span className="text-red-600 font-bold">{disponibles}</span> : !faltante || !cambiarColor ? disponibles : null}</td>
+            <td className="p-3 dark:text-gray-50 text-center uppercase">{disponibles && faltante && colorFaltante ? <span className="font-bold text-red-600 p-1">{disponibles}</span> : disponibles && colorFaltante ? <span className="font-bold text-red-600 p-1">{disponibles}</span> : faltante && colorFaltante === null ? <span className="font-bold text-red-600 p-1">{disponibles}</span>  : disponibles ? disponibles : <span className="font-bold text-white bg-red-600 p-1 uppercase">Sin stock</span>}</td>
             <td className="p-3 dark:text-gray-50 text-center font-bold text-lg hover:cursor-pointer" onClick={() => navigator.clipboard.writeText(`${resumen}`)}>${precio_venta_recomendado}</td>
 
             <td className="p-3 w-40 mt-2  ">
@@ -67,9 +69,9 @@ const Producto = ({producto}) => {
                 <Link href="">
                     <button
                         type="button"
-                        className="bg-red-600 hover:bg-red-900 mb-2 w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md  "
-                        onClick={!cambiarColor || !faltante ? () => crearFaltante() : cambiarColor || faltante ? () => quitarFaltante() : null}
-                    >{faltante || cambiarColor ? "Quitar faltante" : "Agregar faltante"}</button>
+                        className="bg-red-600 hover:bg-red-900 mb-2 w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
+                        onClick={() => añadirFaltante()}
+                    >{!faltante && colorFaltante === null || !faltante && colorFaltante === false || faltante && colorFaltante === false ? "Agregar faltante" : "Quitar faltante"}</button>
                 </Link>
                 
             </td>

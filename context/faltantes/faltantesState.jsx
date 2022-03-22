@@ -1,13 +1,21 @@
+import { useReducer } from "react"
+import clienteAxios from "../../config/axios"
 import faltantesReducer from "./faltantesReducer"
 import faltantesContext from "./faltantesContext"
-import { useReducer } from "react"
-import { AGREGAR_FALTANTE, ELIMINAR_FALTANTE, ORDENAR_CODIGO_FALTANTE, TRAER_FALTANTES } from "../../types"
-import clienteAxios from "../../config/axios"
+
+import { 
+    AGREGAR_FALTANTE, 
+    ELIMINAR_FALTANTE, 
+    FILTRO_FALTANTE, 
+    ORDENAR_CODIGO_FALTANTE, 
+    TRAER_FALTANTES 
+} from "../../types"
 
 const FaltanteState = ({children}) => {
 
     const initialState = {
-        faltantes: []
+        faltantes: [],
+        filtrados: []
     }
 
     const [state, dispatch] = useReducer(faltantesReducer, initialState)
@@ -37,8 +45,7 @@ const FaltanteState = ({children}) => {
     }
 
     const eliminarFaltante = async (id) => {    //modifico el valor de faltante a false y elimino el producto del state
-        const resultado = confirm("¿Desea eliminar el producto con faltante de stock?")
-        if(resultado) {
+        
             try {
                 await clienteAxios.put(`/api/faltantes/${id}`)
                 dispatch({
@@ -48,7 +55,7 @@ const FaltanteState = ({children}) => {
             } catch (error) {
                 console.log(error)
             }
-        }
+        
        
     }
 
@@ -59,15 +66,28 @@ const FaltanteState = ({children}) => {
         })
     }
     
+    const filtroFaltante = (filtro) => {
+        try {
+            dispatch({
+                type: FILTRO_FALTANTE,
+                payload: filtro
+            })
+        } catch (error) {
+            console.log(error)
+        }
+        
+    }
 
   return (
       <faltantesContext.Provider
         value={{
             faltantes: state.faltantes,
+            filtrados: state.filtrados,
             agregarFaltante,
             traerFaltantes,
             eliminarFaltante,
-            orderCodigo
+            orderCodigo,
+            filtroFaltante
         }}
       >
           {children}

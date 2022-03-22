@@ -1,4 +1,10 @@
-import { AGREGAR_FALTANTE, ELIMINAR_FALTANTE, ORDENAR_CODIGO_FALTANTE, TRAER_FALTANTES } from "../../types";
+import { 
+    AGREGAR_FALTANTE, 
+    ELIMINAR_FALTANTE, 
+    FILTRO_FALTANTE, 
+    ORDENAR_CODIGO_FALTANTE, 
+    TRAER_FALTANTES 
+} from "../../types";
 
 
 export default function  faltantesReducer(state, action) {
@@ -22,6 +28,41 @@ export default function  faltantesReducer(state, action) {
             return {
                 ...state,
                 faltantes: action.payload ? state.faltantes.sort((a,b) => b.codigo - a.codigo) : !action.payload ? state.faltantes.sort((a,b) => a.codigo - b.codigo ) : state.faltantes}
+        case FILTRO_FALTANTE:
+            return {
+                ...state,
+                filtrados: state.faltantes.filter(faltante => 
+                    faltante.nombre
+                            .toString()
+                            .toLowerCase()
+                            .includes(action.payload.toLowerCase() ? action.payload : faltante)
+                    || faltante.marca
+                            .toString()
+                            .toLowerCase()
+                            .includes(action.payload.toLowerCase() ? action.payload : faltante)
+                    || faltante.modelo
+                            .toString()
+                            .toLowerCase()
+                            .includes(action.payload.toLowerCase() ? action.payload : faltante)
+                    || faltante.codigo
+                            .toString()
+                            .toLowerCase()
+                            .includes(action.payload.toLowerCase() ? action.payload : faltante)
+                    || faltante.proveedor
+                            .toString()
+                            .toLowerCase()
+                            .includes(action.payload.toLowerCase() ? action.payload : faltante)
+                    || faltante.rubro
+                            .toString()
+                            .toLowerCase()
+                            .includes(action.payload.toLowerCase() ? action.payload : faltante)
+                    || faltante.notas
+                            .toString()
+                            .toLowerCase()
+                            .includes(action.payload.toLowerCase() ? action.payload : faltante)
+                    
+                )
+            }
     default : 
         return state;
     }
