@@ -45,7 +45,8 @@ const Formulario = ({productoEditar}) => {
         dosPrecios: "",
         precio_venta: "",
         disponibles: "",
-        valor_dolar_compra: ""
+        valor_dolar_compra: "",
+        limiteFaltante: ""
     })
     const [producto, setProducto] = useState({
         nombre: productoEditar?.nombre ?? "",
@@ -62,9 +63,10 @@ const Formulario = ({productoEditar}) => {
         disponibles: productoEditar?.disponibles ?? "",
         rentabilidad: productoEditar?.rentabilidad ?? "",
         notas: productoEditar?.notas ?? "",
-        faltante: productoEditar?.faltante ?? false
+        faltante: productoEditar?.faltante ?? false,
+        limiteFaltante: productoEditar?.limiteFaltante ?? ""
     })
-    const {nombre, marca, modelo, codigo, rubro, precio_venta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, disponibles, rentabilidad, notas} = producto
+    const {nombre, marca, modelo, codigo, rubro, precio_venta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, disponibles, rentabilidad, notas, limiteFaltante} = producto
     
     //hago un get a todos los productos, a la API de dolar y a la bd de dolar
     useEffect(() => {
@@ -292,6 +294,19 @@ const Formulario = ({productoEditar}) => {
             }, 3000);
             return
         }
+
+        if(isNaN(limiteFaltante) || limiteFaltante < 0) {
+            setMsj({
+                limiteFaltante: "Ingrese un número mayor a 0"
+            })
+            setTimeout(() => {
+                setMsj({
+                    limiteFaltante: "",
+                })
+            }, 3000);
+            return
+        } 
+        
         
         //si seleccione el rubro, lo mando al state
         if(rubroSelect) {
@@ -331,7 +346,8 @@ const Formulario = ({productoEditar}) => {
                 disponibles: "", 
                 rentabilidad: "", 
                 notas: "",
-                faltante: false
+                faltante: false,
+                limiteFaltante: ""
                 })
             setValoresR("")
             setValoresP("")
@@ -613,6 +629,25 @@ const Formulario = ({productoEditar}) => {
                                 onChange={onChange}
                             />
                         </div>
+                        <div className="mb-4">
+                                <div className="flex justify-between">
+                                    <label htmlFor="limiteFaltante" className="text-gray-800  dark:text-gray-300 font-bold  ">Añadir como faltante cuanto llegue a: </label>
+                                    {msj.limiteFaltante && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.limiteFaltante}</p>}
+                                </div>
+                                                
+                                    <input
+                                        type="number"
+                                        autoComplete="nope"
+                                        className="mt-2 block w-full p-3  rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                        id="limiteFalante"
+                                        placeholder="2 UNIDADES"
+                                        name="limiteFaltante"
+                                        value={limiteFaltante}
+                                        onChange={onChange}
+                                    />
+                                    
+                                                            
+                            </div>
                     </div>
                     <div className="mb-4">
                         <label htmlFor="notas" className="text-gray-800 dark:text-gray-300 font-bold ">Notas</label>

@@ -30,6 +30,16 @@
       "static/chunks/main.js",
       "static/chunks/pages/faltantes.js"
     ],
+    "/nuevoproducto": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/nuevoproducto.js"
+    ],
+    "/producto/editar/[url]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/producto/editar/[url].js"
+    ],
     "/productos": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
