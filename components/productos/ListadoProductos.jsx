@@ -27,6 +27,10 @@ const ListadoProductos = () => {
         orderPrecioFiltrados,
         orderNombre,
         orderNombreFiltrados,
+        orderMarca,
+        orderMarcaFiltrados,
+        orderModelo,
+        orderModeloFiltrados,
         orderDisponibles,
         orderDisponiblesFiltrados,
     } = productosContext
@@ -68,7 +72,6 @@ const ListadoProductos = () => {
             orderCodigoFiltrados(ordenCodigo)
         }
         orderCodigo(ordenCodigo)
-
     }, [ordenCodigo])
     useEffect(() => {
         if(filtrando) {
@@ -77,9 +80,23 @@ const ListadoProductos = () => {
         orderPrecio(ordenPrecio)
     },[ordenPrecio])
     useEffect(() => {
-        
+        if(filtrando) {
+            orderNombreFiltrados(ordenNombre)
+        }
         orderNombre(ordenNombre)
     }, [ordenNombre])
+    useEffect(() => {
+        if(filtrando) {
+            orderMarcaFiltrados(ordenMarca)
+        }
+        orderMarca(ordenMarca)
+    }, [ordenMarca])
+    useEffect(() => {
+        if(filtrando) {
+            orderModeloFiltrados(ordenModelo)
+        }
+        orderModelo(ordenModelo)
+    }, [ordenModelo])
     useEffect(() => {
         if(filtrando) {
             orderDisponiblesFiltrados(ordenDisponibles)
@@ -110,10 +127,15 @@ const ListadoProductos = () => {
     const ordenarNombre = () => {
         setOrdenNombre(!ordenNombre)
     }
+    const ordenarMarca = () => {
+        setOrdenMarca(!ordenMarca)
+    }
     const ordenarDisponibles = () => {
         setOrdenDisponibles(!ordenDisponibles)
     }
-    
+    const ordenarModelo = () => {
+        setOrdenModelo(!ordenModelo)
+    }
     
   return (
     <>  
@@ -156,8 +178,8 @@ const ListadoProductos = () => {
                 <tr className="hover:cursor-pointer select-none">
                     <th onClick={() => ordenarCodigo()} className="p-2 rounded-tl-lg">CODIGO</th>
                     <th onClick={() => ordenarNombre()}>NOMBRE</th>
-                    <th>MARCA</th>
-                    <th>MODELO</th>
+                    <th onClick={() => ordenarMarca()}>MARCA</th>
+                    <th onClick={() => ordenarModelo()}>MODELO</th>
                     <th onClick={() => ordenarDisponibles()}>DISPONIBLES</th>
                     <th onClick={() => ordenarPrecio()}>PRECIO</th>
                     <th className="rounded-tr-lg">ACCIONES</th>

@@ -8,10 +8,18 @@ import {
     ELIMINAR_FALTANTE, 
     FILTRO_FALTANTE, 
     ORDENAR_CODIGO_FALTANTE, 
+    ORDENAR_CODIGO_FALTANTE_FILTRADO, 
     ORDENAR_DISPONIBLES_FALTANTE, 
+    ORDENAR_DISPONIBLES_FALTANTE_FILTRADO, 
     ORDENAR_MARCA_FALTANTE, 
+    ORDENAR_MARCA_FALTANTE_FILTRADO, 
     ORDENAR_MODELO_FALTANTE, 
     ORDENAR_NOMBRE_FALTANTE, 
+    ORDENAR_NOMBRE_FALTANTE_FILTRADO, 
+    ORDENAR_PROVEEDOR_FALTANTE, 
+    ORDENAR_PROVEEDOR_FALTANTE_FILTRADO, 
+    ORDENAR_RUBRO_FALTANTE, 
+    ORDENAR_RUBRO_FALTANTE_FILTRADO, 
     TRAER_FALTANTES 
 } from "../../types"
 
@@ -96,9 +104,63 @@ const FaltanteState = ({children}) => {
             payload: ordenModelo
         })
     }
+    const orderRubro = (ordenRubro) => {
+        dispatch({
+            type: ORDENAR_RUBRO_FALTANTE,
+            payload: ordenRubro
+        })
+    }
+    const orderProveedor = (ordenProveedor) => {
+        dispatch({
+            type: ORDENAR_MODELO_FALTANTE,
+            payload: ordenProveedor
+        })
+    }
     const orderDisponibles = (ordenDisponibles) => {
         dispatch({
             type: ORDENAR_DISPONIBLES_FALTANTE,
+            payload: ordenDisponibles
+        })
+    }
+    const orderCodigoFiltrados = (ordenCodigo) => {
+        dispatch({
+            type: ORDENAR_CODIGO_FALTANTE_FILTRADO,
+            payload: ordenCodigo
+        })
+    }
+    const orderNombreFiltrados = (orderNombre) => {
+        dispatch({
+            type: ORDENAR_NOMBRE_FALTANTE_FILTRADO,
+            payload: orderNombre
+        })
+    }
+    const orderMarcaFiltrados = (ordenMarca) => {
+        dispatch({
+            type: ORDENAR_MARCA_FALTANTE_FILTRADO,
+            payload: ordenMarca
+        })
+    }
+    const orderModeloFiltrados = (ordenModelo) => {
+        dispatch({
+            type: ORDENAR_CODIGO_FALTANTE_FILTRADO,
+            payload: ordenModelo
+        })
+    }
+    const orderRubroFiltrados = (ordenRubro) => {
+        dispatch({
+            type: ORDENAR_RUBRO_FALTANTE_FILTRADO,
+            payload: ordenRubro
+        })
+    }
+    const orderProveedorFiltrados = (ordenproveedor) => {
+        dispatch({
+            type: ORDENAR_PROVEEDOR_FALTANTE_FILTRADO,
+            payload: ordenproveedor
+        })
+    }
+    const orderDisponiblesFiltrados = (ordenDisponibles) => {
+        dispatch({
+            type: ORDENAR_DISPONIBLES_FALTANTE_FILTRADO,
             payload: ordenDisponibles
         })
     }
@@ -111,10 +173,19 @@ const FaltanteState = ({children}) => {
             traerFaltantes,
             eliminarFaltante,
             orderCodigo,
+            orderCodigoFiltrados,
             orderNombre,
+            orderNombreFiltrados,
             orderMarca,
+            orderMarcaFiltrados,
             orderModelo,
+            orderModeloFiltrados,
+            orderRubro,
+            orderRubroFiltrados,
+            orderProveedor,
+            orderProveedorFiltrados,
             orderDisponibles,
+            orderDisponiblesFiltrados,
             filtroFaltante
         }}
       >

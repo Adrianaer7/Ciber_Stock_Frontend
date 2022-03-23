@@ -27,7 +27,12 @@ import {
     ORDENAR_CODIGO_FILTRADO, 
     ORDENAR_DISPONIBLES, 
     ORDENAR_DISPONIBLES_FILTRADO, 
+    ORDENAR_MARCA, 
+    ORDENAR_MARCA_FILTRADO, 
+    ORDENAR_MODELO, 
+    ORDENAR_MODELO_FILTRADO, 
     ORDENAR_NOMBRE, 
+    ORDENAR_NOMBRE_FILTRADO, 
     ORDENAR_PRECIO, 
     ORDENAR_PRECIO_FILTRADO, 
     PRECIO_VENTA, 
@@ -347,21 +352,9 @@ const ProductoState = ({children}) => {
             payload: ordenCodigo
         })
     }
-    const orderCodigoFiltrados = (ordenCodigo) => {
-        dispatch({
-            type: ORDENAR_CODIGO_FILTRADO,
-            payload: ordenCodigo
-        })
-    }
     const orderPrecio = (ordenPrecio) => {
         dispatch({
             type: ORDENAR_PRECIO,
-            payload: ordenPrecio
-        })
-    }
-    const orderPrecioFiltrados = (ordenPrecio) => {
-        dispatch({
-            type: ORDENAR_PRECIO_FILTRADO,
             payload: ordenPrecio
         })
     }
@@ -371,10 +364,53 @@ const ProductoState = ({children}) => {
             payload: ordenNombre
         })
     }
+    const orderMarca = (ordenMarca) => {
+        dispatch({
+            type: ORDENAR_MARCA,
+            payload: ordenMarca
+        })
+    }
+    const orderModelo = (ordenModelo) => {
+        dispatch({
+            type: ORDENAR_MODELO,
+            payload: ordenModelo
+        })
+    }
     const orderDisponibles = (ordenDisponibles) => {
         dispatch({
             type: ORDENAR_DISPONIBLES,
             payload: ordenDisponibles
+        })
+    }
+    const orderCodigoFiltrados = (ordenCodigo) => {
+        dispatch({
+            type: ORDENAR_CODIGO_FILTRADO,
+            payload: ordenCodigo
+        })
+    }
+    
+    const orderPrecioFiltrados = (ordenPrecio) => {
+        dispatch({
+            type: ORDENAR_PRECIO_FILTRADO,
+            payload: ordenPrecio
+        })
+    }
+    const orderNombreFiltrados = (ordenNombre) => {
+        dispatch({
+            type: ORDENAR_NOMBRE_FILTRADO,
+            payload: ordenNombre
+        })
+    }
+    const orderMarcaFiltrados = (ordenMarca) => {
+        dispatch({
+            type: ORDENAR_MARCA_FILTRADO,
+            payload: ordenMarca
+        })
+    }
+    const orderModeloFiltrados = (ordenModelo) => {
+        dispatch({
+            type: ORDENAR_MODELO_FILTRADO,
+            payload: ordenModelo
         })
     }
     const orderDisponiblesFiltrados = (ordenDisponibles) => {
@@ -428,6 +464,11 @@ const ProductoState = ({children}) => {
                 orderPrecio,
                 orderPrecioFiltrados,
                 orderNombre,
+                orderNombreFiltrados,
+                orderMarca,
+                orderMarcaFiltrados,
+                orderModelo,
+                orderModeloFiltrados,
                 orderDisponibles,
                 orderDisponiblesFiltrados,
                 limpiarApp
