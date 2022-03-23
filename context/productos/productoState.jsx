@@ -2,7 +2,6 @@ import { useReducer } from "react";
 import productoContext from "./productoContext"
 import productoReducer from "./productoReducer";
 import clienteAxios from "../../config/axios"
-import axios from "axios"
 
 import {
     AGREGAR_PRODUCTO, 

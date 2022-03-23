@@ -45,18 +45,15 @@ const FaltanteState = ({children}) => {
     }
 
     const eliminarFaltante = async (id) => {    //modifico el valor de faltante a false y elimino el producto del state
-        
-            try {
-                await clienteAxios.put(`/api/faltantes/${id}`)
-                dispatch({
-                    type: ELIMINAR_FALTANTE,
-                    payload: id
-                })
-            } catch (error) {
-                console.log(error)
-            }
-        
-       
+        try {
+            await clienteAxios.put(`/api/faltantes/${id}`)
+            dispatch({
+                type: ELIMINAR_FALTANTE,
+                payload: id
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const orderCodigo = (ordenCodigo) => {

@@ -66,6 +66,8 @@ const ListadoFaltantes = () => {
                     <th>NOMBRE</th>
                     <th>MARCA</th>
                     <th>MODELO</th>
+                    <th>RUBRO</th>
+                    <th>PROVEEDOR</th>
                     <th>DISPONIBLES</th>
                     <th className="rounded-tr-lg">ACCIONES</th>
                 </tr>

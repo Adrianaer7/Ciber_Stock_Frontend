@@ -35,6 +35,7 @@ const Formulario = ({productoEditar}) => {
     const [escribiendoP, setEscribiendoP] = useState(false)   //cuando escribo pasa a true
     const [rubroSelect, setRubroSelect] = useState(productoEditar ? productoEditar.rubro : "")
     const [proveedorSelect, setProveedorSelect] = useState(productoEditar ? productoEditar.proveedor : "")
+    const [valorFaltante, setValorFaltante] = useState(productoEditar ? productoEditar.añadirFaltante : false)
     const [msj, setMsj] = useState({
         nombre: "",
         codigo: "",
@@ -64,9 +65,10 @@ const Formulario = ({productoEditar}) => {
         rentabilidad: productoEditar?.rentabilidad ?? "",
         notas: productoEditar?.notas ?? "",
         faltante: productoEditar?.faltante ?? false,
-        limiteFaltante: productoEditar?.limiteFaltante ?? ""
+        limiteFaltante: productoEditar?.limiteFaltante ?? "",
+        añadirFaltante: productoEditar?.añadirFaltante ?? false
     })
-    const {nombre, marca, modelo, codigo, rubro, precio_venta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, disponibles, rentabilidad, notas, limiteFaltante} = producto
+    const {nombre, marca, modelo, codigo, rubro, precio_venta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, disponibles, rentabilidad, notas, limiteFaltante, añadirFaltante} = producto
     
     //hago un get a todos los productos, a la API de dolar y a la bd de dolar
     useEffect(() => {
@@ -145,6 +147,12 @@ const Formulario = ({productoEditar}) => {
     }
     if(proveedorSelect) {
         producto.proveedor = ""
+    }
+
+    if(valorFaltante) {
+        producto.añadirFaltante = true
+    } else {
+        producto.añadirFaltante = false
     }
 
     //! ENVIAR FORMULARIO
@@ -347,7 +355,8 @@ const Formulario = ({productoEditar}) => {
                 rentabilidad: "", 
                 notas: "",
                 faltante: false,
-                limiteFaltante: ""
+                limiteFaltante: "",
+                añadirFaltante: false
                 })
             setValoresR("")
             setValoresP("")
@@ -424,7 +433,7 @@ const Formulario = ({productoEditar}) => {
 
                             </div>
                             <input  
-                                type="number"
+                                type="tel"
                                 autoComplete="off"
                                 className=" mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="codigo"
@@ -507,7 +516,7 @@ const Formulario = ({productoEditar}) => {
                                 {msj.valor_dolar_compra && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.valor_dolar_compra}</p>}
                             </div>
                             <input
-                                type="number"
+                                type="tel"
                                 step="any"
                                 autoComplete="nope"
                                 className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
@@ -524,7 +533,7 @@ const Formulario = ({productoEditar}) => {
                                 {msj.precio_compra_dolar && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.precio_compra_dolar}</p>}
                             </div>                            
                             <input
-                                type="number"
+                                type="tel"
                                 autoComplete="nope"
                                 className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="precio_compra_dolar"
@@ -541,7 +550,7 @@ const Formulario = ({productoEditar}) => {
                                 {msj.dosPrecios && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.dosPrecios}</p>}
                             </div>                          
                             <input
-                                type="number"
+                                type="tel"
                                 autoComplete="nope"
                                 className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="precio_compra_peso"
@@ -557,7 +566,7 @@ const Formulario = ({productoEditar}) => {
                                 {msj.rentabilidad && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.rentabilidad}</p>}
                             </div>                            
                             <input
-                                type="number"
+                                type="tel"
                                 autoComplete="nope"
                                 className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="rentabilidad"
@@ -575,11 +584,11 @@ const Formulario = ({productoEditar}) => {
                                     {msj.precio_venta && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.precio_venta}</p>}
                                 </div>                                 
                                 <input
-                                    type="number"
+                                    type="tel"
                                     autoComplete="nope"
                                     className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                     id="precio_venta"
-                                    placeholder="VENTA AL PÚBLICO"
+                                    placeholder="$ 10.000"
                                     name="precio_venta"
                                     value={precio_venta}
                                     onChange={onChange}
@@ -588,7 +597,7 @@ const Formulario = ({productoEditar}) => {
                             <div className="mb-4 justify-items-end">
                                 <label htmlFor="valorDeVenta" className="text-gray-800 dark:text-gray-300 font-bold text-right block ">Sugerido</label>
                                     <input
-                                        type="number"
+                                        type="tel"
                                         autoComplete="nope"
                                         className="mt-2 block w-full p-3 pr-0 hover:cursor-pointer text-right justify-end rounded-md font-bold text-red-600 bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                         id="valorDeVenta"
@@ -613,13 +622,14 @@ const Formulario = ({productoEditar}) => {
                                 onChange={onChange}
                             />
                         </div>
+
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="disponibles" className="text-gray-800  dark:text-gray-300 font-bold  ">Disponibles</label>
                                 {msj.disponibles && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.disponibles}</p>}
                             </div>                             
                             <input
-                                type="number"
+                                type="tel"
                                 autoComplete="nope"
                                 className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="disponibles"
@@ -629,26 +639,35 @@ const Formulario = ({productoEditar}) => {
                                 onChange={onChange}
                             />
                         </div>
+
                         <div className="mb-4">
-                                <div className="flex justify-between">
-                                    <label htmlFor="limiteFaltante" className="text-gray-800  dark:text-gray-300 font-bold  ">Añadir como faltante cuanto llegue a: </label>
-                                    {msj.limiteFaltante && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.limiteFaltante}</p>}
-                                </div>
-                                                
-                                    <input
-                                        type="number"
-                                        autoComplete="nope"
-                                        className="mt-2 block w-full p-3  rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                        id="limiteFalante"
-                                        placeholder="2 UNIDADES"
-                                        name="limiteFaltante"
-                                        value={limiteFaltante}
-                                        onChange={onChange}
-                                    />
-                                    
-                                                            
-                            </div>
+                            <div className="flex justify-between">
+                                <label htmlFor="limiteFaltante" className="text-gray-800  dark:text-gray-300 font-bold  ">Añadir como faltante cuanto llegue a: </label>
+                                {msj.limiteFaltante && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.limiteFaltante}</p>}
+                            </div>  
+                            <div className="flex gap-4">          
+                                <input
+                                    type="tel"
+                                    autoComplete="nope"
+                                    className={` ${!valorFaltante && "hover:cursor-not-allowed"} mt-2 block w-full p-3  rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
+                                    id="limiteFalante"
+                                    placeholder="2 UNIDADES"
+                                    name="limiteFaltante"
+                                    value={limiteFaltante}
+                                    onChange={onChange}
+                                    disabled={!valorFaltante}
+                                />
+                                <input
+                                    type="button"
+                                    className={`w-2/4 rounded-md mt-2 block p-3 ${valorFaltante ? "bg-blue-200" : "bg-gray-400 "}`}
+                                    onClick={() => setValorFaltante(!valorFaltante)}
+                                    value={valorFaltante ? "Si"  : "No"}
+                                >
+                                </input>
+                            </div>                                    
+                        </div>
                     </div>
+                    
                     <div className="mb-4">
                         <label htmlFor="notas" className="text-gray-800 dark:text-gray-300 font-bold ">Notas</label>
                         <textarea
