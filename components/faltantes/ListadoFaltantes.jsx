@@ -6,12 +6,29 @@ const ListadoFaltantes = () => {
 
 
     const faltantesContext = useContext(faltanteContext)
-    const {faltantes, traerFaltantes, orderCodigo, filtroFaltante, filtrados} = faltantesContext
+    const {
+        faltantes, 
+        traerFaltantes, 
+        filtroFaltante, 
+        filtrados,
+        orderCodigo, 
+        orderCodigoFiltrados, 
+        orderPrecio, 
+        orderPrecioFiltrados,
+        orderNombre,
+        orderNombreFiltrados,
+        orderDisponibles,
+        orderDisponiblesFiltrados,
+    } = faltantesContext
 
     const [filtrando, setFiltrando] = useState("")    //contiene lo que voy escribiendo
     const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
     const [ordenCodigo, setOrdenCodigo] = useState(false)
-
+    const [ordenNombre, setOrdenNombre] = useState(false)
+    const [ordenMarca, setOrdenMarca] = useState(false)
+    const [ordenModelo, setOrdenModelo] = useState(false)
+    const [ordenDisponibles, setOrdenDisponibles] = useState(false)
+    const [ordenPrecio, setOrdenPrecio] = useState(false)
 
     const AuthContext = useContext(authContext)
     const {usuarioAutenticado} = AuthContext
@@ -27,6 +44,9 @@ const ListadoFaltantes = () => {
     useEffect(() => {
         orderCodigo(ordenCodigo)
     },[ordenCodigo])
+    useEffect(() => {
+        orderDisponibles(ordenDisponibles)
+    }, [ordenDisponibles])
 
     useEffect(() => {
         if(filtrando) {
@@ -43,6 +63,12 @@ const ListadoFaltantes = () => {
 
     const ordenarCodigo = () => {
         setOrdenCodigo(!ordenCodigo)
+    }
+    const ordenarNombre = () => {
+        setOrdenNombre(!ordenNombre)
+    }
+    const ordenarDisponibles = () => {
+        setOrdenDisponibles(!ordenDisponibles)
     }
 
   return (
@@ -68,7 +94,7 @@ const ListadoFaltantes = () => {
                     <th>MODELO</th>
                     <th>RUBRO</th>
                     <th>PROVEEDOR</th>
-                    <th>DISPONIBLES</th>
+                    <th onClick={() => ordenarDisponibles()}>DISPONIBLES</th>
                     <th className="rounded-tr-lg">ACCIONES</th>
                 </tr>
             </thead>

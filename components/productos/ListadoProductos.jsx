@@ -8,12 +8,38 @@ import productoContext from "../../context/productos/productoContext"
 const ListadoProductos = () => {
 
     const productosContext = useContext(productoContext)
-    const {traerProductos, productos, eliminarProductos, eliminarProveedores, eliminarRubros, limpiarSeleccionado, filtro, filtrados, traerDolarAPI, traerDolarBD, dolarBD, editarProductos, orderCodigo, orderCodigoFiltrados, orderPrecio, orderPrecioFiltrados} = productosContext
+    const {
+        traerProductos, 
+        productos, 
+        eliminarProductos, 
+        eliminarProveedores, 
+        eliminarRubros, 
+        limpiarSeleccionado, 
+        filtro, 
+        filtrados, 
+        traerDolarAPI, 
+        traerDolarBD, 
+        dolarBD, 
+        editarProductos, 
+        orderCodigo, 
+        orderCodigoFiltrados, 
+        orderPrecio, 
+        orderPrecioFiltrados,
+        orderNombre,
+        orderNombreFiltrados,
+        orderDisponibles,
+        orderDisponiblesFiltrados,
+    } = productosContext
 
     const [filtrando, setFiltrando] = useState("")    //contiene lo que voy escribiendo
     const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
     const [ordenCodigo, setOrdenCodigo] = useState(false)
+    const [ordenNombre, setOrdenNombre] = useState(false)
+    const [ordenMarca, setOrdenMarca] = useState(false)
+    const [ordenModelo, setOrdenModelo] = useState(false)
+    const [ordenDisponibles, setOrdenDisponibles] = useState(false)
     const [ordenPrecio, setOrdenPrecio] = useState(false)
+
 
     /*useEffect(() => {
         socket = io(process.env.backendURL) //me conecto con el backend
@@ -27,7 +53,6 @@ const ListadoProductos = () => {
         traerProductos()
     }, [])
    
-
     useEffect(() => {
         limpiarSeleccionado()
         traerDolarBD()
@@ -51,6 +76,16 @@ const ListadoProductos = () => {
         }
         orderPrecio(ordenPrecio)
     },[ordenPrecio])
+    useEffect(() => {
+        
+        orderNombre(ordenNombre)
+    }, [ordenNombre])
+    useEffect(() => {
+        if(filtrando) {
+            orderDisponiblesFiltrados(ordenDisponibles)
+        }
+        orderDisponibles(ordenDisponibles)
+    }, [ ordenDisponibles])
 
     //cambia el estado a true si escribo
     useEffect(() => {
@@ -71,6 +106,12 @@ const ListadoProductos = () => {
     }
     const ordenarPrecio = () => {
         setOrdenPrecio(!ordenPrecio)
+    }
+    const ordenarNombre = () => {
+        setOrdenNombre(!ordenNombre)
+    }
+    const ordenarDisponibles = () => {
+        setOrdenDisponibles(!ordenDisponibles)
     }
     
     
@@ -113,12 +154,12 @@ const ListadoProductos = () => {
         <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
             <thead className="bg-blue-800 text-white">
                 <tr className="hover:cursor-pointer select-none">
-                    <th  onClick={() => ordenarCodigo()} className="p-2 rounded-tl-lg">CODIGO</th>
-                    <th>NOMBRE</th>
+                    <th onClick={() => ordenarCodigo()} className="p-2 rounded-tl-lg">CODIGO</th>
+                    <th onClick={() => ordenarNombre()}>NOMBRE</th>
                     <th>MARCA</th>
                     <th>MODELO</th>
-                    <th>DISPONIBLES</th>
-                    <th onClick={ () => ordenarPrecio() }>PRECIO</th>
+                    <th onClick={() => ordenarDisponibles()}>DISPONIBLES</th>
+                    <th onClick={() => ordenarPrecio()}>PRECIO</th>
                     <th className="rounded-tr-lg">ACCIONES</th>
                 </tr>
             </thead>

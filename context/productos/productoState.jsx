@@ -25,6 +25,9 @@ import {
     OCULTAR_ALERTA, 
     ORDENAR_CODIGO, 
     ORDENAR_CODIGO_FILTRADO, 
+    ORDENAR_DISPONIBLES, 
+    ORDENAR_DISPONIBLES_FILTRADO, 
+    ORDENAR_NOMBRE, 
     ORDENAR_PRECIO, 
     ORDENAR_PRECIO_FILTRADO, 
     PRECIO_VENTA, 
@@ -362,7 +365,24 @@ const ProductoState = ({children}) => {
             payload: ordenPrecio
         })
     }
-    
+    const orderNombre = (ordenNombre) => {
+        dispatch({
+            type: ORDENAR_NOMBRE,
+            payload: ordenNombre
+        })
+    }
+    const orderDisponibles = (ordenDisponibles) => {
+        dispatch({
+            type: ORDENAR_DISPONIBLES,
+            payload: ordenDisponibles
+        })
+    }
+    const orderDisponiblesFiltrados = (ordenDisponibles) => {
+        dispatch({
+            type: ORDENAR_DISPONIBLES_FILTRADO,
+            payload: ordenDisponibles
+        })
+    }
 
     const limpiarApp = () => {
         dispatch({
@@ -407,6 +427,9 @@ const ProductoState = ({children}) => {
                 orderCodigoFiltrados,
                 orderPrecio,
                 orderPrecioFiltrados,
+                orderNombre,
+                orderDisponibles,
+                orderDisponiblesFiltrados,
                 limpiarApp
             }}
         >

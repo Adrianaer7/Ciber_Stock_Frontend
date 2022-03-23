@@ -8,6 +8,10 @@ import {
     ELIMINAR_FALTANTE, 
     FILTRO_FALTANTE, 
     ORDENAR_CODIGO_FALTANTE, 
+    ORDENAR_DISPONIBLES_FALTANTE, 
+    ORDENAR_MARCA_FALTANTE, 
+    ORDENAR_MODELO_FALTANTE, 
+    ORDENAR_NOMBRE_FALTANTE, 
     TRAER_FALTANTES 
 } from "../../types"
 
@@ -54,14 +58,7 @@ const FaltanteState = ({children}) => {
         } catch (error) {
             console.log(error)
         }
-    }
-
-    const orderCodigo = (ordenCodigo) => {
-        dispatch({
-            type: ORDENAR_CODIGO_FALTANTE,
-            payload: ordenCodigo
-        })
-    }
+    }    
     
     const filtroFaltante = (filtro) => {
         try {
@@ -75,6 +72,36 @@ const FaltanteState = ({children}) => {
         
     }
 
+    const orderCodigo = (ordenCodigo) => {
+        dispatch({
+            type: ORDENAR_CODIGO_FALTANTE,
+            payload: ordenCodigo
+        })
+    }
+    const orderNombre = (ordenNombre) => {
+        dispatch({
+            type: ORDENAR_NOMBRE_FALTANTE,
+            payload: ordenNombre
+        })
+    }
+    const orderMarca = (ordenMarca) => {
+        dispatch({
+            type: ORDENAR_MARCA_FALTANTE,
+            payload: ordenMarca
+        })
+    }
+    const orderModelo = (ordenModelo) => {
+        dispatch({
+            type: ORDENAR_MODELO_FALTANTE,
+            payload: ordenModelo
+        })
+    }
+    const orderDisponibles = (ordenDisponibles) => {
+        dispatch({
+            type: ORDENAR_DISPONIBLES_FALTANTE,
+            payload: ordenDisponibles
+        })
+    }
   return (
       <faltantesContext.Provider
         value={{
@@ -84,6 +111,10 @@ const FaltanteState = ({children}) => {
             traerFaltantes,
             eliminarFaltante,
             orderCodigo,
+            orderNombre,
+            orderMarca,
+            orderModelo,
+            orderDisponibles,
             filtroFaltante
         }}
       >
