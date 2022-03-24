@@ -30,10 +30,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/nuevoproducto.js"
     ],
-    "/productos": [
+    "/producto/editar/[url]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/productos.js"
+      "static/chunks/pages/producto/editar/[url].js"
     ]
   },
   "ampFirstPages": []

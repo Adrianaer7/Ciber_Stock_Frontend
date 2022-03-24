@@ -437,7 +437,7 @@ const Formulario = ({productoEditar}) => {
 
                             </div>
                             <input  
-                                type="tel"
+                                type="text"
                                 autoComplete="off"
                                 className=" mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="codigo"
@@ -520,9 +520,9 @@ const Formulario = ({productoEditar}) => {
                                 {msj.valor_dolar_compra && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.valor_dolar_compra}</p>}
                             </div>
                             <input
-                                type="tel"
+                                type="text"
                                 step="any"
-                                autoComplete="nope"
+                                autoComplete="off"
                                 className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="valor_dolar_compra"
                                 placeholder="$112"
@@ -537,8 +537,8 @@ const Formulario = ({productoEditar}) => {
                                 {msj.precio_compra_dolar && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.precio_compra_dolar}</p>}
                             </div>                            
                             <input
-                                type="tel"
-                                autoComplete="nope"
+                                type="text"
+                                autoComplete="off"
                                 className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="precio_compra_dolar"
                                 placeholder="$28,84"
@@ -554,8 +554,8 @@ const Formulario = ({productoEditar}) => {
                                 {msj.dosPrecios && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.dosPrecios}</p>}
                             </div>                          
                             <input
-                                type="tel"
-                                autoComplete="nope"
+                                type="text"
+                                autoComplete="off"
                                 className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="precio_compra_peso"
                                 placeholder="$1250"
@@ -570,8 +570,8 @@ const Formulario = ({productoEditar}) => {
                                 {msj.rentabilidad && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.rentabilidad}</p>}
                             </div>                            
                             <input
-                                type="tel"
-                                autoComplete="nope"
+                                type="text"
+                                autoComplete="off"
                                 className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="rentabilidad"
                                 placeholder="40%"
@@ -588,8 +588,8 @@ const Formulario = ({productoEditar}) => {
                                     {msj.precio_venta && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.precio_venta}</p>}
                                 </div>                                 
                                 <input
-                                    type="tel"
-                                    autoComplete="nope"
+                                    type="text"
+                                    autoComplete="off"
                                     className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                     id="precio_venta"
                                     placeholder="$ 10.000"
@@ -601,7 +601,7 @@ const Formulario = ({productoEditar}) => {
                             <div className="mb-4 justify-items-end">
                                 <label htmlFor="valorDeVenta" className="text-gray-800 dark:text-gray-300 font-bold text-right block ">Sugerido</label>
                                     <input
-                                        type="tel"
+                                        type="text"
                                         autoComplete="nope"
                                         className="mt-2 block w-full p-3 pr-0 hover:cursor-pointer text-right justify-end rounded-md font-bold text-red-600 bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                         id="valorDeVenta"
@@ -633,8 +633,8 @@ const Formulario = ({productoEditar}) => {
                                 {msj.disponibles && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.disponibles}</p>}
                             </div>                             
                             <input
-                                type="tel"
-                                autoComplete="nope"
+                                type="text"
+                                autoComplete="off"
                                 className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="disponibles"
                                 placeholder="4 UNIDADES"
@@ -651,9 +651,16 @@ const Formulario = ({productoEditar}) => {
                             </div>  
                             <div className="flex gap-4">          
                                 <input
-                                    type="tel"
-                                    autoComplete="nope"
-                                    className={` ${!valorFaltante && "hover:cursor-not-allowed"} mt-2 block w-full p-3  rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
+                                    type="button"
+                                    className={`w-2/4 rounded-md mt-2 block p-3 ${valorFaltante ? "bg-blue-200" : "bg-gray-400 "}`}
+                                    onClick={() => setValorFaltante(!valorFaltante)}
+                                    value={valorFaltante ? "Si"  : "No"}
+                                >
+                                </input>
+                                <input
+                                    type="text"
+                                    autoComplete="off"
+                                    className={` ${!valorFaltante && "hover:cursor-not-allowed"} mt-2 block w-full p-3 text-right rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
                                     id="limiteFalante"
                                     placeholder="2 UNIDADES"
                                     name="limiteFaltante"
@@ -661,13 +668,6 @@ const Formulario = ({productoEditar}) => {
                                     onChange={onChange}
                                     disabled={!valorFaltante}
                                 />
-                                <input
-                                    type="button"
-                                    className={`w-2/4 rounded-md mt-2 block p-3 ${valorFaltante ? "bg-blue-200" : "bg-gray-400 "}`}
-                                    onClick={() => setValorFaltante(!valorFaltante)}
-                                    value={valorFaltante ? "Si"  : "No"}
-                                >
-                                </input>
                             </div>                                    
                         </div>
                     </div>
