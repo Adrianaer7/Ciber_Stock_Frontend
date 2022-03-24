@@ -112,7 +112,7 @@ const FaltanteState = ({children}) => {
     }
     const orderProveedor = (ordenProveedor) => {
         dispatch({
-            type: ORDENAR_MODELO_FALTANTE,
+            type: ORDENAR_PROVEEDOR_FALTANTE,
             payload: ordenProveedor
         })
     }

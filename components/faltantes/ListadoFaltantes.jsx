@@ -11,12 +11,18 @@ const ListadoFaltantes = () => {
         traerFaltantes, 
         filtroFaltante, 
         filtrados,
-        orderCodigo, 
+        orderCodigo,
         orderCodigoFiltrados, 
-        orderPrecio, 
-        orderPrecioFiltrados,
         orderNombre,
         orderNombreFiltrados,
+        orderMarca,
+        orderMarcaFiltrados,
+        orderModelo,
+        orderModeloFiltrados,
+        orderRubro,
+        orderRubroFiltrados,
+        orderProveedor,
+        orderProveedorFiltrados,
         orderDisponibles,
         orderDisponiblesFiltrados,
     } = faltantesContext
@@ -27,8 +33,9 @@ const ListadoFaltantes = () => {
     const [ordenNombre, setOrdenNombre] = useState(false)
     const [ordenMarca, setOrdenMarca] = useState(false)
     const [ordenModelo, setOrdenModelo] = useState(false)
+    const [ordenRubro, setOrdenRubro] = useState(false)
+    const [ordenProveedor, setOrdenProveedor] = useState(false)
     const [ordenDisponibles, setOrdenDisponibles] = useState(false)
-    const [ordenPrecio, setOrdenPrecio] = useState(false)
 
     const AuthContext = useContext(authContext)
     const {usuarioAutenticado} = AuthContext
@@ -42,11 +49,48 @@ const ListadoFaltantes = () => {
     }, [])
 
     useEffect(() => {
+        if(filtrando) {
+            orderCodigoFiltrados(ordenCodigo)
+        }
         orderCodigo(ordenCodigo)
     },[ordenCodigo])
     useEffect(() => {
+        if(filtrando) {
+            orderNombreFiltrados(ordenNombre)
+        }
+        orderNombre(ordenNombre)
+    }, [ordenNombre])
+    useEffect(() => {
+        if(filtrando) {
+            orderMarcaFiltrados(ordenMarca)
+        }
+        orderMarca(ordenMarca)
+    }, [ordenMarca])
+    useEffect(() => {
+        if(filtrando) {
+            orderModeloFiltrados(ordenModelo)
+        }
+        orderModelo(ordenModelo)
+    }, [ordenModelo])
+    useEffect(() => {
+        if(filtrando) {
+            orderRubroFiltrados(ordenRubro)
+        }
+        orderRubro(ordenRubro)
+    }, [ordenRubro])
+    useEffect(() => {
+        if(filtrando) {
+            orderProveedorFiltrados(ordenProveedor)
+        }
+        orderProveedor(ordenProveedor)
+    }, [ordenProveedor])
+    useEffect(() => {
+        if(filtrando) {
+            orderDisponiblesFiltrados(ordenDisponibles)
+        }
         orderDisponibles(ordenDisponibles)
     }, [ordenDisponibles])
+    
 
     useEffect(() => {
         if(filtrando) {
@@ -66,6 +110,18 @@ const ListadoFaltantes = () => {
     }
     const ordenarNombre = () => {
         setOrdenNombre(!ordenNombre)
+    }
+    const ordenarMarca = () => {
+        setOrdenMarca(!ordenMarca)
+    }
+    const ordenarModelo = () => {
+        setOrdenModelo(!ordenModelo)
+    }
+    const ordenarRubro = () => {
+        setOrdenRubro(!ordenRubro)
+    }
+    const ordenarProveedor = () => {
+        setOrdenProveedor(!ordenProveedor)
     }
     const ordenarDisponibles = () => {
         setOrdenDisponibles(!ordenDisponibles)
@@ -89,11 +145,11 @@ const ListadoFaltantes = () => {
             <thead className="bg-red-600 text-white">
                 <tr className="hover:cursor-pointer select-none">
                     <th  onClick={() => ordenarCodigo()} className="p-2 rounded-tl-lg">CODIGO</th>
-                    <th>NOMBRE</th>
-                    <th>MARCA</th>
-                    <th>MODELO</th>
-                    <th>RUBRO</th>
-                    <th>PROVEEDOR</th>
+                    <th onClick={() => ordenarNombre()}>NOMBRE</th>
+                    <th onClick={() => ordenarMarca()}>MARCA</th>
+                    <th onClick={() => ordenarModelo()}>MODELO</th>
+                    <th onClick={() => ordenarRubro()}>RUBRO</th>
+                    <th onClick={() => ordenarProveedor()}>PROVEEDOR</th>
                     <th onClick={() => ordenarDisponibles()}>DISPONIBLES</th>
                     <th className="rounded-tr-lg">ACCIONES</th>
                 </tr>

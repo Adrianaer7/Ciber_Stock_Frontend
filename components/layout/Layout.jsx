@@ -5,7 +5,6 @@ import Link from "next/link"
 import Image from "next/image"
 import authContext from "../../context/auth/authContext"
 import productoContext from "../../context/productos/productoContext"
-import { LIMPIAR_APP } from "../../types"
 
 const Layout = ({children, pagina}) => {
 

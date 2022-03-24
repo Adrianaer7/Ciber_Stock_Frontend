@@ -91,14 +91,18 @@ const Formulario = ({productoEditar}) => {
     //se fija si en el state de filtrando hay algo, es porque se está escribiendo
     useEffect(() => {
         if(valoresR) {
-            setEscribiendoR(!escribiendoR)
-        } 
+            setEscribiendoR(true)
+        } else {
+            setEscribiendoR(false)
+        }
     }, [valoresR])
 
     useEffect(() => {
         if(valoresP) {
-            setEscribiendoP(!escribiendoP)
-        } 
+            setEscribiendoP(true)
+        } else {
+            setEscribiendoP(false)
+        }
     }, [valoresP])
 
     //cada vez que escriba en los inputs se realiza el calculo aprox para el precio de la venta

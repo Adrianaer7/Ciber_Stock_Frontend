@@ -130,12 +130,13 @@ const ListadoProductos = () => {
     const ordenarMarca = () => {
         setOrdenMarca(!ordenMarca)
     }
-    const ordenarDisponibles = () => {
-        setOrdenDisponibles(!ordenDisponibles)
-    }
     const ordenarModelo = () => {
         setOrdenModelo(!ordenModelo)
     }
+    const ordenarDisponibles = () => {
+        setOrdenDisponibles(!ordenDisponibles)
+    }
+    
     
   return (
     <>  

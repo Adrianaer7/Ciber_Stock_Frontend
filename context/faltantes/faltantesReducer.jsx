@@ -5,9 +5,9 @@ import {
     ORDENAR_CODIGO_FALTANTE, 
     ORDENAR_CODIGO_FALTANTE_FILTRADO, 
     ORDENAR_DISPONIBLES_FALTANTE, 
+    ORDENAR_DISPONIBLES_FALTANTE_FILTRADO, 
     ORDENAR_MARCA_FALTANTE, 
     ORDENAR_MARCA_FALTANTE_FILTRADO, 
-    ORDENAR_MODELO, 
     ORDENAR_MODELO_FALTANTE, 
     ORDENAR_MODELO_FALTANTE_FILTRADO, 
     ORDENAR_NOMBRE_FALTANTE, 
@@ -120,31 +120,37 @@ export default function  faltantesReducer(state, action) {
         case ORDENAR_NOMBRE_FALTANTE_FILTRADO: 
             return {
                 ...state,
-                filtrados: action.payload ? state.filtrados.sort((a,b) => b.nombre - a.nombre) : !action.payload ? state.filtrados.sort((a,b) => a.nombre - b.nombre ) : state.filtrados
+                filtrados: action.payload ? state.filtrados.sort((a,b) => b.nombre > a.nombre ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => a.nombre > b.nombre ? 1 : -1 ) : state.filtrados
 
             }
         case ORDENAR_MARCA_FALTANTE_FILTRADO: 
             return {
                 ...state,
-                filtrados: action.payload ? state.filtrados.sort((a,b) => b.marca - a.marca) : !action.payload ? state.filtrados.sort((a,b) => a.marca - b.marca ) : state.filtrados
+                filtrados: action.payload ? state.filtrados.sort((a,b) => b.marca > a.marca ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => a.marca > b.marca ? 1 : -1) : state.filtrados
 
             }
         case ORDENAR_MODELO_FALTANTE_FILTRADO: 
             return {
                 ...state,
-                filtrados: action.payload ? state.filtrados.sort((a,b) => b.modelo - a.modelo) : !action.payload ? state.filtrados.sort((a,b) => a.modelo - b.modelo ) : state.filtrados
+                filtrados: action.payload ? state.filtrados.sort((a,b) => b.modelo > a.modelo ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => a.modelo > b.modelo ? 1 : -1) : state.filtrados
 
             }
         case ORDENAR_RUBRO_FALTANTE_FILTRADO: 
             return {
                 ...state,
-                filtrados: action.payload ? state.filtrados.sort((a,b) => b.rubro - a.rubro) : !action.payload ? state.filtrados.sort((a,b) => a.rubro - b.rubro ) : state.filtrados
+                filtrados: action.payload ? state.filtrados.sort((a,b) => b.rubro > a.rubro ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => a.rubro > b.rubro ? 1 : -1) : state.filtrados
 
             }
         case ORDENAR_PROVEEDOR_FALTANTE_FILTRADO: 
             return {
                 ...state,
-                filtrados: action.payload ? state.filtrados.sort((a,b) => b.proveedor - a.proveedor) : !action.payload ? state.filtrados.sort((a,b) => a.proveedor - b.proveedor ) : state.filtrados
+                filtrados: action.payload ? state.filtrados.sort((a,b) => b.proveedor > a.proveedor ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => a.proveedor > b.proveedor ? 1 : -1) : state.filtrados
+
+            }
+        case ORDENAR_DISPONIBLES_FALTANTE_FILTRADO: 
+            return {
+                ...state,
+                filtrados: action.payload ? state.filtrados.sort((a,b) => b.disponibles > a.disponibles ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => a.disponibles > b.disponibles ? 1 : -1) : state.filtrados
 
             }
     default : 
