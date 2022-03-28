@@ -46,7 +46,7 @@ const FaltanteState = ({children}) => {
 
     const traerFaltantes = async () => {
         try {
-            const resultado = await clienteAxios("/api/faltantes")
+            const resultado = await clienteAxios.get("/api/faltantes")
             dispatch({
                 type: TRAER_FALTANTES,
                 payload: resultado.data.faltantes

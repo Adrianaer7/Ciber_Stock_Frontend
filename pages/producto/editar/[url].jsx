@@ -7,17 +7,6 @@ import productoContext from "../../../context/productos/productoContext";
 import authContext from "../../../context/auth/authContext";
 import NoEncontrado from "../../../components/productos/NoEncontrado";
 
-
-export async function getServerSideProps({ params: {url} }) {
-  await dbConnect()
-  const respuesta = await clienteAxios.get(`/api/productos/${url}`)
-  if(respuesta.data.redireccionar) {
-    return {notFound: true}
-  }
-  const productoEditar = respuesta.data.producto
-  return { props: { productoEditar }}
-}
-
 const Edicion = ({productoEditar}) => {
 
   const AuthContext = useContext(authContext)
@@ -31,6 +20,7 @@ const Edicion = ({productoEditar}) => {
     if(productoEditar) {
       productoActual(productoEditar)
     }
+    
   }, [])
 
 
@@ -48,5 +38,14 @@ const Edicion = ({productoEditar}) => {
   )
 };
 
+export async function getServerSideProps({ params: {url} }) {
+  await dbConnect()
+  const respuesta = await clienteAxios.get(`/api/productos/${url}`)
+  if(respuesta.data.redireccionar) {
+    return {notFound: true}
+  }
+  const productoEditar = respuesta.data.producto
+  return { props: { productoEditar }}
+}
 
 export default Edicion;

@@ -5,13 +5,13 @@ import FaltanteState from '../context/faltantes/faltantesState'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <AuthState>
       <ProductoState>
         <FaltanteState>
+          <AuthState>
             <Component {...pageProps} />
+          </AuthState>
         </FaltanteState>
       </ProductoState>
-    </AuthState>
   )
 }
 

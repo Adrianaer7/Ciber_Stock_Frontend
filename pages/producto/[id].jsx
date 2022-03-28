@@ -8,17 +8,6 @@ import productoContext from '../../context/productos/productoContext';
 import NoEncontrado from '../../components/productos/NoEncontrado';
 
 
-export async function getServerSideProps({ params: {id} }) {
-  await dbConnect()
-  const respuesta = await clienteAxios.get(`/api/productos/${id}`)
-  if(respuesta.data.redireccionar) {  //si es true
-    return {notFound: true} //redirecciono a la pagina 404. notFound es una funcion de next
-  }
-  const producto = respuesta.data.producto
-  return { props: { producto }}
-}
-
-
 const Ver = ({producto}) => { 
 
   const AuthContext = useContext(authContext)
@@ -52,6 +41,14 @@ const Ver = ({producto}) => {
 };
 
 
-
+export async function getServerSideProps({ params: {id} }) {
+  await dbConnect()
+  const respuesta = await clienteAxios.get(`/api/productos/${id}`)
+  if(respuesta.data.redireccionar) {  //si es true
+    return {notFound: true} //redirecciono a la pagina 404. notFound es una funcion de next
+  }
+  const producto = respuesta.data.producto
+  return { props: { producto }}
+}
 
 export default Ver;
