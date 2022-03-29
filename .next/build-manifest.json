@@ -15,6 +15,11 @@
     "static/development/_middlewareManifest.js"
   ],
   "pages": {
+    "/": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/index.js"
+    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -25,10 +30,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/producto/editar/[url]": [
+    "/faltantes": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/producto/editar/[url].js"
+      "static/chunks/pages/faltantes.js"
+    ],
+    "/nuevoproducto": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/nuevoproducto.js"
     ],
     "/productos": [
       "static/chunks/webpack.js",

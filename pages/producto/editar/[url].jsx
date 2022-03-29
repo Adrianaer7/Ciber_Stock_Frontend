@@ -1,7 +1,7 @@
 import Layout from "../../../components/layout/Layout";
 import clienteAxios from "../../../config/axios";
 import dbConnect from "../../../lib/dbConnect";
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Formulario from "../../../components/productos/Formulario";
 import productoContext from "../../../context/productos/productoContext";
 import authContext from "../../../context/auth/authContext";
@@ -15,26 +15,41 @@ const Edicion = ({productoEditar}) => {
   const productosContext = useContext(productoContext)
   const {productoActual} = productosContext
 
+  const [coincide, setCoincide] = useState(true)
+
+  //Autentico al usuario y agrego el producto actual al state
   useEffect(() => {
     usuarioAutenticado()
     if(productoEditar) {
       productoActual(productoEditar)
     }
-    
   }, [])
+  
+  //Cuando me autentique, verifico que el producto que traigo es el del usuario que está logueado
+  useEffect(() => {
+    if(usuario) {
+      if(productoEditar.creador !== usuario.id){
+        setCoincide(false)
+      }
+    }
+  }, [usuario])
 
 
   return (
-    <Layout pagina={`Editar - ${productoEditar.nombre}`}>
-      {usuario && (
-        productoEditar ? (
+    <>
+      {coincide ? (
+            <Layout pagina={`Editar - ${productoEditar.nombre}`}>
+
           <Formulario
             key={productoEditar._id}
             productoEditar={productoEditar}
           />
+              </Layout>
+
       ): <NoEncontrado/>
-      )}
-    </Layout>
+      }
+    </>
+    
   )
 };
 

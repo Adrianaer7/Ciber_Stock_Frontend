@@ -3,30 +3,39 @@ import VerProducto from '../../components/productos/VerProducto';
 import dbConnect from '../../lib/dbConnect';
 import clienteAxios from "../../config/axios"
 import authContext from '../../context/auth/authContext';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import productoContext from '../../context/productos/productoContext';
 import NoEncontrado from '../../components/productos/NoEncontrado';
-
-
 const Ver = ({producto}) => { 
 
   const AuthContext = useContext(authContext)
-  const {usuarioAutenticado} = AuthContext
+  const {usuarioAutenticado, usuario} = AuthContext
   
   const productosContext = useContext(productoContext)
   const {productoActual} = productosContext
 
+  const [coincide, setCoincide] = useState(true)
+
+  //Autentico al usuario y agrego el producto actual al state
   useEffect(() => {
     usuarioAutenticado()
     if(producto) {
       productoActual(producto)
     }
   },[])
-   
+  
+  //Cuando me autentique, verifico que el producto que traigo es el del usuario que está logueado
+   useEffect(() => {
+    if(usuario) {
+      if(producto.creador !== usuario.id) {
+        setCoincide(false)
+      }
+    }
+   }, [usuario])
 
   return (
     <>
-      {producto ? (
+      {coincide ? (
         <Layout pagina={`Ver - ${producto.nombre}`}>
           <VerProducto
             key={producto._id}
