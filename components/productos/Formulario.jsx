@@ -120,7 +120,7 @@ const Formulario = ({productoEditar}) => {
     //Al escribir, escribiendo pasa a true, se vacia el select y se deshabilita. 
     //Envio lo que escribo al state de valores, y lo que está en valores lo envio al state de producto. Al hacer submit vacio el state de valores, entonces el input queda vacio
     const onChangeRubroInput = e => {
-        setValoresR(e.target.value)
+        setValoresR(e.target.value.toUpperCase())
     }
     if(valoresR) {
         producto.rubro = valoresR
@@ -140,7 +140,7 @@ const Formulario = ({productoEditar}) => {
     }
 
     const onChangeProveedorInput = e => {
-        setValoresP(e.target.value)
+        setValoresP(e.target.value.toUpperCase())
     }
     if(valoresP) {
        producto.proveedor = valoresP
@@ -457,7 +457,7 @@ const Formulario = ({productoEditar}) => {
                                 <input
                                     type="text"
                                     autoComplete="off"
-                                    className={`${rubroSelect && "hover:cursor-not-allowed"} mt-2 uppercase block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
+                                    className={`${rubroSelect && "hover:cursor-not-allowed"} mt-2  block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
                                     id="rubro"
                                     placeholder="Cables"
                                     name="rubro"
@@ -484,13 +484,13 @@ const Formulario = ({productoEditar}) => {
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="proveedor" className="text-gray-800 dark:text-gray-300 font-bold ">Proveedor</label>
-                                {mensajeProveedor && <p className="bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{mensajeProveedor}</p>}
+                                {mensajeProveedor && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{mensajeProveedor}</p>}
                             </div>
                             <div className="flex">
                                 <input
                                     type="text"
                                     autoComplete="off"
-                                    className={`${proveedorSelect && "hover:cursor-not-allowed"} mt-2 uppercase block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
+                                    className={`${proveedorSelect && "hover:cursor-not-allowed"} mt-2  block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
                                     id="proveedor"
                                     placeholder="MercadoLibre"
                                     name="proveedor"
