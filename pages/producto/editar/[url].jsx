@@ -6,7 +6,7 @@ import Formulario from "../../../components/productos/Formulario";
 import productoContext from "../../../context/productos/productoContext";
 import authContext from "../../../context/auth/authContext";
 import NoEncontrado from "../../../components/productos/NoEncontrado";
-
+import Login from "../../../components/auth/Login";
 const Edicion = ({productoEditar}) => {
 
   const AuthContext = useContext(authContext)
@@ -15,41 +15,39 @@ const Edicion = ({productoEditar}) => {
   const productosContext = useContext(productoContext)
   const {productoActual} = productosContext
 
-  const [coincide, setCoincide] = useState(true)
-
+  const [coincide, setCoincide] = useState(null)
+  const [pepe, setPepe] = useState(true)
   //Autentico al usuario y agrego el producto actual al state
   useEffect(() => {
     usuarioAutenticado()
-    if(productoEditar) {
-      productoActual(productoEditar)
-    }
+    setTimeout(() => {
+      setPepe(false)
+    }, 10);
   }, [])
-  
+
   //Cuando me autentique, verifico que el producto que traigo es el del usuario que está logueado
   useEffect(() => {
     if(usuario) {
+      productoActual(productoEditar)
+      setCoincide(true)
       if(productoEditar.creador !== usuario.id){
         setCoincide(false)
-      }
+      }  
     }
   }, [usuario])
 
-
   return (
     <>
-      {coincide ? (
-            <Layout pagina={`Editar - ${productoEditar.nombre}`}>
-
+      {pepe ? null : usuario && coincide ? (
+        <Layout pagina={`Editar - ${productoEditar.nombre}`}>
           <Formulario
             key={productoEditar._id}
             productoEditar={productoEditar}
           />
-              </Layout>
-
-      ): <NoEncontrado/>
+        </Layout>
+      ): usuario && coincide === false && <NoEncontrado/>
       }
     </>
-    
   )
 };
 

@@ -8,8 +8,7 @@ const Producto = ({producto}) => {
     const [colorFaltante, setColorFaltante] = useState(null)
     const {nombre, marca, codigo, precio_venta_recomendado, disponibles, modelo, _id, faltante} = producto
     
-    const resumen = nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_recomendado)   //datos que se copian al hacer click en el precio
-
+    const resumen = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_recomendado)).trim().replace(/\s\s+/g, ' ')   //datos que se copian al hacer click en el precio. El trim elimina los espacios en blanco al principio y al final, y el replace quita 2 o mas espacio entre palabra y palabra
     const productosContext = useContext(productoContext)
     const {productoActual, venderProducto} = productosContext
 

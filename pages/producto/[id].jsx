@@ -19,14 +19,13 @@ const Ver = ({producto}) => {
   //Autentico al usuario y agrego el producto actual al state
   useEffect(() => {
     usuarioAutenticado()
-    if(producto) {
-      productoActual(producto)
-    }
+    
   },[])
   
   //Cuando me autentique, verifico que el producto que traigo es el del usuario que está logueado
    useEffect(() => {
     if(usuario) {
+      productoActual(producto)
       if(producto.creador !== usuario.id) {
         setCoincide(false)
       }
@@ -42,8 +41,7 @@ const Ver = ({producto}) => {
             producto={producto}
           />
         </Layout>
-      )
-      : <NoEncontrado/>
+      ): <NoEncontrado/>
       }
     </>
   )
