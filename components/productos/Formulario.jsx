@@ -3,10 +3,14 @@ import Rubro from "./Rubro"
 import Proveedor from "./Proveedor"
 import { hoy } from "../../helpers"
 import productoContext from "../../context/productos/productoContext"
-
+import authContext from "../../context/auth/authContext"
 const Formulario = ({productoEditar}) => {
 
+    const AuthContext = useContext(authContext)
+    const {usuarioAutenticado, usuario} = AuthContext
+
     const productosContext = useContext(productoContext)
+
     const { 
         productoSeleccionado, 
         productos, 
@@ -72,16 +76,20 @@ const Formulario = ({productoEditar}) => {
     
     //hago un get a todos los productos, a la API de dolar y a la bd de dolar
     useEffect(() => {
-        traerProductos()
-        traerDolarBD()
-        traerDolarAPI()
-    }, [])
+        if(usuario) {
+            traerProductos()
+            traerDolarBD()
+            traerDolarAPI()
+        }
+    }, [usuario])
 
     //hago get a los rubros y proveedores cuando se agregue o cambie la lista de todos los productos
     useEffect(() => {
-        traerRubros()
-        traerProveedores()
-    },[productos])
+        if(usuario) {
+            traerRubros()
+            traerProveedores()
+        }
+    },[usuario])
 
     //cada vez que cambie el producto seleccionado me vacia el input de precio sugerido
     useEffect(() => {

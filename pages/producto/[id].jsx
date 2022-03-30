@@ -6,6 +6,7 @@ import authContext from '../../context/auth/authContext';
 import { useContext, useEffect, useState } from 'react';
 import productoContext from '../../context/productos/productoContext';
 import NoEncontrado from '../../components/productos/NoEncontrado';
+
 const Ver = ({producto}) => { 
 
   const AuthContext = useContext(authContext)
@@ -19,7 +20,6 @@ const Ver = ({producto}) => {
   //Autentico al usuario y agrego el producto actual al state
   useEffect(() => {
     usuarioAutenticado()
-    
   },[])
   
   //Cuando me autentique, verifico que el producto que traigo es el del usuario que está logueado
