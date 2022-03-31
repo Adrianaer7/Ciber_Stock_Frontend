@@ -168,7 +168,8 @@ export default function productoReducer(state, action) {
                                     .toString()
                                     .toLowerCase()
                                     .includes(action.payload.toLowerCase() ? action.payload  : producto)
-                )
+                ),
+                
             }
         case PRECIO_VENTA:
             return {

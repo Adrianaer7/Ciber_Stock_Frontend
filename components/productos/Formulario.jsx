@@ -7,7 +7,7 @@ import authContext from "../../context/auth/authContext"
 const Formulario = ({productoEditar}) => {
 
     const AuthContext = useContext(authContext)
-    const {usuarioAutenticado, usuario} = AuthContext
+    const {usuario} = AuthContext
 
     const productosContext = useContext(productoContext)
 

@@ -50,6 +50,7 @@ const ProductoState = ({children}) => {
         mensajeCodigo: null,
         mensajeProveedor: null,
         filtrados: [],  //guarda los productos filtrados,
+        filtras: [],
         rubros: [], //guarda todos los rubros
         proveedores: [],
         valorDeVenta: "",
@@ -435,6 +436,7 @@ const ProductoState = ({children}) => {
                 mensajeRubro: state.mensajeRubro,
                 mensajeProveedor: state.mensajeProveedor,
                 filtrados: state.filtrados,
+                filtras: state.filtras,
                 rubros: state.rubros,
                 proveedores: state.proveedores,
                 valorDeVenta: state.valorDeVenta,
