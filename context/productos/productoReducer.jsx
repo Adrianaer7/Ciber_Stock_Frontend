@@ -168,7 +168,7 @@ export default function productoReducer(state, action) {
                                     .toString()
                                     .toLowerCase()
                                     .includes(action.payload.toLowerCase() ? action.payload  : producto)
-                ),
+                )
                 
             }
         case PRECIO_VENTA:
@@ -209,7 +209,7 @@ export default function productoReducer(state, action) {
         case ORDENAR_PRECIO:
             return {
                 ...state,
-                productos: action.payload ? state.productos.sort((a,b) => b.precio_venta_recomendado - a.precio_venta_recomendado) : !action.payload ? state.productos.sort((a,b) => a.precio_venta_recomendado - b.precio_venta_recomendado ) : state.productos
+                productos: action.payload ? state.productos.sort((a,b) => b.precio_venta_conocidos - a.precio_venta_conocidos) : !action.payload ? state.productos.sort((a,b) => a.precio_venta_conocidos - b.precio_venta_conocidos ) : state.productos
             }
         case ORDENAR_NOMBRE:
             return {
@@ -243,7 +243,7 @@ export default function productoReducer(state, action) {
         case ORDENAR_PRECIO_FILTRADO:
             return {
                 ...state,
-                filtrados: action.payload ? state.filtrados.sort((a,b) => b.precio_venta_recomendado - a.precio_venta_recomendado) : !action.payload ? state.filtrados.sort((a,b) => a.precio_venta_recomendado - b.precio_venta_recomendado ) : state.filtrados
+                filtrados: action.payload ? state.filtrados.sort((a,b) => b.precio_venta_conocidos - a.precio_venta_conocidos) : !action.payload ? state.filtrados.sort((a,b) => a.precio_venta_conocidos - b.precio_venta_conocidos ) : state.filtrados
 
             }
         case ORDENAR_NOMBRE_FILTRADO:

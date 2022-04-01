@@ -6,9 +6,11 @@ import faltanteContext from "../../context/faltantes/faltantesContext";
 
 const Producto = ({producto}) => {
     const [colorFaltante, setColorFaltante] = useState(null)
-    const {nombre, marca, codigo, precio_venta_recomendado, disponibles, modelo, _id, faltante} = producto
+    const {nombre, marca, codigo, precio_venta_conocidos, precio_venta_efectivo, precio_venta_tarjeta, disponibles, modelo, _id, faltante} = producto
     
-    const resumen = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_recomendado)).trim().replace(/\s\s+/g, ' ')   //datos que se copian al hacer click en el precio. El trim elimina los espacios en blanco al principio y al final, y el replace quita 2 o mas espacio entre palabra y palabra
+    const conocidos = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_conocidos)).trim().replace(/\s\s+/g, ' ')   //datos que se copian al hacer click en el precio. El trim elimina los espacios en blanco al principio y al final, y el replace quita 2 o mas espacio entre palabra y palabra
+    const efectivo = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_efectivo)).trim().replace(/\s\s+/g, ' ')
+    const tarjeta = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_tarjeta)).trim().replace(/\s\s+/g, ' ')
     const productosContext = useContext(productoContext)
     const {productoActual, venderProducto} = productosContext
 
@@ -41,7 +43,14 @@ const Producto = ({producto}) => {
             <td className="p-3 dark:text-gray-50 text-center">{marca}</td>
             <td className="p-3 dark:text-gray-50 text-center">{modelo}</td>
             <td className="p-3 dark:text-gray-50 text-center uppercase">{!disponibles ? <span className="bg-red-600 font-bold text-white p-1 rounded-sm">Sin stock</span> : disponibles && !faltante && colorFaltante === null || disponibles && colorFaltante === false ? disponibles : disponibles && faltante || disponibles && colorFaltante || disponibles && faltante && colorFaltante === false ? <span className="text-red-600 font-bold">{disponibles}</span> : null}</td>
-            <td className="p-3 dark:text-gray-50 text-center font-bold text-lg hover:cursor-pointer" onClick={() => navigator.clipboard.writeText(`${resumen}`)}>${precio_venta_recomendado}</td>
+            <td className="p-3 dark:text-gray-50 text-center  text-lg hover:cursor-pointer ">
+                <div className="flex flex-col">
+                    <p className="mb-4 pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 text-2xl font-black " onClick={() => navigator.clipboard.writeText(`${tarjeta}`)}>${precio_venta_tarjeta}</p>
+                    <p className="pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 font-bold" onClick={() => navigator.clipboard.writeText(`${efectivo}`)}>${precio_venta_efectivo}</p>
+                    <p className="mt-4 pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200" onClick={() => navigator.clipboard.writeText(`${conocidos}`)}>${precio_venta_conocidos}</p>
+                </div>
+                    
+            </td>
 
             <td className="p-3 w-40 mt-2  ">
                 <Link href="">
@@ -68,7 +77,7 @@ const Producto = ({producto}) => {
                 <Link href="">
                     <button
                         type="button"
-                        className="bg-red-600 hover:bg-red-900 mb-2 w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
+                        className="bg-red-600 hover:bg-red-900  w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
                         onClick={() => añadirFaltante()}
                     >{!faltante && colorFaltante === null || !faltante && colorFaltante === false || faltante && colorFaltante === false ? "Agregar faltante" : "Quitar faltante"}</button>
                 </Link>

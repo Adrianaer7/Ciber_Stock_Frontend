@@ -33,7 +33,6 @@ const ListadoProductos = () => {
         orderModeloFiltrados,
         orderDisponibles,
         orderDisponiblesFiltrados,
-        filtras
     } = productosContext
 
     const [filtrando, setFiltrando] = useState("")    //contiene lo que voy escribiendo
@@ -114,14 +113,6 @@ const ListadoProductos = () => {
         }
     }, [filtrando])
 
-    useEffect(() => {
-        const pepe =  incluyeTodas(desc.toLowerCase(), filtrando.toLowerCase())
-        if(pepe) {
-            console.log(desc)
-        } else{ 
-            console.log("negativo")
-        }
-    }, [filtrando])
 
     const onChangeFiltro = e => {
         setFiltrando(e.target.value)
@@ -147,10 +138,6 @@ const ListadoProductos = () => {
         setOrdenDisponibles(!ordenDisponibles)
     }
     
-    function incluyeTodas(original, buscadas) {
-        return !buscadas.split(" ").some(p => !original.includes(p))
-    }
-    const desc = "Logitech Auricular G430"
     
 
   return (

@@ -7,7 +7,7 @@ const VerProducto = ({producto}) => {
     const productosContext = useContext(productoContext)
     const {eliminarProducto} = productosContext
 
-    const {_id, nombre, codigo, rubro, marca, precio_venta, precio_venta_recomendado, precio_compra_dolar, precio_compra_peso, valor_dolar_compra, fecha_compra, proveedor, disponibles, rentabilidad, modelo, notas} = producto
+    const {_id, nombre, codigo, rubro, marca, precio_venta, precio_venta_conocidos, precio_compra_dolar, precio_compra_peso, valor_dolar_compra, fecha_compra, proveedor, disponibles, rentabilidad, modelo, notas} = producto
 
     const fecha = generarFecha(fecha_compra) //formateo la fecha ya que me llega y-m-d
 
@@ -62,9 +62,9 @@ const VerProducto = ({producto}) => {
                         <span className="text-blue-900 uppercase font-bold">Precio de venta: </span>${precio_venta}
                     </p>
                 )}
-                {precio_venta_recomendado > 0 && (
+                {precio_venta_conocidos > 0 && (
                     <p className="text-3xl text-red-600 font-bold dark:text-gray-50 mt-6">
-                        <span className="text-blue-900 text-2xl uppercase font-bold">Precio de venta recomendado: </span>${precio_venta_recomendado}
+                        <span className="text-blue-900 text-2xl uppercase font-bold">Precio de venta conocidos: </span>${precio_venta_conocidos}
                     </p>
                 )}
                 {fecha_compra && (
