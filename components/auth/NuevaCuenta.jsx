@@ -130,15 +130,17 @@ const NuevaCuenta = () => {
                                 value="Crear Usuario"
                                 className="mt-5 w-full bg-blue-800 dark:bg-blue-500 p-3 text-white uppercase font-bold text-lg rounded-md cursor-pointer"
                             />
-                            <p className="text-center mx-auto mt-2">¿Tienes cuenta?</p>
                         </form>
-                        <Link href="/">
-                                <button
-                                    className="mt-3 w-full bg-green-700  p-3  text-white uppercase font-bold text-lg rounded-md cursor-pointer"
-                                >
-                                    Iniciar Sesion
-                                </button>
-                            </Link>
+                </div>
+                <div className="flex justify-between w-3/4 mx-auto">
+                    <Link href="/">
+                        <a
+                            className="pt-5 hover:text-blue-400"
+                        >
+                            Ya tengo cuenta
+                        </a>
+                    </Link>
+                   
                 </div>
         </div>
     </>

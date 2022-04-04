@@ -53,7 +53,7 @@ const Login = () => {
                                 onSubmit={onSubmit}
                             >
                                 <div className="mb-4 py-2">
-                                    <label htmlFor="email" className="text-gray-800 font-bold">Email</label>
+                                    <label htmlFor="email" className="text-gray-800 font-bold">EMAIL</label>
                                     <input
                                         type="email"
                                         autoComplete="nope"
@@ -66,7 +66,7 @@ const Login = () => {
                                     />
                                 </div>
                                 <div className="mb-4">
-                                    <label htmlFor="password" className="text-gray-800 font-bold">Contraseña</label>
+                                    <label htmlFor="password" className="text-gray-800 font-bold">CONTRASEÑA</label>
                                     <input
                                         type="password"
                                         autoComplete="nope"
@@ -84,17 +84,25 @@ const Login = () => {
                                     value="Iniciar Sesion"
                                     className="mt-5 w-full bg-blue-800  p-3 text-white uppercase font-bold text-lg rounded-md cursor-pointer"
                                 />
-                                <p className="text-center mx-auto mt-2">¿No tenes cuenta?</p>
                             </form>
-                            
-                            <Link href="/crear-cuenta">
-                                <button
-                                    className="mt-3 w-full bg-green-700  p-3  text-white uppercase font-bold text-lg rounded-md cursor-pointer"
-                                >
-                                    Registrarse
-                                </button>
-                            </Link>
                     </div>
+                    <div className="flex justify-between w-3/4 mx-auto">
+                        <Link href="/crear-cuenta">
+                            <a
+                                className="pt-5 hover:text-blue-400"
+                            >
+                                Crear cuenta
+                            </a>
+                        </Link>
+                        <Link href="/olvide-password">
+                            <a
+                                className="pt-5 hover:text-blue-400"
+                            >
+                                Olvidé mi contraseña
+                            </a>
+                        </Link>
+                    </div>
+                    
             </div>
         </>
     );
