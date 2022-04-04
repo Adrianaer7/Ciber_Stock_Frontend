@@ -683,7 +683,7 @@ const Formulario = ({productoEditar}) => {
                     <div className="mb-4">
                         <label htmlFor="notas" className="text-gray-800 dark:text-gray-300 font-bold ">Notas</label>
                         <textarea
-                            className="mt-2 block w-full h-20 p-3 rounded-md  bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                            className=" mt-2 block w-full h-48 p-3 rounded-md  bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                             id="notas"
                             placeholder="Ingresa tu notas"
                             name="notas"

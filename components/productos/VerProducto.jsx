@@ -7,7 +7,7 @@ const VerProducto = ({producto}) => {
     const productosContext = useContext(productoContext)
     const {eliminarProducto} = productosContext
 
-    const {_id, nombre, codigo, rubro, marca, precio_venta, precio_venta_conocidos, precio_compra_dolar, precio_compra_peso, valor_dolar_compra, fecha_compra, proveedor, disponibles, rentabilidad, modelo, notas} = producto
+    const {_id, nombre, codigo, rubro, marca, precio_venta, precio_venta_tarjeta, precio_venta_efectivo, precio_venta_conocidos, precio_compra_dolar, precio_compra_peso, valor_dolar_compra, fecha_compra, proveedor, disponibles, rentabilidad, modelo, notas} = producto
 
     const fecha = generarFecha(fecha_compra) //formateo la fecha ya que me llega y-m-d
 
@@ -19,7 +19,7 @@ const VerProducto = ({producto}) => {
 
                 {codigo && (
                     <p className="text-2xl text-gray-600 dark:text-gray-50 mt-6">
-                        <span className="text-blue-900 uppercase font-bold">Código: </span>{codigo}
+                        <span className="text-blue-900  uppercase font-bold">Código: </span>{codigo}
                     </p>
                 )}
                 {marca && (
@@ -62,14 +62,25 @@ const VerProducto = ({producto}) => {
                         <span className="text-blue-900 uppercase font-bold">Precio de venta: </span>${precio_venta}
                     </p>
                 )}
+                {precio_venta_tarjeta > 0 && (
+                    <p className="text-3xl text-red-600 font-black dark:text-gray-50 mt-6">
+                        <span className="text-blue-900 text-2xl uppercase font-black">Precio de venta tarjeta: </span>${precio_venta_tarjeta}
+                    </p>
+                )}
+                {precio_venta_efectivo > 0 && (
+                    <p className="text-2xl text-red-600 font-bold dark:text-gray-50 mt-6">
+                        <span className="text-blue-900 text-2xl uppercase font-bold">Precio de venta efectivo: </span>${precio_venta_efectivo}
+                    </p>
+                )}
                 {precio_venta_conocidos > 0 && (
-                    <p className="text-3xl text-red-600 font-bold dark:text-gray-50 mt-6">
+                    <p className="text-xl text-red-600 font-bold dark:text-gray-50 mt-6">
                         <span className="text-blue-900 text-2xl uppercase font-bold">Precio de venta conocidos: </span>${precio_venta_conocidos}
                     </p>
                 )}
+                
                 {fecha_compra && (
                     <p className="text-2xl text-gray-600 uppercase dark:text-gray-50 mt-6">
-                        <span className="text-blue-900 uppercase font-bold">Fecha compra: </span>{fecha}
+                        <span className="text-blue-900 uppercase font-bold">Fecha última compra: </span>{fecha}
                     </p>
                 )}
                 

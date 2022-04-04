@@ -15,8 +15,8 @@ const ProductoFaltante = ({producto}) => {
 
     return (
         <tr className="border-b dark:border-none hover:bg-gray-50 dark:hover:bg-gray-700">
-            <td className="p-3 dark:text-gray-50 text-center">{codigo}</td>
-            <td className="dark:text-gray-50 p-3 w-1">{nombre}</td>
+            <td className="p-3 dark:text-gray-50 text-center font-semibold">{codigo}</td>
+            <td className="dark:text-gray-50 p-3">{nombre}</td>
             <td className="p-3 dark:text-gray-50 text-center">{marca}</td>
             <td className="p-3 dark:text-gray-50 text-center">{modelo}</td>
             <td className="p-3 dark:text-gray-50 text-center">{rubro}</td>
