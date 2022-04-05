@@ -28,11 +28,9 @@ export default function authReducer(state, action) {
             }
         case LOGIN_EXITOSO:
         case REGISTRO_EXITOSO:
-            localStorage.setItem("token", action.payload)
             return {
                 ...state,
-                token: action.payload,
-                autenticado: true
+                
             }
         case REGISTRO_ERROR:
         case LOGIN_ERROR:

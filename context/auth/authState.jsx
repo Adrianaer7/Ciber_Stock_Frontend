@@ -32,20 +32,19 @@ const AuthState = ({children}) => {
             const respuesta = await clienteAxios.post("/api/usuarios", datos)
             dispatch({
                 type: REGISTRO_EXITOSO,
-                payload: respuesta.data.token
+                payload: respuesta.data.msg
             })
-            usuarioAutenticado()
         } catch (error) {
             dispatch({
                 type: REGISTRO_ERROR,
                 payload: error.response.data.msg
             })            
         }
-        setTimeout(() => {
-            dispatch({
-                type: OCULTAR_ALERTA
-            })
-        }, 3000);
+        
+    }
+
+    const confirmarUsuario = async datos => {
+
     }
 
      //Autenticar usuario
@@ -113,6 +112,7 @@ const AuthState = ({children}) => {
                 usuario: state.usuario,
                 mensaje: state.mensaje,
                 registrarUsuario,
+                confirmarUsuario,
                 iniciarSesion,
                 usuarioAutenticado,
                 cerrarSesion

@@ -3,12 +3,15 @@ import Head from 'next/head';
 import Link from "next/link"
 import Alerta from '../productos/Alerta';
 import authContext from '../../context/auth/authContext';
-
+import { useRouter } from 'next/router';
+import EsperandoConfirmarCuenta from './EsperandoConfirmarCuenta';
 
 const NuevaCuenta = () => {
 
     const AuthContext = useContext(authContext)
     const {mensaje, registrarUsuario} = AuthContext
+
+    const router = useRouter()
 
     const [nuevoUsuario, setNuevoUsuario] = useState({
         nombre: "",
@@ -17,7 +20,7 @@ const NuevaCuenta = () => {
         confirmar: ""
     })
     const [error, setError] = useState()
-
+    const [verificacion, setVerificacion] = useState(false)
     const {nombre, email, password, confirmar} = nuevoUsuario
 
     const onChange = e => {
@@ -55,11 +58,22 @@ const NuevaCuenta = () => {
         }
 
         registrarUsuario(nuevoUsuario)
+        setNuevoUsuario({
+            nombre: "",
+            email: "",
+            password: "",
+            confirmar: ""
+        })
+        setVerificacion(true)
     }
 
     return (
         <>
-        <Head>
+            {verificacion ? (
+               <EsperandoConfirmarCuenta/>
+            ) : (
+                <>
+                <Head>
             <title>Crear cuenta</title>
         </Head>
 
@@ -144,6 +158,8 @@ const NuevaCuenta = () => {
                 </div>
         </div>
     </>
+            )}
+        </>
     )
 
 }

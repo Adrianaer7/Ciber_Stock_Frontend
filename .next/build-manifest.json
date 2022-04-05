@@ -15,11 +15,6 @@
     "static/development/_middlewareManifest.js"
   ],
   "pages": {
-    "/": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/index.js"
-    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -30,27 +25,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-<<<<<<< HEAD
+    "/confirmar/[token]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/confirmar/[token].js"
+    ],
     "/crear-cuenta": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/crear-cuenta.js"
-    ],
-    "/olvide-password": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/olvide-password.js"
-=======
-    "/faltantes": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/faltantes.js"
->>>>>>> bbe3f95b30413b08c0364452b1eff07fe4fe06d8
-    ],
-    "/productos": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/productos.js"
     ]
   },
   "ampFirstPages": []
