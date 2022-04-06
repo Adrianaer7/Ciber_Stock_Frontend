@@ -21,6 +21,7 @@ const NuevaCuenta = () => {
     })
     const [error, setError] = useState()
     const [verificacion, setVerificacion] = useState(false)
+
     const {nombre, email, password, confirmar} = nuevoUsuario
 
     const onChange = e => {
@@ -64,16 +65,11 @@ const NuevaCuenta = () => {
             password: "",
             confirmar: ""
         })
-        setVerificacion(true)
     }
 
     return (
-        <>
-            {verificacion ? (
-               <EsperandoConfirmarCuenta/>
-            ) : (
-                <>
-                <Head>
+        <>    
+        <Head>
             <title>Crear cuenta</title>
         </Head>
 
@@ -82,69 +78,69 @@ const NuevaCuenta = () => {
             <p className="mt-3 text-center text-black">Llena los siguientes campos para crear una cuenta</p>
             {mensaje ? <Alerta>{mensaje}</Alerta> : error ? <Alerta>{error}</Alerta> : null}
                 <div className='bg-white  mt-10 px-5 pb-3 rounded-md shadow-md md:w-3/4 mx-auto'>
-                        <form 
-                            className="mt-10"
-                            onSubmit={onSubmit}
-                        >
-                            <div className="mb-4 py-2">
-                                <label htmlFor="nombre" className="text-gray-800 font-bold">Nombre</label>
-                                <input  //esta etiqueta crea un input
-                                    type="text"
-                                    autoComplete="off"
-                                    className="mt-2 block w-full p-3 rounded-md bg-gray-50  focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                    id="nombre"
-                                    placeholder="Ingresa tu nombre"
-                                    name="nombre"
-                                    value={nombre}
-                                    onChange={onChange}
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="email" className="text-gray-800 font-bold ">Email</label>
-                                <input
-                                    type="email"
-                                    autoComplete="nope"
-                                    className="mt-2 block w-full p-3 rounded-md bg-gray-50  focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                    id="email"
-                                    placeholder="Ingresa tu email"
-                                    name="email"
-                                    value={email}
-                                    onChange={onChange}
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="password" className="text-gray-800 font-bold">Contraseña</label>
-                                <input
-                                    type="password"
-                                    autoComplete="nope"
-                                    className="mt-2 block w-full p-3 rounded-md bg-gray-50  focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                    id="password"
-                                    placeholder="Ingresa tu contraseña"
-                                    name="password"
-                                    value={password}
-                                    onChange={onChange}
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="confirmar" className="text-gray-800 font-bold">Confirmar Contraseña</label>
-                                <input
-                                    type="password"
-                                    autoComplete="nope"
-                                    className="mt-2 block w-full p-3 rounded-md bg-gray-50  focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                    id="confirmar"
-                                    placeholder="Ingresa tu contraseña"
-                                    name="confirmar"
-                                    value={confirmar}
-                                    onChange={onChange}
-                                />
-                            </div>                             
-
-                            <input
-                                type="submit"
-                                value="Crear Usuario"
-                                className="mt-5 w-full bg-blue-800 dark:bg-blue-500 p-3 text-white uppercase font-bold text-lg rounded-md cursor-pointer"
+                    <form 
+                        className="mt-10"
+                        onSubmit={onSubmit}
+                    >
+                        <div className="mb-4 py-2">
+                            <label htmlFor="nombre" className="text-gray-800 font-bold">Nombre</label>
+                            <input  //esta etiqueta crea un input
+                                type="text"
+                                autoComplete="off"
+                                className="mt-2 block w-full p-3 rounded-md bg-gray-50  focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                id="nombre"
+                                placeholder="Ingresa tu nombre"
+                                name="nombre"
+                                value={nombre}
+                                onChange={onChange}
                             />
-                        </form>
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="email" className="text-gray-800 font-bold ">Email</label>
+                            <input
+                                type="email"
+                                autoComplete="nope"
+                                className="mt-2 block w-full p-3 rounded-md bg-gray-50  focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                id="email"
+                                placeholder="Ingresa tu email"
+                                name="email"
+                                value={email}
+                                onChange={onChange}
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="password" className="text-gray-800 font-bold">Contraseña</label>
+                            <input
+                                type="password"
+                                autoComplete="new-password"
+                                className="mt-2 block w-full p-3 rounded-md bg-gray-50  focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                id="password"
+                                placeholder="Ingresa tu contraseña"
+                                name="password"
+                                value={password}
+                                onChange={onChange}
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="confirmar" className="text-gray-800 font-bold">Confirmar Contraseña</label>
+                            <input
+                                type="password"
+                                autoComplete="nope"
+                                className="mt-2 block w-full p-3 rounded-md bg-gray-50  focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                id="confirmar"
+                                placeholder="Ingresa tu contraseña"
+                                name="confirmar"
+                                value={confirmar}
+                                onChange={onChange}
+                            />
+                        </div>                             
+
+                        <input
+                            type="submit"
+                            value="Crear Usuario"
+                            className="mt-5 w-full bg-blue-800 dark:bg-blue-500 p-3 text-white uppercase font-bold text-lg rounded-md cursor-pointer"
+                        />
+                    </form>
                 </div>
                 <div className="flex justify-between w-3/4 mx-auto">
                     <Link href="/">
@@ -154,14 +150,18 @@ const NuevaCuenta = () => {
                             Ya tengo cuenta
                         </a>
                     </Link>
+                    <Link href="/olvide-password">
+                        <a
+                            className="pt-5 hover:text-blue-400"
+                        >
+                            Olvidé mi contraseña
+                        </a>
+                    </Link>
                    
                 </div>
         </div>
-    </>
-            )}
-        </>
+    </>        
     )
-
 }
 
 export default NuevaCuenta;

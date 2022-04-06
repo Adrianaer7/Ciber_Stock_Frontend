@@ -6,7 +6,7 @@ import authContext from "../context/auth/authContext";
 const resetPassword = () => {
 
     const AuthContext = useContext(authContext)
-    const {token} = AuthContext
+    const {token, ocultarAlerta} = AuthContext
 
     const router = useRouter()
 
@@ -17,6 +17,9 @@ const resetPassword = () => {
         }
     },[token]) 
 
+    useEffect(() => {
+        ocultarAlerta()
+    }, [])
 
 
     return (

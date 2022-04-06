@@ -7,7 +7,7 @@ import authContext from "../context/auth/authContext";
 const CrearCuenta = () => {
 
     const AuthContext = useContext(authContext)
-    const {token} = AuthContext
+    const {token, ocultarAlerta} = AuthContext
 
     const router = useRouter()
 
@@ -17,6 +17,10 @@ const CrearCuenta = () => {
             router.push("/productos")
         }
     },[token]) 
+
+    useEffect(() => {
+        ocultarAlerta()
+    }, [])
 
     return (
         <div className="md:flex md:min-h-screen sm:min-h-screen bg-slate-100">

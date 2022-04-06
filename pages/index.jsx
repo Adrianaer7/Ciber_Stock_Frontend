@@ -7,7 +7,7 @@ const index = () => {
 
   
   const AuthContext = useContext(authContext)
-  const {token} = AuthContext
+  const {token, ocultarAlerta} = AuthContext
   
   const router = useRouter()
 
@@ -16,6 +16,12 @@ const index = () => {
         router.push("/productos")
       }
   }, [token])
+
+
+  //oculto la alerta en caso de que haya enviado un token para resetear la contraseña
+  useEffect(() => {
+    ocultarAlerta()
+  }, [])
 
   return (
     <div className="md:flex md:min-h-screen sm:min-h-screen bg-slate-100">

@@ -11,7 +11,9 @@ import {
     LOGIN_EXITOSO,
     LOGIN_ERROR,
     OCULTAR_ALERTA,
-    REGISTRO_EXITOSO
+    REGISTRO_EXITOSO,
+    SOLICITAR_TOKEN_PASSWORD,
+    SOLICITAR_TOKEN_PASSWORD_ERROR
 } from "../../types";
 
 const AuthState = ({children}) => {
@@ -43,12 +45,28 @@ const AuthState = ({children}) => {
         
     }
 
-    const confirmarUsuario = async datos => {
-
+    const olvideContraseña = async email => {
+        try {
+            const {data} = await clienteAxios.post("/api/auth/olvide-password", {email})
+            dispatch({
+                type: SOLICITAR_TOKEN_PASSWORD,
+                payload: data.msg
+            })
+        } catch (error) {
+            dispatch({
+                type: SOLICITAR_TOKEN_PASSWORD_ERROR,
+                payload: error.response.data.msg
+            })
+        }
     }
 
-     //Autenticar usuario
-     const iniciarSesion = async datos => {  //la uso en login.js
+    const cambiarContraseña = async (contraseña, token) => {
+        const url = `/api/auth/olvide-password/${token}`
+        const {data} = await clienteAxios.post(url, {contraseña})
+    }
+
+    //Autenticar usuario
+    const iniciarSesion = async datos => {  //la uso en login.js
         try {
             const respuesta = await clienteAxios.post("/api/auth", datos)   //envio los datos para que me cree un token
             dispatch({
@@ -103,6 +121,11 @@ const AuthState = ({children}) => {
         })
     }
 
+    const ocultarAlerta = () => {
+        dispatch({
+            type: OCULTAR_ALERTA
+        })
+    }
 
     return ( 
         <authContext.Provider
@@ -112,10 +135,13 @@ const AuthState = ({children}) => {
                 usuario: state.usuario,
                 mensaje: state.mensaje,
                 registrarUsuario,
-                confirmarUsuario,
+                olvideContraseña,
+                cambiarContraseña,
                 iniciarSesion,
                 usuarioAutenticado,
-                cerrarSesion
+                olvideContraseña,
+                cerrarSesion,
+                ocultarAlerta
             }}
         >
             {children}

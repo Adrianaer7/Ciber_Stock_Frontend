@@ -25,15 +25,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/confirmar/[token]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/confirmar/[token].js"
-    ],
     "/crear-cuenta": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/crear-cuenta.js"
+    ],
+    "/olvide-password/[token]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/olvide-password/[token].js"
     ]
   },
   "ampFirstPages": []

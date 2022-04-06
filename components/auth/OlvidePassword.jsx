@@ -1,4 +1,3 @@
-
 import React, { useContext, useState } from 'react';
 import Head from 'next/head';
 import Link from "next/link"
@@ -9,50 +8,31 @@ import authContext from '../../context/auth/authContext';
 const OlvidePassword = () => {
 
     const AuthContext = useContext(authContext)
-    const {mensaje, registrarUsuario} = AuthContext
+    const {mensaje, olvideContraseña} = AuthContext
 
-    const [correo, setCorreo] = useState({
-        email: "",
-    })
+    const [correo, setCorreo] = useState("")
     const [error, setError] = useState()
 
-    const {email} = correo
-
-    const onChange = e => {
-        setCorreo({
-            ...correo,
-            [e.target.name] : e.target.value
-        })
-    }
 
     const onSubmit = e => {
         e.preventDefault()
 
-        if(email.trim() === "") {
-            setError("Todos los campos son obligatorios")
+        if(correo.trim() === "" || correo.length < 6) {
+            setError("El email es obligatorio")
             setTimeout(() => {
                 setError("")
             }, 3000);
             return
         }
-
-        if(email.length < 6) {
-            setError("La contraseña debe tener al menos 6 caracteres")
-            setTimeout(() => {
-                setError("")
-            }, 3000);
-            return
-        }
-
         
-
-        registrarUsuario(email)
+        olvideContraseña(correo)
+        setCorreo("")
     }
 
     return (
         <>
         <Head>
-            <title>Crear cuenta</title>
+            <title>Reestablecer contraseña</title>
         </Head>
 
         <div className='w-2/4 mx-auto my-32 '>
@@ -61,7 +41,7 @@ const OlvidePassword = () => {
             {mensaje ? <Alerta>{mensaje}</Alerta> : error ? <Alerta>{error}</Alerta> : null}
                 <div className='bg-white  mt-10 px-5 pb-3 rounded-md shadow-md md:w-3/4 mx-auto'>
                         <form 
-                            className="mt-10"
+                            className="mt-10 pt-5"
                             onSubmit={onSubmit}
                         >
                             
@@ -74,8 +54,8 @@ const OlvidePassword = () => {
                                     id="email"
                                     placeholder="Ingresa tu email"
                                     name="email"
-                                    value={email}
-                                    onChange={onChange}
+                                    value={correo}
+                                    onChange={e => setCorreo(e.target.value)}
                                 />
                             </div>                         
 
@@ -91,7 +71,14 @@ const OlvidePassword = () => {
                         <a
                             className="pt-5 hover:text-blue-400"
                         >
-                            Iniciar Sesión
+                            Tengo una contraseña
+                        </a>
+                    </Link>
+                    <Link href="/crear-cuenta">
+                        <a
+                            className="pt-5 hover:text-blue-400"
+                        >
+                            Registrarme
                         </a>
                     </Link>
                    

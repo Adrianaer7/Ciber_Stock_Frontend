@@ -81,6 +81,7 @@ const ProductoState = ({children}) => {
         }
     }
 
+    //TODO: intentar pasar solo {rubro}
     //crea un nuevo rubro
     const agregarRubro = async elRubro => {
         try {
@@ -102,7 +103,7 @@ const ProductoState = ({children}) => {
         }, 3000);
         }
     }
-
+    //TODO: intentar pasar solo {proveedor}
     const agregarProveedor = async elProveedor => {
         try {
             const proveedor = {nombre: elProveedor}
@@ -137,7 +138,8 @@ const ProductoState = ({children}) => {
         }
     }
 
-    const editarProductos = async (dolar) => {
+    //TODO: intentar pasar solo {dolar}
+    const editarProductos = async dolar => {
         try {
             if(dolar) {
                 const dolares = {precio: dolar}

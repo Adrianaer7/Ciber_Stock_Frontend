@@ -5,7 +5,9 @@ import {
     LOGIN_ERROR,
     LIMPIAR_STATE,
     OCULTAR_ALERTA,
-    REGISTRO_EXITOSO
+    REGISTRO_EXITOSO,
+    SOLICITAR_TOKEN_PASSWORD,
+    SOLICITAR_TOKEN_PASSWORD_ERROR
 } from "../../types";
 
 
@@ -30,7 +32,14 @@ export default function authReducer(state, action) {
         case REGISTRO_EXITOSO:
             return {
                 ...state,
+                mensaje: action.payload
                 
+            }
+        case SOLICITAR_TOKEN_PASSWORD: 
+        case SOLICITAR_TOKEN_PASSWORD_ERROR:
+            return {
+                ...state,
+                mensaje: action.payload
             }
         case REGISTRO_ERROR:
         case LOGIN_ERROR:
