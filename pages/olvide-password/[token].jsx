@@ -1,8 +1,5 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import clienteAxios from "../../config/axios";
 import dbConnect from "../../lib/dbConnect";
-import Link from "next/link";
 import Head from "next/head";
 import NuevaContraseña from "../../components/auth/NuevaContraseña";
 import NoEncontrado from "../../components/productos/NoEncontrado";

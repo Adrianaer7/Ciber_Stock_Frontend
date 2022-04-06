@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import clienteAxios from "../../config/axios";
 import dbConnect from "../../lib/dbConnect";
 import Link from "next/link";
@@ -16,7 +14,7 @@ const ConfirmarToken = ({msg}) => {
             <h1 className="font-black text-4xl text-center text-blue-900 dark:text-blue-300 uppercase">Verificación de la cuenta</h1>
             <div className="block mx-auto bg-red-600 rounded-lg mt-10 text-white text-4xl xs:2xl text-center font-black p-6 shadow-xl  w-2/4">{msg}</div>
             <Link href={"/"}>
-                <a className=" uppercase mx-auto text-4xl ">
+                <a className=" uppercase mx-auto text-4xl hover:text-blue-900 duration-300">
                     Volver a inicio
                 </a>
             </Link>

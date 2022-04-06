@@ -44,7 +44,6 @@ const OlvidePassword = () => {
                             className="mt-10 pt-5"
                             onSubmit={onSubmit}
                         >
-                            
                             <div className="mb-4">
                                 <label htmlFor="email" className="text-gray-800 font-bold ">Email</label>
                                 <input
@@ -81,7 +80,6 @@ const OlvidePassword = () => {
                             Registrarme
                         </a>
                     </Link>
-                   
                 </div>
         </div>
     </>

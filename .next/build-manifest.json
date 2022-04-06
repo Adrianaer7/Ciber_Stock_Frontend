@@ -25,10 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/crear-cuenta": [
+    "/olvide-password": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/crear-cuenta.js"
+      "static/chunks/pages/olvide-password.js"
     ],
     "/olvide-password/[token]": [
       "static/chunks/webpack.js",
