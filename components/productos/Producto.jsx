@@ -44,9 +44,9 @@ const Producto = ({producto}) => {
             <td className="dark:text-gray-50 text-center uppercase">{!disponibles ? <span className="bg-red-600 font-black text-white p-1  rounded-sm">Sin stock</span> : disponibles && !faltante && colorFaltante === null || disponibles && colorFaltante === false ? disponibles : disponibles && faltante || disponibles && colorFaltante || disponibles && faltante && colorFaltante === false ? <span className="text-red-600 font-bold">{disponibles}</span> : null}</td>
             <td className="p-2 dark:text-gray-50 text-center  text-lg hover:cursor-pointer ">
                 <div className="flex flex-col">
-                    <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 text-3xl font-black " onClick={() => navigator.clipboard.writeText(`${tarjeta}`)}>${precio_venta_tarjeta}</p>
-                    <p className="pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200  text-2xl font-medium" onClick={() => navigator.clipboard.writeText(`${efectivo}`)}>${precio_venta_efectivo}</p>
-                    <p className="mt-4 pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 text-xl" onClick={() => navigator.clipboard.writeText(`${conocidos}`)}>${precio_venta_conocidos}</p>
+                    <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-3xl font-black " onClick={() => navigator.clipboard.writeText(`${tarjeta}`)}>${precio_venta_tarjeta}</p>
+                    <p className="pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-2xl font-medium" onClick={() => navigator.clipboard.writeText(`${efectivo}`)}>${precio_venta_efectivo}</p>
+                    <p className="mt-4 pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-xl" onClick={() => navigator.clipboard.writeText(`${conocidos}`)}>${precio_venta_conocidos}</p>
                 </div>
                     
             </td>
