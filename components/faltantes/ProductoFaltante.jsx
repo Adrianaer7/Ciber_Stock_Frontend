@@ -22,7 +22,7 @@ const ProductoFaltante = ({producto}) => {
             <td className="p-3 dark:text-gray-50 text-center">{rubro}</td>
             <td className="p-3 dark:text-gray-50 text-center">{proveedor}</td>
 
-            <td className="p-3 dark:text-gray-50 text-center uppercase">{disponibles && faltante ? <span className="font-bold text-red-600 p-1">{disponibles}</span> : disponibles && !faltante ? disponibles : <span className="font-bold text-white bg-red-600 p-1 uppercase">Sin stock</span>}</td>
+            <td className="p-3 dark:text-gray-50 text-center uppercase">{disponibles && faltante ? <span className="font-bold text-red-600 p-1">{disponibles}</span> : disponibles && !faltante ? disponibles : <span className="font-black text-white bg-red-600 p-1 uppercase">Sin stock</span>}</td>
             <td className="p-3 w-40 mt-2  ">
 
                 <Link href={`/producto/${_id}`}>

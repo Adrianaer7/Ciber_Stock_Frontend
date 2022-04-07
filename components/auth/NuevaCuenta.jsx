@@ -140,14 +140,14 @@ const NuevaCuenta = () => {
                 <div className="flex justify-between w-3/4 mx-auto">
                     <Link href="/">
                         <a
-                            className="pt-5 hover:text-blue-400"
+                            className="pt-5 hover:text-blue-400 font-medium"
                         >
                             Ya tengo cuenta
                         </a>
                     </Link>
                     <Link href="/olvide-password">
                         <a
-                            className="pt-5 hover:text-blue-400"
+                            className="pt-5 hover:text-blue-400 font-medium"
                         >
                             Olvidé mi contraseña
                         </a>

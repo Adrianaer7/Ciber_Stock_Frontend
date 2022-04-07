@@ -15,6 +15,11 @@
     "static/development/_middlewareManifest.js"
   ],
   "pages": {
+    "/": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/index.js"
+    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -25,15 +30,20 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/olvide-password": [
+    "/nuevoproducto": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/olvide-password.js"
+      "static/chunks/pages/nuevoproducto.js"
     ],
-    "/olvide-password/[token]": [
+    "/producto/[id]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/olvide-password/[token].js"
+      "static/chunks/pages/producto/[id].js"
+    ],
+    "/productos": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/productos.js"
     ]
   },
   "ampFirstPages": []

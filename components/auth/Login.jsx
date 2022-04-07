@@ -89,14 +89,14 @@ const Login = () => {
                     <div className="flex justify-between w-3/4 mx-auto">
                         <Link href="/crear-cuenta">
                             <a
-                                className="pt-5 hover:text-blue-400"
+                                className="pt-5 hover:text-blue-400 font-medium"
                             >
                                 Crear cuenta
                             </a>
                         </Link>
                         <Link href="/olvide-password">
                             <a
-                                className="pt-5 hover:text-blue-400"
+                                className="pt-5 hover:text-blue-400 font-medium"
                             >
                                 Olvidé mi contraseña
                             </a>

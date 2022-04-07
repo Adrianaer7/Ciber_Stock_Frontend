@@ -47,7 +47,7 @@ const AuthState = ({children}) => {
 
     const olvideContraseña = async email => {
         try {
-            const {data} = await clienteAxios.post("/api/auth/olvide-password", {email})
+            const {data} = await clienteAxios.post("/api/usuarios/olvide-password", {email})
             dispatch({
                 type: SOLICITAR_TOKEN_PASSWORD,
                 payload: data.msg
@@ -61,8 +61,8 @@ const AuthState = ({children}) => {
     }
 
     const cambiarContraseña = async (contraseña, token) => {
-        const url = `/api/auth/olvide-password/${token}`
-        const {data} = await clienteAxios.post(url, {contraseña})
+        const url = `/api/usuarios/olvide-password/${token}`
+        await clienteAxios.post(url, {contraseña})
     }
 
     //Autenticar usuario

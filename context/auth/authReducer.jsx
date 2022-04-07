@@ -14,27 +14,20 @@ import {
 
 export default function authReducer(state, action) {
     switch (action.type) {
-        case OCULTAR_ALERTA:
-            return {
-                ...state,
-                mensaje: null
-            }
-        case LIMPIAR_STATE:
-            localStorage.removeItem("token")
-            return {
-                ...state,
-                token: null,
-                autenticado: null,
-                usuario: null,
-                mensaje: null
-            }
-        case LOGIN_EXITOSO:
         case REGISTRO_EXITOSO:
             return {
                 ...state,
-                mensaje: action.payload
-                
+                mensaje: action.payload   
             }
+        case LOGIN_EXITOSO:
+            localStorage.setItem("token", action.payload)
+            return {
+                ...state,
+                token: action.payload,
+                autenticado: true
+            }
+        
+       
         case SOLICITAR_TOKEN_PASSWORD: 
         case SOLICITAR_TOKEN_PASSWORD_ERROR:
             return {
@@ -57,6 +50,21 @@ export default function authReducer(state, action) {
                 ...state,
                 usuario: action.payload,
                 autenticado: true,
+            }
+        case OCULTAR_ALERTA:
+            return {
+                ...state,
+                mensaje: null
+            }
+            
+        case LIMPIAR_STATE:
+            localStorage.removeItem("token")
+            return {
+                ...state,
+                token: null,
+                autenticado: null,
+                usuario: null,
+                mensaje: null
             }
         default:
             return state

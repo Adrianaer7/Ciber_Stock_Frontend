@@ -26,7 +26,7 @@ const Ver = ({producto}) => {
    useEffect(() => {
     if(usuario) {
       productoActual(producto)
-      if(producto.creador !== usuario.id) {
+      if(producto.creador !== usuario._id) {
         setCoincide(false)
       }
     }

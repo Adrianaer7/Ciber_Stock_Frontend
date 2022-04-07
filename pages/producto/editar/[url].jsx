@@ -26,7 +26,7 @@ const Edicion = ({productoEditar}) => {
   useEffect(() => {
     if(usuario) {
       productoActual(productoEditar)
-      if(productoEditar.creador !== usuario.id){
+      if(productoEditar.creador !== usuario._id){
         setCoincide(false)
       }  
     }
