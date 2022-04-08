@@ -4,13 +4,14 @@ import Proveedor from "./Proveedor"
 import { hoy } from "../../helpers"
 import productoContext from "../../context/productos/productoContext"
 import authContext from "../../context/auth/authContext"
+
 const Formulario = ({productoEditar}) => {
 
+  
     const AuthContext = useContext(authContext)
     const {usuario} = AuthContext
 
     const productosContext = useContext(productoContext)
-
     const { 
         productoSeleccionado, 
         productos, 
@@ -40,6 +41,8 @@ const Formulario = ({productoEditar}) => {
     const [rubroSelect, setRubroSelect] = useState(productoEditar ? productoEditar.rubro : "")
     const [proveedorSelect, setProveedorSelect] = useState(productoEditar ? productoEditar.proveedor : "")
     const [valorFaltante, setValorFaltante] = useState(productoEditar ? productoEditar.añadirFaltante : false)
+    const [notificacion, setNotificacion] = useState(false) //va a activarse por un tiempo para realizar la traslacion
+    const [banner, setBanner] = useState("")    //cuando se agregue o se edite un producto, este banner va a contener un msj por un tiempo determinado
     const [msj, setMsj] = useState({
         nombre: "",
         codigo: "",
@@ -51,7 +54,7 @@ const Formulario = ({productoEditar}) => {
         precio_venta: "",
         disponibles: "",
         valor_dolar_compra: "",
-        limiteFaltante: ""
+        limiteFaltante: "",
     })
     const [producto, setProducto] = useState({
         nombre: productoEditar?.nombre ?? "",
@@ -166,6 +169,39 @@ const Formulario = ({productoEditar}) => {
     } else {
         producto.añadirFaltante = false
     }
+
+    //Notificaciones al agregar o editar
+    const mostrarNotificacionNuevo = () => { 
+        {/*
+            Cuando presiono en agregar producto, se envia el msj al state de msj en seguida. 
+            A los 4s el state de notificacion pasa a true. Si notificacion esta como true, el div hace un traslate durante 1 seg.
+            Luego de la animacion, ya pasaron 5s. Entonces elimino el msj y vuelvo el state de notificacion a false
+        */}
+        setBanner("Producto agregado correctamente")
+      
+        setTimeout(() => {
+            setNotificacion(true)
+        }, 4000);
+
+        setTimeout(() => {
+            setBanner("")
+            setNotificacion(false)
+        }, 5000);
+        
+    }
+    const mostrarNotificacionEditar = () => {
+        setBanner("Producto modificado correctamente")
+
+        setTimeout(() => {
+            setNotificacion(true)
+        }, 4000);
+
+        setTimeout(() => {
+            setBanner(false)
+            setNotificacion(false)
+        }, 5000);
+    }
+
 
     //! ENVIAR FORMULARIO
     const onSubmit = e => {
@@ -372,10 +408,12 @@ const Formulario = ({productoEditar}) => {
                 })
             setValoresR("")
             setValoresP("")
+            mostrarNotificacionNuevo()
         } else {
             //si hay que editar
             producto._id = productoEditar._id
             editarProducto(producto)
+            mostrarNotificacionEditar()
         }
 
     }
@@ -383,9 +421,14 @@ const Formulario = ({productoEditar}) => {
 
     return (
         <>
+            {banner && (
+                <div className={` ${notificacion ? "h-16 fixed bg-green-200 text-black  container w-3/4 items-center flex float-right top-0 -translate-y-16 duration-1000  rounded-md " : "h-16 fixed bg-green-200 text-black  container w-3/4 items-center flex float-right top-0  rounded-md"  }  `}>
+                    <p className="font-bold text-black justify-center mx-auto">{banner}</p>
+                </div>
+            )}
             <h1 className={`${productoEditar ? "text-green-600 dark:text-green-700" : "text-blue-900"} font-black text-4xl  dark:text-blue-300 text-center`}>{productoEditar ? "Editar Producto": "Agregar Producto"}</h1>
             <p className="mt-3 text-center text-black dark:text-gray-50">Llena los siguientes campos para {productoEditar ? "Editar" : "Agregar"} Un producto</p>
-            <div className='bg-white dark:bg-gray-900 mt-10 px-5 py-10 rounded-md shadow-md xl:w-auto 2xl:w-11/12 mx-auto relative '>
+            <div className='bg-white dark:bg-gray-900 mt-10 px-5 py-10 rounded-md shadow-md xl:w-auto 2xl:w-11/12 mx-auto  '>
                 <h1 className='text-gray-600 dark:text-white font-bold text-xl uppercase text-center'></h1>
                 
                 <form 

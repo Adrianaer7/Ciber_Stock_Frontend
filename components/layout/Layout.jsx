@@ -66,7 +66,7 @@ const Layout = ({children, pagina}) => {
                         <Link href="/nuevoproducto">
                             <a 
                             onClick={() => limpiarSeleccionado()}
-                            className={`${urlActual === "/nuevoproducto" ? "bg-blue-300 bg-opacity-10 rounded-md  text-white" : "text-white"} text-2xl block p-2 mt-2 hover:text-blue-300`}>Nuevos Producto</a>
+                            className={`${urlActual === "/nuevoproducto" ? "bg-blue-300 bg-opacity-10 rounded-md  text-white" : "text-white"} text-2xl block p-2 mt-2 hover:text-blue-300`}>Nuevo Producto</a>
                         </Link>
                         <Link href="/faltantes">
                             <a 
