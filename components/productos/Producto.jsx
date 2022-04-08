@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import productoContext from "../../context/productos/productoContext";
 import faltanteContext from "../../context/faltantes/faltantesContext";
-
+import Swal from "sweetalert2";
 
 const Producto = ({producto}) => {
     const [colorFaltante, setColorFaltante] = useState(null)
@@ -14,11 +14,26 @@ const Producto = ({producto}) => {
     const productosContext = useContext(productoContext)
     const {productoActual, venderProducto} = productosContext
 
+    const Copiado = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1000,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+
     const faltantesContext = useContext(faltanteContext)
     const {agregarFaltante, eliminarFaltante} = faltantesContext
 
 
     const añadirFaltante = () => {
+        Copiado.fire({
+            icon: 'success',
+            title: 'Agregado a faltante'
+          })
         setColorFaltante(!colorFaltante)
         if(colorFaltante === null && faltante) {
             setColorFaltante(false)
@@ -31,9 +46,34 @@ const Producto = ({producto}) => {
         
         if(colorFaltante === false) {
             eliminarFaltante(_id)
+            Copiado.fire({
+                icon: 'error',
+                title: 'Quitado de faltantes'
+              })
         }
     }, [colorFaltante])
 
+    const copiarPrecioTarjeta = () => {
+        navigator.clipboard.writeText(`${tarjeta}`)
+          Copiado.fire({
+            icon: 'success',
+            title: 'Copiado'
+          })
+    }
+    const copiarPrecioEfectivo = () => {
+        navigator.clipboard.writeText(`${efectivo}`)
+          Copiado.fire({
+            icon: 'success',
+            title: 'Copiado'
+          })
+    }
+    const copiarPrecioConocidoss = () => {
+        navigator.clipboard.writeText(`${conocidos}`)
+          Copiado.fire({
+            icon: 'success',
+            title: 'Copiado'
+          })
+    }
 
     return (
         <tr className="border-b dark:border-none hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -44,11 +84,10 @@ const Producto = ({producto}) => {
             <td className="dark:text-gray-50 text-center uppercase">{!disponibles ? <span className="bg-red-600 font-black text-white p-1  rounded-sm">Sin stock</span> : disponibles && !faltante && colorFaltante === null || disponibles && colorFaltante === false ? disponibles : disponibles && faltante || disponibles && colorFaltante || disponibles && faltante && colorFaltante === false ? <span className="text-red-600 font-bold">{disponibles}</span> : null}</td>
             <td className="p-2 dark:text-gray-50 text-center  text-lg hover:cursor-pointer ">
                 <div className="flex flex-col">
-                    <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-3xl font-black " onClick={() => navigator.clipboard.writeText(`${tarjeta}`)}>${precio_venta_tarjeta}</p>
-                    <p className="pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-2xl font-medium" onClick={() => navigator.clipboard.writeText(`${efectivo}`)}>${precio_venta_efectivo}</p>
-                    <p className="mt-4 pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-xl" onClick={() => navigator.clipboard.writeText(`${conocidos}`)}>${precio_venta_conocidos}</p>
+                    <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-3xl font-black " onClick={copiarPrecioTarjeta}>${precio_venta_tarjeta}</p>
+                    <p className="pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-2xl font-medium" onClick={copiarPrecioEfectivo}>${precio_venta_efectivo}</p>
+                    <p className="mt-4 pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-xl" onClick={copiarPrecioConocidoss}>${precio_venta_conocidos}</p>
                 </div>
-                    
             </td>
 
             <td className="p-3 w-40 mt-2  ">

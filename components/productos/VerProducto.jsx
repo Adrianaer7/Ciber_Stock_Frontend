@@ -101,13 +101,11 @@ const VerProducto = ({producto}) => {
                     </p>
                 )}
             </div>
-            <Link href="/">
                 <button
                     type="button"
                     className="bg-red-600 hover:bg-red-900  w-1/4 text-white p-4 uppercase font-bold my-4 mx-auto block rounded-md"
                     onClick={() => eliminarProducto(_id)}
                 >Eliminar Producto</button>
-            </Link>
         </div>
         
     </>

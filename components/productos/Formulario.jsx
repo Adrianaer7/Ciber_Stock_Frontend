@@ -4,6 +4,7 @@ import Proveedor from "./Proveedor"
 import { hoy } from "../../helpers"
 import productoContext from "../../context/productos/productoContext"
 import authContext from "../../context/auth/authContext"
+import Swal from "sweetalert2"
 
 const Formulario = ({productoEditar}) => {
 
@@ -41,8 +42,6 @@ const Formulario = ({productoEditar}) => {
     const [rubroSelect, setRubroSelect] = useState(productoEditar ? productoEditar.rubro : "")
     const [proveedorSelect, setProveedorSelect] = useState(productoEditar ? productoEditar.proveedor : "")
     const [valorFaltante, setValorFaltante] = useState(productoEditar ? productoEditar.añadirFaltante : false)
-    const [notificacion, setNotificacion] = useState(false) //va a activarse por un tiempo para realizar la traslacion
-    const [banner, setBanner] = useState("")    //cuando se agregue o se edite un producto, este banner va a contener un msj por un tiempo determinado
     const [msj, setMsj] = useState({
         nombre: "",
         codigo: "",
@@ -86,6 +85,7 @@ const Formulario = ({productoEditar}) => {
         }
     }, [usuario])
 
+   
     //hago get a los rubros y proveedores cuando se agregue o cambie la lista de todos los productos
     useEffect(() => {
         if(usuario) {
@@ -170,196 +170,143 @@ const Formulario = ({productoEditar}) => {
         producto.añadirFaltante = false
     }
 
-    //Notificaciones al agregar o editar
-    const mostrarNotificacionNuevo = () => { 
-        {/*
-            Cuando presiono en agregar producto, se envia el msj al state de msj en seguida. 
-            A los 4s el state de notificacion pasa a true. Si notificacion esta como true, el div hace un traslate durante 1 seg.
-            Luego de la animacion, ya pasaron 5s. Entonces elimino el msj y vuelvo el state de notificacion a false
-        */}
-        setBanner("Producto agregado correctamente")
-      
-        setTimeout(() => {
-            setNotificacion(true)
-        }, 4000);
-
-        setTimeout(() => {
-            setBanner("")
-            setNotificacion(false)
-        }, 5000);
-        
+    const alertaNuevoCorrecto = () => {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'El producto se guardó correctamente.',
+            showConfirmButton: false,
+            timer: 1500
+        })
     }
-    const mostrarNotificacionEditar = () => {
-        setBanner("Producto modificado correctamente")
-
-        setTimeout(() => {
-            setNotificacion(true)
-        }, 4000);
-
-        setTimeout(() => {
-            setBanner(false)
-            setNotificacion(false)
-        }, 5000);
+    const alertaEditarCorrecto = () => {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'El producto se modificó correctamente.',
+            showConfirmButton: false,
+            timer: 1500
+        })
     }
-
 
     //! ENVIAR FORMULARIO
     const onSubmit = e => {
         e.preventDefault()
         //Validar nombre
         if(nombre === ""){
-            setMsj({
-                nombre: "El nombre es obligatorio"
-            })
-            setTimeout(() => {
-                setMsj({
-                    nombre: "",
-                })
-            }, 3000);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                html: 'El <b>nombre</b> es obligatorio.',
+              })
             return
         }
         //valido codigo
         if(isNaN(codigo)) {
-            setMsj({
-                codigo: "Ingrese número mayor a 0"
-            })
-            setTimeout(() => {
-                setMsj({
-                    codigo: "",
-                })
-            }, 3000);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                html: 'El <b>código</b> debe ser un número.',
+              })
             return
         }
         if(!codigo) {
-            setMsj({
-                codigo: "El código es obligatorio"
-            })
-            setTimeout(() => {
-                setMsj({
-                    codigo: "",
-                })
-            }, 3000);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                html: 'El <b>código</b> es obligatorio.',
+              })
             return
         }
         if (codigo.toString().length !== 3) {   //lo convierto a string para calcular su tamaño
-            setMsj({
-                codigo: "Ingrese número de 3 dígitos"
-            })
-            setTimeout(() => {
-                setMsj({
-                    codigo: "",
-                })
-            }, 3000);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                html: 'El <b>código</b> debe ser de 3 dígitos.',
+              })
             return
         }
         
         //Validar precio del dolar
         if(!valor_dolar_compra) {
-            setMsj({
-                valor_dolar_compra: "El precio del dolar es obligatorio"
-            })
-            setTimeout(() => {
-                setMsj({
-                    valor_dolar_compra: "",
-                })
-            }, 3000);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                html: 'El <b>precio del dolar</b> es obligatorio.',
+              })
             return
         } else {
             if(isNaN(valor_dolar_compra) || valor_dolar_compra < 0) {
-                setMsj({
-                    valor_dolar_compra: "Ingrese un número mayor a 0"
-                })
-                setTimeout(() => {
-                    setMsj({
-                        valor_dolar_compra: "",
-                    })
-                }, 3000);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    html: 'El <b>precio del dolar</b> debe ser un número mayor a 0.',
+                  })
                 return
             }
         }
         
         //validar valor compra dolar
         if(isNaN(precio_compra_dolar) || precio_compra_dolar < 0) {
-            setMsj({
-                precio_compra_dolar: "Ingrese un número mayor a 0"
-            })
-            setTimeout(() => {
-                setMsj({
-                    precio_compra_dolar: "",
-                })
-            }, 3000);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                html: 'El <b>precio de compra en USD</b> debe ser mayor a 0.',
+              })
             return
         }
         //validar valor compra peso
         if(isNaN(precio_compra_peso) || precio_compra_peso < 0) {
-            setMsj({
-                precio_compra_peso: "Ingrese un número mayor a 0"
-            })
-            setTimeout(() => {
-                setMsj({
-                    precio_compra_peso: "",
-                })
-            }, 3000);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                html: 'El <b>precio de compra en ARS</b> debe ser mayor a 0',
+              })
             return
         }
         //validar rentabilidad
         if(isNaN(rentabilidad) || rentabilidad < 0 || rentabilidad > 100) {
-            setMsj({
-                rentabilidad: "Ingrese un número entre 0 y 100"
-            })
-            setTimeout(() => {
-                setMsj({
-                    rentabilidad: "",
-                })
-            }, 3000);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                html: 'La <b>rentabilidad</b> tiene que ser entre 0 y 100',
+              })
             return
         }  
         //validar los 2 input juntos del precio
         if(precio_compra_dolar && precio_compra_peso) {
-            setMsj({
-                dosPrecios: "Ingrese un tipo de moneda a la vez"
-            })
-            setTimeout(() => {
-                setMsj({
-                    dosPrecios: "",
-                })
-            }, 3000);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Ingrese un tipo de moneda a la vez',
+              })
             return
         }
         //Validar el precio de venta
         if(isNaN(precio_venta) || precio_venta < 0) {
-            setMsj({
-                precio_venta: "Precio no válido"
-            })
-            setTimeout(() => {
-                setMsj({
-                    precio_venta: "",
-                })
-            }, 3000);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                html: 'El <b>precio de venta</b> debe ser mayor a 0.',
+              })
             return
         }
         //Validar stock
         if(isNaN(disponibles) || disponibles < 0) {
-            setMsj({
-                disponibles: "Ingrese un número mayor a 0"
-            })
-            setTimeout(() => {
-                setMsj({
-                    disponibles: "",
-                })
-            }, 3000);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                html: 'La <b>disponibilidad</b> debe ser mayor a 0.',
+              })
             return
         }
 
         if(isNaN(limiteFaltante) || limiteFaltante < 0) {
-            setMsj({
-                limiteFaltante: "Ingrese un número mayor a 0"
-            })
-            setTimeout(() => {
-                setMsj({
-                    limiteFaltante: "",
-                })
-            }, 3000);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                html: 'Los <b>faltantes</b> deben ser mayor a 0.',
+              })
             return
         } 
         
@@ -408,12 +355,12 @@ const Formulario = ({productoEditar}) => {
                 })
             setValoresR("")
             setValoresP("")
-            mostrarNotificacionNuevo()
+            alertaNuevoCorrecto()
         } else {
             //si hay que editar
             producto._id = productoEditar._id
             editarProducto(producto)
-            mostrarNotificacionEditar()
+            alertaEditarCorrecto()
         }
 
     }
@@ -421,11 +368,7 @@ const Formulario = ({productoEditar}) => {
 
     return (
         <>
-            {banner && (
-                <div className={` ${notificacion ? "h-16 fixed bg-green-200 text-black  container w-3/4 items-center flex float-right top-0 -translate-y-16 duration-1000  rounded-md " : "h-16 fixed bg-green-200 text-black  container w-3/4 items-center flex float-right top-0  rounded-md"  }  `}>
-                    <p className="font-bold text-black justify-center mx-auto">{banner}</p>
-                </div>
-            )}
+            
             <h1 className={`${productoEditar ? "text-green-600 dark:text-green-700" : "text-blue-900"} font-black text-4xl  dark:text-blue-300 text-center`}>{productoEditar ? "Editar Producto": "Agregar Producto"}</h1>
             <p className="mt-3 text-center text-black dark:text-gray-50">Llena los siguientes campos para {productoEditar ? "Editar" : "Agregar"} Un producto</p>
             <div className='bg-white dark:bg-gray-900 mt-10 px-5 py-10 rounded-md shadow-md xl:w-auto 2xl:w-11/12 mx-auto  '>

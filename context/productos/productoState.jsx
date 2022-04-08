@@ -2,7 +2,7 @@ import { useReducer } from "react";
 import productoContext from "./productoContext"
 import productoReducer from "./productoReducer";
 import clienteAxios from "../../config/axios"
-
+import { useRouter } from "next/router";
 import {
     AGREGAR_PRODUCTO, 
     AGREGAR_PROVEEDOR, 
@@ -42,6 +42,8 @@ import {
 } from "../../types";
 
 const ProductoState = ({children}) => {
+
+    const router = useRouter()
 
     const initialState = {
         productos: [],
@@ -229,6 +231,7 @@ const ProductoState = ({children}) => {
                     type: ELIMINAR_PRODUCTO,
                     payload: id
                 })
+                router.push("/")
             } catch (error) {
                 console.log(error)
             }
