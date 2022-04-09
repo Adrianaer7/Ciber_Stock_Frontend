@@ -22,11 +22,7 @@ const Producto = ({producto}) => {
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 1000,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
+        timer: 2000
       })
 
       const venderElProducto = async () => {
@@ -42,14 +38,20 @@ const Producto = ({producto}) => {
             },
             showCloseButton: true,
 
-          })
-          if(valor.isConfirmed) {
-              const unidades = valor.value[0]
-            
-          } else {
-              console.log("nop")
-          }
-      }
+        })
+        if(valor.isConfirmed) {
+            const unidades = Number(valor.value[0])
+            if(unidades < 1 || !unidades || isNaN(unidades) || !Number.isInteger(unidades) || unidades < disponibles) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    html: 'Los <b>unidades a vender</b> deben ser un número entero mayor a 0.',
+                })
+                return
+            }
+
+        } 
+    }
       
 
     const añadirFaltante = () => {

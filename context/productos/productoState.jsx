@@ -268,16 +268,16 @@ const ProductoState = ({children}) => {
     }
 
     //quito disponibilidad del producto
-    const venderProducto = async producto => {
-        console.log(producto)
+    const venderProducto = async unidades => {
+        console.log(unidades)
     }
 
     const precioVenta = (valor1, valor2, valor3, valor4) => {
         if(valor1>0 && valor2>0 && valor3>0 && valor4 === "") {
-            const val1 = parseFloat(valor1)
-            const val2 = parseFloat(valor2)
+            const val1 = parseFloat(valor1) //precio compra dolar
+            const val2 = parseFloat(valor2) //valor dolar compra
             const res1 = (val1 * val2)
-            const res2 = parseInt(valor3)+100
+            const res2 = parseInt(Math.round(valor3))+100   //redondeo el porcentaje y convierto a integer el resultado de la operacion
             const res3 = res1 *  res2
             const res4 = (res3 / 100).toFixed(2)
             try {

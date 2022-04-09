@@ -202,35 +202,24 @@ const Formulario = ({productoEditar}) => {
             return
         }
         //valido codigo
-        if(isNaN(codigo)) {
+        const codigoCambiado = Number(codigo)   //convierto el valor del state a numero
+        if(!codigo || codigo < 1 || isNaN(codigo) || !Number.isInteger(codigoCambiado) ) {  //verifico si es numero entero con isInteger
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                html: 'El <b>código</b> debe ser un número.',
+                html: 'El <b>código</b> debe ser un número entero mayor a 0.',
               })
             return
         }
-        if(!codigo) {
+        if(codigo.length > 3) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                html: 'El <b>código</b> es obligatorio.',
+                html: 'El <b>código</b> debe ser un número menor a 4 digitos.',
               })
             return
         }
-        if (codigo.toString().length !== 3) {   //lo convierto a string para calcular su tamaño
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                html: 'El <b>código</b> debe ser de 3 dígitos.',
-              })
-            return
-        }
-        const codigoCambiado = parseInt(codigo)
-        if(Number.isInteger(codigoCambiado)) {
-            console.log(typeof codigoCambiado, typeof codigo)
-            return
-        }
+      
         //Validar precio del dolar
         if(!valor_dolar_compra) {
             Swal.fire({
@@ -269,11 +258,11 @@ const Formulario = ({productoEditar}) => {
             return
         }
         //validar rentabilidad
-        if(isNaN(rentabilidad) || rentabilidad < 0 || rentabilidad > 100) {
+        if(isNaN(rentabilidad) || rentabilidad < 0) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                html: 'La <b>rentabilidad</b> tiene que ser entre 0 y 100',
+                html: 'La <b>rentabilidad</b> tiene que ser mayor a 0',
               })
             return
         }  
@@ -296,20 +285,22 @@ const Formulario = ({productoEditar}) => {
             return
         }
         //Validar stock
-        if(isNaN(disponibles) || disponibles < 0) {
+        const disponibleCambiado = Number(disponibles)
+        if(disponibles < 0 || isNaN(disponibles) || !Number.isInteger(disponibleCambiado)) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                html: 'La <b>disponibilidad</b> debe ser mayor a 0.',
+                html: 'La <b>disponibilidad</b> debe ser un número entero mayor a 0.',
               })
             return
         }
 
-        if(isNaN(limiteFaltante) || limiteFaltante < 0) {
+        const limiteFaltanteCambiado = Number(limiteFaltante)
+        if( limiteFaltante < 0 || isNaN(limiteFaltante) || !Number.isInteger(limiteFaltanteCambiado)) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                html: 'Los <b>faltantes</b> deben ser mayor a 0.',
+                html: 'Los <b>faltantes</b> deben ser un número entero mayor a 0.',
               })
             return
         } 
