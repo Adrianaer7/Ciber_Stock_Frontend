@@ -11,8 +11,12 @@ const Producto = ({producto}) => {
     const conocidos = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_conocidos)).trim().replace(/\s\s+/g, ' ')   //datos que se copian al hacer click en el precio. El trim elimina los espacios en blanco al principio y al final, y el replace quita 2 o mas espacio entre palabra y palabra
     const efectivo = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_efectivo)).trim().replace(/\s\s+/g, ' ')
     const tarjeta = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_tarjeta)).trim().replace(/\s\s+/g, ' ')
+
     const productosContext = useContext(productoContext)
     const {productoActual, venderProducto} = productosContext
+
+    const faltantesContext = useContext(faltanteContext)
+    const {agregarFaltante, eliminarFaltante} = faltantesContext
 
     const Copiado = Swal.mixin({
         toast: true,
@@ -25,9 +29,28 @@ const Producto = ({producto}) => {
         }
       })
 
-    const faltantesContext = useContext(faltanteContext)
-    const {agregarFaltante, eliminarFaltante} = faltantesContext
+      const venderElProducto = async () => {
+        const valor = await Swal.fire({
+            title: 'Unidades a vender',
+            html:
+              '<input id="swal-input" type="number" value="1" class="swal2-input">',
+            focusConfirm: true,
+            preConfirm: () => {
+              return [
+                document.getElementById('swal-input').value
+              ]
+            },
+            showCloseButton: true,
 
+          })
+          if(valor.isConfirmed) {
+              const unidades = valor.value[0]
+            
+          } else {
+              console.log("nop")
+          }
+      }
+      
 
     const añadirFaltante = () => {
         Copiado.fire({
@@ -95,7 +118,7 @@ const Producto = ({producto}) => {
                     <button
                         type="button"
                         className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 mb-2 w-full text-black p-2 uppercase font-bold text-xs mr-3 rounded-md"
-                        onClick={() => venderProducto(producto)}
+                        onClick={venderElProducto}
                     >Vender</button>
                 </Link>
                 <Link href={`/producto/${_id}`}>

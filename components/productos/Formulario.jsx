@@ -226,7 +226,11 @@ const Formulario = ({productoEditar}) => {
               })
             return
         }
-        
+        const codigoCambiado = parseInt(codigo)
+        if(Number.isInteger(codigoCambiado)) {
+            console.log(typeof codigoCambiado, typeof codigo)
+            return
+        }
         //Validar precio del dolar
         if(!valor_dolar_compra) {
             Swal.fire({

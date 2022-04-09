@@ -2,7 +2,6 @@ import { useReducer } from "react";
 import productoContext from "./productoContext"
 import productoReducer from "./productoReducer";
 import clienteAxios from "../../config/axios"
-import { useRouter } from "next/router";
 import {
     AGREGAR_PRODUCTO, 
     AGREGAR_PROVEEDOR, 
@@ -43,7 +42,6 @@ import {
 
 const ProductoState = ({children}) => {
 
-    const router = useRouter()
 
     const initialState = {
         productos: [],
@@ -223,19 +221,16 @@ const ProductoState = ({children}) => {
 
     //elimino un producto
     const eliminarProducto = async id => {
-        const resultado = confirm("Deseas eliminar este producto")
-        if(resultado) {
-            try {
-                await clienteAxios.delete(`/api/productos/${id}`)
-                dispatch({
-                    type: ELIMINAR_PRODUCTO,
-                    payload: id
-                })
-                router.push("/")
-            } catch (error) {
-                console.log(error)
-            }
+        try {
+            await clienteAxios.delete(`/api/productos/${id}`)
+            dispatch({
+                type: ELIMINAR_PRODUCTO,
+                payload: id
+            })
+        } catch (error) {
+            console.log(error)
         }
+        
     }
 
     //eliminar todos los productos
@@ -274,15 +269,7 @@ const ProductoState = ({children}) => {
 
     //quito disponibilidad del producto
     const venderProducto = async producto => {
-        const unidades = prompt("¿Cuántas unidades querés vender?", 1)
-        if(unidades > producto.disponibles) return confirm("No se pueden vender mas unidades de las que existen")
-        producto.disponibles = producto.disponibles - unidades
-        
-        try {
-            editarProducto(producto)
-        } catch (error) {
-            console.log(error)
-        }
+        console.log(producto)
     }
 
     const precioVenta = (valor1, valor2, valor3, valor4) => {

@@ -1,15 +1,37 @@
-import Link from "next/link";
 import { useContext } from "react";
 import { generarFecha } from '../../helpers';
+import {useRouter} from "next/router"
 import productoContext from "../../context/productos/productoContext";
+import Swal from "sweetalert2";
 
 const VerProducto = ({producto}) => {
+    const router = useRouter()
+
     const productosContext = useContext(productoContext)
     const {eliminarProducto} = productosContext
 
     const {_id, nombre, codigo, rubro, marca, precio_venta, precio_venta_tarjeta, precio_venta_efectivo, precio_venta_conocidos, precio_compra_dolar, precio_compra_peso, valor_dolar_compra, fecha_compra, proveedor, disponibles, rentabilidad, modelo, notas} = producto
 
     const fecha = generarFecha(fecha_compra) //formateo la fecha ya que me llega y-m-d
+
+    const eliminarElProducto = () => {
+        Swal.fire({
+            title: '¿Estas seguro?',
+            text: "Este cambio no se puede revertir!",
+            icon: 'warning',
+            html:'No se puede revertir esto',
+            showCloseButton: true,
+            showCancelButton: true,
+            confirmButtonText:'<b>Si, eliminar!</b>',
+            confirmButtonColor: '#d33',
+            cancelButtonText:'<p>Cancelar</p>',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              eliminarProducto(_id)
+              router.push("/productos")
+            }
+          })
+    }
 
   return (
       <>
@@ -104,7 +126,7 @@ const VerProducto = ({producto}) => {
                 <button
                     type="button"
                     className="bg-red-600 hover:bg-red-900  w-1/4 text-white p-4 uppercase font-bold my-4 mx-auto block rounded-md"
-                    onClick={() => eliminarProducto(_id)}
+                    onClick={eliminarElProducto}
                 >Eliminar Producto</button>
         </div>
         
