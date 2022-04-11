@@ -268,8 +268,14 @@ const ProductoState = ({children}) => {
     }
 
     //quito disponibilidad del producto
-    const venderProducto = async unidades => {
-        console.log(unidades)
+    const venderProducto = async (producto, unidades) => {
+        producto.disponibles = producto.disponibles - unidades
+        
+        try {
+            editarProducto(producto)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const precioVenta = (valor1, valor2, valor3, valor4) => {

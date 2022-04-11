@@ -229,11 +229,11 @@ const Formulario = ({productoEditar}) => {
               })
             return
         } else {
-            if(isNaN(valor_dolar_compra) || valor_dolar_compra < 0) {
+            if(isNaN(valor_dolar_compra) || valor_dolar_compra < 1) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    html: 'El <b>precio del dolar</b> debe ser un número mayor a 0.',
+                    html: 'El <b>precio del dolar</b> debe ser un número mayor a 1.',
                   })
                 return
             }
@@ -253,7 +253,7 @@ const Formulario = ({productoEditar}) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                html: 'El <b>precio de compra en ARS</b> debe ser mayor a 0',
+                html: 'El <b>precio de compra en ARS</b> debe ser mayor a 0.',
               })
             return
         }
@@ -262,7 +262,7 @@ const Formulario = ({productoEditar}) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                html: 'La <b>rentabilidad</b> tiene que ser mayor a 0',
+                html: 'La <b>rentabilidad</b> tiene que ser mayor a 0.',
               })
             return
         }  
@@ -271,7 +271,7 @@ const Formulario = ({productoEditar}) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'Ingrese un tipo de moneda a la vez',
+                text: 'Solo se puede ingresar un precio de compra.',
               })
             return
         }

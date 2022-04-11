@@ -18,38 +18,60 @@ const Producto = ({producto}) => {
     const faltantesContext = useContext(faltanteContext)
     const {agregarFaltante, eliminarFaltante} = faltantesContext
 
+
+    useEffect(() => {
+        if(colorFaltante) {
+            agregarFaltante(_id)
+        }
+        if(colorFaltante === false) {
+            eliminarFaltante(_id)
+            Copiado.fire({
+                icon: 'error',
+                title: 'Quitado de faltantes'
+              })
+        }
+    }, [colorFaltante])
+
     const Copiado = Swal.mixin({
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
         timer: 2000
-      })
+    })
 
-      const venderElProducto = async () => {
+    const venderElProducto = async () => {
         const valor = await Swal.fire({
-            title: 'Unidades a vender',
+            title: 'Unidades',
             html:
-              '<input id="swal-input" type="number" value="1" class="swal2-input">',
+                '<input id="swal-input" type="number" value="1" class="swal2-input">',
             focusConfirm: true,
             preConfirm: () => {
-              return [
+                return [
                 document.getElementById('swal-input').value
-              ]
+                ]
             },
             showCloseButton: true,
 
         })
         if(valor.isConfirmed) {
             const unidades = Number(valor.value[0])
-            if(unidades < 1 || !unidades || isNaN(unidades) || !Number.isInteger(unidades) || unidades < disponibles) {
+            if(unidades < 1 || !unidades || isNaN(unidades) || !Number.isInteger(unidades)) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
                     html: 'Los <b>unidades a vender</b> deben ser un número entero mayor a 0.',
                 })
+                return venderElProducto()
+            }
+            if(unidades > disponibles) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    html: 'Los <b>unidades a vender</b> deben ser iguales o mayores a las disponibles.',
+                })
                 return
             }
-
+            venderProducto(producto, unidades)
         } 
     }
       
@@ -64,19 +86,7 @@ const Producto = ({producto}) => {
             setColorFaltante(false)
         }
     }
-    useEffect(() => {
-        if(colorFaltante) {
-            agregarFaltante(_id)
-        }
-        
-        if(colorFaltante === false) {
-            eliminarFaltante(_id)
-            Copiado.fire({
-                icon: 'error',
-                title: 'Quitado de faltantes'
-              })
-        }
-    }, [colorFaltante])
+    
 
     const copiarPrecioTarjeta = () => {
         navigator.clipboard.writeText(`${tarjeta}`)
@@ -141,7 +151,7 @@ const Producto = ({producto}) => {
                     <button
                         type="button"
                         className="bg-red-600 hover:bg-red-900  w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
-                        onClick={() => añadirFaltante()}
+                        onClick={añadirFaltante}
                     >{!faltante && colorFaltante === null || !faltante && colorFaltante === false || faltante && colorFaltante === false ? "Agregar faltante" : "Quitar faltante"}</button>
                 </Link>
                 
