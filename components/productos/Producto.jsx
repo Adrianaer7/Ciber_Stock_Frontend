@@ -40,7 +40,7 @@ const Producto = ({producto}) => {
     })
 
     const venderElProducto = async () => {
-        const valor = await Swal.fire({
+        const valor = await Swal.fire({ //modal del input
             title: 'Unidades',
             html:
                 '<input id="swal-input" type="number" value="1" class="swal2-input">',
@@ -56,20 +56,20 @@ const Producto = ({producto}) => {
         if(valor.isConfirmed) {
             const unidades = Number(valor.value[0])
             if(unidades < 1 || !unidades || isNaN(unidades) || !Number.isInteger(unidades)) {
-                Swal.fire({
+                 await Swal.fire({ //le pongo el await para que la siguiente funcion se ejecute cuando quite el modal de error
                     icon: 'error',
                     title: 'Error',
                     html: 'Los <b>unidades a vender</b> deben ser un número entero mayor a 0.',
                 })
-                return venderElProducto()
+                return venderElProducto()   //luego de mostrar el modal de error, vuelvo a ejecutar la funcion desde 0
             }
             if(unidades > disponibles) {
-                Swal.fire({
+                await Swal.fire({
                     icon: 'error',
                     title: 'Error',
                     html: 'Los <b>unidades a vender</b> deben ser iguales o mayores a las disponibles.',
                 })
-                return
+                return venderElProducto()
             }
             venderProducto(producto, unidades)
         } 
