@@ -9,7 +9,7 @@ import productoContext from "../../context/productos/productoContext"
 const Layout = ({children, pagina}) => {
 
     const AuthContext = useContext(authContext)
-    const {usuario, cerrarSesion, token} = AuthContext
+    const {usuario, cerrarSesion, token, traerTema} = AuthContext
 
     const productosContext = useContext(productoContext)
     const {limpiarSeleccionado, limpiarApp} = productosContext
@@ -37,6 +37,7 @@ const Layout = ({children, pagina}) => {
     //guardo el tema en LS
     useEffect(() => {
         localStorage.setItem("Modo oscuro", JSON.stringify(oscuro))
+        traerTema(oscuro)
     },[oscuro])
 
     //cambio el estado del tema a oscuro o claro

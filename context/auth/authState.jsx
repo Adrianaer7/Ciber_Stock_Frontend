@@ -13,7 +13,8 @@ import {
     OCULTAR_ALERTA,
     REGISTRO_EXITOSO,
     SOLICITAR_TOKEN_PASSWORD,
-    SOLICITAR_TOKEN_PASSWORD_ERROR
+    SOLICITAR_TOKEN_PASSWORD_ERROR,
+    GUARDAR_TEMA
 } from "../../types";
 
 const AuthState = ({children}) => {
@@ -22,7 +23,8 @@ const AuthState = ({children}) => {
         token:  typeof window !== "undefined" ? localStorage.getItem("token") : "",  //una vez que me logeo, al recargar la pagina, el token del state inicia con el valor del token que hay en localstorage
         autenticado: null,
         usuario: null,
-        mensaje: null
+        mensaje: null,
+        modo: typeof window !== "undefined" ? localStorage.getItem("Modo oscuro") : ""
     }
 
     //Definir el reducer
@@ -127,6 +129,13 @@ const AuthState = ({children}) => {
         })
     }
 
+    const traerTema = tema =>{
+        dispatch({
+            type: GUARDAR_TEMA,
+            payload: tema
+        })
+    }
+
     return ( 
         <authContext.Provider
             value={{
@@ -134,6 +143,7 @@ const AuthState = ({children}) => {
                 autenticado: state.autenticado,
                 usuario: state.usuario,
                 mensaje: state.mensaje,
+                modo: state.modo,
                 registrarUsuario,
                 olvideContraseña,
                 cambiarContraseña,
@@ -141,6 +151,7 @@ const AuthState = ({children}) => {
                 usuarioAutenticado,
                 olvideContraseña,
                 cerrarSesion,
+                traerTema,
                 ocultarAlerta
             }}
         >

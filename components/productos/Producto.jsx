@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import productoContext from "../../context/productos/productoContext";
 import faltanteContext from "../../context/faltantes/faltantesContext";
+import authContext from "../../context/auth/authContext";
 import Swal from "sweetalert2";
 
 const Producto = ({producto}) => {
@@ -11,6 +12,9 @@ const Producto = ({producto}) => {
     const conocidos = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_conocidos)).trim().replace(/\s\s+/g, ' ')   //datos que se copian al hacer click en el precio. El trim elimina los espacios en blanco al principio y al final, y el replace quita 2 o mas espacio entre palabra y palabra
     const efectivo = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_efectivo)).trim().replace(/\s\s+/g, ' ')
     const tarjeta = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_tarjeta)).trim().replace(/\s\s+/g, ' ')
+
+    const AuthContext = useContext(authContext)
+    const {modo} = AuthContext
 
     const productosContext = useContext(productoContext)
     const {productoActual, venderProducto} = productosContext
@@ -37,42 +41,56 @@ const Producto = ({producto}) => {
         position: 'top-end',
         showConfirmButton: false,
         timer: 2000
+        
     })
 
     const venderElProducto = async () => {
-        const valor = await Swal.fire({ //modal del input
-            title: 'Unidades',
-            html:
-                '<input id="swal-input" type="number" value="1" class="swal2-input">',
-            focusConfirm: true,
-            preConfirm: () => {
-                return [
-                document.getElementById('swal-input').value
-                ]
-            },
-            showCloseButton: true,
-
-        })
-        if(valor.isConfirmed) {
-            const unidades = Number(valor.value[0])
-            if(unidades < 1 || !unidades || isNaN(unidades) || !Number.isInteger(unidades)) {
-                 await Swal.fire({ //le pongo el await para que la siguiente funcion se ejecute cuando quite el modal de error
-                    icon: 'error',
-                    title: 'Error',
-                    html: 'Los <b>unidades a vender</b> deben ser un número entero mayor a 0.',
-                })
-                return venderElProducto()   //luego de mostrar el modal de error, vuelvo a ejecutar la funcion desde 0
+            const valor = await Swal.fire({ //modal del input
+                title: "<h5 style='color:#a59ff3'>" + "Unidades" + "</h5>",
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
+                html:`${modo ? '<input id="swal-input" type="number" value="1" style="color: white " class="swal2-input">' : '<input id="swal-input" type="number" value="1" style="color: black " class="swal2-input">'}`,
+                focusConfirm: true,
+                preConfirm: () => {
+                    return [
+                    document.getElementById('swal-input').value
+                    ]
+                },
+                showCloseButton: true,
+    
+            })
+            if(valor.isConfirmed) {
+                const unidades = Number(valor.value[0])
+                if(unidades < 1 || !unidades || isNaN(unidades) || !Number.isInteger(unidades)) {
+                     await Swal.fire({ //le pongo el await para que la siguiente funcion se ejecute cuando quite el modal de error
+                        icon: 'error',
+                        title: 'Error',
+                        color:"white",
+                        background: `${modo ? "rgb(31 41 55)" : "white"}`,
+                        html: `${modo ? '<p style="color:#a59ff3">Los <b>unidades a vender</b> deben ser un número entero mayor a 0.</p>' : '<p style="color: 545454">Los <b>unidades a vender</b> deben ser un número entero mayor a 0.</p>'}`,
+                    })
+                    return venderElProducto()   //luego de mostrar el modal de error, vuelvo a ejecutar la funcion desde 0
+                }
+                if(unidades > disponibles) {
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        color:"white",
+                        background: "rgb(31 41 55)",
+                        html: '<p style="color:#a59ff3"><b>No se pueden vender</b> más unidades de las que hay.</p>',
+                    })
+                    return venderElProducto()
+                }
+                await venderProducto(producto, unidades)
+                Copiado.fire({
+                    icon: 'success',
+                    title: `Se vendieron ${unidades} unidades de ${nombre}`,
+                    background: "#625f77",
+                    color: "white",
+                  })
             }
-            if(unidades > disponibles) {
-                await Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    html: 'Los <b>unidades a vender</b> deben ser iguales o mayores a las disponibles.',
-                })
-                return venderElProducto()
-            }
-            venderProducto(producto, unidades)
-        } 
+            
+        
+        
     }
       
 

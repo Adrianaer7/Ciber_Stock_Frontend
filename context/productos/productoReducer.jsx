@@ -232,6 +232,7 @@ export default function productoReducer(state, action) {
         case ORDENAR_DISPONIBLES:
             return {
                 ...state,
+                //ordeno el state segun numero. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor. La sintaxis de comparar numeros y letras es un poco diferente
                 productos: action.payload ? state.productos.sort((a,b) => b.disponibles - a.disponibles) : !action.payload ? state.productos.sort((a,b) => a.disponibles - b.disponibles ) : state.productos
             }
         case ORDENAR_CODIGO_FILTRADO: 

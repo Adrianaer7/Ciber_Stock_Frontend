@@ -8,7 +8,6 @@ import Swal from "sweetalert2"
 
 const Formulario = ({productoEditar}) => {
 
-  
     const AuthContext = useContext(authContext)
     const {usuario} = AuthContext
 
@@ -84,7 +83,7 @@ const Formulario = ({productoEditar}) => {
             traerDolarAPI()
         }
     }, [usuario])
-
+    
    
     //hago get a los rubros y proveedores cuando se agregue o cambie la lista de todos los productos
     useEffect(() => {

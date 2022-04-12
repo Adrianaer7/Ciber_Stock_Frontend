@@ -2,134 +2,165 @@ import { useContext } from "react";
 import { generarFecha } from '../../helpers';
 import {useRouter} from "next/router"
 import productoContext from "../../context/productos/productoContext";
+import authContext from "../../context/auth/authContext";
 import Swal from "sweetalert2";
+
 
 const VerProducto = ({producto}) => {
     const router = useRouter()
-
     const productosContext = useContext(productoContext)
     const {eliminarProducto} = productosContext
 
-    const {_id, nombre, codigo, rubro, marca, precio_venta, precio_venta_tarjeta, precio_venta_efectivo, precio_venta_conocidos, precio_compra_dolar, precio_compra_peso, valor_dolar_compra, fecha_compra, proveedor, disponibles, rentabilidad, modelo, notas} = producto
+    const AuthContext = useContext(authContext)
+    const {modo} = AuthContext
+
+    const {_id, nombre, codigo, rubro, marca, precio_venta_tarjeta, precio_venta_efectivo, precio_venta_conocidos, precio_compra_dolar, precio_compra_peso, valor_dolar_compra, fecha_compra, proveedor, disponibles, rentabilidad, modelo, notas} = producto
 
     const fecha = generarFecha(fecha_compra) //formateo la fecha ya que me llega y-m-d
 
     const eliminarElProducto = () => {
-        Swal.fire({
-            title: '¿Estas seguro?',
-            text: "Este cambio no se puede revertir!",
-            icon: 'warning',
-            html:'No se puede revertir esto',
-            showCloseButton: true,
-            showCancelButton: true,
-            confirmButtonText:'<b>Si, eliminar!</b>',
-            confirmButtonColor: '#d33',
-            cancelButtonText:'<p>Cancelar</p>',
-          }).then((result) => {
-            if (result.isConfirmed) {
-              eliminarProducto(_id)
-              router.push("/productos")
-            }
-          })
+        if(modo) {
+            Swal.fire({
+                title: "<h5 style='color:white'>" + "¿Estas seguro?" + "</h5>",
+                text:"¡No se puede revertir esto!",
+                icon: 'warning',
+                color: '#a59ff3',
+                showCloseButton: true,
+                showCancelButton: true,
+                confirmButtonText:'<b>Si, eliminar!</b>',
+                confirmButtonColor: '#d33',
+                cancelButtonText:'<p>Cancelar</p>',
+                background: "rgb(31 41 55)",
+                
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  eliminarProducto(_id)
+                  router.push("/productos")
+                }
+              })
+        } else {
+            Swal.fire({
+                title: '¿Estas seguro?',
+                text: "Este cambio no se puede revertir!",
+                icon: 'warning',
+                html:'No se puede revertir esto',
+                showCloseButton: true,
+                showCancelButton: true,
+                confirmButtonText:'<b>Si, eliminar!</b>',
+                confirmButtonColor: '#d33',
+                cancelButtonText:'<p>Cancelar</p>',
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  eliminarProducto(_id)
+                  router.push("/productos")
+                }
+              })
+        }
     }
 
   return (
       <>
-        <div className='min-h-screen dark:bg-gray-800 bg-slate-100'>
-            <div className="bg-white dark:bg-gray-900 w-auto rounded-md  shadow-md p-5 mt-2 mx-auto">
-                <h1 className="font-black text-4xl dark:text-blue-300 text-blue-900 text-center">{nombre}</h1>
-
-                {codigo && (
-                    <p className="text-2xl text-gray-600 dark:text-gray-50 mt-6">
-                        <span className="text-blue-900  uppercase font-bold">Código: </span>{codigo}
-                    </p>
-                )}
-                {marca && (
-                    <p className="text-2xl text-gray-600 dark:text-gray-50 mt-6">
-                        <span className="text-blue-900 uppercase font-bold">Marca: </span>{marca}
-                    </p>
-                )}
-                {modelo && (
-                    <p className="text-2xl text-gray-600 dark:text-gray-50 mt-6">
-                        <span className="text-blue-900 uppercase font-bold">Modelo: </span>{modelo}
-                    </p>
-                )}
-                {rubro && (
-                    <p className="text-2xl text-gray-600 dark:text-gray-50 mt-6">
-                        <span className="text-blue-900 uppercase font-bold">Rubro: </span>{rubro}
-                    </p>
-                )}
-                {proveedor && (
-                    <p className="text-2xl text-gray-600 dark:text-gray-50 mt-6">
-                        <span className="text-blue-900 uppercase font-bold">Proveedor: </span>{proveedor}
-                    </p>
-                )}
-                {valor_dolar_compra && (
-                    <p className="text-2xl text-gray-600 dark:text-gray-50 mt-6">
-                        <span className="text-blue-900 uppercase font-bold">Valor del dolar cuando se compró: </span>${valor_dolar_compra}
-                    </p>
-                )}
-                {precio_compra_dolar && (
-                    <p className="text-2xl text-gray-600 dark:text-gray-50 mt-6">
-                        <span className="text-blue-900 uppercase font-bold">Precio comprado en USD: </span>${precio_compra_dolar}
-                    </p>
-                )}
-                {precio_compra_peso && (
-                    <p className="text-2xl text-gray-600 dark:text-gray-50 mt-6">
-                        <span className="text-blue-900 uppercase font-bold">Precio comprado en AR$: </span>${precio_compra_peso}
-                    </p>
-                )}
-                {precio_venta && (
-                    <p className="text-2xl text-gray-600 dark:text-gray-50 mt-6">
-                        <span className="text-blue-900 uppercase font-bold">Precio de venta: </span>${precio_venta}
-                    </p>
-                )}
-                {precio_venta_tarjeta > 0 && (
-                    <p className="text-3xl text-red-600 font-black dark:text-gray-50 mt-6">
-                        <span className="text-blue-900 text-2xl uppercase font-black">Precio de venta tarjeta: </span>${precio_venta_tarjeta}
-                    </p>
-                )}
-                {precio_venta_efectivo > 0 && (
-                    <p className="text-2xl text-red-600 font-bold dark:text-gray-50 mt-6">
-                        <span className="text-blue-900 text-2xl uppercase font-bold">Precio de venta efectivo: </span>${precio_venta_efectivo}
-                    </p>
-                )}
-                {precio_venta_conocidos > 0 && (
-                    <p className="text-xl text-red-600 font-bold dark:text-gray-50 mt-6">
-                        <span className="text-blue-900 text-2xl uppercase font-bold">Precio de venta conocidos: </span>${precio_venta_conocidos}
-                    </p>
-                )}
-                
-                {fecha_compra && (
-                    <p className="text-2xl text-gray-600 uppercase dark:text-gray-50 mt-6">
-                        <span className="text-blue-900 uppercase font-bold">Fecha última compra: </span>{fecha}
-                    </p>
-                )}
-                
-                {disponibles && (
-                    <p className="text-2xl text-gray-600 dark:text-gray-50 mt-6">
-                        <span className="text-blue-900 uppercase font-bold">Disponibles: </span>{disponibles}
-                    </p>
-                )}
-                {rentabilidad > 0 && (
-                    <p className="text-2xl text-gray-600 dark:text-gray-50 mt-6">
-                        <span className="text-blue-900 uppercase font-bold">rentabilidad: </span>{rentabilidad}%
-                    </p>
-                )}
-                
-                {notas && (
-                    <p className="text-2xl italic text-gray-600 dark:text-gray-50 mt-6 break-words">   {/*break-words para que la palabra larga siga abajo y no desborde el div */}
-                        <span className="text-blue-900 not-italic uppercase font-bold">Notas: </span>{notas}
-                    </p>
-                )}
+        <div className='lg:w-2/3 mx-auto dark:bg-gray-800 bg-slate-100 flex flex-col gap-4'>
+            <h1 className="font-black text-4xl dark:text-blue-300 text-blue-900 text-left sm:text-center">{nombre}</h1>
+            <div className=" overflow-x-auto shadow-md sm:rounded-lg">
+                <table className=" sm:table-fixed w-full  text-lg text-left text-gray-500 dark:text-gray-400">
+                    <tbody>
+                        <tr className="dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">NOMBRE</th>
+                            <td className="px-6 py-4 ">{nombre}</td>
+                        </tr>
+                        
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">MARCA</th>
+                            <td className="px-6 py-4">{marca ? marca: "-"}</td>
+                        </tr>
+                    
+                    
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">MODELO</th>
+                            <td className="px-6 py-4">{modelo ? modelo : "-"}</td>
+                        </tr>
+                    
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">CÓDIGO</th>
+                            <td className="px-6 py-4">{codigo}</td>
+                        </tr>
+                        
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap ">PRECIO DE VENTA CON TARJETA</th>
+                            <td className="px-6 py-4">{precio_venta_tarjeta ? "$" + precio_venta_tarjeta : "-"}</td>
+                        </tr>
+                    
+                    
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">PRECIO DE VENTA EN EFECTIVO</th>
+                            <td className="px-6 py-4">{precio_venta_efectivo ? "$" + precio_venta_efectivo : "-"}</td>
+                        </tr>
+                    
+                    
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">PRECIO DE VENTA CONOCIDOS</th>
+                            <td className="px-6 py-4">{precio_venta_conocidos ? "$" + precio_venta_tarjeta : "-"}</td>
+                        </tr>
+                    
+                    
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">RUBRO</th>
+                            <td className="px-6 py-4">{rubro ? rubro : "-"}</td>
+                        </tr>
+                    
+                    
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">PROVEEDOR</th>
+                            <td className="px-6 py-4">{proveedor ? proveedor : "-"}</td>
+                        </tr>
+                    
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">VALOR DEL DÓLAR AL COMPRARLO</th>
+                            <td className="px-6 py-4">${valor_dolar_compra}</td>
+                        </tr>
+                    
+                        
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">PRECIO DE LA COMPRA EN DÓLARES</th>
+                            <td className="px-6 py-4">{precio_compra_dolar ? "$" + precio_compra_dolar : "-"}</td>
+                        </tr>
+                    
+                    
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">PRECIO DE LA COMPRA EN PESOS</th>
+                            <td className="px-6 py-4">{precio_compra_peso ? "$" + precio_compra_peso : "-"}</td>
+                        </tr>
+                    
+                        
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">FECHA DE LA ULTIMA COMPRA</th>
+                            <td className="px-6 py-4">{fecha}</td>
+                        </tr>
+                    
+                       
+                       
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">RENTABILIDAD</th>
+                            <td className="px-6 py-4">{rentabilidad ? rentabilidad + "%" : "-"}</td>
+                        </tr>
+                    
+                    
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 break-words">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">NOTAS</th>
+                            <td className="px-6 py-4">{notas ? notas : "-"}</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
             </div>
-                <button
-                    type="button"
-                    className="bg-red-600 hover:bg-red-900  w-1/4 text-white p-4 uppercase font-bold my-4 mx-auto block rounded-md"
-                    onClick={eliminarElProducto}
-                >Eliminar Producto</button>
-        </div>
-        
+            <button
+                type="button"
+                className="bg-red-600 hover:bg-red-900  w-1/4 text-white p-4 uppercase font-bold my-4 mx-auto block rounded-md"
+                onClick={eliminarElProducto}
+            >Eliminar Producto
+            </button>
+        </div>      
     </>
     
     

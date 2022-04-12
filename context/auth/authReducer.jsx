@@ -7,7 +7,8 @@ import {
     OCULTAR_ALERTA,
     REGISTRO_EXITOSO,
     SOLICITAR_TOKEN_PASSWORD,
-    SOLICITAR_TOKEN_PASSWORD_ERROR
+    SOLICITAR_TOKEN_PASSWORD_ERROR,
+    GUARDAR_TEMA
 } from "../../types";
 
 
@@ -55,6 +56,11 @@ export default function authReducer(state, action) {
             return {
                 ...state,
                 mensaje: null
+            }
+        case GUARDAR_TEMA:
+            return {
+                ...state,
+                modo: action.payload
             }
             
         case LIMPIAR_STATE:
