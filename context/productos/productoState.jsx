@@ -81,12 +81,11 @@ const ProductoState = ({children}) => {
         }
     }
 
-    //TODO: intentar pasar solo {rubro}
     //crea un nuevo rubro
-    const agregarRubro = async elRubro => {
+    const agregarRubro = async nombre => {  //envio el rubro
         try {
-            const rubro = { nombre: elRubro}
-            const respuesta = await clienteAxios.post("/api/rubros", rubro)
+            
+            const respuesta = await clienteAxios.post("/api/rubros", {nombre})
             dispatch({
                 type: AGREGAR_RUBRO,
                 payload: respuesta.data.rubro.nombre
@@ -103,11 +102,11 @@ const ProductoState = ({children}) => {
         }, 3000);
         }
     }
-    //TODO: intentar pasar solo {proveedor}
-    const agregarProveedor = async elProveedor => {
+
+    //crea un nuevo proveedor
+    const agregarProveedor = async nombre => {
         try {
-            const proveedor = {nombre: elProveedor}
-            const respuesta = await clienteAxios.post("/api/proveedores", proveedor)
+            const respuesta = await clienteAxios.post("/api/proveedores", {nombre})
             dispatch({
                 type: AGREGAR_PROVEEDOR,
                 payload: respuesta.data.proveedor
@@ -138,20 +137,14 @@ const ProductoState = ({children}) => {
         }
     }
 
-    //TODO: intentar pasar solo {dolar}
-    const editarProductos = async dolar => {
+    const editarProductos = async precio => {
         try {
-            if(dolar) {
-                const dolares = {precio: dolar}
-                const respuesta = await clienteAxios.put("/api/productos", dolares)
+            if(precio) {
+                const respuesta = await clienteAxios.put("/api/productos", {precio})
                 dispatch({
                     type: PRODUCTOS_CAMBIADOS,
                     payload: respuesta.data.productos
                 })
-                respuesta.data.productos.map(producto => {
-                    editarProducto(producto)
-                })
-                
             }
         } catch (error) {
             console.log(error)
@@ -270,7 +263,6 @@ const ProductoState = ({children}) => {
     //quito disponibilidad del producto
     const venderProducto = async (producto, unidades) => {
         producto.disponibles = producto.disponibles - unidades
-        
         try {
             editarProducto(producto)
         } catch (error) {
