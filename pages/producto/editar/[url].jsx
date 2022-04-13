@@ -20,6 +20,7 @@ const Edicion = ({productoEditar}) => {
   //Autentico al usuario y agrego el producto actual al state
   useEffect(() => {
     usuarioAutenticado()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   //Cuando me autentique, verifico que el producto que traigo es el del usuario que está logueado

@@ -1,9 +1,9 @@
 import OlvidePassword from "../components/auth/OlvidePassword";
 import { useEffect, useContext } from "react";
 import { useRouter } from "next/router";
-
 import authContext from "../context/auth/authContext";
-const resetPassword = () => {
+
+const ResetPassword = () => {
 
     const AuthContext = useContext(authContext)
     const {token, ocultarAlerta} = AuthContext
@@ -15,10 +15,12 @@ const resetPassword = () => {
         if(token) {
             router.push("/productos")
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[token]) 
 
     useEffect(() => {
         ocultarAlerta()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
@@ -29,4 +31,4 @@ const resetPassword = () => {
     );
 };
 
-export default resetPassword;
+export default ResetPassword;

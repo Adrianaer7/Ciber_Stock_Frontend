@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import Login from '../components/auth/Login';
 import authContext from '../context/auth/authContext';
 import { useRouter } from 'next/router';
 
-const index = () => {
+const Index = () => {
 
   
   const AuthContext = useContext(authContext)
@@ -15,12 +15,14 @@ const index = () => {
       if(token) {
         router.push("/productos")
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token])
 
 
   //oculto la alerta en caso de que haya enviado un token para resetear la contraseña
   useEffect(() => {
     ocultarAlerta()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -30,4 +32,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

@@ -16,10 +16,12 @@ const CrearCuenta = () => {
         if(token) {
             router.push("/productos")
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[token]) 
 
     useEffect(() => {
         ocultarAlerta()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

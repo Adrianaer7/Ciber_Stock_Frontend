@@ -11,6 +11,7 @@ const Productos = () => {
     //si no inicie sesion, no hay token. Si no hay token no me puedo autenticar. La consola del navegador tirará error si se intenta acceder a esta pagina sin autenticacion.
     useEffect(() => {
       usuarioAutenticado()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
 

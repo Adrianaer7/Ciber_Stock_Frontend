@@ -15,6 +15,7 @@ const NuevoProducto = () => {
     useEffect(() => {
         limpiarSeleccionado()
         usuarioAutenticado()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     return (

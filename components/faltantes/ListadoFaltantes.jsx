@@ -42,10 +42,12 @@ const ListadoFaltantes = () => {
 
     useEffect(() => {
         usuarioAutenticado()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     useEffect(() => {
         traerFaltantes()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -53,42 +55,49 @@ const ListadoFaltantes = () => {
             orderCodigoFiltrados(ordenCodigo)
         }
         orderCodigo(ordenCodigo)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[ordenCodigo])
     useEffect(() => {
         if(filtrando) {
             orderNombreFiltrados(ordenNombre)
         }
         orderNombre(ordenNombre)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ordenNombre])
     useEffect(() => {
         if(filtrando) {
             orderMarcaFiltrados(ordenMarca)
         }
         orderMarca(ordenMarca)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ordenMarca])
     useEffect(() => {
         if(filtrando) {
             orderModeloFiltrados(ordenModelo)
         }
         orderModelo(ordenModelo)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ordenModelo])
     useEffect(() => {
         if(filtrando) {
             orderRubroFiltrados(ordenRubro)
         }
         orderRubro(ordenRubro)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ordenRubro])
     useEffect(() => {
         if(filtrando) {
             orderProveedorFiltrados(ordenProveedor)
         }
         orderProveedor(ordenProveedor)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ordenProveedor])
     useEffect(() => {
         if(filtrando) {
             orderDisponiblesFiltrados(ordenDisponibles)
         }
         orderDisponibles(ordenDisponibles)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ordenDisponibles])
     
 
