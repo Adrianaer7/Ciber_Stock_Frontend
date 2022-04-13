@@ -17,45 +17,39 @@ const VerProducto = ({producto}) => {
     const {_id, nombre, codigo, rubro, marca, precio_venta_tarjeta, precio_venta_efectivo, precio_venta_conocidos, precio_compra_dolar, precio_compra_peso, valor_dolar_compra, fecha_compra, proveedor, disponibles, rentabilidad, modelo, notas} = producto
 
     const fecha = generarFecha(fecha_compra) //formateo la fecha ya que me llega y-m-d
-
+    const Eliminado = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+        
+    })
     const eliminarElProducto = () => {
-        if(modo) {
-            Swal.fire({
-                title: "<h5 style='color:white'>" + "¿Estas seguro?" + "</h5>",
-                text:"¡No se puede revertir esto!",
-                icon: 'warning',
-                color: '#a59ff3',
-                showCloseButton: true,
-                showCancelButton: true,
-                confirmButtonText:'<b>Si, eliminar!</b>',
-                confirmButtonColor: '#d33',
-                cancelButtonText:'<p>Cancelar</p>',
-                background: "rgb(31 41 55)",
-                
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  eliminarProducto(_id)
-                  router.push("/productos")
-                }
-              })
-        } else {
-            Swal.fire({
-                title: '¿Estas seguro?',
-                text: "Este cambio no se puede revertir!",
-                icon: 'warning',
-                html:'No se puede revertir esto',
-                showCloseButton: true,
-                showCancelButton: true,
-                confirmButtonText:'<b>Si, eliminar!</b>',
-                confirmButtonColor: '#d33',
-                cancelButtonText:'<p>Cancelar</p>',
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  eliminarProducto(_id)
-                  router.push("/productos")
-                }
-              })
-        }
+        Swal.fire({
+            title: `${modo ? '<h5 style="color:white">¿Estás seguro?</h5>' : '<h5 style="color:#545454">¿Estás seguro?</h5>'}`,
+            text:"¡No se puede revertir esto!",
+            icon: 'warning',
+            color: `${modo ? "white" : "#545454"}`,
+            showCloseButton: true,
+            showCancelButton: true,
+            confirmButtonText:'<b>Si, eliminar!</b>',
+            confirmButtonColor: '#d33',
+            cancelButtonText:'<p>Cancelar</p>',
+            background: `${modo ? "rgb(31 41 55)" : "white"}`,
+            }).then((result) => {
+            if (result.isConfirmed) {
+                eliminarProducto(_id)
+                router.push("/productos")
+                Eliminado.fire({
+                    icon: 'success',
+                    title: "Se eliminó el producto correctamente",
+                    background: `${modo ? "#505050" : "white"}`,
+                    width: "25%",
+                    color: `${modo ? "white" : "#545454"}`,
+                  })
+            }
+            })
+        
     }
 
   return (

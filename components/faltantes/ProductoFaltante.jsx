@@ -2,11 +2,16 @@ import Link from "next/link";
 import { useContext } from "react";
 import productoContext from "../../context/productos/productoContext";
 import faltanteContext from "../../context/faltantes/faltantesContext";
+import authContext from "../../context/auth/authContext";
+
 import Swal from "sweetalert2";
 
 const ProductoFaltante = ({producto}) => {
     const {nombre, marca, codigo, disponibles, modelo, rubro, _id, faltante, proveedor} = producto
-   
+
+    const AuthContext = useContext(authContext)
+    const {modo} = AuthContext
+    
     const productosContext = useContext(productoContext)
     const {productoActual} = productosContext
 
@@ -24,7 +29,9 @@ const ProductoFaltante = ({producto}) => {
         await eliminarFaltante(_id)
         Eliminado.fire({
             icon: 'error',
-            title: 'Quitado de faltantes'
+            title: 'Quitado de faltantes',
+            color: `${modo ? "white" : "#545454"}`,
+            background: `${modo ? "#505050"  : "white"}`,
           })
     }
 

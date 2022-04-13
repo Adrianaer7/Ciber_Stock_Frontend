@@ -31,7 +31,9 @@ const Producto = ({producto}) => {
             eliminarFaltante(_id)
             Copiado.fire({
                 icon: 'error',
-                title: 'Quitado de faltantes'
+                title: 'Quitado de faltantes',
+                background: `${modo ? "#505050"  : "white"}`,
+                color: `${modo ? "white" : "#545454"}`,
               })
         }
     }, [colorFaltante])
@@ -40,13 +42,13 @@ const Producto = ({producto}) => {
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 2000
+        timer: 3000
         
     })
 
     const venderElProducto = async () => {
             const valor = await Swal.fire({ //modal del input
-                title: "<h5 style='color:#a59ff3'>" + "Unidades" + "</h5>",
+                title: `${modo ? '<h5 style="color:white">Unidades</h5>' : '<h5 style="color:#545454">Unidades</h5>'}`,
                 background: `${modo ? "rgb(31 41 55)" : "white"}`,
                 html:`${modo ? '<input id="swal-input" type="number" value="1" style="color: white " class="swal2-input">' : '<input id="swal-input" type="number" value="1" style="color: black " class="swal2-input">'}`,
                 focusConfirm: true,
@@ -66,7 +68,7 @@ const Producto = ({producto}) => {
                         title: 'Error',
                         color:"white",
                         background: `${modo ? "rgb(31 41 55)" : "white"}`,
-                        html: `${modo ? '<p style="color:#a59ff3">Los <b>unidades a vender</b> deben ser un número entero mayor a 0.</p>' : '<p style="color: 545454">Los <b>unidades a vender</b> deben ser un número entero mayor a 0.</p>'}`,
+                        html: `${modo ? '<p style="color:#a59ff3">Los <b>unidades a vender</b> deben ser un número entero mayor a 0.</p>' : '<p style="color: #545454">Los <b>unidades a vender</b> deben ser un número entero mayor a 0.</p>'}`,
                     })
                     return venderElProducto()   //luego de mostrar el modal de error, vuelvo a ejecutar la funcion desde 0
                 }
@@ -75,17 +77,18 @@ const Producto = ({producto}) => {
                         icon: 'error',
                         title: 'Error',
                         color:"white",
-                        background: "rgb(31 41 55)",
-                        html: '<p style="color:#a59ff3"><b>No se pueden vender</b> más unidades de las que hay.</p>',
+                        background: `${modo ? "rgb(31 41 55)" : "white"}`,
+                        html: `${modo ? '<p style="color:#a59ff3"><b>No se pueden vender</b> más unidades de las que hay.</p>' : '<p style="color: #545454">No se pueden vender</b> más unidades de las que hay..</p>'}`,
                     })
                     return venderElProducto()
                 }
                 await venderProducto(producto, unidades)
                 Copiado.fire({
                     icon: 'success',
-                    title: `Se vendieron ${unidades} unidades de ${nombre}`,
-                    background: "#625f77",
-                    color: "white",
+                    title: `${unidades > 1 ? "Se vendieron " + unidades + " unidades de" + nombre : "Se vendió " + unidades + " unidad de " + nombre }`,
+                    background: `${modo ? "#505050" : "white"}`,
+                    width: "25%",
+                    color: `${modo ? "white" : "#545454"}`,
                   })
             }
             
@@ -97,7 +100,9 @@ const Producto = ({producto}) => {
     const añadirFaltante = () => {
         Copiado.fire({
             icon: 'success',
-            title: 'Agregado a faltante'
+            title: 'Agregado a faltante',
+            color: `${modo ? "white" : "#545454"}`,
+            background: `${modo ? "#505050"  : "white"}`,
           })
         setColorFaltante(!colorFaltante)
         if(colorFaltante === null && faltante) {
@@ -110,21 +115,27 @@ const Producto = ({producto}) => {
         navigator.clipboard.writeText(`${tarjeta}`)
           Copiado.fire({
             icon: 'success',
-            title: 'Copiado'
+            title: 'Copiado',
+            color: `${modo ? "white" : "#545454"}`,
+            background: `${modo ? "#505050"  : "white"}`,
           })
     }
     const copiarPrecioEfectivo = () => {
         navigator.clipboard.writeText(`${efectivo}`)
           Copiado.fire({
             icon: 'success',
-            title: 'Copiado'
+            title: 'Copiado',
+            color: `${modo ? "white" : "#545454"}`,
+            background: `${modo ? "#505050"  : "white"}`,
           })
     }
     const copiarPrecioConocidoss = () => {
         navigator.clipboard.writeText(`${conocidos}`)
           Copiado.fire({
             icon: 'success',
-            title: 'Copiado'
+            title: 'Copiado',
+            color: `${modo ? "white" : "#545454"}`,
+            background: `${modo ? "#505050"  : "white"}`,
           })
     }
 

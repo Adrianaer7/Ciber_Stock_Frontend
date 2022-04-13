@@ -9,12 +9,11 @@ import Swal from "sweetalert2"
 const Formulario = ({productoEditar}) => {
 
     const AuthContext = useContext(authContext)
-    const {usuario} = AuthContext
+    const {usuario, modo} = AuthContext
 
     const productosContext = useContext(productoContext)
     const { 
         productoSeleccionado, 
-        productos, 
         agregarProducto, 
         agregarRubro, 
         agregarProveedor, 
@@ -41,19 +40,7 @@ const Formulario = ({productoEditar}) => {
     const [rubroSelect, setRubroSelect] = useState(productoEditar ? productoEditar.rubro : "")
     const [proveedorSelect, setProveedorSelect] = useState(productoEditar ? productoEditar.proveedor : "")
     const [valorFaltante, setValorFaltante] = useState(productoEditar ? productoEditar.añadirFaltante : false)
-    const [msj, setMsj] = useState({
-        nombre: "",
-        codigo: "",
-        valor_dolar_compra: "",
-        precio_compra_dolar: "",
-        precio_compra_peso: "",
-        rentabilidad: "",
-        dosPrecios: "",
-        precio_venta: "",
-        disponibles: "",
-        valor_dolar_compra: "",
-        limiteFaltante: "",
-    })
+
     const [producto, setProducto] = useState({
         nombre: productoEditar?.nombre ?? "",
         modelo: productoEditar?.modelo ?? "",
@@ -173,18 +160,20 @@ const Formulario = ({productoEditar}) => {
         Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'El producto se guardó correctamente.',
+            title: `${modo ? '<h3 style="color:white">Se creó el producto correctamente</h3>' : '<h3 style="color:#545454">Se creó el producto correctamente</h3>'}`,
             showConfirmButton: false,
-            timer: 1500
+            timer: 1500,
+            background: `${modo ? "rgb(31 41 55)" : "white"}`,
         })
     }
     const alertaEditarCorrecto = () => {
         Swal.fire({
-            position: 'center',
+            position: 'top-end',
             icon: 'success',
-            title: 'El producto se modificó correctamente.',
+            title: `${modo ? '<h3 style="color:white">Se modificó el producto correctamente</h3>' : '<h3 style="color:#545454">Se modificó el producto correctamente</h3>'}`,
             showConfirmButton: false,
-            timer: 1500
+            timer: 1500,
+            background: `${modo ? "rgb(31 41 55)" : "white"}`,
         })
     }
 
@@ -195,8 +184,9 @@ const Formulario = ({productoEditar}) => {
         if(nombre === ""){
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
-                html: 'El <b>nombre</b> es obligatorio.',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>nombre</b> es obligatorio.</p>' : '<p style="color:#545454">El <b>nombre</b> es obligatorio.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
               })
             return
         }
@@ -205,16 +195,18 @@ const Formulario = ({productoEditar}) => {
         if(!codigo || codigo < 1 || isNaN(codigo) || !Number.isInteger(codigoCambiado) ) {  //verifico si es numero entero con isInteger
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
-                html: 'El <b>código</b> debe ser un número entero mayor a 0.',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>código</b> debe ser un número entero mayor a 0.</p>' : '<p style="color:#545454">El <b>código</b> debe ser un número entero mayor a 0.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
               })
             return
         }
         if(codigo.length > 3) {
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
-                html: 'El <b>código</b> debe ser un número menor a 4 digitos.',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>código</b> debe ser un número menor a 4 dígitos</p>' : '<p style="color:#545454">El <b>código</b> debe ser un número menor a 4 dígitos</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
               })
             return
         }
@@ -223,16 +215,18 @@ const Formulario = ({productoEditar}) => {
         if(!valor_dolar_compra) {
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
-                html: 'El <b>precio del dolar</b> es obligatorio.',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>precio del dolar </b> es obligatorio.</p>' : '<p style="color:#545454">El <b>precio del dolar </b> es obligatorio.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
               })
             return
         } else {
             if(isNaN(valor_dolar_compra) || valor_dolar_compra < 1) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
-                    html: 'El <b>precio del dolar</b> debe ser un número mayor a 1.',
+                    title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                    html: `${modo ? '<p style="color:white">El <b>precio del dolar</b> debe ser 1 como mínimo.</p>' : '<p style="color:#545454">El <b>precio del dolar</b> debe ser 1 como mínimo.</p>'}`,
+                    background: `${modo ? "rgb(31 41 55)" : "white"}`,
                   })
                 return
             }
@@ -242,8 +236,9 @@ const Formulario = ({productoEditar}) => {
         if(isNaN(precio_compra_dolar) || precio_compra_dolar < 0) {
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
-                html: 'El <b>precio de compra en USD</b> debe ser mayor a 0.',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>precio de compra en USD</b> debe ser un número entero mayor a 0.</p>' : '<p style="color:#545454">El <b>precio de compra en USD</b> debe ser un número entero mayor a 0.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
               })
             return
         }
@@ -251,8 +246,9 @@ const Formulario = ({productoEditar}) => {
         if(isNaN(precio_compra_peso) || precio_compra_peso < 0) {
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
-                html: 'El <b>precio de compra en ARS</b> debe ser mayor a 0.',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>precio de compra en ARS</b> debe ser un número entero mayor a 0.</p>' : '<p style="color:#545454">El <b>precio de compra en ARS</b> debe ser un número entero mayor a 0.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
               })
             return
         }
@@ -260,8 +256,9 @@ const Formulario = ({productoEditar}) => {
         if(isNaN(rentabilidad) || rentabilidad < 0) {
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
-                html: 'La <b>rentabilidad</b> tiene que ser mayor a 0.',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">La <b>rentabilidad</b> tiene que ser mayor a 0.</p>' : '<p style="color:#545454">La <b>rentabilidad</b> tiene que ser mayor a 0.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
               })
             return
         }  
@@ -269,8 +266,9 @@ const Formulario = ({productoEditar}) => {
         if(precio_compra_dolar && precio_compra_peso) {
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
-                text: 'Solo se puede ingresar un precio de compra.',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">Solo se puede ingresar un tipo de moneda en la compra.</p>' : '<p style="color:#545454">Solo se puede ingresar un tipo de moneda en la compra.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
               })
             return
         }
@@ -278,8 +276,10 @@ const Formulario = ({productoEditar}) => {
         if(isNaN(precio_venta) || precio_venta < 0) {
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
-                html: 'El <b>precio de venta</b> debe ser mayor a 0.',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>precio de venta</b> debe ser mayor a 0.</p>' : '<p style="color:#545454">El <b>precio de venta</b> debe ser mayor a 0.</p>'}`,
+
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
               })
             return
         }
@@ -288,8 +288,9 @@ const Formulario = ({productoEditar}) => {
         if(disponibles < 0 || isNaN(disponibles) || !Number.isInteger(disponibleCambiado)) {
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
-                html: 'La <b>disponibilidad</b> debe ser un número entero mayor a 0.',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">La <b>disponibilidad</b> debe ser un número entero mayor a 0.</p>' : '<p style="color:#545454">El <b>disponibilidad</b> debe ser un número entero mayor a 0.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
               })
             return
         }
@@ -298,8 +299,9 @@ const Formulario = ({productoEditar}) => {
         if( limiteFaltante < 0 || isNaN(limiteFaltante) || !Number.isInteger(limiteFaltanteCambiado)) {
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
-                html: 'Los <b>faltantes</b> deben ser un número entero mayor a 0.',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">Los <b>faltantes</b> debe ser un número entero mayor a 0.</p>' : '<p style="color:#545454">Los <b>faltantes</b> debe ser un número entero mayor a 0.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
               })
             return
         } 
@@ -377,7 +379,6 @@ const Formulario = ({productoEditar}) => {
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="nombre" className="text-gray-800 dark:text-gray-300 font-bold font ">Nombre *</label>
-                                {msj.nombre && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.nombre}</p>}
                             </div>
                             <input
                                 type="text"
@@ -420,7 +421,6 @@ const Formulario = ({productoEditar}) => {
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="codigo" className="text-gray-800 dark:text-gray-300 font-bold">Código *</label>
-                                {msj.codigo && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.codigo}</p>}
                                 {mensajeCodigo && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{mensajeCodigo}</p>}
 
                             </div>
@@ -505,7 +505,6 @@ const Formulario = ({productoEditar}) => {
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="valor_dolar_compra" className="text-gray-800 dark:text-gray-300 font-bold font ">Precio dolar *</label>
-                                {msj.valor_dolar_compra && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.valor_dolar_compra}</p>}
                             </div>
                             <input
                                 type="text"
@@ -522,7 +521,6 @@ const Formulario = ({productoEditar}) => {
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="precio_compra_dolar" className="text-gray-800 dark:text-gray-300 font-bold font ">Precio compra en USD</label>
-                                {msj.precio_compra_dolar && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.precio_compra_dolar}</p>}
                             </div>                            
                             <input
                                 type="text"
@@ -538,8 +536,6 @@ const Formulario = ({productoEditar}) => {
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="precio_compra_peso" className="text-gray-800 dark:text-gray-300 font-bold font ">Precio compra en AR$</label>
-                                {msj.precio_compra_peso && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.precio_compra_peso}</p>}
-                                {msj.dosPrecios && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.dosPrecios}</p>}
                             </div>                          
                             <input
                                 type="text"
@@ -555,7 +551,6 @@ const Formulario = ({productoEditar}) => {
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="rentabilidad" className="text-gray-800 dark:text-gray-300 font-bold font ">Rentabilidad</label>
-                                {msj.rentabilidad && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.rentabilidad}</p>}
                             </div>                            
                             <input
                                 type="text"
@@ -573,7 +568,6 @@ const Formulario = ({productoEditar}) => {
                             <div className="mb-4">
                                 <div className="flex justify-between">
                                     <label htmlFor="precio_venta" className="text-gray-800  dark:text-gray-300 font-bold  ">Precio de venta</label>
-                                    {msj.precio_venta && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.precio_venta}</p>}
                                 </div>                                 
                                 <input
                                     type="text"
@@ -618,7 +612,6 @@ const Formulario = ({productoEditar}) => {
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="disponibles" className="text-gray-800  dark:text-gray-300 font-bold  ">Disponibles</label>
-                                {msj.disponibles && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.disponibles}</p>}
                             </div>                             
                             <input
                                 type="text"
@@ -635,7 +628,6 @@ const Formulario = ({productoEditar}) => {
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="limiteFaltante" className="text-gray-800  dark:text-gray-300 font-bold  ">Añadir como faltante cuanto llegue a: </label>
-                                {msj.limiteFaltante && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{msj.limiteFaltante}</p>}
                             </div>  
                             <div className="flex gap-4">          
                                 <input
