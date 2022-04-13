@@ -6,8 +6,6 @@ import NoEncontrado from "../../components/productos/NoEncontrado";
 
 const ConfirmarToken = ({msg}) => { 
     
-
-
   return (
     <>  
         <Head>
@@ -18,8 +16,6 @@ const ConfirmarToken = ({msg}) => {
         ) : (
         <NoEncontrado/>
         )}
-       
-        
     </>
   )
 };
@@ -33,5 +29,4 @@ export async function getServerSideProps({ params: {token} }) {
     return { props: { msg }}
   }
   
-
 export default ConfirmarToken

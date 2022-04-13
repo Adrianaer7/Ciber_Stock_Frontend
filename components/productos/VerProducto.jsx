@@ -14,7 +14,25 @@ const VerProducto = ({producto}) => {
     const AuthContext = useContext(authContext)
     const {modo} = AuthContext
 
-    const {_id, nombre, codigo, rubro, marca, precio_venta_tarjeta, precio_venta_efectivo, precio_venta_conocidos, precio_compra_dolar, precio_compra_peso, valor_dolar_compra, fecha_compra, proveedor, disponibles, rentabilidad, modelo, notas} = producto
+    const {
+        _id, 
+        nombre, 
+        codigo, 
+        rubro, 
+        marca, 
+        precio_venta_tarjeta, 
+        precio_venta_efectivo, 
+        precio_venta_conocidos, 
+        precio_compra_dolar, 
+        precio_compra_peso, 
+        valor_dolar_compra, 
+        fecha_compra, 
+        proveedor, 
+        disponibles, 
+        rentabilidad, 
+        modelo, 
+        notas
+    } = producto
 
     const fecha = generarFecha(fecha_compra) //formateo la fecha ya que me llega y-m-d
     const Eliminado = Swal.mixin({
@@ -22,7 +40,6 @@ const VerProducto = ({producto}) => {
         position: 'top-end',
         showConfirmButton: false,
         timer: 3000
-        
     })
     const eliminarElProducto = () => {
         Swal.fire({
@@ -46,10 +63,9 @@ const VerProducto = ({producto}) => {
                     background: `${modo ? "#505050" : "white"}`,
                     width: "25%",
                     color: `${modo ? "white" : "#545454"}`,
-                  })
+                })
             }
-            })
-        
+        })
     }
 
   return (
@@ -68,7 +84,6 @@ const VerProducto = ({producto}) => {
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">MARCA</th>
                             <td className="px-6 py-4">{marca ? marca: "-"}</td>
                         </tr>
-                    
                     
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">MODELO</th>
@@ -125,11 +140,16 @@ const VerProducto = ({producto}) => {
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">PRECIO DE LA COMPRA EN PESOS</th>
                             <td className="px-6 py-4">{precio_compra_peso ? "$" + precio_compra_peso : "-"}</td>
                         </tr>
+
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">DISPONIBLES</th>
+                            <td className="px-6 py-4">{disponibles > 0 ? disponibles : "SIN STOCK"}</td>
+                        </tr>
                     
                         
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">FECHA DE LA ULTIMA COMPRA</th>
-                            <td className="px-6 py-4">{fecha}</td>
+                            <td className="px-6 py-4 uppercase">{fecha}</td>
                         </tr>
                     
                        

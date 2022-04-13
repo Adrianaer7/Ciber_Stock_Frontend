@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import Link from "next/link"
 import Alerta from '../productos/Alerta';
 import authContext from '../../context/auth/authContext';

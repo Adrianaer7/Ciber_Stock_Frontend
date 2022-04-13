@@ -358,13 +358,10 @@ const Formulario = ({productoEditar}) => {
             editarProducto(producto)
             alertaEditarCorrecto()
         }
-
     }
-
 
     return (
         <>
-            
             <h1 className={`${productoEditar ? "text-green-600 dark:text-green-700" : "text-blue-900"} font-black text-4xl  dark:text-blue-300 text-center`}>{productoEditar ? "Editar Producto": "Agregar Producto"}</h1>
             <p className="mt-3 text-center text-black dark:text-gray-50">Llena los siguientes campos para {productoEditar ? "Editar" : "Agregar"} Un producto</p>
             <div className='bg-white dark:bg-gray-900 mt-10 px-5 py-10 rounded-md shadow-md xl:w-auto 2xl:w-11/12 mx-auto  '>
@@ -374,8 +371,7 @@ const Formulario = ({productoEditar}) => {
                     className="mt-10"
                     onSubmit={onSubmit}
                 >
-                    <div className="grid  md:grid-cols-1 lg:grid-cols-2 lg:gap-4 ">
-
+                    <div className="grid md:grid-cols-1 lg:grid-cols-2 lg:gap-4 ">
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="nombre" className="text-gray-800 dark:text-gray-300 font-bold font ">Nombre *</label>
@@ -390,7 +386,6 @@ const Formulario = ({productoEditar}) => {
                                 value={nombre}
                                 onChange={onChange}
                             />
-                            
                         </div>
                         <div className="mb-4">
                             <label htmlFor="marca" className="text-gray-800 dark:text-gray-300 font-bold font ">Marca</label>
@@ -563,7 +558,6 @@ const Formulario = ({productoEditar}) => {
                                 onChange={onChange}
                             />
                         </div>
-
                         <div className="grid grid-cols-2 gap-2">
                             <div className="mb-4">
                                 <div className="flex justify-between">
@@ -594,7 +588,6 @@ const Formulario = ({productoEditar}) => {
                                     />                                
                             </div>
                         </div>
-
                         <div className="mb-4">
                             <label htmlFor="fecha_compra" className="text-gray-800 dark:text-gray-300 font-bold ">Fecha de compra</label>
                             <input
@@ -608,7 +601,6 @@ const Formulario = ({productoEditar}) => {
                                 onChange={onChange}
                             />
                         </div>
-
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="disponibles" className="text-gray-800  dark:text-gray-300 font-bold  ">Disponibles</label>
@@ -624,7 +616,6 @@ const Formulario = ({productoEditar}) => {
                                 onChange={onChange}
                             />
                         </div>
-
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="limiteFaltante" className="text-gray-800  dark:text-gray-300 font-bold  ">Añadir como faltante cuanto llegue a: </label>
