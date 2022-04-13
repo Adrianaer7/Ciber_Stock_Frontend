@@ -1,7 +1,16 @@
 {
-  "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/404": "pages/404.js",
-  "/productos": "pages/productos.js"
+  "/404": "pages/404.html",
+  "/_app": "pages/_app.js",
+  "/crear-cuenta": "pages/crear-cuenta.html",
+  "/faltantes": "pages/faltantes.html",
+  "/nuevoproducto": "pages/nuevoproducto.html",
+  "/": "pages/index.html",
+  "/olvide-password": "pages/olvide-password.html",
+  "/productos": "pages/productos.html",
+  "/producto/editar/[url]": "pages/producto/editar/[url].js",
+  "/confirmar/[token]": "pages/confirmar/[token].js",
+  "/producto/[id]": "pages/producto/[id].js",
+  "/olvide-password/[token]": "pages/olvide-password/[token].js"
 }
