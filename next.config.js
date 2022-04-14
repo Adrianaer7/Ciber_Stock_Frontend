@@ -1,6 +1,6 @@
 module.exports = {
   reactStrictMode: true,
   env: {
-    backendURL: "https://whispering-stream-04041.herokuapp.com"
+    backendURL: "https://stock-servidor.herokuapp.com"
   }
 }
