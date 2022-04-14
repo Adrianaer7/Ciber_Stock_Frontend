@@ -2,8 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import Producto from "./Producto";
 import productoContext from "../../context/productos/productoContext"
 
-//import io from "socket.io-client"
-//let socket;
+
 
 const ListadoProductos = () => {
 
@@ -45,13 +44,6 @@ const ListadoProductos = () => {
     const [ordenPrecio, setOrdenPrecio] = useState(false)
 
 
-    /*useEffect(() => {
-        socket = io(process.env.backendURL) //me conecto con el backend
-        socket.emit("prueba")   //emit crea el evento llamado prueba. En el index del backend, el socket.on decide que se va a hacer con este evento
-        socket.on("respuesta", () => {
-            console.log("desde el frontend")
-        })
-    }, [])*/
 
     useEffect(() => {
         traerProductos()
