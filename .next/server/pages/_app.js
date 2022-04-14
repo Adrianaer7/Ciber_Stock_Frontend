@@ -15,7 +15,7 @@ exports.modules = {
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 const clienteAxios = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
-    baseURL: "https://whispering-stream-04041.herokuapp.com/"
+    baseURL: "https://whispering-stream-04041.herokuapp.com"
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (clienteAxios);
 
