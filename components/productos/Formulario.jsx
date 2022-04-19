@@ -9,10 +9,11 @@ import Swal from "sweetalert2"
 const Formulario = ({productoEditar}) => {
 
     const AuthContext = useContext(authContext)
-    const {usuario, modo} = AuthContext
+    const {modo, usuario} = AuthContext
 
     const productosContext = useContext(productoContext)
     const { 
+        productos,
         productoSeleccionado, 
         agregarProducto, 
         agregarRubro, 
@@ -46,13 +47,13 @@ const Formulario = ({productoEditar}) => {
         modelo: productoEditar?.modelo ?? "",
         marca: productoEditar?.marca ?? "",
         codigo: productoEditar?.codigo ?? "",
-        rubro: productoEditar?.rubro ?? "",
         valor_dolar_compra: productoEditar?.valor_dolar_compra ?? "",
         precio_venta: productoEditar?.precio_venta ?? "",
         precio_compra_dolar: productoEditar?.precio_compra_dolar ?? "",
         precio_compra_peso: productoEditar?.precio_compra_peso ?? "",
-        fecha_compra: productoEditar?.fecha_compra ?? hoy,
+        rubro: productoEditar?.rubro ?? "",
         proveedor: productoEditar?.proveedor ?? "",
+        fecha_compra: productoEditar?.fecha_compra ?? hoy,
         disponibles: productoEditar?.disponibles ?? "",
         rentabilidad: productoEditar?.rentabilidad ?? "",
         notas: productoEditar?.notas ?? "",
@@ -60,27 +61,58 @@ const Formulario = ({productoEditar}) => {
         limiteFaltante: productoEditar?.limiteFaltante ?? "",
         añadirFaltante: productoEditar?.añadirFaltante ?? false
     })
-    const {nombre, marca, modelo, codigo, rubro, precio_venta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, disponibles, rentabilidad, notas, limiteFaltante, añadirFaltante} = producto
+    const {nombre, marca, modelo, codigo, rubro, precio_venta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, disponibles, rentabilidad, notas, limiteFaltante} = producto
     
-    //hago un get a todos los productos, a la API de dolar y a la bd de dolar
+    //estos 3 useEffect validan desde la bd por si falla algun dato en el state cuando valide desde el submit
     useEffect(() => {
-        if(usuario) {
+        if(mensajeCodigo) {
+            Swal.fire({
+                icon: 'error',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>codigo</b> ya esta ingresado.</p>' : '<p style="color:#545454">El <b>codigo</b> ya esta ingresado.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
+              })
+            return
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [mensajeCodigo])
+    useEffect(() => {
+        if(mensajeRubro) {
+            Swal.fire({
+                icon: 'error',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>codigo</b> ya esta ingresado.</p>' : '<p style="color:#545454">El <b>codigo</b> ya esta ingresado.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
+              })
+            return
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [mensajeRubro])
+    useEffect(() => {
+        if(mensajeProveedor) {
+            Swal.fire({
+                icon: 'error',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>codigo</b> ya esta ingresado.</p>' : '<p style="color:#545454">El <b>codigo</b> ya esta ingresado.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
+              })
+            return
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [mensajeProveedor])
+
+    //hago un get a todas estas colecciones para tenerlos en este componente
+    useEffect(() => {
+        if(usuario) {   //solo hace estos get cuando exista el usuario
             traerProductos()
             traerDolarBD()
             traerDolarAPI()
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [usuario])
-    
-   
-    //hago get a los rubros y proveedores cuando se agregue o cambie la lista de todos los productos
-    useEffect(() => {
-        if(usuario) {
             traerRubros()
             traerProveedores()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[usuario])
+    }, [usuario, productos])    //cuando cambie cualquiera de las 2 se ejecuta el useefect
+    
 
     //cada vez que cambie el producto seleccionado me vacia el input de precio sugerido
     useEffect(() => {
@@ -194,8 +226,24 @@ const Formulario = ({productoEditar}) => {
               })
             return
         }
-        //valido codigo
-        const codigoCambiado = Number(codigo)   //convierto el valor del state a numero
+        //valido codigo. Esto lo hago para que no se vacíe el campo en caso de que haya algun error de backend
+        if(productos) { //si existe algun producto creado, hago un recorrido
+            const boolean = productos.map(producto => producto.codigo == codigo ? true : false )
+            const contiene = boolean.includes(true) //si existe el codigo del formulario en un producto ya creado guardo un true
+            const productoeditar = productoEditar?.codigo   //en caso de que el producto sea a editar, guardo su codigo
+
+            if(contiene && productoeditar !== codigo) { //si el codigo del form es igual al de algun producto que no estoy editando muestro error. Si es un producto editado, ignora esta linea y se valida el campo
+                Swal.fire({
+                    icon: 'error',
+                    title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                    html: `${modo ? '<p style="color:white">El <b>codigo</b> ya esta ingresado.</p>' : '<p style="color:#545454">El <b>codigo</b> ya esta ingresado.</p>'}`,
+                    background: `${modo ? "rgb(31 41 55)" : "white"}`,
+                  })
+                return
+            }
+        }
+        //convierto el valor del state a numero
+        const codigoCambiado = Number(codigo)
         if(!codigo || codigo < 1 || isNaN(codigo) || !Number.isInteger(codigoCambiado) ) {  //verifico si es numero entero con isInteger
             Swal.fire({
                 icon: 'error',
@@ -214,16 +262,48 @@ const Formulario = ({productoEditar}) => {
               })
             return
         }
-        if(mensajeCodigo) {
-            Swal.fire({
-                icon: 'error',
-                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                html: `${modo ? '<p style="color:white">El <b>código</b> ya está ingresado en otro producto.</p>' : '<p style="color:#545454">El <b>código</b> ya está ingresado en otro producto.</p>'}`,
-                background: `${modo ? "rgb(31 41 55)" : "white"}`,
-              })
-            return
+       
+      //validar el nuevo rubro. Esto lo hago para que no se vacíe el campo en caso de que haya algun error de backend
+      if(valoresR) {  //si tiene algo el input de rubro
+        if(rubros) {    //si hay algun rubro creado
+            const boolean = rubros.map(rubro => rubro.nombre == valoresR ? true : false )   //recorro el state de rubros
+            const contiene = boolean.includes(true) //devuelvo si existe un rubro con el mismo nombre
+            if(contiene) {  //lanzo el error en ese caso
+                Swal.fire({
+                    icon: 'error',
+                    title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                    html: `${modo ? '<p style="color:white">El <b>rubro</b> ya está ingresado.</p>' : '<p style="color:#545454">El <b>rubro</b> ya está ingresado.</p>'}`,
+                    background: `${modo ? "rgb(31 41 55)" : "white"}`,
+                })
+                return
+            } 
         }
-      
+    }
+        //si seleccione el rubro, lo mando al state
+        if(rubroSelect) {
+            producto.rubro = rubroSelect
+        }
+
+        //validar el nuevo proveedor. Esto lo hago para que no se vacíe el campo en caso de que haya algun error de backend
+        if(valoresP) {  //si tiene algo el input de proveedor
+            if(proveedores) {    //si hay algun proveedor creado
+                const boolean = proveedores.map(proveedor => proveedor.nombre == valoresP ? true : false )   //recorro el state de proveedores
+                const contiene = boolean.includes(true) //devuelvo si existe un proveedor con el mismo nombre
+                if(contiene) {  //lanzo el error en ese caso
+                    Swal.fire({
+                        icon: 'error',
+                        title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                        html: `${modo ? '<p style="color:white">El <b>proveedor</b> ya está ingresado.</p>' : '<p style="color:#545454">El <b>proveedor</b> ya está ingresado.</p>'}`,
+                        background: `${modo ? "rgb(31 41 55)" : "white"}`,
+                    })
+                    return
+                }
+            }  
+        }
+        if(proveedorSelect) {
+            producto.proveedor = proveedorSelect
+        }
+
         //Validar precio del dolar
         if(!valor_dolar_compra) {
             Swal.fire({
@@ -244,6 +324,7 @@ const Formulario = ({productoEditar}) => {
                 return
             }
         }
+            
         
         //validar valor compra dolar
         if(isNaN(precio_compra_dolar) || precio_compra_dolar < 0) {
@@ -265,16 +346,7 @@ const Formulario = ({productoEditar}) => {
               })
             return
         }
-        //validar rentabilidad
-        if(isNaN(rentabilidad) || rentabilidad < 0) {
-            Swal.fire({
-                icon: 'error',
-                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                html: `${modo ? '<p style="color:white">La <b>rentabilidad</b> tiene que ser mayor a 0.</p>' : '<p style="color:#545454">La <b>rentabilidad</b> tiene que ser mayor a 0.</p>'}`,
-                background: `${modo ? "rgb(31 41 55)" : "white"}`,
-              })
-            return
-        }  
+
         //validar los 2 input juntos del precio
         if(precio_compra_dolar && precio_compra_peso) {
             Swal.fire({
@@ -285,6 +357,18 @@ const Formulario = ({productoEditar}) => {
               })
             return
         }
+
+        //validar rentabilidad
+        if(isNaN(rentabilidad) || rentabilidad < 0) {
+            Swal.fire({
+                icon: 'error',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">La <b>rentabilidad</b> tiene que ser mayor a 0.</p>' : '<p style="color:#545454">La <b>rentabilidad</b> tiene que ser mayor a 0.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
+              })
+            return
+        }  
+        
         //Validar el precio de venta
         if(isNaN(precio_venta) || precio_venta < 0) {
             Swal.fire({
@@ -308,6 +392,7 @@ const Formulario = ({productoEditar}) => {
             return
         }
 
+        //validar numero de faltantes
         const limiteFaltanteCambiado = Number(limiteFaltante)
         if( limiteFaltante < 0 || isNaN(limiteFaltante) || !Number.isInteger(limiteFaltanteCambiado)) {
             Swal.fire({
@@ -317,62 +402,36 @@ const Formulario = ({productoEditar}) => {
                 background: `${modo ? "rgb(31 41 55)" : "white"}`,
               })
             return
-        }
-
-        if(mensajeRubro) {
-            Swal.fire({
-                icon: 'error',
-                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                html: `${modo ? '<p style="color:white">El <b>rubro</b> ya está registrado.</p>' : '<p style="color:#545454">El <b>rubro</b> ya está registrado.</p>'}`,
-                background: `${modo ? "rgb(31 41 55)" : "white"}`,
-              })
-            return
-        }
-        if(mensajeProveedor) {
-            Swal.fire({
-                icon: 'error',
-                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                html: `${modo ? '<p style="color:white">El <b>proveedor</b> ya está registrado.</p>' : '<p style="color:#545454">El <b>proveedor</b> ya está registrado.</p>'}`,
-                background: `${modo ? "rgb(31 41 55)" : "white"}`,
-              })
-            return
-        }
+        } 
         
-        //si seleccione el rubro, lo mando al state
-        if(rubroSelect) {
-            producto.rubro = rubroSelect
-        }
-        if(proveedorSelect) {
-            producto.proveedor = proveedorSelect
-        }
-        //si el input de rubro tiene algo, envio el rubro
-        if(valoresR) {  
-            agregarRubro(rubro)
-        }
-        //si el input de proveedores tiene algo, envio el proveedor
-        if(valoresP) {  
+
+        //si no se cumple ninguna condicion que le puse arriba, y tampoco está vacio el input, lo envio a la bd
+        if(valoresP) {
             agregarProveedor(proveedor)
         }
+        //si no se cumple ninguna condicion que le puse arriba, y tampoco está vacio el input, lo envio a la bd
+        if(valoresR) {
+            agregarRubro(rubro)
+        }
 
-        
         //si es nuevo producto
         if(!productoEditar) {
-            agregarProducto(producto)   
-
+            agregarProducto(producto)
+            
             setRubroSelect("")
             setProveedorSelect("")
             setProducto({
                 nombre: "",
                 marca: "", 
                 modelo: "", 
-                codigo: "", 
-                rubro: "", 
+                codigo: "",
+                rubro: "",
+                proveedor: "",
                 precio_venta: "", 
                 precio_compra_dolar: "", 
                 fecha_compra: hoy, 
                 precio_compra_peso: "", 
                 valor_dolar_compra: "", 
-                proveedor: "", 
                 disponibles: "", 
                 rentabilidad: "", 
                 notas: "",
