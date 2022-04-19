@@ -47,14 +47,14 @@ const ProductoFaltante = ({producto}) => {
             <td className="p-3 dark:text-gray-50 text-center uppercase">{disponibles && faltante ? <span className="font-bold text-red-600 p-1">{disponibles}</span> : disponibles && !faltante ? disponibles : <span className="font-black text-white bg-red-600 p-1 uppercase">Sin stock</span>}</td>
             <td className="p-3 w-40 mt-2  ">
 
-                <Link href={`/producto/${_id}`}>
+                <Link passHref href={`/producto/${_id}`}>
                     <button
                         type="button"
                         className="bg-blue-600 hover:bg-blue-900 mb-2 w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
                         onClick={() => productoActual(producto)}
                     >Detalles</button>
                 </Link>
-                <Link href="">
+                <Link passHref href="">
                     <button
                         type="button"
                         className="bg-red-600 hover:bg-red-900 mb-2 w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"

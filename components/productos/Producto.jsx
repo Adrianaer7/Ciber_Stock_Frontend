@@ -47,6 +47,7 @@ const Producto = ({producto}) => {
                 color: `${modo ? "white" : "#545454"}`,
               })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [colorFaltante])
 
     const Copiado = Swal.mixin({
@@ -161,28 +162,28 @@ const Producto = ({producto}) => {
             </td>
 
             <td className="p-3 w-40 mt-2  ">
-                <Link href="">
+                <Link passHref href="">
                     <button
                         type="button"
                         className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 mb-2 w-full text-black p-2 uppercase font-bold text-xs mr-3 rounded-md"
                         onClick={venderElProducto}
                     >Vender</button>
                 </Link>
-                <Link href={`/producto/${_id}`}>
+                <Link passHref href={`/producto/${_id}`}>
                     <button
                         type="button"
                         className="bg-blue-600 hover:bg-blue-900 mb-2 w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
                         onClick={() => productoActual(producto)}
                     >Detalles</button>
                 </Link>
-                <Link href={`/producto/editar/${_id}`}>
+                <Link passHref href={`/producto/editar/${_id}`}>
                     <button
                         type="button"
                         className="bg-green-600 hover:bg-green-900 mb-2 w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
                         onClick={() => productoActual(producto)}
                     >Editar</button>
                 </Link>
-                <Link href="">
+                <Link passHref href="">
                     <button
                         type="button"
                         className="bg-red-600 hover:bg-red-900  w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"

@@ -69,6 +69,7 @@ const Formulario = ({productoEditar}) => {
             traerDolarBD()
             traerDolarAPI()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [usuario])
     
    
@@ -78,11 +79,13 @@ const Formulario = ({productoEditar}) => {
             traerRubros()
             traerProveedores()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[usuario])
 
     //cada vez que cambie el producto seleccionado me vacia el input de precio sugerido
     useEffect(() => {
         limpiarPrecioVenta()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productoSeleccionado])
     
     //se fija si en el state de filtrando hay algo, es porque se está escribiendo
@@ -105,6 +108,7 @@ const Formulario = ({productoEditar}) => {
     //cada vez que escriba en los inputs se realiza el calculo aprox para el precio de la venta
     useEffect(() => {
         precioVenta(precio_compra_dolar, valor_dolar_compra, rentabilidad, precio_compra_peso)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [producto])
 
     const onChange = e => {

@@ -1,5 +1,4 @@
 import clienteAxios from "../../config/axios";
-import dbConnect from "../../lib/dbConnect";
 import Link from "next/link";
 import Head from "next/head";
 
@@ -25,7 +24,6 @@ const ConfirmarToken = ({msg}) => {
 
 
 export async function getServerSideProps({ params: {token} }) {
-    await dbConnect()
     const respuesta = await clienteAxios.get(`/api/usuarios/confirmar/${token}`)
     const msg = respuesta.data.msg
     

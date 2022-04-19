@@ -145,6 +145,9 @@ const ProductoState = ({children}) => {
                     type: PRODUCTOS_CAMBIADOS,
                     payload: respuesta.data.productos
                 })
+                respuesta.data.productos.map(producto => {
+                    editarProducto(producto)
+                })
             }
         } catch (error) {
             console.log(error)

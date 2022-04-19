@@ -24,6 +24,7 @@ const Layout = ({children, pagina}) => {
         if(!token) {
             router.push("/")
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[token])
 
     
@@ -38,6 +39,7 @@ const Layout = ({children, pagina}) => {
     useEffect(() => {
         localStorage.setItem("Modo oscuro", JSON.stringify(oscuro))
         traerTema(oscuro)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[oscuro])
 
     //cambio el estado del tema a oscuro o claro

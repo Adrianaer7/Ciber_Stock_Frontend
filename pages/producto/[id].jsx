@@ -1,11 +1,23 @@
 import Layout from '../../components/layout/Layout';
 import VerProducto from '../../components/productos/VerProducto';
-import dbConnect from '../../lib/dbConnect';
 import clienteAxios from "../../config/axios"
 import authContext from '../../context/auth/authContext';
 import { useContext, useEffect, useState } from 'react';
 import productoContext from '../../context/productos/productoContext';
 import NoEncontrado from '../../components/productos/NoEncontrado';
+
+
+
+
+export async function getServerSideProps({ params: {id} }) {
+  const respuesta = await clienteAxios.get(`/api/productos/${id}`)
+  if(respuesta.data.redireccionar) {  //si es true
+    return {notFound: true} //redirecciono a la pagina 404. notFound es una funcion de next
+  }
+  const producto = respuesta.data.producto
+  return { props: { producto }}
+}
+
 
 const Ver = ({producto}) => { 
 
@@ -20,6 +32,7 @@ const Ver = ({producto}) => {
   //Autentico al usuario y agrego el producto actual al state
   useEffect(() => {
     usuarioAutenticado()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   
   //Cuando me autentique, verifico que el producto que traigo es el del usuario que está logueado
@@ -30,6 +43,7 @@ const Ver = ({producto}) => {
         setCoincide(false)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [usuario])
 
   return (
@@ -48,14 +62,5 @@ const Ver = ({producto}) => {
 };
 
 
-export async function getServerSideProps({ params: {id} }) {
-  await dbConnect()
-  const respuesta = await clienteAxios.get(`/api/productos/${id}`)
-  if(respuesta.data.redireccionar) {  //si es true
-    return {notFound: true} //redirecciono a la pagina 404. notFound es una funcion de next
-  }
-  const producto = respuesta.data.producto
-  return { props: { producto }}
-}
 
 export default Ver;

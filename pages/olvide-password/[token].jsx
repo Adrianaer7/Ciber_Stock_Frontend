@@ -1,5 +1,4 @@
 import clienteAxios from "../../config/axios";
-import dbConnect from "../../lib/dbConnect";
 import Head from "next/head";
 import NuevaContraseña from "../../components/auth/NuevaContraseña";
 import NoEncontrado from "../../components/productos/NoEncontrado";
@@ -22,7 +21,6 @@ const ConfirmarToken = ({msg}) => {
 
 
 export async function getServerSideProps({ params: {token} }) {
-    await dbConnect()
     const respuesta = await clienteAxios.get(`/api/usuarios/olvide-password/${token}`)
     const msg = respuesta.data.msg
     

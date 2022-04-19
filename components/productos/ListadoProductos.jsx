@@ -47,16 +47,19 @@ const ListadoProductos = () => {
 
     useEffect(() => {
         traerProductos()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
    
     useEffect(() => {
         limpiarSeleccionado()
         traerDolarBD()
         traerDolarAPI()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     useEffect(() => {
         editarProductos(dolarBD)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dolarBD])
 
     useEffect(() => {
@@ -64,36 +67,42 @@ const ListadoProductos = () => {
             orderCodigoFiltrados(ordenCodigo)
         }
         orderCodigo(ordenCodigo)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ordenCodigo])
     useEffect(() => {
         if(filtrando) {
             orderPrecioFiltrados(ordenPrecio)
         }
         orderPrecio(ordenPrecio)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[ordenPrecio])
     useEffect(() => {
         if(filtrando) {
             orderNombreFiltrados(ordenNombre)
         }
         orderNombre(ordenNombre)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ordenNombre])
     useEffect(() => {
         if(filtrando) {
             orderMarcaFiltrados(ordenMarca)
         }
         orderMarca(ordenMarca)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ordenMarca])
     useEffect(() => {
         if(filtrando) {
             orderModeloFiltrados(ordenModelo)
         }
         orderModelo(ordenModelo)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ordenModelo])
     useEffect(() => {
         if(filtrando) {
             orderDisponiblesFiltrados(ordenDisponibles)
         }
         orderDisponibles(ordenDisponibles)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ ordenDisponibles])
 
     //cambia el estado a true si escribo
