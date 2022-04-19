@@ -214,6 +214,15 @@ const Formulario = ({productoEditar}) => {
               })
             return
         }
+        if(mensajeCodigo) {
+            Swal.fire({
+                icon: 'error',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>código</b> ya está ingresado en otro producto.</p>' : '<p style="color:#545454">El <b>código</b> ya está ingresado en otro producto.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
+              })
+            return
+        }
       
         //Validar precio del dolar
         if(!valor_dolar_compra) {
@@ -308,8 +317,26 @@ const Formulario = ({productoEditar}) => {
                 background: `${modo ? "rgb(31 41 55)" : "white"}`,
               })
             return
-        } 
-        
+        }
+
+        if(mensajeRubro) {
+            Swal.fire({
+                icon: 'error',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>rubro</b> ya está registrado.</p>' : '<p style="color:#545454">El <b>rubro</b> ya está registrado.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
+              })
+            return
+        }
+        if(mensajeProveedor) {
+            Swal.fire({
+                icon: 'error',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>proveedor</b> ya está registrado.</p>' : '<p style="color:#545454">El <b>proveedor</b> ya está registrado.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
+              })
+            return
+        }
         
         //si seleccione el rubro, lo mando al state
         if(rubroSelect) {
@@ -420,7 +447,6 @@ const Formulario = ({productoEditar}) => {
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="codigo" className="text-gray-800 dark:text-gray-300 font-bold">Código *</label>
-                                {mensajeCodigo && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{mensajeCodigo}</p>}
 
                             </div>
                             <input  
@@ -438,7 +464,6 @@ const Formulario = ({productoEditar}) => {
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="rubro" className="text-gray-800 dark:text-gray-300 font-bold ">Rubro</label>
-                                {mensajeRubro && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{mensajeRubro}</p>}
                             </div>
                             <div className="flex">
                                 <input
@@ -471,7 +496,6 @@ const Formulario = ({productoEditar}) => {
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="proveedor" className="text-gray-800 dark:text-gray-300 font-bold ">Proveedor</label>
-                                {mensajeProveedor && <p className="text-xs my-auto bg-red-700 rounded-lg uppercase text-white pl-2 pr-2">{mensajeProveedor}</p>}
                             </div>
                             <div className="flex">
                                 <input
