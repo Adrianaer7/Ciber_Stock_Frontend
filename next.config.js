@@ -1,6 +1,6 @@
 module.exports = {
   reactStrictMode: true,
   env: {
-    backendURL: "http://localhost:4000"
+    backendURL: "https://lit-dawn-31866.herokuapp.com"
   }
 }
