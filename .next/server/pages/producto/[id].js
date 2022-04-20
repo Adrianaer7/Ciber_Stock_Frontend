@@ -20,7 +20,7 @@ var external_axios_default = /*#__PURE__*/__webpack_require__.n(external_axios_n
 ;// CONCATENATED MODULE: ./config/axios.jsx
 
 const clienteAxios = external_axios_default().create({
-    baseURL: "https://lit-dawn-31866.herokuapp.com"
+    baseURL: "http://localhost:4000"
 });
 /* harmony default export */ const axios = (clienteAxios);
 
@@ -138,20 +138,20 @@ const VerProducto = ({ producto  })=>{
     };
     return /*#__PURE__*/ jsx_runtime_.jsx(jsx_runtime_.Fragment, {
         children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-            className: "lg:w-2/3 mx-auto dark:bg-gray-800 bg-slate-100 flex flex-col gap-4",
+            className: " lg:w-2/3 mx-auto dark:bg-gray-800 bg-slate-100 flex flex-col gap-4",
             children: [
                 /*#__PURE__*/ jsx_runtime_.jsx("h1", {
-                    className: "font-black text-4xl dark:text-blue-300 text-blue-900 text-left sm:text-center",
+                    className: "font-black text-2xl lg:text-4xl dark:text-blue-300 text-blue-900 text-center",
                     children: nombre
                 }),
                 /*#__PURE__*/ jsx_runtime_.jsx("div", {
                     className: " overflow-x-auto shadow-md sm:rounded-lg",
                     children: /*#__PURE__*/ jsx_runtime_.jsx("table", {
-                        className: " sm:table-fixed w-full text-lg text-left text-gray-500 dark:text-gray-400",
+                        className: " sm:table-fixed w-screen sm:w-full text-sm lg:text-lg text-left text-gray-500 dark:text-gray-400",
                         children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tbody", {
                             children: [
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: "dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700",
+                                    className: "dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row sm:flex-row",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
@@ -165,7 +165,7 @@ const VerProducto = ({ producto  })=>{
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
@@ -179,7 +179,7 @@ const VerProducto = ({ producto  })=>{
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
@@ -193,7 +193,7 @@ const VerProducto = ({ producto  })=>{
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
@@ -207,7 +207,7 @@ const VerProducto = ({ producto  })=>{
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
@@ -221,7 +221,7 @@ const VerProducto = ({ producto  })=>{
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
@@ -235,7 +235,7 @@ const VerProducto = ({ producto  })=>{
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
@@ -249,7 +249,7 @@ const VerProducto = ({ producto  })=>{
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
@@ -263,7 +263,7 @@ const VerProducto = ({ producto  })=>{
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
@@ -277,7 +277,7 @@ const VerProducto = ({ producto  })=>{
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
@@ -294,7 +294,7 @@ const VerProducto = ({ producto  })=>{
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
@@ -308,7 +308,7 @@ const VerProducto = ({ producto  })=>{
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
@@ -322,7 +322,7 @@ const VerProducto = ({ producto  })=>{
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
@@ -336,7 +336,7 @@ const VerProducto = ({ producto  })=>{
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
@@ -350,7 +350,7 @@ const VerProducto = ({ producto  })=>{
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
@@ -364,7 +364,7 @@ const VerProducto = ({ producto  })=>{
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 break-words",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 break-words flex flex-col sm:flex-row",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
@@ -383,7 +383,7 @@ const VerProducto = ({ producto  })=>{
                 }),
                 /*#__PURE__*/ jsx_runtime_.jsx("button", {
                     type: "button",
-                    className: "bg-red-600 hover:bg-red-900 w-1/4 text-white p-4 uppercase font-bold my-4 mx-auto block rounded-md",
+                    className: "bg-red-600 hover:bg-red-900 sm:w-1/4 text-white p-4 uppercase font-bold my-4 mx-auto block rounded-md",
                     onClick: eliminarElProducto,
                     children: "Eliminar Producto"
                 })

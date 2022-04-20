@@ -14,7 +14,7 @@ exports.modules = {
 
 const Alerta = ({ children  })=>{
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-        className: "text-center bg-red-600 text-white rounded-lg shadow-md w-3/4 mx-auto font-bold my-4 p-3 uppercase",
+        className: "text-center bg-red-600 text-white rounded-lg shadow-md sm:w-3/4 mx-auto font-bold my-4 p-3 uppercase",
         children: children
     });
 };

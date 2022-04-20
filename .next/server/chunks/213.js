@@ -479,7 +479,7 @@ const Formulario = ({ productoEditar  })=>{
     return /*#__PURE__*/ (0,jsx_runtime_.jsxs)(jsx_runtime_.Fragment, {
         children: [
             /*#__PURE__*/ jsx_runtime_.jsx("h1", {
-                className: `${productoEditar ? "text-green-600 dark:text-green-700" : "text-blue-900"} font-black text-4xl  dark:text-blue-300 text-center`,
+                className: `${productoEditar ? "text-green-600 dark:text-green-700" : "text-blue-900"} font-black text-3xl sm:text-4xl  dark:text-blue-300 text-center`,
                 children: productoEditar ? "Editar Producto" : "Agregar Producto"
             }),
             /*#__PURE__*/ (0,jsx_runtime_.jsxs)("p", {

@@ -143,41 +143,22 @@ const ListadoProductos = () => {
 
   return (
     <>  
-        <div className="  absolute  lg:relative">
-            <h1 className="font-black dark:text-blue-300 text-4xl text-blue-900 text-center mb-4 ">Listado de productos</h1>
-            <div className="flex flex-col lg:flex-row justify-between w-4/4">
+        <div className="">
+            <h1 className="font-black dark:text-blue-300 text-3xl sm:text-4xl text-blue-900 text-center mb-4 ">Listado de productos</h1>
+            <div className="flex flex-col-reverse lg:flex-row justify-between ">
                 <input 
                     type="text" 
-                    className="lg:w-2/6  p-4 shadow dark:bg-gray-900  focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 rounded-lg" //outline-none le quita el borde default, focus-ring le pone borde
+                    className="lg:w-2/6 m-1 p-4 shadow dark:bg-gray-900  focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 rounded-lg" //outline-none le quita el borde default, focus-ring le pone borde
                     placeholder="Buscar algún producto" 
                     onChange={onChangeFiltro}
                 />
-                <div className="flex flex-row gap-2">
-                    <input 
-                        type="button" 
-                        value="Eliminar Productos" 
-                        className="bg-red-600 p-2 mt-2 text-white font-bold rounded-lg hover:cursor-pointer " 
-                        onClick={() => eliminarProductos()} 
-                    />
-                    <input 
-                        type="button" 
-                        value="Eliminar Rubros" 
-                        className="bg-red-600 p-2 mt-2 text-white font-bold rounded-lg hover:cursor-pointer " 
-                        onClick={() => eliminarRubros()} 
-                    />
-                    <input 
-                        type="button" 
-                        value="Eliminar Proveedores" 
-                        className="bg-red-600 p-2 mt-2 text-white font-bold rounded-lg hover:cursor-pointer " 
-                        onClick={() => eliminarProveedores()} 
-                    />
-                </div>
+                
                 {dolarBD && <p className=" p-4 pl-0 my-auto font-bold dark:text-white">Dolar hoy: <span className="text-red-600">${dolarBD}</span></p>}
                 
             </div>
         </div>
         
-        <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
+        <table className=" top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
             <thead className="bg-blue-800 text-white">
                 <tr className="hover:cursor-pointer select-none">
                     <th onClick={() => ordenarCodigo()} className="p-2 rounded-tl-lg">CODIGO</th>

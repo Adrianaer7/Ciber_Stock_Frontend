@@ -35,7 +35,7 @@ const OlvidePassword = () => {
             <title>Reestablecer contraseña</title>
         </Head>
 
-        <div className='w-2/4 mx-auto my-32 '>
+        <div className='sm:w-3/5 xl:w-2/5 sm:mx-auto mr-1 ml-1 my-10 sm:my-32 '>
             <h1 className="font-black text-4xl text-center text-blue-900 dark:text-blue-300">Reestablece tu contraseña</h1>
             <p className="mt-3 text-center text-black">Recupera tu contraseña para no perder tus datos</p>
             {mensaje ? <Alerta>{mensaje}</Alerta> : error ? <Alerta>{error}</Alerta> : null}
@@ -65,12 +65,12 @@ const OlvidePassword = () => {
                             />
                         </form>
                 </div>
-                <div className="flex justify-between w-3/4 mx-auto">
+                <div className="flex flex-col items-center sm:mx-auto sm:justify-between sm:w-3/4">
                     <Link href="/">
                         <a
                             className="pt-5 hover:text-blue-400 font-medium"
                         >
-                            Tengo una contraseña
+                            Iniciar Sesión
                         </a>
                     </Link>
                     <Link href="/crear-cuenta">

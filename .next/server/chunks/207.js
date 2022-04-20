@@ -37,6 +37,7 @@ const Layout = ({ children , pagina  })=>{
     const productosContext = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_context_productos_productoContext__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z);
     const { limpiarSeleccionado , limpiarApp  } = productosContext;
     const { 0: oscuro , 1: setOscuro  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const { 0: panel , 1: setPanel  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const router = (0,next_router__WEBPACK_IMPORTED_MODULE_5__.useRouter)();
     const urlActual = router.route;
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
@@ -65,6 +66,9 @@ const Layout = ({ children , pagina  })=>{
     const darkMode = ()=>{
         setOscuro(!oscuro);
     };
+    const tuerca = ()=>{
+        setPanel(!panel);
+    };
     const vaciarStates = ()=>{
         cerrarSesion();
         limpiarApp();
@@ -84,24 +88,53 @@ const Layout = ({ children , pagina  })=>{
                 className: `lg:flex md:min-h-screen sm:min-h-screen bg-gray-100 ${oscuro && "dark"}`,
                 children: [
                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                        className: "lg:w-1/5 bg-blue-900 px-5 dark:bg-gray-900 flex flex-col justify-between",
+                        className: "lg:w-1/5 bg-blue-900 px-5 dark:bg-gray-900 flex flex-col justify-between lg:justify-start ",
                         children: [
-                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-                                className: "text-white text-4xl font-black text-center",
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                className: "flex justify-between mt-1",
                                 children: [
-                                    "Hola, ",
-                                    usuario ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-                                        children: usuario.nombre
-                                    }) : null
+                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+                                        className: "text-white text-2xl md:text-4xl font-black text-center",
+                                        children: [
+                                            "Hola, ",
+                                            usuario ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                                children: usuario.nombre
+                                            }) : null
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_image__WEBPACK_IMPORTED_MODULE_4___default()), {
+                                        src: "/settings-claro.svg",
+                                        alt: "Settings",
+                                        width: 30,
+                                        height: 30,
+                                        priority: true,
+                                        className: "cursor-pointer",
+                                        onClick: tuerca
+                                    })
                                 ]
                             }),
+                            panel ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                className: "flex flex-col mt-2 py-2",
+                                children: [
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
+                                        onClick: darkMode,
+                                        className: `${oscuro ? "text-white" : "text-black"} text-left py-2`,
+                                        children: oscuro ? "Tema claro" : "Tema oscuro"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
+                                        onClick: vaciarStates,
+                                        className: `${oscuro ? "text-white" : "text-black"} text-left py-2`,
+                                        children: "Cerrar sesi\xf3n"
+                                    })
+                                ]
+                            }) : null,
                             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("nav", {
-                                className: "mt-10 lg:flex-col lg:h-5/6",
+                                className: "flex mt-4 justify-between sm:mt-10 lg:flex-col lg:justify-start h-5/6",
                                 children: [
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_link__WEBPACK_IMPORTED_MODULE_3___default()), {
                                         href: "/productos",
                                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                                            className: `${urlActual === "/productos" ? "bg-blue-300 bg-opacity-10 rounded-md  text-white" : "text-white"} text-2xl block p-2 mt-2 hover:text-blue-300`,
+                                            className: `${urlActual === "/productos" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm  md:text-2xl block p-2 mt-2 hover:text-blue-300`,
                                             children: "Productos"
                                         })
                                     }),
@@ -110,7 +143,7 @@ const Layout = ({ children , pagina  })=>{
                                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
                                             onClick: ()=>limpiarSeleccionado()
                                             ,
-                                            className: `${urlActual === "/nuevoproducto" ? "bg-blue-300 bg-opacity-10 rounded-md  text-white" : "text-white"} text-2xl block p-2 mt-2 hover:text-blue-300`,
+                                            className: `${urlActual === "/nuevoproducto" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm  md:text-2xl block p-2 mt-2 hover:text-blue-300`,
                                             children: "Nuevo Producto"
                                         })
                                     }),
@@ -119,39 +152,16 @@ const Layout = ({ children , pagina  })=>{
                                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
                                             onClick: ()=>limpiarSeleccionado()
                                             ,
-                                            className: `${urlActual === "/faltantes" ? "bg-blue-300 bg-opacity-10 rounded-md  text-white" : "text-white"} text-2xl block p-2 mt-2 hover:text-blue-300`,
+                                            className: `${urlActual === "/faltantes" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm  md:text-2xl block p-2 mt-2 hover:text-blue-300`,
                                             children: "Faltantes"
                                         })
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                className: "flex flex-row justify-between mb-2",
-                                children: [
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_image__WEBPACK_IMPORTED_MODULE_4___default()), {
-                                        src: oscuro ? "/light_mode.svg" : "/dark_mode.svg",
-                                        alt: oscuro ? "light" : "dark",
-                                        width: 50,
-                                        height: 50,
-                                        priority: true,
-                                        className: "cursor-pointer",
-                                        onClick: darkMode
-                                    }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_image__WEBPACK_IMPORTED_MODULE_4___default()), {
-                                        src: oscuro ? "/logout_light.svg" : "/logout_dark.svg",
-                                        alt: "Cerrar Sesion",
-                                        width: 50,
-                                        height: 50,
-                                        priority: true,
-                                        className: "cursor-pointer",
-                                        onClick: ()=>vaciarStates()
                                     })
                                 ]
                             })
                         ]
                     }),
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                        className: " lg:w-4/5 p-2 lg:p-10 h-screen dark:bg-gray-800 overflow-x-auto ",
+                        className: " lg:w-4/5 sm:p-2 lg:p-10 h-screen dark:bg-gray-800 overflow-x-auto ",
                         children: children
                     })
                 ]

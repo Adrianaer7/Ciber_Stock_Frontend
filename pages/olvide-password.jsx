@@ -25,7 +25,7 @@ const ResetPassword = () => {
 
 
     return (
-        <div className="md:flex md:min-h-screen sm:min-h-screen bg-slate-100">
+        <div className="md:flex md:min-h-screen sm:min-h-screen h-screen overflow-y-auto bg-slate-100">
             <OlvidePassword/>
         </div>
     );
