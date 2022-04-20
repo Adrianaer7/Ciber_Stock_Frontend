@@ -1,6 +1,6 @@
 module.exports = {
   reactStrictMode: true,
   env: {
-    backendURL: "http://localhost:4000"
+    backendURL: "https://stock-ciber.vercel.app"
   }
 }
