@@ -143,62 +143,62 @@ const ListadoProductos = () => {
 
   return (
     <>  
-        <div className="">
-            <h1 className="font-black dark:text-blue-300 text-3xl sm:text-4xl text-blue-900 text-center mb-4 ">Listado de productos</h1>
-            <div className="flex flex-col-reverse lg:flex-row justify-between ">
-                <input 
-                    type="text" 
-                    className="lg:w-2/6 m-1 p-4 shadow dark:bg-gray-900  focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 rounded-lg" //outline-none le quita el borde default, focus-ring le pone borde
-                    placeholder="Buscar algún producto" 
-                    onChange={onChangeFiltro}
-                />
-                
-                {dolarBD && <p className=" p-4 pl-0 my-auto font-bold dark:text-white">Dolar hoy: <span className="text-red-600">${dolarBD}</span></p>}
-                
-            </div>
-        </div>
-        
-        <table className=" top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
-            <thead className="bg-blue-800 text-white">
-                <tr className="hover:cursor-pointer select-none">
-                    <th onClick={() => ordenarCodigo()} className="p-2 rounded-tl-lg">CODIGO</th>
-                    <th onClick={() => ordenarNombre()}>NOMBRE</th>
-                    <th onClick={() => ordenarMarca()}>MARCA</th>
-                    <th onClick={() => ordenarModelo()}>MODELO</th>
-                    <th onClick={() => ordenarDisponibles()}>DISPONIBLES</th>
-                    <th onClick={() => ordenarPrecio()}>PRECIO</th>
-                    <th className="rounded-tr-lg">ACCIONES</th>
-                </tr>
-            </thead>
-            <tbody>
-                {Object.keys(filtrados).length === 0 && escribiendo ? (
-                    <>
-                        <tr className="relative p-3 dark:text-gray-50 text-xl">
-                            <td>Sin resultados</td>
-                        </tr>
-                    </>) 
-                : Object.keys(filtrados).length > 0 && escribiendo ?(
-                    <>
-                        {filtrados.map(producto => (
-                            <Producto
-                                key={producto._id}
-                                producto={producto}
-                            />
-                        ))}
-                    </>)
-                : (
+    <div className="absolute lg:relative min-w-full m-0">
+
+        <h1 className="font-black dark:text-blue-300 text-3xl sm:text-4xl text-blue-900 text-center mt-2 sm:mt-0 mb-4 ">Listado de productos</h1>
+        <div className="flex flex-col-reverse sm:flex-row justify-between ">
+            <input 
+                type="text" 
+                className="w-full sm:w-3/6 md:w-2/6 p-4 shadow dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 rounded-md md:rounded-lg" //outline-none le quita el borde default, focus-ring le pone borde
+                placeholder="Buscar algún producto" 
+                onChange={onChangeFiltro}
+            />
+            
+            {dolarBD && <p className=" p-4 pl-0 my-auto font-bold dark:text-white">Dolar hoy: <span className="text-red-600">${dolarBD}</span></p>}
+            
+        </div>    
+    </div>
+    <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-md md:rounded-lg dark:bg-gray-900 bg-white ">
+        <thead className="bg-blue-800 text-white">
+            <tr className="hover:cursor-pointer select-none">
+                <th onClick={() => ordenarCodigo()} className="p-2 rounded-tl-lg">CODIGO</th>
+                <th onClick={() => ordenarNombre()}>NOMBRE</th>
+                <th onClick={() => ordenarMarca()}>MARCA</th>
+                <th onClick={() => ordenarModelo()}>MODELO</th>
+                <th onClick={() => ordenarDisponibles()}>DISPONIBLES</th>
+                <th onClick={() => ordenarPrecio()}>PRECIO</th>
+                <th className="rounded-tr-lg">ACCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            {Object.keys(filtrados).length === 0 && escribiendo ? (
                 <>
-                    {productos.map(producto => (
+                    <tr className="relative p-3 dark:text-gray-50 text-xl">
+                        <td>Sin resultados</td>
+                    </tr>
+                </>) 
+            : Object.keys(filtrados).length > 0 && escribiendo ?(
+                <>
+                    {filtrados.map(producto => (
                         <Producto
                             key={producto._id}
                             producto={producto}
                         />
                     ))}
-                </>
-                )}  
-            </tbody>
-            
-        </table>
+                </>)
+            : (
+            <>
+                {productos.map(producto => (
+                    <Producto
+                        key={producto._id}
+                        producto={producto}
+                    />
+                ))}
+            </>
+            )}  
+        </tbody>
+        
+    </table>
     </>
     )
     

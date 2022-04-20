@@ -88,10 +88,10 @@ const Layout = ({ children , pagina  })=>{
                 className: `lg:flex md:min-h-screen sm:min-h-screen bg-gray-100 ${oscuro && "dark"}`,
                 children: [
                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                        className: "lg:w-1/5 bg-blue-900 px-5 dark:bg-gray-900 flex flex-col justify-between lg:justify-start ",
+                        className: "lg:w-1/5 bg-blue-900 dark:bg-gray-900 flex flex-col justify-between lg:justify-start ",
                         children: [
                             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                className: "flex justify-between mt-1",
+                                className: "flex justify-between mt-1 px-5",
                                 children: [
                                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
                                         className: "text-white text-2xl md:text-4xl font-black text-center",
@@ -114,27 +114,27 @@ const Layout = ({ children , pagina  })=>{
                                 ]
                             }),
                             panel ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                className: "flex flex-col mt-2 py-2",
+                                className: "flex flex-col mt-2 ml-5 py-2",
                                 children: [
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
                                         onClick: darkMode,
-                                        className: `${oscuro ? "text-white" : "text-black"} text-left py-2`,
+                                        className: `${oscuro && "text-white"} text-left py-2 hover:text-blue-300 hover:translate-x-3`,
                                         children: oscuro ? "Tema claro" : "Tema oscuro"
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
                                         onClick: vaciarStates,
-                                        className: `${oscuro ? "text-white" : "text-black"} text-left py-2`,
+                                        className: `${oscuro && "text-white"} text-left py-2 hover:text-blue-300`,
                                         children: "Cerrar sesi\xf3n"
                                     })
                                 ]
                             }) : null,
                             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("nav", {
-                                className: "flex mt-4 justify-between sm:mt-10 lg:flex-col lg:justify-start h-5/6",
+                                className: "grid grid-cols-3 lg:px-5 mt-4 sm:mt-10 lg:flex lg:flex-col lg:justify-start h-5/6",
                                 children: [
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_link__WEBPACK_IMPORTED_MODULE_3___default()), {
                                         href: "/productos",
                                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                                            className: `${urlActual === "/productos" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm  md:text-2xl block p-2 mt-2 hover:text-blue-300`,
+                                            className: `${urlActual === "/productos" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-2xl block p-2 mt-2 hover:text-blue-300`,
                                             children: "Productos"
                                         })
                                     }),
@@ -143,7 +143,7 @@ const Layout = ({ children , pagina  })=>{
                                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
                                             onClick: ()=>limpiarSeleccionado()
                                             ,
-                                            className: `${urlActual === "/nuevoproducto" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm  md:text-2xl block p-2 mt-2 hover:text-blue-300`,
+                                            className: `${urlActual === "/nuevoproducto" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-2xl block p-2 mt-2 hover:text-blue-300`,
                                             children: "Nuevo Producto"
                                         })
                                     }),
@@ -152,7 +152,7 @@ const Layout = ({ children , pagina  })=>{
                                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
                                             onClick: ()=>limpiarSeleccionado()
                                             ,
-                                            className: `${urlActual === "/faltantes" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm  md:text-2xl block p-2 mt-2 hover:text-blue-300`,
+                                            className: `${urlActual === "/faltantes" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-2xl block p-2 mt-2 hover:text-blue-300`,
                                             children: "Faltantes"
                                         })
                                     })
@@ -161,7 +161,7 @@ const Layout = ({ children , pagina  })=>{
                         ]
                     }),
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                        className: " lg:w-4/5 sm:p-2 lg:p-10 h-screen dark:bg-gray-800 overflow-x-auto ",
+                        className: " lg:w-4/5 lg:p-10 h-screen dark:bg-gray-800 overflow-x-auto ",
                         children: children
                     })
                 ]

@@ -20,7 +20,7 @@ var external_axios_default = /*#__PURE__*/__webpack_require__.n(external_axios_n
 ;// CONCATENATED MODULE: ./config/axios.jsx
 
 const clienteAxios = external_axios_default().create({
-    baseURL: "http://localhost:4000"
+    baseURL: "https://lit-dawn-31866.herokuapp.com"
 });
 /* harmony default export */ const axios = (clienteAxios);
 

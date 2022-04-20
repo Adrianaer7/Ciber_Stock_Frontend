@@ -453,7 +453,7 @@ const Formulario = ({productoEditar}) => {
     return (
         <>
             <h1 className={`${productoEditar ? "text-green-600 dark:text-green-700" : "text-blue-900"} font-black text-3xl sm:text-4xl  dark:text-blue-300 text-center`}>{productoEditar ? "Editar Producto": "Agregar Producto"}</h1>
-            <p className="mt-3 text-center text-black dark:text-gray-50">Llena los siguientes campos para {productoEditar ? "Editar" : "Agregar"} Un producto</p>
+            <p className="mt-3 text-center text-black dark:text-gray-50">Llena los siguientes campos para {productoEditar ? "editar" : "agregar"} un producto</p>
             <div className='bg-white dark:bg-gray-900 mt-10 px-5 py-10 rounded-md shadow-md xl:w-auto 2xl:w-11/12 mx-auto  '>
                 <h1 className='text-gray-600 dark:text-white font-bold text-xl uppercase text-center'></h1>
                 

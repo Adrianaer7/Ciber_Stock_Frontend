@@ -138,18 +138,18 @@ const ListadoFaltantes = () => {
 
   return (
     <>   
-        <div className="  absolute  lg:relative">
-            <h1 className="text-red-700 font-black text-3xl sm:text-4xl  dark:text-red-500 text-center">Faltantes</h1>
+        <div className="absolute lg:relative min-w-full">
+            <h1 className="font-black dark:text-red-500 text-3xl sm:text-4xl text-red-500 text-center mt-2 sm:mt-0 mb-4 ">Faltantes</h1>
             <p className="mt-3 text-center text-black dark:text-gray-50">Lista de todos los productos con poco stock</p>
-            <div className="flex flex-col lg:flex-row justify-between w-4/4">
+            <div className="flex flex-col-reverse sm:flex-row justify-between ">
                 <input 
                     type="text" 
-                    className="lg:w-2/6  p-4 shadow dark:bg-gray-900  focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 rounded-lg" //outline-none le quita el borde default, focus-ring le pone borde
+                    className="w-full  md:w-2/6 p-4 shadow dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 rounded-md md:rounded-lg" //outline-none le quita el borde default, focus-ring le pone borde
                     placeholder="Buscar algún producto faltante" 
                     onChange={onChangeFiltro}
                 />
             </div>
-    </div>
+        </div>
         <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
             <thead className="bg-red-600 text-white">
                 <tr className="hover:cursor-pointer select-none">

@@ -486,8 +486,8 @@ const Formulario = ({ productoEditar  })=>{
                 className: "mt-3 text-center text-black dark:text-gray-50",
                 children: [
                     "Llena los siguientes campos para ",
-                    productoEditar ? "Editar" : "Agregar",
-                    " Un producto"
+                    productoEditar ? "editar" : "agregar",
+                    " un producto"
                 ]
             }),
             /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {

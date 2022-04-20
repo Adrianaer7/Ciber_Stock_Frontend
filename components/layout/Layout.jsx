@@ -63,8 +63,8 @@ const Layout = ({children, pagina}) => {
             </Head>
 
             <div className={`lg:flex md:min-h-screen sm:min-h-screen bg-gray-100 ${oscuro && "dark"}`}>
-                <div className="lg:w-1/5 bg-blue-900  px-5  dark:bg-gray-900 flex flex-col  justify-between lg:justify-start ">
-                    <div className="flex justify-between mt-1">
+                <div className="lg:w-1/5 bg-blue-900    dark:bg-gray-900 flex flex-col  justify-between lg:justify-start ">
+                    <div className="flex justify-between mt-1 px-5">
                         <p className="text-white text-2xl md:text-4xl font-black text-center">Hola, {usuario ? <span>{usuario.nombre}</span> : null}</p>
                         <Image 
                             src="/settings-claro.svg"
@@ -77,16 +77,16 @@ const Layout = ({children, pagina}) => {
                         />
                     </div>
                     {panel ?
-                        <div className="flex flex-col mt-2 py-2">
+                        <div className="flex flex-col mt-2 ml-5 py-2">
                             <button
                                 onClick={darkMode}
-                                className={`${oscuro ? "text-white" : "text-black"} text-left py-2`}
+                                className={`${oscuro && "text-white"} text-left py-2 hover:text-blue-300 hover:translate-x-3`}
                             >
                                 {oscuro ? "Tema claro" : "Tema oscuro"}
                             </button>
                             <button
                                 onClick={vaciarStates}
-                                className={`${oscuro ? "text-white" : "text-black"} text-left py-2`}
+                                className={`${oscuro && "text-white"} text-left py-2 hover:text-blue-300`}
                             >
                                 Cerrar sesión
                             </button> 
@@ -94,29 +94,28 @@ const Layout = ({children, pagina}) => {
                         
                     : null}
                     
-                    <nav className="flex mt-4 justify-between sm:mt-10 lg:flex-col lg:justify-start h-5/6">
+                    <nav className="grid grid-cols-3 lg:px-5 mt-4 sm:mt-10 lg:flex lg:flex-col lg:justify-start h-5/6">
                         <Link href="/productos">
-                            <a className={`${urlActual === "/productos" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm  md:text-2xl block p-2 mt-2 hover:text-blue-300`}>Productos</a> 
+                            <a className={`${urlActual === "/productos" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-2xl block p-2 mt-2 hover:text-blue-300`}>Productos</a> 
                         </Link>
 
                         <Link href="/nuevoproducto">
                             <a 
                             onClick={() => limpiarSeleccionado()}
-                            className={`${urlActual === "/nuevoproducto" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm  md:text-2xl block p-2 mt-2 hover:text-blue-300`}>Nuevo Producto</a>
+                            className={`${urlActual === "/nuevoproducto" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-2xl block p-2 mt-2 hover:text-blue-300`}>Nuevo Producto</a>
                         </Link>
                         <Link href="/faltantes">
                             <a 
                             onClick={() => limpiarSeleccionado()}
-                            className={`${urlActual === "/faltantes" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm  md:text-2xl block p-2 mt-2 hover:text-blue-300`}>Faltantes</a>
+                            className={`${urlActual === "/faltantes" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-2xl block p-2 mt-2 hover:text-blue-300`}>Faltantes</a>
                         </Link>
                     </nav>
 
                     
                 </div>
                 
-                <div className=" lg:w-4/5 sm:p-2 lg:p-10 h-screen  dark:bg-gray-800 overflow-x-auto ">
-                        {children}
-                            
+                <div className=" lg:w-4/5 lg:p-10 h-screen  dark:bg-gray-800 overflow-x-auto ">
+                    {children}      
                 </div>
                 
             </div>
