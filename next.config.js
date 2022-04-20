@@ -1,6 +1,6 @@
 module.exports = {
   reactStrictMode: true,
   env: {
-    backendURL: "https://stock-ciber.vercel.app"
+    backendURL: "https://lit-dawn-31866.herokuapp.com"
   }
 }
