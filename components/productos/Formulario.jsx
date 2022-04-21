@@ -150,6 +150,13 @@ const Formulario = ({productoEditar}) => {
             [e.target.name]: e.target.value,
         })
     }
+
+    const onChangeNumeros = e => {
+        setProducto({
+            ...producto,
+            [e.target.name]: e.target.value.replace(",", "."),
+        })
+    }
     
     //Al escribir, escribiendo pasa a true, se vacia el select y se deshabilita. 
     //Envio lo que escribo al state de valores, y lo que está en valores lo envio al state de producto. Al hacer submit vacio el state de valores, entonces el input queda vacio
@@ -545,7 +552,7 @@ const Formulario = ({productoEditar}) => {
                                 placeholder="893247539457"
                                 name="barras"
                                 value={barras}
-                                onChange={onChange}
+                                onChange={onChangeNumeros}
                             />
                         </div>
 
@@ -625,8 +632,8 @@ const Formulario = ({productoEditar}) => {
                                 id="valor_dolar_compra"
                                 placeholder="$112"
                                 name="valor_dolar_compra"
-                                value={valor_dolar_compra.replace(",", ".")}
-                                onChange={onChange}
+                                value={valor_dolar_compra}
+                                onChange={onChangeNumeros}
                             />
                         </div>                 
                         <div className="mb-4">
@@ -640,8 +647,8 @@ const Formulario = ({productoEditar}) => {
                                 id="precio_compra_dolar"
                                 placeholder="$28,84"
                                 name="precio_compra_dolar"
-                                value={precio_compra_dolar.replace(",", ".")}
-                                onChange={onChange}
+                                value={precio_compra_dolar}
+                                onChange={onChangeNumeros}
                             />
                         </div>
                         <div className="mb-4">
@@ -655,8 +662,8 @@ const Formulario = ({productoEditar}) => {
                                 id="precio_compra_peso"
                                 placeholder="$1250"
                                 name="precio_compra_peso"
-                                value={precio_compra_peso.replace(",", ".")}
-                                onChange={onChange}
+                                value={precio_compra_peso}
+                                onChange={onChangeNumeros}
                             />
                         </div>
                         <div className="mb-4">
@@ -670,7 +677,7 @@ const Formulario = ({productoEditar}) => {
                                 id="rentabilidad"
                                 placeholder="40%"
                                 name="rentabilidad"
-                                value={rentabilidad.replace(",", ".")}
+                                value={rentabilidad}
                                 onChange={onChange}
                             />
                         </div>
@@ -686,8 +693,8 @@ const Formulario = ({productoEditar}) => {
                                     id="precio_venta"
                                     placeholder="$ 10.000"
                                     name="precio_venta"
-                                    value={precio_venta.replace(",", ".")}
-                                    onChange={onChange}
+                                    value={precio_venta}
+                                    onChange={onChangeNumeros}
                                 />
                             </div>
                             <div className="mb-4 justify-items-end">
