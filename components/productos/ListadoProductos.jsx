@@ -117,7 +117,7 @@ const ListadoProductos = () => {
 
     const onChangeFiltro = e => {
         setFiltrando(e.target.value)
-        filtro(e.target.value)  //envio al productoState
+        filtro(e.target.value.toLowerCase())  //envio al productoState
     }
 
     const ordenarCodigo = () => {
@@ -149,7 +149,7 @@ const ListadoProductos = () => {
             <input 
                 type="text" 
                 className="w-full  sm:w-3/6 md:w-2/6 p-4 shadow dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 rounded-md md:rounded-lg" //outline-none le quita el borde default, focus-ring le pone borde
-                placeholder="Buscar algún producto" 
+                placeholder="Buscar algún producto"
                 onChange={onChangeFiltro}
             />
             

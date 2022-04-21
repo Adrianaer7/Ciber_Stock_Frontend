@@ -139,35 +139,35 @@ export default function productoReducer(state, action) {
                         producto.nombre
                                 .toString()
                                 .toLowerCase()  //convierto el campo a string minuscula
-                                .includes(action.payload.toLowerCase()  ? action.payload  : producto) //trato de encontrar un producto que contenga lo que escribo en el buscador. Convierto el input a minusculas para comparar
+                                .includes(action.payload ? action.payload  : producto) //trato de encontrar un producto que contenga lo que escribo en el buscador. Convierto el input a minusculas para comparar
                         || producto.marca
                                 .toString()
                                 .toLowerCase()
-                                .includes(action.payload.toLowerCase() ? action.payload  : producto)
+                                .includes(action.payload ? action.payload  : producto)
                         || producto.modelo
                                     .toString()
                                     .toLowerCase()
-                                    .includes(action.payload.toLowerCase() ? action.payload  : producto)
+                                    .includes(action.payload ? action.payload  : producto)
                         || producto.codigo
                                     .toString()
                                     .toLowerCase()
-                                    .includes(action.payload.toLowerCase() ? action.payload  : producto)
+                                    .includes(action.payload ? action.payload  : producto)
                         || producto.proveedor
                                     .toString()
                                     .toLowerCase()
-                                    .includes(action.payload.toLowerCase() ? action.payload  : producto)
+                                    .includes(action.payload ? action.payload  : producto)
                         || producto.rubro
                                     .toString()
                                     .toLowerCase()
-                                    .includes(action.payload.toLowerCase() ? action.payload  : producto)
+                                    .includes(action.payload ? action.payload  : producto)
                         || producto.notas
                                     .toString()
                                     .toLowerCase()
-                                    .includes(action.payload.toLowerCase() ? action.payload  : producto)
+                                    .includes(action.payload ? action.payload  : producto)
                         || producto.descripcion
                                     .toString()
                                     .toLowerCase()
-                                    .includes(action.payload.toLowerCase() ? action.payload  : producto)
+                                    .includes(action.payload ? action.payload  : producto)
                 )
                 
             }
