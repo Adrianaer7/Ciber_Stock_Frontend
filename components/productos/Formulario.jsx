@@ -265,7 +265,7 @@ const Formulario = ({productoEditar}) => {
         }
 
         const barrasCambiado = Number(barras)
-        if(barras < 1 || isNaN(barras) || !Number.isInteger(barrasCambiado) ) {  //verifico si es numero entero con isInteger
+        if(barras < 0 || isNaN(barras) || !Number.isInteger(barrasCambiado) ) {  //verifico si es numero entero con isInteger
             Swal.fire({
                 icon: 'error',
                 title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
