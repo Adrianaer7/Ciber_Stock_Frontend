@@ -17,7 +17,8 @@ const VerProducto = ({producto}) => {
     const {
         _id, 
         nombre, 
-        codigo, 
+        codigo,
+        barras,
         rubro, 
         marca, 
         precio_venta_tarjeta, 
@@ -96,6 +97,11 @@ const VerProducto = ({producto}) => {
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700  justify-between grid  grid-cols-1 lg:grid-cols-2">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">CÓDIGO</th>
                             <td className="px-6 py-4 text-left">{codigo}</td>
+                        </tr>
+
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700  justify-between grid  grid-cols-1 lg:grid-cols-2">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">CÓDIGO DE BARRAS</th>
+                            <td className="px-6 py-4 text-left">{barras}</td>
                         </tr>
                         
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700  justify-between grid  grid-cols-1 lg:grid-cols-2">
