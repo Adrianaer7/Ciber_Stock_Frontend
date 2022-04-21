@@ -20,7 +20,7 @@ var external_axios_default = /*#__PURE__*/__webpack_require__.n(external_axios_n
 ;// CONCATENATED MODULE: ./config/axios.jsx
 
 const clienteAxios = external_axios_default().create({
-    baseURL: "https://lit-dawn-31866.herokuapp.com"
+    baseURL: "http://localhost:4000"
 });
 /* harmony default export */ const axios = (clienteAxios);
 
@@ -102,8 +102,11 @@ const VerProducto = ({ producto  })=>{
     const AuthContext = (0,external_react_.useContext)(authContext/* default */.Z);
     const { modo  } = AuthContext;
     const { _id , nombre , codigo , rubro , marca , precio_venta_tarjeta , precio_venta_efectivo , precio_venta_conocidos , precio_compra_dolar , precio_compra_peso , valor_dolar_compra , fecha_compra , proveedor , disponibles , rentabilidad , modelo , notas  } = producto;
-    const fecha = (0,helpers/* generarFecha */.qU)(fecha_compra) //formateo la fecha ya que me llega y-m-d
+    let fecha //formateo la fecha ya que me llega y-m-d
     ;
+    if (fecha_compra) {
+        fecha = (0,helpers/* generarFecha */.qU)(fecha_compra);
+    }
     const Eliminado = external_sweetalert2_default().mixin({
         toast: true,
         position: "top-end",
@@ -147,145 +150,145 @@ const VerProducto = ({ producto  })=>{
                 /*#__PURE__*/ jsx_runtime_.jsx("div", {
                     className: " overflow-x-auto shadow-md sm:rounded-lg",
                     children: /*#__PURE__*/ jsx_runtime_.jsx("table", {
-                        className: " sm:table-fixed w-screen sm:w-full text-sm lg:text-lg text-left text-gray-500 dark:text-gray-400",
+                        className: " sm:table-fixed w-screen sm:w-full text-sm lg:text-lg text-gray-500 dark:text-gray-400",
                         children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tbody", {
                             children: [
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: "dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row sm:flex-row",
+                                    className: "dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid grid-cols-1 lg:grid-cols-2 ",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
-                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap",
+                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left",
                                             children: "NOMBRE"
                                         }),
                                         /*#__PURE__*/ jsx_runtime_.jsx("td", {
-                                            className: "px-6 py-4 ",
+                                            className: "px-6 py-4 text-left",
                                             children: nombre
                                         })
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid grid-cols-1 lg:grid-cols-2",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
-                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap",
+                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left",
                                             children: "MARCA"
                                         }),
                                         /*#__PURE__*/ jsx_runtime_.jsx("td", {
-                                            className: "px-6 py-4",
+                                            className: "px-6 py-4 mr-20 text-left",
                                             children: marca ? marca : "-"
                                         })
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid grid-cols-1 lg:grid-cols-2",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
-                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap",
+                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left",
                                             children: "MODELO"
                                         }),
                                         /*#__PURE__*/ jsx_runtime_.jsx("td", {
-                                            className: "px-6 py-4",
+                                            className: "px-6 py-4 text-left",
                                             children: modelo ? modelo : "-"
                                         })
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid grid-cols-1 lg:grid-cols-2",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
-                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap",
+                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left",
                                             children: "C\xd3DIGO"
                                         }),
                                         /*#__PURE__*/ jsx_runtime_.jsx("td", {
-                                            className: "px-6 py-4",
+                                            className: "px-6 py-4 text-left",
                                             children: codigo
                                         })
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid grid-cols-1 lg:grid-cols-2",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
-                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap ",
+                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left",
                                             children: "PRECIO DE VENTA CON TARJETA"
                                         }),
                                         /*#__PURE__*/ jsx_runtime_.jsx("td", {
-                                            className: "px-6 py-4",
+                                            className: "px-6 py-4 text-left",
                                             children: precio_venta_tarjeta ? "$" + precio_venta_tarjeta : "-"
                                         })
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid grid-cols-1 lg:grid-cols-2",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
-                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap",
+                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left",
                                             children: "PRECIO DE VENTA EN EFECTIVO"
                                         }),
                                         /*#__PURE__*/ jsx_runtime_.jsx("td", {
-                                            className: "px-6 py-4",
+                                            className: "px-6 py-4 text-left",
                                             children: precio_venta_efectivo ? "$" + precio_venta_efectivo : "-"
                                         })
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid grid-cols-1 lg:grid-cols-2",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
-                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap",
+                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left",
                                             children: "PRECIO DE VENTA CONOCIDOS"
                                         }),
                                         /*#__PURE__*/ jsx_runtime_.jsx("td", {
-                                            className: "px-6 py-4",
+                                            className: "px-6 py-4 text-left",
                                             children: precio_venta_conocidos ? "$" + precio_venta_tarjeta : "-"
                                         })
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid grid-cols-1 lg:grid-cols-2",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
-                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap",
+                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left",
                                             children: "RUBRO"
                                         }),
                                         /*#__PURE__*/ jsx_runtime_.jsx("td", {
-                                            className: "px-6 py-4",
+                                            className: "px-6 py-4 text-left",
                                             children: rubro ? rubro : "-"
                                         })
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid grid-cols-1 lg:grid-cols-2",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
-                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap",
+                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left",
                                             children: "PROVEEDOR"
                                         }),
                                         /*#__PURE__*/ jsx_runtime_.jsx("td", {
-                                            className: "px-6 py-4",
+                                            className: "px-6 py-4 text-left",
                                             children: proveedor ? proveedor : "-"
                                         })
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid grid-cols-1 lg:grid-cols-2",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
-                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap",
+                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left",
                                             children: "VALOR DEL D\xd3LAR AL COMPRARLO"
                                         }),
                                         /*#__PURE__*/ (0,jsx_runtime_.jsxs)("td", {
-                                            className: "px-6 py-4",
+                                            className: "px-6 py-4 text-left",
                                             children: [
                                                 "$",
                                                 valor_dolar_compra
@@ -294,67 +297,67 @@ const VerProducto = ({ producto  })=>{
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid grid-cols-1 lg:grid-cols-2",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
-                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap",
+                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left",
                                             children: "PRECIO DE LA COMPRA EN D\xd3LARES"
                                         }),
                                         /*#__PURE__*/ jsx_runtime_.jsx("td", {
-                                            className: "px-6 py-4",
+                                            className: "px-6 py-4 text-left",
                                             children: precio_compra_dolar ? "$" + precio_compra_dolar : "-"
                                         })
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid grid-cols-1 lg:grid-cols-2",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
-                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap",
+                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left",
                                             children: "PRECIO DE LA COMPRA EN PESOS"
                                         }),
                                         /*#__PURE__*/ jsx_runtime_.jsx("td", {
-                                            className: "px-6 py-4",
+                                            className: "px-6 py-4 text-left",
                                             children: precio_compra_peso ? "$" + precio_compra_peso : "-"
                                         })
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid grid-cols-1 lg:grid-cols-2",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
-                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap",
+                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left",
                                             children: "DISPONIBLES"
                                         }),
                                         /*#__PURE__*/ jsx_runtime_.jsx("td", {
-                                            className: "px-6 py-4",
+                                            className: "px-6 py-4 text-left",
                                             children: disponibles > 0 ? disponibles : "SIN STOCK"
                                         })
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid grid-cols-1 lg:grid-cols-2",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
-                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap",
+                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left",
                                             children: "FECHA DE LA ULTIMA COMPRA"
                                         }),
                                         /*#__PURE__*/ jsx_runtime_.jsx("td", {
                                             className: "px-6 py-4 uppercase",
-                                            children: fecha
+                                            children: fecha ? fecha : "-"
                                         })
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 flex flex-col sm:flex-row",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid grid-cols-1 lg:grid-cols-2",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
-                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap",
+                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left",
                                             children: "RENTABILIDAD"
                                         }),
                                         /*#__PURE__*/ jsx_runtime_.jsx("td", {
@@ -364,11 +367,11 @@ const VerProducto = ({ producto  })=>{
                                     ]
                                 }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("tr", {
-                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 break-words flex flex-col sm:flex-row",
+                                    className: " dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 break-words justify-between grid grid-cols-1 lg:grid-cols-2",
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("th", {
                                             scope: "row",
-                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap",
+                                            className: "px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left",
                                             children: "NOTAS"
                                         }),
                                         /*#__PURE__*/ jsx_runtime_.jsx("td", {

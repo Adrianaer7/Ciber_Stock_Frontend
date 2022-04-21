@@ -70,27 +70,28 @@ const Formulario = ({ productoEditar  })=>{
     const { 0: rubroSelect , 1: setRubroSelect  } = (0,external_react_.useState)(productoEditar ? productoEditar.rubro : "");
     const { 0: proveedorSelect , 1: setProveedorSelect  } = (0,external_react_.useState)(productoEditar ? productoEditar.proveedor : "");
     const { 0: valorFaltante , 1: setValorFaltante  } = (0,external_react_.useState)(productoEditar ? productoEditar.añadirFaltante : false);
-    var ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, ref10, ref11, ref12, ref13, ref14, ref15, ref16;
+    var ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, ref10, ref11, ref12, ref13, ref14, ref15, ref16, ref17, ref18;
     const { 0: producto1 , 1: setProducto  } = (0,external_react_.useState)({
         nombre: (ref = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.nombre) !== null && ref !== void 0 ? ref : "",
         modelo: (ref1 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.modelo) !== null && ref1 !== void 0 ? ref1 : "",
         marca: (ref2 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.marca) !== null && ref2 !== void 0 ? ref2 : "",
         codigo: (ref3 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.codigo) !== null && ref3 !== void 0 ? ref3 : "",
-        valor_dolar_compra: (ref4 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.valor_dolar_compra) !== null && ref4 !== void 0 ? ref4 : "",
-        precio_venta: (ref5 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.precio_venta) !== null && ref5 !== void 0 ? ref5 : "",
-        precio_compra_dolar: (ref6 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.precio_compra_dolar) !== null && ref6 !== void 0 ? ref6 : "",
-        precio_compra_peso: (ref7 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.precio_compra_peso) !== null && ref7 !== void 0 ? ref7 : "",
-        rubro: (ref8 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.rubro) !== null && ref8 !== void 0 ? ref8 : "",
-        proveedor: (ref9 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.proveedor) !== null && ref9 !== void 0 ? ref9 : "",
-        fecha_compra: (ref10 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.fecha_compra) !== null && ref10 !== void 0 ? ref10 : helpers/* hoy */.Ns,
-        disponibles: (ref11 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.disponibles) !== null && ref11 !== void 0 ? ref11 : "",
-        rentabilidad: (ref12 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.rentabilidad) !== null && ref12 !== void 0 ? ref12 : "",
-        notas: (ref13 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.notas) !== null && ref13 !== void 0 ? ref13 : "",
-        faltante: (ref14 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.faltante) !== null && ref14 !== void 0 ? ref14 : false,
-        limiteFaltante: (ref15 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.limiteFaltante) !== null && ref15 !== void 0 ? ref15 : "",
-        añadirFaltante: (ref16 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.añadirFaltante) !== null && ref16 !== void 0 ? ref16 : false
+        barras: (ref4 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.barras) !== null && ref4 !== void 0 ? ref4 : "",
+        valor_dolar_compra: (ref5 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.valor_dolar_compra) !== null && ref5 !== void 0 ? ref5 : "",
+        precio_venta: (ref6 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.precio_venta) !== null && ref6 !== void 0 ? ref6 : "",
+        precio_compra_dolar: (ref7 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.precio_compra_dolar) !== null && ref7 !== void 0 ? ref7 : "",
+        precio_compra_peso: (ref8 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.precio_compra_peso) !== null && ref8 !== void 0 ? ref8 : "",
+        rubro: (ref9 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.rubro) !== null && ref9 !== void 0 ? ref9 : "",
+        proveedor: (ref10 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.proveedor) !== null && ref10 !== void 0 ? ref10 : "",
+        fecha_compra: (ref12 = (ref11 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.fecha_compra) !== null && ref11 !== void 0 ? ref11 : helpers/* hoy */.Ns) !== null && ref12 !== void 0 ? ref12 : "",
+        disponibles: (ref13 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.disponibles) !== null && ref13 !== void 0 ? ref13 : "",
+        rentabilidad: (ref14 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.rentabilidad) !== null && ref14 !== void 0 ? ref14 : "",
+        notas: (ref15 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.notas) !== null && ref15 !== void 0 ? ref15 : "",
+        faltante: (ref16 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.faltante) !== null && ref16 !== void 0 ? ref16 : false,
+        limiteFaltante: (ref17 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.limiteFaltante) !== null && ref17 !== void 0 ? ref17 : "",
+        añadirFaltante: (ref18 = productoEditar === null || productoEditar === void 0 ? void 0 : productoEditar.añadirFaltante) !== null && ref18 !== void 0 ? ref18 : false
     });
-    const { nombre , marca , modelo , codigo , rubro: rubro1 , precio_venta , precio_compra_dolar , fecha_compra , precio_compra_peso , valor_dolar_compra , proveedor: proveedor1 , disponibles , rentabilidad , notas , limiteFaltante  } = producto1;
+    const { nombre , marca , modelo , codigo , barras , rubro: rubro1 , precio_venta , precio_compra_dolar , fecha_compra , precio_compra_peso , valor_dolar_compra , proveedor: proveedor1 , disponibles , rentabilidad , notas , limiteFaltante  } = producto1;
     //estos 3 useEffect validan desde la bd por si falla algun dato en el state cuando valide desde el submit
     (0,external_react_.useEffect)(()=>{
         if (mensajeCodigo) {
@@ -297,6 +298,16 @@ const Formulario = ({ productoEditar  })=>{
             });
             return;
         }
+        const barrasCambiado = Number(barras);
+        if (barras < 1 || isNaN(barras) || !Number.isInteger(barrasCambiado)) {
+            external_sweetalert2_default().fire({
+                icon: "error",
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>c\xf3digo de barras</b> debe ser un n\xfamero entero mayor a 0.</p>' : '<p style="color:#545454">El <b>c\xf3digo de barras</b> debe ser un n\xfamero entero mayor a 0.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`
+            });
+            return;
+        }
         //validar el nuevo rubro. Esto lo hago para que no se vacíe el campo en caso de que haya algun error de backend
         if (valoresR) {
             if (rubros) {
@@ -452,6 +463,7 @@ const Formulario = ({ productoEditar  })=>{
                 marca: "",
                 modelo: "",
                 codigo: "",
+                barras: "",
                 rubro: "",
                 proveedor: "",
                 precio_venta: "",
@@ -491,7 +503,7 @@ const Formulario = ({ productoEditar  })=>{
                 ]
             }),
             /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                className: "bg-white dark:bg-gray-900 mt-10 px-5 py-10 rounded-md shadow-md xl:w-auto 2xl:w-11/12 mx-auto ",
+                className: "bg-white dark:bg-gray-900 mt-10 px-5 pt-1 pb-5 rounded-md shadow-md xl:w-auto 2xl:w-11/12 mx-auto ",
                 children: [
                     /*#__PURE__*/ jsx_runtime_.jsx("h1", {
                         className: "text-gray-600 dark:text-white font-bold text-xl uppercase text-center"
@@ -501,7 +513,7 @@ const Formulario = ({ productoEditar  })=>{
                         onSubmit: onSubmit,
                         children: [
                             /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                                className: "grid md:grid-cols-1 lg:grid-cols-2 lg:gap-4 ",
+                                className: "grid lg:grid-cols-2 xl:grid-cols-3 lg:gap-2 xl:gap-4 ",
                                 children: [
                                     /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
                                         className: "mb-4",
@@ -578,13 +590,36 @@ const Formulario = ({ productoEditar  })=>{
                                                 })
                                             }),
                                             /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                                type: "text",
+                                                type: "tel",
                                                 autoComplete: "off",
                                                 className: " mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300",
                                                 id: "codigo",
                                                 placeholder: "123",
                                                 name: "codigo",
                                                 value: codigo,
+                                                onChange: onChange
+                                            })
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                                        className: "mb-4",
+                                        children: [
+                                            /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                                                className: "flex justify-between",
+                                                children: /*#__PURE__*/ jsx_runtime_.jsx("label", {
+                                                    htmlFor: "codigo",
+                                                    className: "text-gray-800 dark:text-gray-300 font-bold",
+                                                    children: "C\xf3digo de barras"
+                                                })
+                                            }),
+                                            /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                                                type: "tel",
+                                                autoComplete: "off",
+                                                className: " mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300",
+                                                id: "barras",
+                                                placeholder: "893247539457",
+                                                name: "barras",
+                                                value: barras,
                                                 onChange: onChange
                                             })
                                         ]
@@ -697,14 +732,14 @@ const Formulario = ({ productoEditar  })=>{
                                                 })
                                             }),
                                             /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                                type: "text",
+                                                type: "tel",
                                                 step: "any",
                                                 autoComplete: "off",
                                                 className: "mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300",
                                                 id: "valor_dolar_compra",
                                                 placeholder: "$112",
                                                 name: "valor_dolar_compra",
-                                                value: valor_dolar_compra,
+                                                value: valor_dolar_compra.replace(",", "."),
                                                 onChange: onChange
                                             })
                                         ]
@@ -721,13 +756,13 @@ const Formulario = ({ productoEditar  })=>{
                                                 })
                                             }),
                                             /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                                type: "text",
+                                                type: "tel",
                                                 autoComplete: "off",
                                                 className: "mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300",
                                                 id: "precio_compra_dolar",
                                                 placeholder: "$28,84",
                                                 name: "precio_compra_dolar",
-                                                value: precio_compra_dolar,
+                                                value: precio_compra_dolar.replace(",", "."),
                                                 onChange: onChange
                                             })
                                         ]
@@ -744,13 +779,13 @@ const Formulario = ({ productoEditar  })=>{
                                                 })
                                             }),
                                             /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                                type: "text",
+                                                type: "tel",
                                                 autoComplete: "off",
                                                 className: "mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300",
                                                 id: "precio_compra_peso",
                                                 placeholder: "$1250",
                                                 name: "precio_compra_peso",
-                                                value: precio_compra_peso,
+                                                value: precio_compra_peso.replace(",", "."),
                                                 onChange: onChange
                                             })
                                         ]
@@ -767,13 +802,13 @@ const Formulario = ({ productoEditar  })=>{
                                                 })
                                             }),
                                             /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                                type: "text",
+                                                type: "tel",
                                                 autoComplete: "off",
                                                 className: "mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300",
                                                 id: "rentabilidad",
                                                 placeholder: "40%",
                                                 name: "rentabilidad",
-                                                value: rentabilidad,
+                                                value: rentabilidad.replace(",", "."),
                                                 onChange: onChange
                                             })
                                         ]
@@ -793,13 +828,13 @@ const Formulario = ({ productoEditar  })=>{
                                                         })
                                                     }),
                                                     /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                                        type: "text",
+                                                        type: "tel",
                                                         autoComplete: "off",
                                                         className: "mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300",
                                                         id: "precio_venta",
                                                         placeholder: "$ 10.000",
                                                         name: "precio_venta",
-                                                        value: precio_venta,
+                                                        value: precio_venta.replace(",", "."),
                                                         onChange: onChange
                                                     })
                                                 ]
@@ -813,7 +848,7 @@ const Formulario = ({ productoEditar  })=>{
                                                         children: "Sugerido"
                                                     }),
                                                     /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                                        type: "text",
+                                                        type: "tel",
                                                         autoComplete: "nope",
                                                         className: "mt-2 block w-full p-3 pr-0 hover:cursor-pointer text-right justify-end rounded-md font-bold text-red-600 bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300",
                                                         id: "valorDeVenta",
@@ -858,7 +893,7 @@ const Formulario = ({ productoEditar  })=>{
                                                 })
                                             }),
                                             /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                                type: "text",
+                                                type: "tel",
                                                 autoComplete: "off",
                                                 className: "mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300",
                                                 id: "disponibles",
@@ -885,13 +920,13 @@ const Formulario = ({ productoEditar  })=>{
                                                 children: [
                                                     /*#__PURE__*/ jsx_runtime_.jsx("input", {
                                                         type: "button",
-                                                        className: `w-2/4 rounded-md mt-2 block p-3 ${valorFaltante ? "bg-blue-200" : "bg-gray-400 "}`,
+                                                        className: `w-2/4 lg:w-1/4 rounded-md mt-2 block p-3 ${valorFaltante ? "bg-blue-200" : "bg-gray-400 "}`,
                                                         onClick: ()=>setValorFaltante(!valorFaltante)
                                                         ,
                                                         value: valorFaltante ? "Si" : "No"
                                                     }),
                                                     /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                                        type: "text",
+                                                        type: "tel",
                                                         autoComplete: "off",
                                                         className: ` ${!valorFaltante && "hover:cursor-not-allowed"} mt-2 block w-full p-3 text-right rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`,
                                                         id: "limiteFalante",
@@ -928,7 +963,7 @@ const Formulario = ({ productoEditar  })=>{
                             /*#__PURE__*/ jsx_runtime_.jsx("input", {
                                 type: "submit",
                                 value: productoEditar ? "Editar producto" : "Agregar producto",
-                                className: `${productoEditar ? "bg-green-600 dark:bg-green-800" : "bg-blue-800  dark:bg-blue-500"} mt-5 w-full  p-3 text-white uppercase font-bold text-lg rounded-md cursor-pointer`
+                                className: `${productoEditar ? "bg-green-600 active:bg-green-700 dark:bg-green-800 dark:active:bg-green-900" : "bg-blue-800 active:bg-blue-900 dark:bg-blue-500 dark:active:bg-blue-600"} mt-5 w-full  p-3 text-white uppercase font-bold text-lg rounded-md cursor-pointer`
                             })
                         ]
                     })

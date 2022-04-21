@@ -80,13 +80,13 @@ const Layout = ({children, pagina}) => {
                         <div className="flex flex-col mt-2 ml-5 py-2">
                             <button
                                 onClick={darkMode}
-                                className={`${oscuro && "text-white"} text-left py-2 hover:text-blue-300 hover:translate-x-3`}
+                                className="text-white text-left py-2 hover:text-blue-300 hover:translate-x-3"
                             >
                                 {oscuro ? "Tema claro" : "Tema oscuro"}
                             </button>
                             <button
                                 onClick={vaciarStates}
-                                className={`${oscuro && "text-white"} text-left py-2 hover:text-blue-300`}
+                                className="text-white text-left py-2 hover:text-blue-300 hover:translate-x-3"
                             >
                                 Cerrar sesión
                             </button> 
@@ -96,7 +96,7 @@ const Layout = ({children, pagina}) => {
                     
                     <nav className="grid grid-cols-3 lg:px-5 mt-4 sm:mt-10 lg:flex lg:flex-col lg:justify-start h-5/6">
                         <Link href="/productos">
-                            <a className={`${urlActual === "/productos" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-2xl block p-2 mt-2 hover:text-blue-300`}>Productos</a> 
+                            <a className={`${urlActual === "/productos" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"}  text-sm text-center lg:text-left sm:text-2xl block p-2 mt-2 hover:text-blue-300`}>Productos</a> 
                         </Link>
 
                         <Link href="/nuevoproducto">

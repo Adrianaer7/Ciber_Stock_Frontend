@@ -47,13 +47,14 @@ const Formulario = ({productoEditar}) => {
         modelo: productoEditar?.modelo ?? "",
         marca: productoEditar?.marca ?? "",
         codigo: productoEditar?.codigo ?? "",
+        barras: productoEditar?.barras ?? "",
         valor_dolar_compra: productoEditar?.valor_dolar_compra ?? "",
         precio_venta: productoEditar?.precio_venta ?? "",
         precio_compra_dolar: productoEditar?.precio_compra_dolar ?? "",
         precio_compra_peso: productoEditar?.precio_compra_peso ?? "",
         rubro: productoEditar?.rubro ?? "",
         proveedor: productoEditar?.proveedor ?? "",
-        fecha_compra: productoEditar?.fecha_compra ?? hoy,
+        fecha_compra: productoEditar?.fecha_compra ?? hoy ?? "",
         disponibles: productoEditar?.disponibles ?? "",
         rentabilidad: productoEditar?.rentabilidad ?? "",
         notas: productoEditar?.notas ?? "",
@@ -61,7 +62,7 @@ const Formulario = ({productoEditar}) => {
         limiteFaltante: productoEditar?.limiteFaltante ?? "",
         añadirFaltante: productoEditar?.añadirFaltante ?? false
     })
-    const {nombre, marca, modelo, codigo, rubro, precio_venta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, disponibles, rentabilidad, notas, limiteFaltante} = producto
+    const {nombre, marca, modelo, codigo, barras, rubro, precio_venta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, disponibles, rentabilidad, notas, limiteFaltante} = producto
     
     //estos 3 useEffect validan desde la bd por si falla algun dato en el state cuando valide desde el submit
     useEffect(() => {
@@ -262,6 +263,17 @@ const Formulario = ({productoEditar}) => {
               })
             return
         }
+
+        const barrasCambiado = Number(barras)
+        if(barras < 1 || isNaN(barras) || !Number.isInteger(barrasCambiado) ) {  //verifico si es numero entero con isInteger
+            Swal.fire({
+                icon: 'error',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>código de barras</b> debe ser un número entero mayor a 0.</p>' : '<p style="color:#545454">El <b>código de barras</b> debe ser un número entero mayor a 0.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
+              })
+            return
+        }
        
       //validar el nuevo rubro. Esto lo hago para que no se vacíe el campo en caso de que haya algun error de backend
       if(valoresR) {  //si tiene algo el input de rubro
@@ -425,6 +437,7 @@ const Formulario = ({productoEditar}) => {
                 marca: "", 
                 modelo: "", 
                 codigo: "",
+                barras: "",
                 rubro: "",
                 proveedor: "",
                 precio_venta: "", 
@@ -454,14 +467,14 @@ const Formulario = ({productoEditar}) => {
         <>
             <h1 className={`${productoEditar ? "text-green-600 dark:text-green-700" : "text-blue-900"} font-black text-3xl sm:text-4xl  dark:text-blue-300 text-center`}>{productoEditar ? "Editar Producto": "Agregar Producto"}</h1>
             <p className="mt-3 text-center text-black dark:text-gray-50">Llena los siguientes campos para {productoEditar ? "editar" : "agregar"} un producto</p>
-            <div className='bg-white dark:bg-gray-900 mt-10 px-5 py-10 rounded-md shadow-md xl:w-auto 2xl:w-11/12 mx-auto  '>
+            <div className='bg-white dark:bg-gray-900 mt-10 px-5 pt-1 pb-5 rounded-md shadow-md xl:w-auto 2xl:w-11/12 mx-auto  '>
                 <h1 className='text-gray-600 dark:text-white font-bold text-xl uppercase text-center'></h1>
                 
                 <form 
                     className="mt-10"
                     onSubmit={onSubmit}
                 >
-                    <div className="grid md:grid-cols-1 lg:grid-cols-2 lg:gap-4 ">
+                    <div className="grid lg:grid-cols-2 xl:grid-cols-3 lg:gap-2 xl:gap-4 ">
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="nombre" className="text-gray-800 dark:text-gray-300 font-bold font ">Nombre *</label>
@@ -509,13 +522,29 @@ const Formulario = ({productoEditar}) => {
 
                             </div>
                             <input  
-                                type="text"
+                                type="tel"
                                 autoComplete="off"
                                 className=" mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="codigo"
                                 placeholder="123"
                                 name="codigo"
                                 value={codigo}
+                                onChange={onChange}
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <div className="flex justify-between">
+                                <label htmlFor="codigo" className="text-gray-800 dark:text-gray-300 font-bold">Código de barras</label>
+
+                            </div>
+                            <input  
+                                type="tel"
+                                autoComplete="off"
+                                className=" mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                id="barras"
+                                placeholder="893247539457"
+                                name="barras"
+                                value={barras}
                                 onChange={onChange}
                             />
                         </div>
@@ -589,14 +618,14 @@ const Formulario = ({productoEditar}) => {
                                 <label htmlFor="valor_dolar_compra" className="text-gray-800 dark:text-gray-300 font-bold font ">Precio dolar *</label>
                             </div>
                             <input
-                                type="text"
+                                type="tel"
                                 step="any"
                                 autoComplete="off"
                                 className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="valor_dolar_compra"
                                 placeholder="$112"
                                 name="valor_dolar_compra"
-                                value={valor_dolar_compra}
+                                value={valor_dolar_compra.replace(",", ".")}
                                 onChange={onChange}
                             />
                         </div>                 
@@ -605,13 +634,13 @@ const Formulario = ({productoEditar}) => {
                                 <label htmlFor="precio_compra_dolar" className="text-gray-800 dark:text-gray-300 font-bold font ">Precio compra en USD</label>
                             </div>                            
                             <input
-                                type="text"
+                                type="tel"
                                 autoComplete="off"
                                 className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="precio_compra_dolar"
                                 placeholder="$28,84"
                                 name="precio_compra_dolar"
-                                value={precio_compra_dolar}
+                                value={precio_compra_dolar.replace(",", ".")}
                                 onChange={onChange}
                             />
                         </div>
@@ -620,13 +649,13 @@ const Formulario = ({productoEditar}) => {
                                 <label htmlFor="precio_compra_peso" className="text-gray-800 dark:text-gray-300 font-bold font ">Precio compra en AR$</label>
                             </div>                          
                             <input
-                                type="text"
+                                type="tel"
                                 autoComplete="off"
                                 className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="precio_compra_peso"
                                 placeholder="$1250"
                                 name="precio_compra_peso"
-                                value={precio_compra_peso}
+                                value={precio_compra_peso.replace(",", ".")}
                                 onChange={onChange}
                             />
                         </div>
@@ -635,13 +664,13 @@ const Formulario = ({productoEditar}) => {
                                 <label htmlFor="rentabilidad" className="text-gray-800 dark:text-gray-300 font-bold font ">Rentabilidad</label>
                             </div>                            
                             <input
-                                type="text"
+                                type="tel"
                                 autoComplete="off"
                                 className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="rentabilidad"
                                 placeholder="40%"
                                 name="rentabilidad"
-                                value={rentabilidad}
+                                value={rentabilidad.replace(",", ".")}
                                 onChange={onChange}
                             />
                         </div>
@@ -651,20 +680,20 @@ const Formulario = ({productoEditar}) => {
                                     <label htmlFor="precio_venta" className="text-gray-800  dark:text-gray-300 font-bold  ">Precio de venta</label>
                                 </div>                                 
                                 <input
-                                    type="text"
+                                    type="tel"
                                     autoComplete="off"
                                     className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                     id="precio_venta"
                                     placeholder="$ 10.000"
                                     name="precio_venta"
-                                    value={precio_venta}
+                                    value={precio_venta.replace(",", ".")}
                                     onChange={onChange}
                                 />
                             </div>
                             <div className="mb-4 justify-items-end">
                                 <label htmlFor="valorDeVenta" className="text-gray-800 dark:text-gray-300 font-bold text-right block ">Sugerido</label>
                                     <input
-                                        type="text"
+                                        type="tel"
                                         autoComplete="nope"
                                         className="mt-2 block w-full p-3 pr-0 hover:cursor-pointer text-right justify-end rounded-md font-bold text-red-600 bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                         id="valorDeVenta"
@@ -693,7 +722,7 @@ const Formulario = ({productoEditar}) => {
                                 <label htmlFor="disponibles" className="text-gray-800  dark:text-gray-300 font-bold  ">Disponibles</label>
                             </div>                             
                             <input
-                                type="text"
+                                type="tel"
                                 autoComplete="off"
                                 className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="disponibles"
@@ -710,13 +739,13 @@ const Formulario = ({productoEditar}) => {
                             <div className="flex gap-4">          
                                 <input
                                     type="button"
-                                    className={`w-2/4 rounded-md mt-2 block p-3 ${valorFaltante ? "bg-blue-200" : "bg-gray-400 "}`}
+                                    className={`w-2/4 lg:w-1/4 rounded-md mt-2 block p-3 ${valorFaltante ? "bg-blue-200" : "bg-gray-400 "}`}
                                     onClick={() => setValorFaltante(!valorFaltante)}
                                     value={valorFaltante ? "Si"  : "No"}
                                 >
                                 </input>
                                 <input
-                                    type="text"
+                                    type="tel"
                                     autoComplete="off"
                                     className={` ${!valorFaltante && "hover:cursor-not-allowed"} mt-2 block w-full p-3 text-right rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
                                     id="limiteFalante"
@@ -744,7 +773,7 @@ const Formulario = ({productoEditar}) => {
                     <input
                         type="submit"
                         value={productoEditar ? "Editar producto" : "Agregar producto"}
-                        className={`${productoEditar ? "bg-green-600 dark:bg-green-800" : "bg-blue-800  dark:bg-blue-500"} mt-5 w-full  p-3 text-white uppercase font-bold text-lg rounded-md cursor-pointer`}
+                        className={`${productoEditar ? "bg-green-600 active:bg-green-700 dark:bg-green-800 dark:active:bg-green-900" : "bg-blue-800 active:bg-blue-900 dark:bg-blue-500 dark:active:bg-blue-600"} mt-5 w-full  p-3 text-white uppercase font-bold text-lg rounded-md cursor-pointer`}
                     />
                 </form>
             </div>

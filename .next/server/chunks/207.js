@@ -118,12 +118,12 @@ const Layout = ({ children , pagina  })=>{
                                 children: [
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
                                         onClick: darkMode,
-                                        className: `${oscuro && "text-white"} text-left py-2 hover:text-blue-300 hover:translate-x-3`,
+                                        className: "text-white text-left py-2 hover:text-blue-300 hover:translate-x-3",
                                         children: oscuro ? "Tema claro" : "Tema oscuro"
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
                                         onClick: vaciarStates,
-                                        className: `${oscuro && "text-white"} text-left py-2 hover:text-blue-300`,
+                                        className: "text-white text-left py-2 hover:text-blue-300 hover:translate-x-3",
                                         children: "Cerrar sesi\xf3n"
                                     })
                                 ]
@@ -134,7 +134,7 @@ const Layout = ({ children , pagina  })=>{
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_link__WEBPACK_IMPORTED_MODULE_3___default()), {
                                         href: "/productos",
                                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
-                                            className: `${urlActual === "/productos" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-2xl block p-2 mt-2 hover:text-blue-300`,
+                                            className: `${urlActual === "/productos" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"}  text-sm text-center lg:text-left sm:text-2xl block p-2 mt-2 hover:text-blue-300`,
                                             children: "Productos"
                                         })
                                     }),
