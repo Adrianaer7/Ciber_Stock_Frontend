@@ -152,10 +152,6 @@ export default function productoReducer(state, action) {
                                     .toString()
                                     .toLowerCase()
                                     .includes(action.payload ? action.payload  : producto)
-                        || producto.barras
-                                    .toString()
-                                    .toLowerCase()
-                                    .includes(action.payload ? action.payload  : producto)
                         || producto.proveedor
                                     .toString()
                                     .toLowerCase()
