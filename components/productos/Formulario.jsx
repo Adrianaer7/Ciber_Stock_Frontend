@@ -270,17 +270,6 @@ const Formulario = ({productoEditar}) => {
               })
             return
         }
-
-        const barrasCambiado = Number(barras)
-        if(barras < 0 || isNaN(barras) || !Number.isInteger(barrasCambiado) ) {  //verifico si es numero entero con isInteger
-            Swal.fire({
-                icon: 'error',
-                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                html: `${modo ? '<p style="color:white">El <b>código de barras</b> debe ser un número entero mayor a 0.</p>' : '<p style="color:#545454">El <b>código de barras</b> debe ser un número entero mayor a 0.</p>'}`,
-                background: `${modo ? "rgb(31 41 55)" : "white"}`,
-              })
-            return
-        }
        
       //validar el nuevo rubro. Esto lo hago para que no se vacíe el campo en caso de que haya algun error de backend
       if(valoresR) {  //si tiene algo el input de rubro
@@ -552,7 +541,7 @@ const Formulario = ({productoEditar}) => {
                                 placeholder="893247539457"
                                 name="barras"
                                 value={barras}
-                                onChange={onChangeNumeros}
+                                onChange={onChange}
                             />
                         </div>
 
