@@ -17,7 +17,8 @@ const Producto = ({producto}) => {
         disponibles, 
         modelo, 
         _id, 
-        faltante
+        faltante,
+        limiteFaltante
     } = producto
     
     const conocidos = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_conocidos)).trim().replace(/\s\s+/g, ' ')   //datos que se copian al hacer click en el precio. El trim elimina los espacios en blanco al principio y al final, y el replace quita 2 o mas espacio entre palabra y palabra
@@ -61,7 +62,8 @@ const Producto = ({producto}) => {
         const valor = await Swal.fire({ //modal del input
             title: `${modo ? '<h5 style="color:white">Unidades</h5>' : '<h5 style="color:#545454">Unidades</h5>'}`,
             background: `${modo ? "rgb(31 41 55)" : "white"}`,
-            html:`${modo ? '<input id="swal-input" type="number" value="1" style="color: white " class="swal2-input">' : '<input id="swal-input" type="number" value="1" style="color: black " class="swal2-input">'}`,
+            html:`${modo ? '<input id="swal-input" type="tel" value="1" style="color: white; width: 100px; text-align:center" class="swal2-input">' : '<input id="swal-input" type="number" value="1" style="color: black; width: 100px; text-align:center;" class="swal2-input">'}`,
+            width:"25rem",
             focusConfirm: true,
             preConfirm: () => {
                 return [
@@ -93,13 +95,23 @@ const Producto = ({producto}) => {
                 return venderElProducto()
             }
             await venderProducto(producto, unidades)
-            Copiado.fire({
+            await Copiado.fire({    //luego de descontar de la bd, muestro alerta de venta correcta
                 icon: 'success',
                 title: `${unidades > 1 ? "Se vendieron " + unidades + " unidades de" + nombre : "Se vendió " + unidades + " unidad de " + nombre }`,
                 background: `${modo ? "#505050" : "white"}`,
                 width: "25%",
                 color: `${modo ? "white" : "#545454"}`,
                 })
+
+            const resta = disponibles - limiteFaltante
+            if(resta == 1) { //si el producto que vendi entró a faltantes, muestro alerta luego de la alerta de vendido
+                Copiado.fire({
+                    icon: 'success',
+                    title: 'Agregado a faltante',
+                    color: `${modo ? "white" : "#545454"}`,
+                    background: `${modo ? "#505050"  : "white"}`,
+                  })
+            }
         }
     }
       
