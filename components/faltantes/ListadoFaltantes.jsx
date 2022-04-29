@@ -139,7 +139,7 @@ const ListadoFaltantes = () => {
   return (
     <>   
         <div className="absolute lg:relative min-w-full m-0">
-        <h1 className="font-black dark:text-blue-300 text-3xl sm:text-4xl text-blue-900 text-center mt-2 sm:mt-0 mb-4 ">Listado de productos</h1>
+        <h1 className="font-black dark:text-red-500 text-3xl sm:text-4xl text-red-500 text-center mt-2 sm:mt-0 mb-4 ">Listado de faltantes</h1>
         <div className="flex flex-col-reverse sm:flex-row justify-between ">
             <input 
                 type="text" 
