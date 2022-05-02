@@ -62,7 +62,7 @@ const Producto = ({producto}) => {
         const valor = await Swal.fire({ //modal del input
             title: `${modo ? '<h5 style="color:white">Unidades</h5>' : '<h5 style="color:#545454">Unidades</h5>'}`,
             background: `${modo ? "rgb(31 41 55)" : "white"}`,
-            html:`${modo ? '<input id="swal-input" type="tel" value="1" style="color: white; width: 100px; text-align:center" class="swal2-input">' : '<input id="swal-input" type="number" value="1" style="color: black; width: 100px; text-align:center;" class="swal2-input">'}`,
+            html:`${modo ? '<input id="swal-input" type="tel" value="1" style="color: white; width: 100px; text-align:center" class="swal2-input">' : '<input id="swal-input" type="tel" value="1" style="color: black; width: 100px; text-align:center;" class="swal2-input">'}`,
             width:"25rem",
             focusConfirm: true,
             preConfirm: () => {
@@ -78,7 +78,7 @@ const Producto = ({producto}) => {
                     await Swal.fire({ //le pongo el await para que la siguiente funcion se ejecute cuando quite el modal de error
                     icon: 'error',
                     title: 'Error',
-                    color:"white",
+                    color:`${modo ? "white" : "rgb(31 41 55)"}`,
                     background: `${modo ? "rgb(31 41 55)" : "white"}`,
                     html: `${modo ? '<p style="color:#a59ff3">Los <b>unidades a vender</b> deben ser un número entero mayor a 0.</p>' : '<p style="color: #545454">Los <b>unidades a vender</b> deben ser un número entero mayor a 0.</p>'}`,
                 })
@@ -88,7 +88,7 @@ const Producto = ({producto}) => {
                 await Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    color:"white",
+                    color:`${modo ? "white" : "rgb(31 41 55)"}`,
                     background: `${modo ? "rgb(31 41 55)" : "white"}`,
                     html: `${modo ? '<p style="color:#a59ff3"><b>No se pueden vender</b> más unidades de las que hay.</p>' : '<p style="color: #545454">No se pueden vender</b> más unidades de las que hay..</p>'}`,
                 })
