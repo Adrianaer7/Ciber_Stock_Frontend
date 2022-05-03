@@ -2,10 +2,15 @@ import { useContext, useEffect, useState } from "react";
 import ProductoFaltante from "./ProductoFaltante";
 import faltanteContext from "../../context/faltantes/faltantesContext";
 import authContext from "../../context/auth/authContext";
+import Image from "next/image";
+
 const ListadoFaltantes = () => {
 
+    const AuthContext = useContext(authContext)
+    const {modo, usuarioAutenticado} = AuthContext
 
     const faltantesContext = useContext(faltanteContext)
+
     const {
         faltantes, 
         traerFaltantes, 
@@ -29,6 +34,7 @@ const ListadoFaltantes = () => {
 
     const [filtrando, setFiltrando] = useState("")    //contiene lo que voy escribiendo
     const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
+    const [focus, setFocus] = useState(false)   //activar el ring en el buscador
     const [ordenCodigo, setOrdenCodigo] = useState(false)
     const [ordenNombre, setOrdenNombre] = useState(false)
     const [ordenMarca, setOrdenMarca] = useState(false)
@@ -37,8 +43,6 @@ const ListadoFaltantes = () => {
     const [ordenProveedor, setOrdenProveedor] = useState(false)
     const [ordenDisponibles, setOrdenDisponibles] = useState(false)
 
-    const AuthContext = useContext(authContext)
-    const {usuarioAutenticado} = AuthContext
 
     useEffect(() => {
         usuarioAutenticado()
@@ -139,18 +143,32 @@ const ListadoFaltantes = () => {
   return (
     <>   
         <div className="absolute lg:relative min-w-full m-0">
-        <h1 className="font-black dark:text-red-500 text-3xl sm:text-4xl text-red-500 text-center mt-2 sm:mt-0 mb-4 ">Listado de faltantes</h1>
-        <div className="flex flex-col-reverse sm:flex-row justify-between ">
-            <input 
-                type="text" 
-                className="w-full sm:w-3/6 md:w-2/6 p-4 shadow dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 rounded-md md:rounded-lg" //outline-none le quita el borde default, focus-ring le pone borde
-                placeholder="Buscar algún producto" 
-                onChange={onChangeFiltro}
-            />
-            
-            
-        </div>    
-    </div>
+            <h1 className="font-black dark:text-red-500 text-3xl sm:text-4xl text-red-500 text-center mt-2 sm:mt-0 mb-4 ">Listado de faltantes</h1>
+            <div className="flex flex-col-reverse sm:flex-row justify-between ">
+                <div className={`${focus && "ring-2"} relative my-auto p-2 w-full sm:w-2/6 xl:w-2/6 shadow dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 bg-white rounded-md md:rounded-lg`}>
+                        <input 
+                            type="text" 
+                            className="w-10/12 xl:w-11/12 p-2 focus:outline-none dark:bg-transparent" //outline-none le quita el borde default, focus-ring le pone borde
+                            placeholder="Buscar algún faltante"
+                            onChange={onChangeFiltro}
+                            value={filtrando}
+                            onFocus={()=> setFocus(true)}
+                            onBlur={()=> setFocus(false)}
+                        />
+                        <div className="absolute mr-2 -inset-y-1 flex right-0 opacity-40">
+                            <Image
+                                src={`${modo && escribiendo ? "/close_dark.svg" : !modo && escribiendo ? "/close_light.svg": modo && !escribiendo ? "/search_light.svg" : "/search_dark.svg"}`}
+                                alt="Cerrar"
+                                width={30} 
+                                height={30}
+                                priority={true}
+                                className="cursor-pointer"
+                                onClick={escribiendo ? () => setFiltrando("") : null}
+                            />
+                        </div> 
+                    </div>  
+                </div>    
+        </div>
         <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
             <thead className="bg-red-600 text-white">
                 <tr className="hover:cursor-pointer select-none">

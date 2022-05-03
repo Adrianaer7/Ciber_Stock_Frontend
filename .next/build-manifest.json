@@ -25,11 +25,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/faltantes": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/faltantes.js"
-    ],
     "/nuevoproducto": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

@@ -530,7 +530,7 @@ const Formulario = ({productoEditar}) => {
                         </div>
                         <div className="mb-4">
                             <div className="flex justify-between">
-                                <label htmlFor="codigo" className="text-gray-800 dark:text-gray-300 font-bold">Código de barras</label>
+                                <label htmlFor="barras" className="text-gray-800 dark:text-gray-300 font-bold">Código de barras</label>
 
                             </div>
                             <input  
