@@ -44,14 +44,17 @@ export default function  faltantesReducer(state, action) {
                     faltante.nombre
                             .toString()
                             .toLowerCase()
+                            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                             .includes(action.payload.toLowerCase() ? action.payload : faltante)
                     || faltante.marca
                             .toString()
                             .toLowerCase()
+                            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                             .includes(action.payload.toLowerCase() ? action.payload : faltante)
                     || faltante.modelo
                             .toString()
                             .toLowerCase()
+                            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                             .includes(action.payload.toLowerCase() ? action.payload : faltante)
                     || faltante.codigo
                             .toString()
@@ -60,14 +63,17 @@ export default function  faltantesReducer(state, action) {
                     || faltante.proveedor
                             .toString()
                             .toLowerCase()
+                            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                             .includes(action.payload.toLowerCase() ? action.payload : faltante)
                     || faltante.rubro
                             .toString()
                             .toLowerCase()
+                            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                             .includes(action.payload.toLowerCase() ? action.payload : faltante)
                     || faltante.notas
                             .toString()
                             .toLowerCase()
+                            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                             .includes(action.payload.toLowerCase() ? action.payload : faltante)
                     
                 )

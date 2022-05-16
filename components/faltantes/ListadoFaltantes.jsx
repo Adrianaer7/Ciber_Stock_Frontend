@@ -115,7 +115,7 @@ const ListadoFaltantes = () => {
 
     const onChangeFiltro = e => {
         setFiltrando(e.target.value)
-        filtroFaltante(e.target.value)  //envio al productoState
+        filtroFaltante(e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))  //envio al productoState
     }
 
     const ordenarCodigo = () => {

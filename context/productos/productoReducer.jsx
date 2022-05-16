@@ -139,18 +139,17 @@ export default function productoReducer(state, action) {
                         producto.nombre
                                 .toString()
                                 .toLowerCase()  //convierto el campo a string minuscula
+                                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")   //el normalice separa la tilde de la letra. el replace reemplaza la tilde por "", osea lo elimina
                                 .includes(action.payload ? action.payload  : producto) //trato de encontrar un producto que contenga lo que escribo en el buscador. Convierto el input a minusculas para comparar
                         || producto.marca
                                 .toString()
                                 .toLowerCase()
+                                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                                 .includes(action.payload ? action.payload  : producto)
                         || producto.modelo
                                     .toString()
                                     .toLowerCase()
-                                    .includes(action.payload ? action.payload  : producto)
-                        || producto.codigo
-                                    .toString()
-                                    .toLowerCase()
+                                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                                     .includes(action.payload ? action.payload  : producto)
                         || producto.codigo
                                     .toString()
@@ -159,22 +158,27 @@ export default function productoReducer(state, action) {
                         || producto.barras
                                     .toString()
                                     .toLowerCase()
+                                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                                     .includes(action.payload ? action.payload  : producto)
                         || producto.proveedor
                                     .toString()
                                     .toLowerCase()
+                                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                                     .includes(action.payload ? action.payload  : producto)
                         || producto.rubro
                                     .toString()
                                     .toLowerCase()
+                                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                                     .includes(action.payload ? action.payload  : producto)
                         || producto.notas
                                     .toString()
                                     .toLowerCase()
+                                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                                     .includes(action.payload ? action.payload  : producto)
                         || producto.descripcion
                                     .toString()
                                     .toLowerCase()
+                                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                                     .includes(action.payload ? action.payload  : producto)
                 )
                 
