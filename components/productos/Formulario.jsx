@@ -5,11 +5,15 @@ import { hoy } from "../../helpers"
 import productoContext from "../../context/productos/productoContext"
 import authContext from "../../context/auth/authContext"
 import Swal from "sweetalert2"
+import compraContext from "../../context/historial/compras/compraContext"
 
 const Formulario = ({productoEditar}) => {
 
     const AuthContext = useContext(authContext)
     const {modo, usuario} = AuthContext
+
+    const CompraContext = useContext(compraContext)
+    const {compraDeProducto} = CompraContext
 
     const productosContext = useContext(productoContext)
     const { 
@@ -425,7 +429,7 @@ const Formulario = ({productoEditar}) => {
         //si es nuevo producto
         if(!productoEditar) {
             agregarProducto(producto)
-            
+            compraDeProducto(producto)
             setRubroSelect("")
             setProveedorSelect("")
             setProducto({
@@ -456,6 +460,7 @@ const Formulario = ({productoEditar}) => {
             producto._id = productoEditar._id
             editarProducto(producto)
             alertaEditarCorrecto()
+            compraDeProducto(producto)
         }
     }
 
@@ -585,7 +590,7 @@ const Formulario = ({productoEditar}) => {
                                 <input
                                     type="text"
                                     autoComplete="off"
-                                    className={`${proveedorSelect && "hover:cursor-not-allowed"} mt-2  block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
+                                    className={`${proveedorSelect && "hover:cursor-not-allowed"} mt-2  block w-2/4 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
                                     id="proveedor"
                                     placeholder="MercadoLibre"
                                     name="proveedor"
@@ -593,7 +598,8 @@ const Formulario = ({productoEditar}) => {
                                     disabled={proveedorSelect && true}
                                     onChange={onChangeProveedorInput}
                                 />
-                                <select  onChange={onChangeProveedorSelect} value={escribiendoP ? "" : proveedorSelect} disabled={escribiendoP && true} className="uppercase text-center mt-2 ml-4 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300">
+                                
+                                <select  onChange={onChangeProveedorSelect} value={escribiendoP ? "" : proveedorSelect} disabled={escribiendoP && true} className="uppercase text-center mt-2 ml-4 block w-2/4 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300">
                                     <option value="" className="uppercase"> proveedores</option>
                                     {Object.keys(proveedores).length > 0  ? (
                                         <>
