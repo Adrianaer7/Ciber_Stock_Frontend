@@ -157,7 +157,7 @@ const Formulario = ({productoEditar}) => {
         }
         if(productoEditar) {
             if(compras.length > 0) {
-
+                console.log("ola")
                 compras.map(compra => {
                     if(compra.idProducto == productoEditar._id) {
                         productos.map(product => {
@@ -176,6 +176,7 @@ const Formulario = ({productoEditar}) => {
                         })
                     }
                 })
+                
             } else {
                 productos.map(product => {
                     const idProduct = product._id
