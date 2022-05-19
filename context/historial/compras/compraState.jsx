@@ -1,9 +1,11 @@
 import {useReducer } from "react"
 import compraContext from "./compraContext"
 import compraReducer from "./compraReducer"
+import clienteAxios from "../../../config/axios"
 
 import {
-    CREAR_COMPRA
+    CREAR_COMPRA,
+    TRAER_COMPRAS
 } from "../../../types/index"
 
 
@@ -16,10 +18,19 @@ const CompraState = ({children}) => {
 
     const [state, dispatch] = useReducer(compraReducer, initialState)
 
-    const compraDeProducto = (producto) => {
+    const compraDeProducto = async (producto, cantidad) => {
+        const respuesta = await clienteAxios.post("/api/compras", {producto, cantidad}) //envio producto como objeto porque sino no puedo extraer su _id en el backend
         dispatch({
             type: CREAR_COMPRA,
-            payload: producto
+            payload: respuesta.data.compra
+        })
+    }
+
+    const traerCompras = async () => {
+        const respuesta = await clienteAxios("/api/compras")
+        dispatch({
+            type: TRAER_COMPRAS,
+            payload: respuesta.data.compras
         })
     }
 
@@ -27,7 +38,8 @@ const CompraState = ({children}) => {
     <compraContext.Provider
         value={{
             compras: state.compras,
-            compraDeProducto
+            compraDeProducto,
+            traerCompras
         }}
     >
         {children}

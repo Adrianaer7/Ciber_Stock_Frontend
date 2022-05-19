@@ -13,7 +13,7 @@ const Formulario = ({productoEditar}) => {
     const {modo, usuario} = AuthContext
 
     const CompraContext = useContext(compraContext)
-    const {compraDeProducto} = CompraContext
+    const {compras, compraDeProducto, traerCompras} = CompraContext
 
     const productosContext = useContext(productoContext)
     const { 
@@ -45,6 +45,7 @@ const Formulario = ({productoEditar}) => {
     const [rubroSelect, setRubroSelect] = useState(productoEditar ? productoEditar.rubro : "")
     const [proveedorSelect, setProveedorSelect] = useState(productoEditar ? productoEditar.proveedor : "")
     const [valorFaltante, setValorFaltante] = useState(productoEditar ? productoEditar.añadirFaltante : false)
+    const [cantidadCompra, setCantidadCompra] = useState("")
 
     const [producto, setProducto] = useState({
         nombre: productoEditar?.nombre ?? "",
@@ -119,6 +120,8 @@ const Formulario = ({productoEditar}) => {
     }, [usuario, productos])    //cuando cambie cualquiera de las 2 se ejecuta el useefect
     
 
+
+
     //cada vez que cambie el producto seleccionado me vacia el input de precio sugerido
     useEffect(() => {
         limpiarPrecioVenta()
@@ -147,6 +150,53 @@ const Formulario = ({productoEditar}) => {
         precioVenta(precio_compra_dolar, valor_dolar_compra, rentabilidad, precio_compra_peso)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [producto])
+
+    useEffect(() => {
+        if(usuario) {
+            traerCompras()
+        }
+        if(productoEditar) {
+            if(compras.length > 0) {
+
+                compras.map(compra => {
+                    if(compra.idProducto == productoEditar._id) {
+                        productos.map(product => {
+                            const compraId = compra.idProducto
+                            if(compraId == product._id) {
+                                if(product.disponibles === 0 || product.disponibles === null && producto.disponibles > 0) {
+                                    setCantidadCompra(disponibles)
+                                } else {
+                                    setCantidadCompra("")
+                                }
+                                if(product.disponibles > 0 && producto.disponibles > 0 && product.disponibles < producto.disponibles) {
+                                    let resta = producto.disponibles - product.disponibles
+                                    setCantidadCompra(resta)
+                                }
+                            }
+                        })
+                    }
+                })
+            } else {
+                productos.map(product => {
+                    const idProduct = product._id
+                    if(idProduct == productoEditar._id) {
+                        if(product.disponibles === 0 || product.disponibles === null && producto.disponibles > 0) {
+                            setCantidadCompra(disponibles)
+                        } else {
+                            setCantidadCompra("")
+                        }
+                        if(product.disponibles > 0 && producto.disponibles > 0 && product.disponibles < producto.disponibles) {
+                            let resta = producto.disponibles - product.disponibles
+                            setCantidadCompra(resta)
+                        }
+                    }
+                })
+            }
+        } else {
+            setCantidadCompra(disponibles)
+        }
+        
+    }, [disponibles])
 
     const onChange = e => {
         setProducto({
@@ -203,6 +253,8 @@ const Formulario = ({productoEditar}) => {
     } else {
         producto.añadirFaltante = false
     }
+
+    
 
     const alertaNuevoCorrecto = () => {
         Swal.fire({
@@ -429,7 +481,6 @@ const Formulario = ({productoEditar}) => {
         //si es nuevo producto
         if(!productoEditar) {
             agregarProducto(producto)
-            compraDeProducto(producto)
             setRubroSelect("")
             setProveedorSelect("")
             setProducto({
@@ -460,7 +511,9 @@ const Formulario = ({productoEditar}) => {
             producto._id = productoEditar._id
             editarProducto(producto)
             alertaEditarCorrecto()
-            compraDeProducto(producto)
+            if(cantidadCompra) {
+                compraDeProducto(producto, parseInt(cantidadCompra))
+            }
         }
     }
 

@@ -66,6 +66,11 @@ const ProductoState = ({children}) => {
                 type: AGREGAR_PRODUCTO,
                 payload: respuesta.data.producto
             })
+            if(parseInt(producto.disponibles) > 0) {
+                const cantidad = producto.disponibles
+                await clienteAxios.post("/api/compras", {producto, cantidad})
+            }
+            
 
         } catch (error) {
            dispatch({
