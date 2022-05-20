@@ -69,26 +69,6 @@ const Formulario = ({productoEditar}) => {
     })
     const {nombre, marca, modelo, codigo, barras, rubro, precio_venta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, disponibles, rentabilidad, notas, limiteFaltante} = producto
     
-    
-
-    //hago un get a todas estas colecciones para tenerlos en este componente
-    useEffect(() => {
-        if(usuario) {   //solo hace estos get cuando exista el usuario
-            traerDolarBD()
-            traerDolarAPI()
-            traerRubros()
-            traerProveedores()
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [usuario, productos])    //cuando cambie cualquiera de las 2 se ejecuta el useefect
-    
-    //cargo todos los productos una vez al cargar el componente
-    useEffect(() => {
-        if(usuario) {
-            traerProductos()
-        }
-    }, [usuario])
-    
     //estos 3 useEffect validan desde la bd por si falla algun dato en el state cuando valide desde el submit
     useEffect(() => {
         if(mensajeCodigo) {
@@ -97,7 +77,7 @@ const Formulario = ({productoEditar}) => {
                 title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
                 html: `${modo ? '<p style="color:white">El <b>codigo</b> ya esta ingresado.</p>' : '<p style="color:#545454">El <b>codigo</b> ya esta ingresado.</p>'}`,
                 background: `${modo ? "rgb(31 41 55)" : "white"}`,
-            })
+              })
             return
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -109,23 +89,37 @@ const Formulario = ({productoEditar}) => {
                 title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
                 html: `${modo ? '<p style="color:white">El <b>codigo</b> ya esta ingresado.</p>' : '<p style="color:#545454">El <b>codigo</b> ya esta ingresado.</p>'}`,
                 background: `${modo ? "rgb(31 41 55)" : "white"}`,
-            })
+              })
             return
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mensajeRubro])
-useEffect(() => {
-    if(mensajeProveedor) {
-        Swal.fire({
-            icon: 'error',
-            title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-            html: `${modo ? '<p style="color:white">El <b>codigo</b> ya esta ingresado.</p>' : '<p style="color:#545454">El <b>codigo</b> ya esta ingresado.</p>'}`,
-            background: `${modo ? "rgb(31 41 55)" : "white"}`,
-          })
-        return
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [mensajeProveedor])
+    useEffect(() => {
+        if(mensajeProveedor) {
+            Swal.fire({
+                icon: 'error',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>codigo</b> ya esta ingresado.</p>' : '<p style="color:#545454">El <b>codigo</b> ya esta ingresado.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
+              })
+            return
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [mensajeProveedor])
+
+    //hago un get a todas estas colecciones para tenerlos en este componente
+    useEffect(() => {
+        if(usuario) {   //solo hace estos get cuando exista el usuario
+            traerProductos()
+            traerDolarBD()
+            traerDolarAPI()
+            traerRubros()
+            traerProveedores()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [usuario, productos])    //cuando cambie cualquiera de las 2 se ejecuta el useefect
+    
+
 
 
     //cada vez que cambie el producto seleccionado me vacia el input de precio sugerido
@@ -162,34 +156,46 @@ useEffect(() => {
             traerCompras()
         }
         if(productoEditar) {
-            if(compras.length > 0) {    //si alguna vez se realizo la compra de algun producto
+            if(compras.length > 0) {
+
                 compras.map(compra => {
-                    if(compra.idProducto == productoEditar._id) {   //si alguna vez se compro este producto
+                    if(compra.idProducto == productoEditar._id) {
                         productos.map(product => {
                             const compraId = compra.idProducto
-                            if(compraId == product._id) {   //recorro los productos y cuando encuentre el producto que compre y quiero editar
-                                if(product.disponibles === 0 || product.disponibles === null && disponibles > 0) { //verifico si el producto de la lista de productos no tiene stock y a la vez ingresé en el input stock > 0
-                                    setCantidadCompra(disponibles)  //agrego al state lo del input
+                            if(compraId == product._id) {
+                                if(product.disponibles === 0 || product.disponibles === null && producto.disponibles > 0) {
+                                    setCantidadCompra(disponibles)
                                 } else {
-                                    setCantidadCompra("")   //sino lo vacio
+                                    setCantidadCompra("")
                                 }
-                                if(product.disponibles > 0 && disponibles > 0 && product.disponibles < disponibles) { //si tiene stock el producto de la lista de productos y es menor a lo que ingrese en el input y el input es > 0
-                                    let resta = disponibles - product.disponibles  //resto lo que hay en el input menos lo que tiene el producto y lo envio al state
+                                if(product.disponibles > 0 && producto.disponibles > 0 && product.disponibles < producto.disponibles) {
+                                    let resta = producto.disponibles - product.disponibles
                                     setCantidadCompra(resta)
                                 }
                             }
                         })
-                    } else {    //si este producto nunca se compro, no resto nada y lo agrego directamente
-                        setCantidadCompra(disponibles)
                     }
                 })
-            } else {    //si nunca se realizo ninguna compra de ningun producto
-                setCantidadCompra(disponibles)
+            } else {
+                productos.map(product => {
+                    const idProduct = product._id
+                    if(idProduct == productoEditar._id) {
+                        if(product.disponibles === 0 || product.disponibles === null && producto.disponibles > 0) {
+                            setCantidadCompra(disponibles)
+                        } else {
+                            setCantidadCompra("")
+                        }
+                        if(product.disponibles > 0 && producto.disponibles > 0 && product.disponibles < producto.disponibles) {
+                            let resta = producto.disponibles - product.disponibles
+                            setCantidadCompra(resta)
+                        }
+                    }
+                })
             }
-        } else {    //si es un producto nuevo
+        } else {
             setCantidadCompra(disponibles)
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        
     }, [disponibles])
 
     const onChange = e => {
@@ -472,10 +478,9 @@ useEffect(() => {
             agregarRubro(rubro)
         }
 
-
         //si es nuevo producto
         if(!productoEditar) {
-            agregarProducto(producto)   //agrego el nuevo producto, y si hay stock, creo la compra
+            agregarProducto(producto)
             setRubroSelect("")
             setProveedorSelect("")
             setProducto({
@@ -498,22 +503,17 @@ useEffect(() => {
                 limiteFaltante: "",
                 añadirFaltante: false
                 })
+            setValoresR("")
             setValoresP("")
             alertaNuevoCorrecto()
-            traerProductos()    //si agrego nuevo producto o modifico alguno, actualizo la lista de productos
         } else {
             //si hay que editar
             producto._id = productoEditar._id
             editarProducto(producto)
-            setRubroSelect(producto.rubro)
-            setValoresR("")
-            setProveedorSelect(producto.proveedor)
-            setValoresP("")
+            alertaEditarCorrecto()
             if(cantidadCompra) {
                 compraDeProducto(producto, parseInt(cantidadCompra))
             }
-            alertaEditarCorrecto()
-            traerProductos()
         }
     }
 
@@ -528,7 +528,7 @@ useEffect(() => {
                     className="mt-10"
                     onSubmit={onSubmit}
                 >
-                    <div className="grid lg:grid-cols-2 xl:grid-cols-3 lg:gap-2 xl:gap-4 ">
+                    <div className="grid lg:grid-cols-2 xl:grid-cols-2 lg:gap-2 xl:gap-4 ">
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="nombre" className="text-gray-800 dark:text-gray-300 font-bold font ">Nombre *</label>
@@ -636,14 +636,16 @@ useEffect(() => {
                         </div>
 
                         <div className="mb-4">
-                            <div className="flex justify-between">
-                                <label htmlFor="proveedor" className="text-gray-800 dark:text-gray-300 font-bold ">Proveedor</label>
+                            <div className="grid grid-cols-3">
+                                <label htmlFor="proveedor" className="text-gray-800 dark:text-gray-300 font-bold text-left">Proveedor</label>
+                                <label htmlFor="proveedor" className="text-gray-800 dark:text-gray-300 font-bold text-center">N°</label>
+                                <label htmlFor="proveedor" className="text-gray-800 dark:text-gray-300 font-bold text-right">Proveedores</label>
                             </div>
-                            <div className="flex">
+                            <div className="grid grid-cols-9">
                                 <input
                                     type="text"
                                     autoComplete="off"
-                                    className={`${proveedorSelect && "hover:cursor-not-allowed"} mt-2  block w-2/4 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
+                                    className={`${proveedorSelect && "hover:cursor-not-allowed"} mt-2 col-span-4 block  p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
                                     id="proveedor"
                                     placeholder="MercadoLibre"
                                     name="proveedor"
@@ -651,8 +653,16 @@ useEffect(() => {
                                     disabled={proveedorSelect && true}
                                     onChange={onChangeProveedorInput}
                                 />
+                                <input
+                                    type="text"
+                                    autoComplete="off"
+                                    className={` mt-2 ml-1 block col-span-1 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
+                                    id="numero"
+                                    placeholder="1"
+                                    name="numero"
+                                />
                                 
-                                <select  onChange={onChangeProveedorSelect} value={escribiendoP ? "" : proveedorSelect} disabled={escribiendoP && true} className="uppercase text-center mt-2 ml-4 block w-2/4 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300">
+                                <select  onChange={onChangeProveedorSelect} value={escribiendoP ? "" : proveedorSelect} disabled={escribiendoP && true} className="uppercase text-center mt-2 ml-1 block col-span-4 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300">
                                     <option value="" className="uppercase"> proveedores</option>
                                     {Object.keys(proveedores).length > 0  ? (
                                         <>

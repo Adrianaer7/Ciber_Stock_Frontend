@@ -20,9 +20,11 @@ const Compra = ({producto}) => {
               <ul>{cantidad.map((unidades, i) => <li key={i} className="mb-2">{unidades}</li>)}</ul>
             </td>
             <td className="p-3 dark:text-gray-50 text-center">
-              <ul className="">{fecha_compra.map((fecha, i) => {return <li key={i} className="mb-2">{fecha}</li>})}</ul>
+              <ul>{fecha_compra.map((fecha, i) => <li key={i} className="mb-2">{fecha}</li>)}</ul>
             </td>
-            <td className="p-3 dark:text-gray-50 text-center">{proveedor}</td>
+            <td className="p-3 dark:text-gray-50 text-center">
+              <ul>{proveedor.map((proveedor, i) => <li key={i} className="mb-2">{proveedor}</li>)}</ul>
+            </td>
 
 
         </tr>
