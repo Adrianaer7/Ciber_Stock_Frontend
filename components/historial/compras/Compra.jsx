@@ -5,7 +5,7 @@ import authContext from "../../../context/auth/authContext";
 import Swal from "sweetalert2";
 
 const Compra = ({producto}) => {
-    const {nombre, marca, codigo, disponibles, modelo, cantidad, idProducto, faltante, proveedor, fecha_compra} = producto
+    const {nombre, marca, modelo, cantidad, proveedor, fecha_compra, valor_dolar_compra, precio_compra_dolar} = producto
 
     const AuthContext = useContext(authContext)
     const {modo} = AuthContext
@@ -24,6 +24,12 @@ const Compra = ({producto}) => {
             </td>
             <td className="p-3 dark:text-gray-50 text-center">
               <ul>{proveedor.map((proveedor, i) => <li key={i} className="mb-2">{proveedor}</li>)}</ul>
+            </td>
+            <td className="p-3 dark:text-gray-50 text-center">
+              <ul>{valor_dolar_compra.map((valor, i) => <li key={i} className="mb-2">${valor}</li>)}</ul>
+            </td>
+            <td className="p-3 dark:text-gray-50 text-center">
+              <ul>{precio_compra_dolar.map((precio, i) => <li key={i} className="mb-2">$ {precio}</li>)}</ul>
             </td>
 
 

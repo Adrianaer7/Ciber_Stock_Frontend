@@ -2,5 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/producto/editar/[url]": "pages/producto/editar/[url].js"
+  "/producto/editar/[url]": "pages/producto/editar/[url].js",
+  "/compras": "pages/compras.js"
 }

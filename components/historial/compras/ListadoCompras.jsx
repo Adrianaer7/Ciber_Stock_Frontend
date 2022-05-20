@@ -109,9 +109,6 @@ const ListadoCompras = () => {
         filtroCompra(e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))  //envio al productoState
     }
 
-    const ordenarCodigo = () => {
-        setOrdenCodigo(!ordenCodigo)
-    }
     const ordenarNombre = () => {
         setOrdenNombre(!ordenNombre)
     }
@@ -157,7 +154,9 @@ const ListadoCompras = () => {
                     <th onClick={() => ordenarModelo()}>MODELO</th>
                     <th onClick={() => ordenarModelo()}>CANTIDAD</th>
                     <th onClick={() => ordenarModelo()}>FECHA DE COMPRA</th>
-                    <th onClick={() => ordenarProveedor()} className="rounded-tr-lg">PROVEEDOR</th>
+                    <th onClick={() => ordenarModelo()}>PROVEEDOR</th>
+                    <th onClick={() => ordenarModelo()}>VALOR DEL DOLAR</th>
+                    <th onClick={() => ordenarProveedor()} className="rounded-tr-lg">PRECIO EN USD</th>
                 </tr>
             </thead>
             <tbody>
