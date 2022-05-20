@@ -6,15 +6,16 @@ import CompraState from '../context/historial/compras/compraState'
 
 function MyApp({ Component, pageProps }) {
   return (
+    <AuthState>
       <ProductoState>
         <FaltanteState>
           <CompraState>
-            <AuthState>
               <Component {...pageProps} />
-            </AuthState>
           </CompraState>
         </FaltanteState>
       </ProductoState>
+    </AuthState>
+
   )
 }
 
