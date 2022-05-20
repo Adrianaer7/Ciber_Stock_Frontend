@@ -45,6 +45,12 @@ const VerProducto = ({producto}) => {
         showConfirmButton: false,
         timer: 3000
     })
+
+    const eliminar = async () => {
+        await router.push("/productos")
+        eliminarProducto(_id)
+    } 
+
     const eliminarElProducto = () => {
         Swal.fire({
             title: `${modo ? '<h5 style="color:white">¿Estás seguro?</h5>' : '<h5 style="color:#545454">¿Estás seguro?</h5>'}`,
@@ -59,8 +65,7 @@ const VerProducto = ({producto}) => {
             background: `${modo ? "rgb(31 41 55)" : "white"}`,
             }).then((result) => {
             if (result.isConfirmed) {
-                eliminarProducto(_id)
-                router.push("/productos")
+                eliminar()
                 Eliminado.fire({
                     icon: 'success',
                     title: "Se eliminó el producto correctamente",
