@@ -61,11 +61,13 @@ const ProductoState = ({children}) => {
     //crea un producto nuevo
     const agregarProducto = async producto => {
         try {
+            //creo el nuevo producto
             const respuesta = await clienteAxios.post("/api/productos", producto)
             dispatch({
                 type: AGREGAR_PRODUCTO,
                 payload: respuesta.data.producto
             })
+            //creo la nueva compra
             if(parseInt(producto.disponibles) > 0) {
                 const cantidad = producto.disponibles
                 await clienteAxios.post("/api/compras", {producto, cantidad})

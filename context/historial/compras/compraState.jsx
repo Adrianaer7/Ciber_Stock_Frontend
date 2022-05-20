@@ -18,6 +18,7 @@ const CompraState = ({children}) => {
 
     const [state, dispatch] = useReducer(compraReducer, initialState)
 
+    //agregar compra
     const compraDeProducto = async (producto, cantidad) => {
         const respuesta = await clienteAxios.post("/api/compras", {producto, cantidad}) //envio producto como objeto porque sino no puedo extraer su _id en el backend
         dispatch({

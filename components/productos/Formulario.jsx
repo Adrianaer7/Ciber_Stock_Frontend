@@ -69,6 +69,26 @@ const Formulario = ({productoEditar}) => {
     })
     const {nombre, marca, modelo, codigo, barras, rubro, precio_venta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, disponibles, rentabilidad, notas, limiteFaltante} = producto
     
+    
+
+    //hago un get a todas estas colecciones para tenerlos en este componente
+    useEffect(() => {
+        if(usuario) {   //solo hace estos get cuando exista el usuario
+            traerDolarBD()
+            traerDolarAPI()
+            traerRubros()
+            traerProveedores()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [usuario, productos])    //cuando cambie cualquiera de las 2 se ejecuta el useefect
+    
+    //cargo todos los productos una vez al cargar el componente
+    useEffect(() => {
+        if(usuario) {
+            traerProductos()
+        }
+    }, [usuario])
+    
     //estos 3 useEffect validan desde la bd por si falla algun dato en el state cuando valide desde el submit
     useEffect(() => {
         if(mensajeCodigo) {
@@ -77,7 +97,7 @@ const Formulario = ({productoEditar}) => {
                 title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
                 html: `${modo ? '<p style="color:white">El <b>codigo</b> ya esta ingresado.</p>' : '<p style="color:#545454">El <b>codigo</b> ya esta ingresado.</p>'}`,
                 background: `${modo ? "rgb(31 41 55)" : "white"}`,
-              })
+            })
             return
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -89,37 +109,23 @@ const Formulario = ({productoEditar}) => {
                 title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
                 html: `${modo ? '<p style="color:white">El <b>codigo</b> ya esta ingresado.</p>' : '<p style="color:#545454">El <b>codigo</b> ya esta ingresado.</p>'}`,
                 background: `${modo ? "rgb(31 41 55)" : "white"}`,
-              })
+            })
             return
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mensajeRubro])
-    useEffect(() => {
-        if(mensajeProveedor) {
-            Swal.fire({
-                icon: 'error',
-                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                html: `${modo ? '<p style="color:white">El <b>codigo</b> ya esta ingresado.</p>' : '<p style="color:#545454">El <b>codigo</b> ya esta ingresado.</p>'}`,
-                background: `${modo ? "rgb(31 41 55)" : "white"}`,
-              })
-            return
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [mensajeProveedor])
-
-    //hago un get a todas estas colecciones para tenerlos en este componente
-    useEffect(() => {
-        if(usuario) {   //solo hace estos get cuando exista el usuario
-            traerProductos()
-            traerDolarBD()
-            traerDolarAPI()
-            traerRubros()
-            traerProveedores()
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [usuario, productos])    //cuando cambie cualquiera de las 2 se ejecuta el useefect
-    
-
+useEffect(() => {
+    if(mensajeProveedor) {
+        Swal.fire({
+            icon: 'error',
+            title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+            html: `${modo ? '<p style="color:white">El <b>codigo</b> ya esta ingresado.</p>' : '<p style="color:#545454">El <b>codigo</b> ya esta ingresado.</p>'}`,
+            background: `${modo ? "rgb(31 41 55)" : "white"}`,
+          })
+        return
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [mensajeProveedor])
 
 
     //cada vez que cambie el producto seleccionado me vacia el input de precio sugerido
@@ -156,47 +162,34 @@ const Formulario = ({productoEditar}) => {
             traerCompras()
         }
         if(productoEditar) {
-            if(compras.length > 0) {
-                console.log("ola")
+            if(compras.length > 0) {    //si alguna vez se realizo la compra de algun producto
                 compras.map(compra => {
-                    if(compra.idProducto == productoEditar._id) {
+                    if(compra.idProducto == productoEditar._id) {   //si alguna vez se compro este producto
                         productos.map(product => {
                             const compraId = compra.idProducto
-                            if(compraId == product._id) {
-                                if(product.disponibles === 0 || product.disponibles === null && producto.disponibles > 0) {
-                                    setCantidadCompra(disponibles)
+                            if(compraId == product._id) {   //recorro los productos y cuando encuentre el producto que compre y quiero editar
+                                if(product.disponibles === 0 || product.disponibles === null && disponibles > 0) { //verifico si el producto de la lista de productos no tiene stock y a la vez ingresé en el input stock > 0
+                                    setCantidadCompra(disponibles)  //agrego al state lo del input
                                 } else {
-                                    setCantidadCompra("")
+                                    setCantidadCompra("")   //sino lo vacio
                                 }
-                                if(product.disponibles > 0 && producto.disponibles > 0 && product.disponibles < producto.disponibles) {
-                                    let resta = producto.disponibles - product.disponibles
+                                if(product.disponibles > 0 && disponibles > 0 && product.disponibles < disponibles) { //si tiene stock el producto de la lista de productos y es menor a lo que ingrese en el input y el input es > 0
+                                    let resta = disponibles - product.disponibles  //resto lo que hay en el input menos lo que tiene el producto y lo envio al state
                                     setCantidadCompra(resta)
                                 }
                             }
                         })
+                    } else {    //si este producto nunca se compro, no resto nada y lo agrego directamente
+                        setCantidadCompra(disponibles)
                     }
                 })
-                
-            } else {
-                productos.map(product => {
-                    const idProduct = product._id
-                    if(idProduct == productoEditar._id) {
-                        if(product.disponibles === 0 || product.disponibles === null && producto.disponibles > 0) {
-                            setCantidadCompra(disponibles)
-                        } else {
-                            setCantidadCompra("")
-                        }
-                        if(product.disponibles > 0 && producto.disponibles > 0 && product.disponibles < producto.disponibles) {
-                            let resta = producto.disponibles - product.disponibles
-                            setCantidadCompra(resta)
-                        }
-                    }
-                })
+            } else {    //si nunca se realizo ninguna compra de ningun producto
+                setCantidadCompra(disponibles)
             }
-        } else {
+        } else {    //si es un producto nuevo
             setCantidadCompra(disponibles)
         }
-        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [disponibles])
 
     const onChange = e => {
@@ -479,9 +472,10 @@ const Formulario = ({productoEditar}) => {
             agregarRubro(rubro)
         }
 
+
         //si es nuevo producto
         if(!productoEditar) {
-            agregarProducto(producto)
+            agregarProducto(producto)   //agrego el nuevo producto, y si hay stock, creo la compra
             setRubroSelect("")
             setProveedorSelect("")
             setProducto({
@@ -504,17 +498,22 @@ const Formulario = ({productoEditar}) => {
                 limiteFaltante: "",
                 añadirFaltante: false
                 })
-            setValoresR("")
             setValoresP("")
             alertaNuevoCorrecto()
+            traerProductos()    //si agrego nuevo producto o modifico alguno, actualizo la lista de productos
         } else {
             //si hay que editar
             producto._id = productoEditar._id
             editarProducto(producto)
-            alertaEditarCorrecto()
+            setRubroSelect(producto.rubro)
+            setValoresR("")
+            setProveedorSelect(producto.proveedor)
+            setValoresP("")
             if(cantidadCompra) {
                 compraDeProducto(producto, parseInt(cantidadCompra))
             }
+            alertaEditarCorrecto()
+            traerProductos()
         }
     }
 
