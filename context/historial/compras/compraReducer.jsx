@@ -21,7 +21,7 @@ export default function comprareducer (state, action) {
         case CREAR_COMPRA:
             return {
                 ...state,
-                compras: [...state.compras, action.payload]
+                compras: state.compras.map(compra => compra.idProducto === action.payload.idProducto ? action.payload : [...state.compras, action.payload])
             }
         case TRAER_COMPRAS:
             return {

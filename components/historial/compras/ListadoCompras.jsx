@@ -33,11 +33,9 @@ const ListadoCompras = () => {
     const [filtrando, setFiltrando] = useState("")    //contiene lo que voy escribiendo
     const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
     const [focus, setFocus] = useState(false)   //activar el ring en el buscador
-    const [ordenCodigo, setOrdenCodigo] = useState(false)
     const [ordenNombre, setOrdenNombre] = useState(false)
     const [ordenMarca, setOrdenMarca] = useState(false)
     const [ordenModelo, setOrdenModelo] = useState(false)
-    const [ordenRubro, setOrdenRubro] = useState(false)
     const [ordenProveedor, setOrdenProveedor] = useState(false)
 
 
@@ -51,13 +49,7 @@ const ListadoCompras = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    useEffect(() => {
-        if(filtrando) {
-            orderCodigoFiltrados(ordenCodigo)
-        }
-        orderCodigo(ordenCodigo)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[ordenCodigo])
+    
     useEffect(() => {
         if(filtrando) {
             orderNombreFiltrados(ordenNombre)
@@ -79,13 +71,7 @@ const ListadoCompras = () => {
         orderModelo(ordenModelo)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ordenModelo])
-    useEffect(() => {
-        if(filtrando) {
-            orderRubroFiltrados(ordenRubro)
-        }
-        orderRubro(ordenRubro)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ordenRubro])
+    
     useEffect(() => {
         if(filtrando) {
             orderProveedorFiltrados(ordenProveedor)
@@ -117,9 +103,6 @@ const ListadoCompras = () => {
     }
     const ordenarModelo = () => {
         setOrdenModelo(!ordenModelo)
-    }
-    const ordenarRubro = () => {
-        setOrdenRubro(!ordenRubro)
     }
     const ordenarProveedor = () => {
         setOrdenProveedor(!ordenProveedor)
@@ -163,10 +146,14 @@ const ListadoCompras = () => {
             
                 <>
                     {compras.map(producto => (
-                        <Compra
-                            key={producto.idProducto}
-                            producto={producto}
-                        />
+                        
+
+                            <Compra
+                                key={producto.idProducto}
+                                producto={producto}
+                            />
+
+                        
                     ))}
                 </>
                 

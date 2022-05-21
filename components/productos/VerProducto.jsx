@@ -47,8 +47,8 @@ const VerProducto = ({producto}) => {
     })
 
     const eliminar = async () => {
-        await router.push("/productos")
-        eliminarProducto(_id)
+        await eliminarProducto(_id)
+        router.push("/productos")
     } 
 
     const eliminarElProducto = () => {

@@ -110,16 +110,20 @@ const Formulario = ({productoEditar}) => {
     //hago un get a todas estas colecciones para tenerlos en este componente
     useEffect(() => {
         if(usuario) {   //solo hace estos get cuando exista el usuario
-            traerProductos()
             traerDolarBD()
             traerDolarAPI()
             traerRubros()
             traerProveedores()
+            traerCompras()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [usuario, productos])    //cuando cambie cualquiera de las 2 se ejecuta el useefect
     
-
+    useEffect(() => {
+        if(usuario) {
+            traerProductos()
+        }
+    }, [usuario])
 
 
     //cada vez que cambie el producto seleccionado me vacia el input de precio sugerido
@@ -152,31 +156,29 @@ const Formulario = ({productoEditar}) => {
     }, [producto])
 
     useEffect(() => {
-        if(usuario) {
-            traerCompras()
-        }
         if(productoEditar) {
             if(compras.length > 0) {
-
                 compras.map(compra => {
                     if(compra.idProducto == productoEditar._id) {
                         productos.map(product => {
                             const compraId = compra.idProducto
                             if(compraId == product._id) {
-                                if(product.disponibles === 0 || product.disponibles === null && producto.disponibles > 0) {
-                                    setCantidadCompra(disponibles)
+                                if(producto.disponibles > product.disponibles) {
+                                    setCantidadCompra(producto.disponibles - product.disponibles)
                                 } else {
                                     setCantidadCompra("")
                                 }
-                                if(product.disponibles > 0 && producto.disponibles > 0 && product.disponibles < producto.disponibles) {
-                                    let resta = producto.disponibles - product.disponibles
-                                    setCantidadCompra(resta)
-                                }
+                                
                             }
+                        
                         })
+                        return
+                    } else {
+                        console.log("ola")
                     }
                 })
             } else {
+                console.log("nolista")
                 productos.map(product => {
                     const idProduct = product._id
                     if(idProduct == productoEditar._id) {
@@ -505,15 +507,17 @@ const Formulario = ({productoEditar}) => {
                 })
             setValoresR("")
             setValoresP("")
+            traerProductos()
             alertaNuevoCorrecto()
         } else {
             //si hay que editar
             producto._id = productoEditar._id
             editarProducto(producto)
-            alertaEditarCorrecto()
             if(cantidadCompra) {
                 compraDeProducto(producto, parseInt(cantidadCompra))
             }
+            traerProductos()
+            alertaEditarCorrecto()
         }
     }
 
