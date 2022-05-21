@@ -45,7 +45,6 @@ const Formulario = ({productoEditar}) => {
     const [rubroSelect, setRubroSelect] = useState(productoEditar ? productoEditar.rubro : "")
     const [proveedorSelect, setProveedorSelect] = useState(productoEditar ? productoEditar.proveedor : "")
     const [valorFaltante, setValorFaltante] = useState(productoEditar ? productoEditar.añadirFaltante : false)
-    const [cantidadCompra, setCantidadCompra] = useState("")
 
     const [producto, setProducto] = useState({
         nombre: productoEditar?.nombre ?? "",
@@ -149,56 +148,7 @@ const Formulario = ({productoEditar}) => {
         }
     }, [valoresP])
 
-    //cada vez que escriba en los inputs se realiza el calculo aprox para el precio de la venta
-    useEffect(() => {
-        precioVenta(precio_compra_dolar, valor_dolar_compra, rentabilidad, precio_compra_peso)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [producto])
-
-    useEffect(() => {
-        if(productoEditar) {
-            if(compras.length > 0) {
-                compras.map(compra => {
-                    if(compra.idProducto == productoEditar._id) {
-                        productos.map(product => {
-                            const compraId = compra.idProducto
-                            if(compraId == product._id) {
-                                if(producto.disponibles > product.disponibles) {
-                                    setCantidadCompra(producto.disponibles - product.disponibles)
-                                } else {
-                                    setCantidadCompra("")
-                                }
-                                
-                            }
-                        
-                        })
-                        return
-                    } else {
-                        console.log("ola")
-                    }
-                })
-            } else {
-                console.log("nolista")
-                productos.map(product => {
-                    const idProduct = product._id
-                    if(idProduct == productoEditar._id) {
-                        if(product.disponibles === 0 || product.disponibles === null && producto.disponibles > 0) {
-                            setCantidadCompra(disponibles)
-                        } else {
-                            setCantidadCompra("")
-                        }
-                        if(product.disponibles > 0 && producto.disponibles > 0 && product.disponibles < producto.disponibles) {
-                            let resta = producto.disponibles - product.disponibles
-                            setCantidadCompra(resta)
-                        }
-                    }
-                })
-            }
-        } else {
-            setCantidadCompra(disponibles)
-        }
-        
-    }, [disponibles])
+ 
 
     const onChange = e => {
         setProducto({
@@ -513,9 +463,6 @@ const Formulario = ({productoEditar}) => {
             //si hay que editar
             producto._id = productoEditar._id
             editarProducto(producto)
-            if(cantidadCompra) {
-                compraDeProducto(producto, parseInt(cantidadCompra))
-            }
             traerProductos()
             alertaEditarCorrecto()
         }
