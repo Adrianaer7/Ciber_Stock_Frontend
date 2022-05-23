@@ -45,6 +45,7 @@ const Formulario = ({productoEditar}) => {
     const [rubroSelect, setRubroSelect] = useState(productoEditar ? productoEditar.rubro : "")
     const [proveedorSelect, setProveedorSelect] = useState(productoEditar ? productoEditar.proveedor : "")
     const [valorFaltante, setValorFaltante] = useState(productoEditar ? productoEditar.añadirFaltante : false)
+    const [cantidad, setCantidad] = useState("")
 
     const [producto, setProducto] = useState({
         nombre: productoEditar?.nombre ?? "",
@@ -396,17 +397,7 @@ const Formulario = ({productoEditar}) => {
               })
             return
         }
-        //Validar stock
-        const disponibleCambiado = Number(disponibles)
-        if(disponibles < 0 || isNaN(disponibles) || !Number.isInteger(disponibleCambiado)) {
-            Swal.fire({
-                icon: 'error',
-                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                html: `${modo ? '<p style="color:white">La <b>disponibilidad</b> debe ser un número entero mayor a 0.</p>' : '<p style="color:#545454">El <b>disponibilidad</b> debe ser un número entero mayor a 0.</p>'}`,
-                background: `${modo ? "rgb(31 41 55)" : "white"}`,
-              })
-            return
-        }
+        
 
         //validar numero de faltantes
         const limiteFaltanteCambiado = Number(limiteFaltante)
@@ -432,7 +423,11 @@ const Formulario = ({productoEditar}) => {
 
         //si es nuevo producto
         if(!productoEditar) {
-            agregarProducto(producto)
+            if(cantidad) {
+                producto.disponibles = cantidad
+            }
+            agregarProducto(producto, cantidad)
+            setCantidad("")
             setRubroSelect("")
             setProveedorSelect("")
             setProducto({
@@ -448,7 +443,6 @@ const Formulario = ({productoEditar}) => {
                 fecha_compra: hoy, 
                 precio_compra_peso: "", 
                 valor_dolar_compra: "", 
-                disponibles: "", 
                 rentabilidad: "", 
                 notas: "",
                 faltante: false,
@@ -461,8 +455,16 @@ const Formulario = ({productoEditar}) => {
             alertaNuevoCorrecto()
         } else {
             //si hay que editar
+            if(cantidad && disponibles) {
+                producto.disponibles = Number(producto.disponibles) + Number(cantidad)
+            } else {
+                if(cantidad && !disponibles) {
+                    producto.disponibles = Number(cantidad)
+                }
+            }
             producto._id = productoEditar._id
-            editarProducto(producto)
+            editarProducto(producto, cantidad)
+            setCantidad("")
             traerProductos()
             alertaEditarCorrecto()
         }
@@ -735,17 +737,17 @@ const Formulario = ({productoEditar}) => {
                         </div>
                         <div className="mb-4">
                             <div className="flex justify-between">
-                                <label htmlFor="disponibles" className="text-gray-800  dark:text-gray-300 font-bold  ">Disponibles</label>
+                                <label htmlFor="cantidad" className="text-gray-800  dark:text-gray-300 font-bold  ">cantidad</label>
                             </div>                             
                             <input
                                 type="tel"
                                 autoComplete="off"
                                 className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                id="disponibles"
+                                id="cantidad"
                                 placeholder="4 UNIDADES"
-                                name="disponibles"
-                                value={disponibles}
-                                onChange={onChange}
+                                name="cantidad"
+                                value={cantidad}
+                                onChange={e => setCantidad(e.target.value)}
                             />
                         </div>
                         <div className="mb-4">

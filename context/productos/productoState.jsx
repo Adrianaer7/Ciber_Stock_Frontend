@@ -59,7 +59,7 @@ const ProductoState = ({children}) => {
     const [state, dispatch] = useReducer(productoReducer, initialState) // se renombra initialState como state
 
     //crea un producto nuevo
-    const agregarProducto = async producto => {
+    const agregarProducto = async (producto, cantidad) => {
         try {
             //creo el nuevo producto
             const respuesta = await clienteAxios.post("/api/productos", producto)
@@ -68,8 +68,7 @@ const ProductoState = ({children}) => {
                 payload: respuesta.data.producto
             })
             //creo la nueva compra
-            if(producto.disponibles > 0) {
-                const cantidad = producto.disponibles
+            if(cantidad > 0) {
                 await clienteAxios.post("/api/compras", {producto, cantidad})
             }
             
@@ -132,13 +131,16 @@ const ProductoState = ({children}) => {
     }
 
     //modifico el producto
-    const editarProducto = async producto => {
+    const editarProducto = async (producto, cantidad) => {
         try {
-            const respuesta = await clienteAxios.put(`/api/productos/${producto._id}`, producto)
+            const respuesta = await clienteAxios.put(`/api/productos/${producto._id}`, {producto, cantidad})
             dispatch({
                 type: EDITAR_PRODUCTO,
                 payload: respuesta.data.producto
             })
+            if(cantidad > 0) {
+                await clienteAxios.post("/api/compras", {producto, cantidad})
+            }
         } catch (error) {
             console.log(error)
         }
