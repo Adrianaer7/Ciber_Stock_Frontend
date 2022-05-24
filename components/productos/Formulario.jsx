@@ -150,7 +150,11 @@ const Formulario = ({productoEditar}) => {
         }
     }, [valoresP])
 
-
+    //cada vez que escriba en los inputs se realiza el calculo aprox para el precio de la venta
+    useEffect(() => {
+        precioVenta(precio_compra_dolar, valor_dolar_compra, rentabilidad, precio_compra_peso)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [rentabilidad])
 
     const onChange = e => {
         setProducto({
@@ -165,6 +169,13 @@ const Formulario = ({productoEditar}) => {
             [e.target.name]: e.target.value.replace(",", "."),
         })
     }
+
+    useEffect(() => {
+        setProducto({
+            ...producto,
+            precio_venta: valorDeVenta
+        })
+    }, [valorDeVenta])
     
     //Al escribir, escribiendo pasa a true, se vacia el select y se deshabilita. 
     //Envio lo que escribo al state de valores, y lo que está en valores lo envio al state de producto. Al hacer submit vacio el state de valores, entonces el input queda vacio
@@ -589,8 +600,8 @@ const Formulario = ({productoEditar}) => {
                         <div className="mb-4">
                             <div className="grid grid-cols-3">
                                 <label htmlFor="proveedor" className="text-gray-800 dark:text-gray-300 font-bold text-left">Proveedor</label>
-                                <label htmlFor="proveedor" className="text-gray-800 dark:text-gray-300 font-bold text-center">N°</label>
-                                <label htmlFor="proveedor" className="text-gray-800 dark:text-gray-300 font-bold text-right">Proveedores</label>
+                                <label htmlFor="cantidad" className="text-gray-800 dark:text-gray-300 font-bold text-center">N°</label>
+                                <label htmlFor="selectp" className="text-gray-800 dark:text-gray-300 font-bold text-right">Proveedores</label>
                             </div>
                             <div className="grid grid-cols-9">
                                 <input
@@ -605,15 +616,16 @@ const Formulario = ({productoEditar}) => {
                                     onChange={onChangeProveedorInput}
                                 />
                                 <input
-                                    type="text"
+                                    type="tel"
                                     autoComplete="off"
-                                    className={` mt-2 ml-1 block col-span-1 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
-                                    id="numero"
-                                    placeholder="1"
-                                    name="numero"
-                                />
+                                    className={`text-center mt-2 ml-1 block col-span-1 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
+                                    id="cantidad"
+                                    name="cantidad"
+                                    value={cantidad}
+                                    onChange={e => setCantidad(e.target.value)}
+                            />
                                 
-                                <select  onChange={onChangeProveedorSelect} value={escribiendoP ? "" : proveedorSelect} disabled={escribiendoP && true} className="uppercase text-center mt-2 ml-1 block col-span-4 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300">
+                                <select id="selectp" onChange={onChangeProveedorSelect} value={escribiendoP ? "" : proveedorSelect} disabled={escribiendoP && true} className="uppercase text-center mt-2 ml-1 block col-span-4 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300">
                                     <option value="" className="uppercase"> proveedores</option>
                                     {Object.keys(proveedores).length > 0  ? (
                                         <>
@@ -690,36 +702,21 @@ const Formulario = ({productoEditar}) => {
                                 onChange={onChange}
                             />
                         </div>
-                        <div className="grid grid-cols-2 gap-2">
                             <div className="mb-4">
-                                <div className="flex justify-between">
-                                    <label htmlFor="precio_venta" className="text-gray-800  dark:text-gray-300 font-bold  ">Precio de venta</label>
-                                </div>                                 
+                                <label htmlFor="precio_venta" className="text-gray-800  dark:text-gray-300 font-bold  ">Precio de venta en efectivo</label>
                                 <input
                                     type="tel"
                                     autoComplete="off"
-                                    className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                    className="mt-2 block w-full p-3 pr-0 hover:cursor-pointer  justify-end rounded-md font-bold text-red-600 bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                     id="precio_venta"
                                     placeholder="$ 10.000"
                                     name="precio_venta"
                                     value={precio_venta}
-                                    onChange={onChangeNumeros}
+                                    readOnly={true}
+                                    
                                 />
                             </div>
-                            <div className="mb-4 justify-items-end">
-                                <label htmlFor="valorDeVenta" className="text-gray-800 dark:text-gray-300 font-bold text-right block ">Sugerido</label>
-                                    <input
-                                        type="tel"
-                                        autoComplete="nope"
-                                        className="mt-2 block w-full p-3 pr-0 hover:cursor-pointer text-right justify-end rounded-md font-bold text-red-600 bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                        id="valorDeVenta"
-                                        name="valorDeVenta"
-                                        defaultValue={valorDeVenta}
-                                        readOnly={true}
-                                        onClick={() => navigator.clipboard.writeText(`${valorDeVenta}`)}  //al tocar copiar enlace se crea un portapapeles con el link
-                                    />                                
-                            </div>
-                        </div>
+                            
                         <div className="mb-4">
                             <label htmlFor="fecha_compra" className="text-gray-800 dark:text-gray-300 font-bold ">Fecha de compra</label>
                             <input
@@ -733,21 +730,7 @@ const Formulario = ({productoEditar}) => {
                                 onChange={onChange}
                             />
                         </div>
-                        <div className="mb-4">
-                            <div className="flex justify-between">
-                                <label htmlFor="cantidad" className="text-gray-800  dark:text-gray-300 font-bold  ">cantidad</label>
-                            </div>                             
-                            <input
-                                type="tel"
-                                autoComplete="off"
-                                className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                id="cantidad"
-                                placeholder="4 UNIDADES"
-                                name="cantidad"
-                                value={cantidad}
-                                onChange={e => setCantidad(e.target.value)}
-                            />
-                        </div>
+                        
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="limiteFaltante" className="text-gray-800  dark:text-gray-300 font-bold  ">Añadir como faltante cuanto llegue a: </label>

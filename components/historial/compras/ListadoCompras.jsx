@@ -125,11 +125,11 @@ const ListadoCompras = () => {
                     <th onClick={() => ordenarNombre()} className="p-2 rounded-tl-lg" >NOMBRE</th>
                     <th onClick={() => ordenarMarca()}>MARCA</th>
                     <th onClick={() => ordenarModelo()}>MODELO</th>
-                    <th onClick={() => ordenarModelo()}>CANTIDAD</th>
-                    <th onClick={() => ordenarModelo()}>FECHA DE COMPRA</th>
-                    <th onClick={() => ordenarModelo()}>PROVEEDOR</th>
-                    <th onClick={() => ordenarModelo()}>VALOR DEL DOLAR</th>
-                    <th onClick={() => ordenarProveedor()} className="rounded-tr-lg">PRECIO EN USD</th>
+                    <th>CANTIDAD</th>
+                    <th>FECHA DE COMPRA</th>
+                    <th>PROVEEDOR</th>
+                    <th>VALOR DEL DOLAR</th>
+                    <th className="rounded-tr-lg">PRECIO EN USD</th>
                 </tr>
             </thead>
             <tbody>
