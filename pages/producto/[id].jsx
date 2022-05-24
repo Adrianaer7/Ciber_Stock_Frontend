@@ -10,11 +10,11 @@ import NoEncontrado from '../../components/productos/NoEncontrado';
 
 
 export async function getServerSideProps({ params: {id} }) {
-  const respuesta = await clienteAxios.get(`/api/productos/${id}`)
-  if(respuesta.data.redireccionar) {  //si es true
+  const {data} = await clienteAxios.get(`/api/productos/${id}`)
+  if(data.redireccionar) {  //si es true
     return {notFound: true} //redirecciono a la pagina 404. notFound es una funcion de next
   }
-  const producto = respuesta.data.producto
+  const producto = data.producto
   return { props: { producto }}
 }
 

@@ -33,10 +33,10 @@ const AuthState = ({children}) => {
     //Registrar nuevos usuarios
     const registrarUsuario = async datos => {
         try {
-            const respuesta = await clienteAxios.post("/api/usuarios", datos)
+            const {data} = await clienteAxios.post("/api/usuarios", datos)
             dispatch({
                 type: REGISTRO_EXITOSO,
-                payload: respuesta.data.msg
+                payload: data.msg
             })
         } catch (error) {
             dispatch({
@@ -70,10 +70,10 @@ const AuthState = ({children}) => {
     //Autenticar usuario
     const iniciarSesion = async datos => {  //la uso en login.js
         try {
-            const respuesta = await clienteAxios.post("/api/auth", datos)   //envio los datos para que me cree un token
+            const {data} = await clienteAxios.post("/api/auth", datos)   //envio los datos para que me cree un token
             dispatch({
                 type: LOGIN_EXITOSO,
-                payload: respuesta.data.token
+                payload: data.token
             })
             usuarioAutenticado()
 
@@ -99,11 +99,11 @@ const AuthState = ({children}) => {
             tokenAuth(token)
         }
         try {
-            const respuesta = await clienteAxios.get("/api/auth")
-            if(respuesta.data.usuario) {
+            const {data} = await clienteAxios.get("/api/auth")
+            if(data.usuario) {
                 dispatch({
                     type: USUARIO_AUTENTICADO,
-                    payload: respuesta.data.usuario
+                    payload: data.usuario
                 })
             }
             

@@ -9,11 +9,11 @@ import NoEncontrado from "../../../components/productos/NoEncontrado";
 
 
 export async function getServerSideProps({ params: {url} }) {
-  const respuesta = await clienteAxios.get(`/api/productos/${url}`)
-  if(respuesta.data.redireccionar) {
+  const {data} = await clienteAxios.get(`/api/productos/${url}`)
+  if(data.redireccionar) {
     return {notFound: true}
   }
-  const productoEditar = respuesta.data.producto
+  const productoEditar = data.producto
   return { props: { productoEditar }}
 }
 

@@ -59,17 +59,17 @@ const ProductoState = ({children}) => {
     const [state, dispatch] = useReducer(productoReducer, initialState) // se renombra initialState como state
 
     //crea un producto nuevo
-    const agregarProducto = async (producto, cantidad) => {
+    const agregarProducto = async (producto, cantidad, desdeForm) => {
         try {
             //creo el nuevo producto
-            const respuesta = await clienteAxios.post("/api/productos", producto)
+            const {data} = await clienteAxios.post("/api/productos", producto)
             dispatch({
                 type: AGREGAR_PRODUCTO,
-                payload: respuesta.data.producto
+                payload: data.producto
             })
             //creo la nueva compra
-            if(cantidad > 0) {
-                await clienteAxios.post("/api/compras", {producto, cantidad})
+            if(desdeForm && cantidad > 0) {
+                await clienteAxios.post("/api/compras", {producto, cantidad, desdeForm})
             }
             
 
@@ -91,10 +91,10 @@ const ProductoState = ({children}) => {
     const agregarRubro = async nombre => {  //envio el rubro
         try {
             
-            const respuesta = await clienteAxios.post("/api/rubros", {nombre})
+            const {data} = await clienteAxios.post("/api/rubros", {nombre})
             dispatch({
                 type: AGREGAR_RUBRO,
-                payload: respuesta.data.rubro.nombre
+                payload: data.rubro.nombre
             })
         } catch (error) {
             dispatch({
@@ -112,10 +112,10 @@ const ProductoState = ({children}) => {
     //crea un nuevo proveedor
     const agregarProveedor = async nombre => {
         try {
-            const respuesta = await clienteAxios.post("/api/proveedores", {nombre})
+            const {data} = await clienteAxios.post("/api/proveedores", {nombre})
             dispatch({
                 type: AGREGAR_PROVEEDOR,
-                payload: respuesta.data.proveedor
+                payload: data.proveedor
             })
         } catch (error) {
             dispatch({
@@ -131,16 +131,18 @@ const ProductoState = ({children}) => {
     }
 
     //modifico el producto
-    const editarProducto = async (producto, cantidad) => {
+    const editarProducto = async (producto, cantidad, desdeForm) => {
         try {
-            const respuesta = await clienteAxios.put(`/api/productos/${producto._id}`, {producto, cantidad})
+            const {data} = await clienteAxios.put(`/api/productos/${producto._id}`, {producto, cantidad})
             dispatch({
                 type: EDITAR_PRODUCTO,
-                payload: respuesta.data.producto
+                payload: data.producto
             })
-            if(cantidad > 0) {
-                await clienteAxios.post("/api/compras", {producto, cantidad})
+            if(desdeForm) {
+
+                await clienteAxios.post("/api/compras", {producto, cantidad, desdeForm})
             }
+            
         } catch (error) {
             console.log(error)
         }
@@ -149,12 +151,12 @@ const ProductoState = ({children}) => {
     const editarProductos = async precio => {
         try {
             if(precio) {
-                const respuesta = await clienteAxios.put("/api/productos", {precio})
+                const {data} = await clienteAxios.put("/api/productos", {precio})
                 dispatch({
                     type: PRODUCTOS_CAMBIADOS,
-                    payload: respuesta.data.productos
+                    payload: data.productos
                 })
-                respuesta.data.productos.map(producto => {
+                data.productos.map(producto => {
                     editarProducto(producto)
                 })
             }
@@ -167,10 +169,10 @@ const ProductoState = ({children}) => {
     //trae todos los productos creados
     const traerProductos = async () => {
         try {
-            const respuesta = await clienteAxios.get("/api/productos")
+            const {data} = await clienteAxios.get("/api/productos")
             dispatch({
                 type: OBTENER_PRODUCTOS,
-                payload: respuesta.data.productos
+                payload: data.productos
             })
         } catch (error) {
             console.log(error)
@@ -181,10 +183,10 @@ const ProductoState = ({children}) => {
     //trae todos los rubros creados
     const traerRubros = async () => {
         try {
-            const respuesta = await clienteAxios.get("/api/rubros")
+            const {data} = await clienteAxios.get("/api/rubros")
             dispatch({
                 type: OBTENER_RUBROS,
-                payload: respuesta.data.rubros
+                payload: data.rubros
             })
         } catch (error) {
             console.log(error)
@@ -193,10 +195,10 @@ const ProductoState = ({children}) => {
 
     const traerProveedores = async () => {
         try {
-            const respuesta = await clienteAxios.get("/api/proveedores")
+            const {data} = await clienteAxios.get("/api/proveedores")
             dispatch({
                 type: OBTENER_PROVEEDORES,
-                payload: respuesta.data.proveedores
+                payload: data.proveedores
             })
         } catch (error) {
             console.log(error)
@@ -335,9 +337,9 @@ const ProductoState = ({children}) => {
 
     const traerDolarBD = async () => {
         try {
-            const respuesta = await clienteAxios.get("/api/dolares")
-            if(respuesta.data.dolar.length !== 0) {
-                const dolar = respuesta.data.dolar[0].precio
+            const {data} = await clienteAxios.get("/api/dolares")
+            if(data.dolar.length !== 0) {
+                const dolar = data.dolar[0].precio
                 dispatch({
                 type: TRAER_DOLAR_BD,
                 payload: dolar

@@ -24,8 +24,8 @@ const ConfirmarToken = ({msg}) => {
 
 
 export async function getServerSideProps({ params: {token} }) {
-    const respuesta = await clienteAxios.get(`/api/usuarios/confirmar/${token}`)
-    const msg = respuesta.data.msg
+    const {data} = await clienteAxios.get(`/api/usuarios/confirmar/${token}`)
+    const msg = data.msg
     
     return { props: { msg }}
   }

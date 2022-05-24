@@ -14,20 +14,14 @@ const ListadoCompras = () => {
     const {
         compras, 
         traerCompras, 
-        filtroCompras, 
+        filtroCompra, 
         filtrados,
-        orderCodigo,
-        orderCodigoFiltrados, 
         orderNombre,
         orderNombreFiltrados,
         orderMarca,
         orderMarcaFiltrados,
         orderModelo,
         orderModeloFiltrados,
-        orderRubro,
-        orderRubroFiltrados,
-        orderProveedor,
-        orderProveedorFiltrados,
     } = CompraContext
 
     const [filtrando, setFiltrando] = useState("")    //contiene lo que voy escribiendo
@@ -70,16 +64,7 @@ const ListadoCompras = () => {
         }
         orderModelo(ordenModelo)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ordenModelo])
-    
-    useEffect(() => {
-        if(filtrando) {
-            orderProveedorFiltrados(ordenProveedor)
-        }
-        orderProveedor(ordenProveedor)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ordenProveedor])
-    
+    }, [ordenModelo])  
     
 
     useEffect(() => {
@@ -104,14 +89,11 @@ const ListadoCompras = () => {
     const ordenarModelo = () => {
         setOrdenModelo(!ordenModelo)
     }
-    const ordenarProveedor = () => {
-        setOrdenProveedor(!ordenProveedor)
-    }
-
+  
   return (
     <>   
         <div className="absolute lg:relative min-w-full m-0">
-            <h1 className="font-black dark:text-red-500 text-3xl sm:text-4xl text-red-500 text-center mt-2 sm:mt-0 mb-4 ">Listado de compras</h1>
+            <h1 className="font-black dark:text-yellow-500 text-3xl sm:text-4xl text-yellow-500 text-center mt-2 sm:mt-0 mb-4 ">Listado de compras</h1>
             <div className="flex flex-col-reverse sm:flex-row justify-between ">
                 <div className={`${focus && "ring-2"} relative my-auto p-2 w-full sm:w-2/6 xl:w-2/6 shadow dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 bg-white rounded-md md:rounded-lg`}>
                         <input 
@@ -124,13 +106,21 @@ const ListadoCompras = () => {
                             onBlur={()=> setFocus(false)}
                         />
                         <div className="absolute mr-2 -inset-y-1 flex right-0 opacity-40">
-                            
+                            <Image
+                                src={`${modo && escribiendo ? "/close_dark.svg" : !modo && escribiendo ? "/close_light.svg": modo && !escribiendo ? "/search_light.svg" : "/search_dark.svg"}`}
+                                alt="Cerrar"
+                                width={30} 
+                                height={30}
+                                priority={true}
+                                className="cursor-pointer"
+                                onClick={escribiendo ? () => setFiltrando("") : null}
+                            />
                         </div> 
                     </div>  
                 </div>    
         </div>
         <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
-            <thead className="bg-red-600 text-white">
+            <thead className="bg-yellow-500 text-white">
                 <tr className="hover:cursor-pointer select-none">
                     <th onClick={() => ordenarNombre()} className="p-2 rounded-tl-lg" >NOMBRE</th>
                     <th onClick={() => ordenarMarca()}>MARCA</th>
@@ -144,18 +134,31 @@ const ListadoCompras = () => {
             </thead>
             <tbody>
             
-                <>
-                    {compras.map(producto => (
-                        
-
+            {Object.keys(filtrados).length === 0 && escribiendo ? (
+                    <>
+                        <tr className="relative p-3 text-2xl dark:text-gray-50">
+                            <td>No hay resultados</td>
+                        </tr>
+                    </>) 
+                : Object.keys(filtrados).length > 0 && escribiendo ?(
+                    <>
+                        {filtrados.map(producto => (
                             <Compra
-                                key={producto.idProducto}
+                                key={producto._id}
                                 producto={producto}
                             />
-
-                        
+                        ))}
+                    </>)
+                : (
+                <>
+                    {compras.map(producto => (
+                        <Compra
+                            key={producto._id}
+                            producto={producto}
+                        />
                     ))}
                 </>
+                )}  
                 
             </tbody>
         </table>

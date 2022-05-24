@@ -33,18 +33,18 @@ const CompraState = ({children}) => {
 
     //agregar compra
     const compraDeProducto = async (producto, cantidad) => {
-        const respuesta = await clienteAxios.post("/api/compras", {producto, cantidad}) //envio producto como objeto porque sino no puedo extraer su _id en el backend
+        const {data} = await clienteAxios.post("/api/compras", {producto, cantidad}) //envio producto como objeto porque sino no puedo extraer su _id en el backend
         dispatch({
             type: CREAR_COMPRA,
-            payload: respuesta.data.compra
+            payload: data.compra
         })
     }
 
     const traerCompras = async () => {
-        const respuesta = await clienteAxios("/api/compras")
+        const {data} = await clienteAxios("/api/compras")
         dispatch({
             type: TRAER_COMPRAS,
-            payload: respuesta.data.compras
+            payload: data.todas
         })
     }
 
@@ -60,12 +60,7 @@ const CompraState = ({children}) => {
         
     }
 
-    const orderCodigo = (ordenCodigo) => {
-        dispatch({
-            type: ORDENAR_CODIGO_COMPRA,
-            payload: ordenCodigo
-        })
-    }
+    
     const orderNombre = (ordenNombre) => {
         dispatch({
             type: ORDENAR_NOMBRE_COMPRA,
@@ -84,25 +79,9 @@ const CompraState = ({children}) => {
             payload: ordenModelo
         })
     }
-    const orderRubro = (ordenRubro) => {
-        dispatch({
-            type: ORDENAR_RUBRO_COMPRA,
-            payload: ordenRubro
-        })
-    }
-    const orderProveedor = (ordenProveedor) => {
-        dispatch({
-            type: ORDENAR_PROVEEDOR_COMPRA,
-            payload: ordenProveedor
-        })
-    }
+    
 
-    const orderCodigoFiltrados = (ordenCodigo) => {
-        dispatch({
-            type: ORDENAR_CODIGO_COMPRA_FILTRADO,
-            payload: ordenCodigo
-        })
-    }
+   
     const orderNombreFiltrados = (orderNombre) => {
         dispatch({
             type: ORDENAR_NOMBRE_COMPRA_FILTRADO,
@@ -121,38 +100,22 @@ const CompraState = ({children}) => {
             payload: ordenModelo
         })
     }
-    const orderRubroFiltrados = (ordenRubro) => {
-        dispatch({
-            type: ORDENAR_RUBRO_COMPRA_FILTRADO,
-            payload: ordenRubro
-        })
-    }
-    const orderProveedorFiltrados = (ordenproveedor) => {
-        dispatch({
-            type: ORDENAR_PROVEEDOR_COMPRA_FILTRADO,
-            payload: ordenproveedor
-        })
-    }
+   
 
 
   return (
     <compraContext.Provider
         value={{
             compras: state.compras,
+            filtrados: state.filtrados,
             compraDeProducto,
             traerCompras,
-            orderCodigo,
-            orderCodigoFiltrados,
             orderNombre,
             orderNombreFiltrados,
             orderMarca,
             orderMarcaFiltrados,
             orderModelo,
             orderModeloFiltrados,
-            orderRubro,
-            orderRubroFiltrados,
-            orderProveedor,
-            orderProveedorFiltrados,
             filtroCompra
         }}
     >

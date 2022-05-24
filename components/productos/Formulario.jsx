@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react"
 import Rubro from "./Rubro"
 import Proveedor from "./Proveedor"
-import { hoy } from "../../helpers"
+import { generarFecha, hoy } from "../../helpers"
 import productoContext from "../../context/productos/productoContext"
 import authContext from "../../context/auth/authContext"
 import Swal from "sweetalert2"
@@ -13,7 +13,7 @@ const Formulario = ({productoEditar}) => {
     const {modo, usuario} = AuthContext
 
     const CompraContext = useContext(compraContext)
-    const {compras, compraDeProducto, traerCompras} = CompraContext
+    const {traerCompras} = CompraContext
 
     const productosContext = useContext(productoContext)
     const { 
@@ -46,6 +46,7 @@ const Formulario = ({productoEditar}) => {
     const [proveedorSelect, setProveedorSelect] = useState(productoEditar ? productoEditar.proveedor : "")
     const [valorFaltante, setValorFaltante] = useState(productoEditar ? productoEditar.añadirFaltante : false)
     const [cantidad, setCantidad] = useState("")
+    const desdeForm = true  //con esto me aseguro que los datos que envio para agregar producto/compra o editar producto/compra, vienen desde el formulario, y no se editan en el listado
 
     const [producto, setProducto] = useState({
         nombre: productoEditar?.nombre ?? "",
@@ -149,7 +150,7 @@ const Formulario = ({productoEditar}) => {
         }
     }, [valoresP])
 
- 
+
 
     const onChange = e => {
         setProducto({
@@ -197,9 +198,7 @@ const Formulario = ({productoEditar}) => {
     const onChangeProveedorSelect = e => {
         setProveedorSelect(e.target.value)
     }
-    if(proveedorSelect) {
-        producto.proveedor = ""
-    }
+    
 
     if(valorFaltante) {
         producto.añadirFaltante = true
@@ -207,7 +206,6 @@ const Formulario = ({productoEditar}) => {
         producto.añadirFaltante = false
     }
 
-    
 
     const alertaNuevoCorrecto = () => {
         Swal.fire({
@@ -426,7 +424,7 @@ const Formulario = ({productoEditar}) => {
             if(cantidad) {
                 producto.disponibles = cantidad
             }
-            agregarProducto(producto, cantidad)
+            agregarProducto(producto, cantidad, desdeForm)
             setCantidad("")
             setRubroSelect("")
             setProveedorSelect("")
@@ -440,7 +438,7 @@ const Formulario = ({productoEditar}) => {
                 proveedor: "",
                 precio_venta: "", 
                 precio_compra_dolar: "", 
-                fecha_compra: hoy, 
+                fecha_compra: "", 
                 precio_compra_peso: "", 
                 valor_dolar_compra: "", 
                 rentabilidad: "", 
@@ -463,7 +461,7 @@ const Formulario = ({productoEditar}) => {
                 }
             }
             producto._id = productoEditar._id
-            editarProducto(producto, cantidad)
+            editarProducto(producto, cantidad, desdeForm)
             setCantidad("")
             traerProductos()
             alertaEditarCorrecto()
