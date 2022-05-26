@@ -40,11 +40,9 @@ const Formulario = ({productoEditar}) => {
    
     const [valoresR, setValoresR] = useState("")    //contiene lo que voy escribiendo en rubro
     const [valoresP, setValoresP] = useState("")    //contiene lo que voy escribiendo en proveedor
-    const [escribiendoR, setEscribiendoR] = useState(false)   //cuando escribo pasa a true
-    const [escribiendoP, setEscribiendoP] = useState(false)   //cuando escribo pasa a true
-    const [rubroSelect, setRubroSelect] = useState(productoEditar ? productoEditar.rubro : "")
-    const [proveedorSelect, setProveedorSelect] = useState(productoEditar ? productoEditar.proveedor : "")
-    const [valorFaltante, setValorFaltante] = useState(productoEditar ? productoEditar.añadirFaltante : false)
+    const [rubroSelect, setRubroSelect] = useState(productoEditar?.rubro ?? "")
+    const [proveedorSelect, setProveedorSelect] = useState(productoEditar?.proveedor ?? "")
+    const [valorFaltante, setValorFaltante] = useState(productoEditar?.añadirFaltante ?? false)
     const [cantidad, setCantidad] = useState("")
     const desdeForm = true  //con esto me aseguro que los datos que envio para agregar producto/compra o editar producto/compra, vienen desde el formulario, y no se editan en el listado
 
@@ -55,11 +53,12 @@ const Formulario = ({productoEditar}) => {
         codigo: productoEditar?.codigo ?? "",
         barras: productoEditar?.barras ?? "",
         valor_dolar_compra: productoEditar?.valor_dolar_compra ?? "",
-        precio_venta: productoEditar?.precio_venta ?? "",
+        precio_venta_efectivo: productoEditar?.precio_venta_efectivo ?? "",
         precio_compra_dolar: productoEditar?.precio_compra_dolar ?? "",
         precio_compra_peso: productoEditar?.precio_compra_peso ?? "",
         rubro: productoEditar?.rubro ?? "",
         proveedor: productoEditar?.proveedor ?? "",
+        todos_proveedores: productoEditar?.todos_proveedores ?? [],
         fecha_compra: productoEditar?.fecha_compra ?? hoy ?? "",
         disponibles: productoEditar?.disponibles ?? "",
         rentabilidad: productoEditar?.rentabilidad ?? "",
@@ -68,45 +67,9 @@ const Formulario = ({productoEditar}) => {
         limiteFaltante: productoEditar?.limiteFaltante ?? "",
         añadirFaltante: productoEditar?.añadirFaltante ?? false
     })
-    const {nombre, marca, modelo, codigo, barras, rubro, precio_venta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, disponibles, rentabilidad, notas, limiteFaltante} = producto
+    const {nombre, marca, modelo, codigo, barras, rubro, precio_venta_efectivo, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, disponibles, rentabilidad, notas, limiteFaltante} = producto
     
-    //estos 3 useEffect validan desde la bd por si falla algun dato en el state cuando valide desde el submit
-    useEffect(() => {
-        if(mensajeCodigo) {
-            Swal.fire({
-                icon: 'error',
-                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                html: `${modo ? '<p style="color:white">El <b>codigo</b> ya esta ingresado.</p>' : '<p style="color:#545454">El <b>codigo</b> ya esta ingresado.</p>'}`,
-                background: `${modo ? "rgb(31 41 55)" : "white"}`,
-              })
-            return
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [mensajeCodigo])
-    useEffect(() => {
-        if(mensajeRubro) {
-            Swal.fire({
-                icon: 'error',
-                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                html: `${modo ? '<p style="color:white">El <b>codigo</b> ya esta ingresado.</p>' : '<p style="color:#545454">El <b>codigo</b> ya esta ingresado.</p>'}`,
-                background: `${modo ? "rgb(31 41 55)" : "white"}`,
-              })
-            return
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [mensajeRubro])
-    useEffect(() => {
-        if(mensajeProveedor) {
-            Swal.fire({
-                icon: 'error',
-                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                html: `${modo ? '<p style="color:white">El <b>codigo</b> ya esta ingresado.</p>' : '<p style="color:#545454">El <b>codigo</b> ya esta ingresado.</p>'}`,
-                background: `${modo ? "rgb(31 41 55)" : "white"}`,
-              })
-            return
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [mensajeProveedor])
+    
 
     //hago un get a todas estas colecciones para tenerlos en este componente
     useEffect(() => {
@@ -133,28 +96,23 @@ const Formulario = ({productoEditar}) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productoSeleccionado])
     
-    //se fija si en el state de filtrando hay algo, es porque se está escribiendo
-    useEffect(() => {
-        if(valoresR) {
-            setEscribiendoR(true)
-        } else {
-            setEscribiendoR(false)
-        }
-    }, [valoresR])
-
-    useEffect(() => {
-        if(valoresP) {
-            setEscribiendoP(true)
-        } else {
-            setEscribiendoP(false)
-        }
-    }, [valoresP])
+   
 
     //cada vez que escriba en los inputs se realiza el calculo aprox para el precio de la venta
     useEffect(() => {
-        precioVenta(precio_compra_dolar, valor_dolar_compra, rentabilidad, precio_compra_peso)
+        precioVenta(valor_dolar_compra, precio_compra_dolar, precio_compra_peso, rentabilidad)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [rentabilidad])
+    }, [valor_dolar_compra, precio_compra_dolar, precio_compra_peso, rentabilidad])
+
+
+    useEffect(() => {
+        producto.proveedor = proveedorSelect
+    }, [proveedorSelect])
+    useEffect(() => {
+        producto.proveedor = valoresP
+    }, [valoresP])
+
+
 
     const onChange = e => {
         setProducto({
@@ -173,43 +131,35 @@ const Formulario = ({productoEditar}) => {
     useEffect(() => {
         setProducto({
             ...producto,
-            precio_venta: valorDeVenta
+            precio_venta_efectivo: valorDeVenta
         })
     }, [valorDeVenta])
     
-    //Al escribir, escribiendo pasa a true, se vacia el select y se deshabilita. 
-    //Envio lo que escribo al state de valores, y lo que está en valores lo envio al state de producto. Al hacer submit vacio el state de valores, entonces el input queda vacio
     const onChangeRubroInput = e => {
         setValoresR(e.target.value.toUpperCase())
     }
-    if(valoresR) {
+    const onChangeRubroSelect = e => {
+        setRubroSelect(e.target.value.toUpperCase())
+    }
+    if(valoresR && !rubroSelect) {
         producto.rubro = valoresR
     }
-    //Si no estoy escribiendo, el select está habilitado y su valor por default es vacio. 
-    //Como es vacio, muestra el primer option disponible. El primer option no tiene value. 
-    //Si existen rubros creados los muestra como options. 
-    //Si selecciono un option, el onchange envia el option seleccionado al state de rubroSelect, el input se deshabilita vacia y deshabilita el input. 
-    //Al hacer submit, envio el dato del state rubroSelect a el state producto y vacío rubroSelect. 
-    //Luego de crear el producto el value del select consulta si estoy escribiendo, como no escribo, toma el valor de rubroSelect, como está vacío, muestra el primer option.
-    const onChangeRubroSelect = e => {
-        setRubroSelect(e.target.value)
+    if(rubroSelect && !valoresR) {
+        producto.rubro = rubroSelect
     }
-    //vacío el input si el select tiene algo
-    if(rubroSelect) {
-        producto.rubro = ""
-    }
-
+    
     const onChangeProveedorInput = e => {
         setValoresP(e.target.value.toUpperCase())
     }
-    if(valoresP) {
-       producto.proveedor = valoresP
-    }
-
     const onChangeProveedorSelect = e => {
-        setProveedorSelect(e.target.value)
+        setProveedorSelect(e.target.value.toUpperCase())
     }
-    
+    if(valoresP && !proveedorSelect) {
+        producto.proveedor = valoresP
+     }
+    if(proveedorSelect && !valoresP) {
+        producto.proveedor = proveedorSelect
+    } 
 
     if(valorFaltante) {
         producto.añadirFaltante = true
@@ -290,44 +240,49 @@ const Formulario = ({productoEditar}) => {
         }
        
       //validar el nuevo rubro. Esto lo hago para que no se vacíe el campo en caso de que haya algun error de backend
-      if(valoresR) {  //si tiene algo el input de rubro
-        if(rubros) {    //si hay algun rubro creado
-            const boolean = rubros.map(rubro => rubro.nombre == valoresR ? true : false )   //recorro el state de rubros
-            const contiene = boolean.includes(true) //devuelvo si existe un rubro con el mismo nombre
-            if(contiene) {  //lanzo el error en ese caso
+        if(valoresR) {  //si tiene algo el input de rubro
+            if(rubroSelect && valoresR) {
                 Swal.fire({
                     icon: 'error',
                     title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                    html: `${modo ? '<p style="color:white">El <b>rubro</b> ya está ingresado.</p>' : '<p style="color:#545454">El <b>rubro</b> ya está ingresado.</p>'}`,
+                    html: `${modo ? '<p style="color:white">Ingrese 1 solo <b>rubro</b> a la vez.</p>' : '<p style="color:#545454">Ingrese un solo <b>rubro</b> a la vez.</p>'}`,
                     background: `${modo ? "rgb(31 41 55)" : "white"}`,
                 })
                 return
-            } 
-        }
-    }
-        //si seleccione el rubro, lo mando al state
-        if(rubroSelect) {
-            producto.rubro = rubroSelect
-        }
-
-        //validar el nuevo proveedor. Esto lo hago para que no se vacíe el campo en caso de que haya algun error de backend
-        if(valoresP) {  //si tiene algo el input de proveedor
-            if(proveedores) {    //si hay algun proveedor creado
-                const boolean = proveedores.map(proveedor => proveedor.nombre == valoresP ? true : false )   //recorro el state de proveedores
-                const contiene = boolean.includes(true) //devuelvo si existe un proveedor con el mismo nombre
+            }
+            if(rubros) {    //si hay algun rubro creado
+                const boolean = rubros.map(rubro => rubro.nombre == valoresR ? true : false )   //recorro el state de rubros
+                const contiene = boolean.includes(true) //devuelvo si existe un rubro con el mismo nombre
                 if(contiene) {  //lanzo el error en ese caso
                     Swal.fire({
                         icon: 'error',
                         title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                        html: `${modo ? '<p style="color:white">El <b>proveedor</b> ya está ingresado.</p>' : '<p style="color:#545454">El <b>proveedor</b> ya está ingresado.</p>'}`,
+                        html: `${modo ? '<p style="color:white">El <b>rubro</b> ya está ingresado.</p>' : '<p style="color:#545454">El <b>rubro</b> ya está ingresado.</p>'}`,
                         background: `${modo ? "rgb(31 41 55)" : "white"}`,
                     })
                     return
-                }
-            }  
+                } 
+            }
         }
-        if(proveedorSelect) {
-            producto.proveedor = proveedorSelect
+
+        const cantidadCambiada = Number(cantidad)
+        if(cantidad < 0 || isNaN(cantidad) || !Number.isInteger(cantidadCambiada) ) {  //verifico si es numero entero con isInteger
+            Swal.fire({
+                icon: 'error',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">La <b>cantidad</b> de productos a ingresar debe ser un número entero mayor a 0.</p>' : '<p style="color:#545454">La <b>cantidad</b> de productos a ingresar debe ser un número entero mayor a 0.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
+              })
+            return
+        }
+        if(codigo.length > 3) {
+            Swal.fire({
+                icon: 'error',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>código</b> debe ser un número menor a 4 dígitos</p>' : '<p style="color:#545454">El <b>código</b> debe ser un número menor a 4 dígitos</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
+              })
+            return
         }
 
         //Validar precio del dolar
@@ -396,7 +351,7 @@ const Formulario = ({productoEditar}) => {
         }  
         
         //Validar el precio de venta
-        if(isNaN(precio_venta) || precio_venta < 0) {
+        if(isNaN(precio_venta_efectivo) || precio_venta_efectivo < 0) {
             Swal.fire({
                 icon: 'error',
                 title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
@@ -407,7 +362,7 @@ const Formulario = ({productoEditar}) => {
             return
         }
         
-
+        
         //validar numero de faltantes
         const limiteFaltanteCambiado = Number(limiteFaltante)
         if( limiteFaltante < 0 || isNaN(limiteFaltante) || !Number.isInteger(limiteFaltanteCambiado)) {
@@ -416,10 +371,52 @@ const Formulario = ({productoEditar}) => {
                 title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
                 html: `${modo ? '<p style="color:white">Los <b>faltantes</b> debe ser un número entero mayor a 0.</p>' : '<p style="color:#545454">Los <b>faltantes</b> debe ser un número entero mayor a 0.</p>'}`,
                 background: `${modo ? "rgb(31 41 55)" : "white"}`,
-              })
+            })
             return
         } 
         
+        //validar el nuevo proveedor. Esto lo hago para que no se vacíe el campo en caso de que haya algun error de backend
+        if(valoresP) {  //si tiene algo el input de proveedor
+            if(proveedorSelect && valoresP) {
+                Swal.fire({
+                    icon: 'error',
+                    title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                    html: `${modo ? '<p style="color:white">Ingrese 1 solo <b>proveedor</b> a la vez.</p>' : '<p style="color:#545454">Ingrese un solo <b>proveedor</b> a la vez.</p>'}`,
+                    background: `${modo ? "rgb(31 41 55)" : "white"}`,
+                })
+                return
+            }
+
+            if(proveedores) {    //si hay algun proveedor creado
+                const boolean = proveedores.map(proveedor => proveedor.nombre == valoresP ? true : false )   //recorro el state de proveedores
+                const contiene = boolean.includes(true) //devuelvo si existe un proveedor con el mismo nombre
+                if(contiene) {  //lanzo el error en ese caso
+                    Swal.fire({
+                        icon: 'error',
+                        title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                        html: `${modo ? '<p style="color:white">El <b>proveedor</b> ya está ingresado.</p>' : '<p style="color:#545454">El <b>proveedor</b> ya está ingresado.</p>'}`,
+                        background: `${modo ? "rgb(31 41 55)" : "white"}`,
+                    })
+                    return
+                }
+            }
+
+            const boolean = productos.map(producto => producto._id === productoEditar._id ? producto.todos_proveedores.map(providers => providers !== valoresP ? true : false) : null)
+            const prov = boolean[1].includes(false)
+            if(!prov) {
+                producto.todos_proveedores.push(valoresP)
+            }
+                
+            
+        }
+        if(proveedorSelect) {
+            const boolean = productos.map(producto => producto._id === productoEditar._id ? producto.todos_proveedores.map(providers => providers !== proveedorSelect ? true : false) : null)
+            const prov = boolean[1].includes(false)
+            if(!prov) {
+                producto.todos_proveedores.push(proveedorSelect)
+            }
+            
+        }
 
         //si no se cumple ninguna condicion que le puse arriba, y tampoco está vacio el input, lo envio a la bd
         if(valoresP) {
@@ -447,9 +444,9 @@ const Formulario = ({productoEditar}) => {
                 barras: "",
                 rubro: "",
                 proveedor: "",
-                precio_venta: "", 
+                precio_venta_efectivo: "", 
                 precio_compra_dolar: "", 
-                fecha_compra: "", 
+                fecha_compra: hoy, 
                 precio_compra_peso: "", 
                 valor_dolar_compra: "", 
                 rentabilidad: "", 
@@ -568,21 +565,26 @@ const Formulario = ({productoEditar}) => {
                         <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="rubro" className="text-gray-800 dark:text-gray-300 font-bold ">Rubro</label>
+                                <label htmlFor="rubro" className="text-gray-800 dark:text-gray-300 font-bold ">Rubros</label>
+
                             </div>
                             <div className="flex">
                                 <input
                                     type="text"
                                     autoComplete="off"
-                                    className={`${rubroSelect && "hover:cursor-not-allowed"} mt-2  block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
+                                    className={` mt-2  block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
                                     id="rubro"
                                     placeholder="Cables"
                                     name="rubro"
                                     value={valoresR}
-                                    disabled={rubroSelect && true}
                                     onChange={onChangeRubroInput}
                                 />
-                                <select  onChange={onChangeRubroSelect} value={escribiendoR ? "" : rubroSelect} disabled={escribiendoR && true} className="uppercase text-center mt-2 ml-4 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300">
-                                    <option value="" className="uppercase"> rubros</option>
+                                <select  
+                                    onChange={onChangeRubroSelect} 
+                                    value={rubroSelect} 
+                                    className="uppercase text-center mt-2 ml-4 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                >
+                                    <option value="" className="uppercase"> -- Seleccione --</option>
                                     {Object.keys(rubros).length > 0  && (
                                         <>
                                             {rubros.map((rubro, i) => (
@@ -598,35 +600,39 @@ const Formulario = ({productoEditar}) => {
                         </div>
 
                         <div className="mb-4">
-                            <div className="grid grid-cols-3">
-                                <label htmlFor="proveedor" className="text-gray-800 dark:text-gray-300 font-bold text-left">Proveedor</label>
-                                <label htmlFor="cantidad" className="text-gray-800 dark:text-gray-300 font-bold text-center">N°</label>
-                                <label htmlFor="selectp" className="text-gray-800 dark:text-gray-300 font-bold text-right">Proveedores</label>
+                            <div className="grid grid-cols-9">
+                                <label htmlFor="cantidad" className="text-gray-800 dark:text-gray-300 font-bold text-center col-span-1">N°</label>
+                                <label htmlFor="proveedor" className="text-gray-800 dark:text-gray-300 font-bold text-left col-span-4">Proveedor</label>
+                                <label htmlFor="selectp" className="text-gray-800 dark:text-gray-300 font-bold text-right col-span-4">Proveedores</label>
                             </div>
                             <div className="grid grid-cols-9">
                                 <input
-                                    type="text"
-                                    autoComplete="off"
-                                    className={`${proveedorSelect && "hover:cursor-not-allowed"} mt-2 col-span-4 block  p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
-                                    id="proveedor"
-                                    placeholder="MercadoLibre"
-                                    name="proveedor"
-                                    value={valoresP}
-                                    disabled={proveedorSelect && true}
-                                    onChange={onChangeProveedorInput}
-                                />
-                                <input
                                     type="tel"
                                     autoComplete="off"
-                                    className={`text-center mt-2 ml-1 block col-span-1 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
+                                    className={`text-center mt-2 block col-span-1 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
                                     id="cantidad"
                                     name="cantidad"
                                     value={cantidad}
                                     onChange={e => setCantidad(e.target.value)}
-                            />
+                                />
+                                <input
+                                    type="text"
+                                    autoComplete="off"
+                                    className={` mt-2 ml-1 col-span-4 block  p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
+                                    id="proveedor"
+                                    placeholder="MercadoLibre"
+                                    name="proveedor"
+                                    value={valoresP}
+                                    onChange={onChangeProveedorInput}
+                                />
                                 
-                                <select id="selectp" onChange={onChangeProveedorSelect} value={escribiendoP ? "" : proveedorSelect} disabled={escribiendoP && true} className="uppercase text-center mt-2 ml-1 block col-span-4 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300">
-                                    <option value="" className="uppercase"> proveedores</option>
+                                <select 
+                                    id="selectp" 
+                                    className="uppercase text-center mt-2 ml-1 block col-span-4 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                    value={proveedorSelect} 
+                                    onChange={onChangeProveedorSelect} 
+                                >
+                                    <option value="" className="uppercase">-- Seleccione --</option>
                                     {Object.keys(proveedores).length > 0  ? (
                                         <>
                                             {proveedores.map((proveedor, i) => (
@@ -699,19 +705,19 @@ const Formulario = ({productoEditar}) => {
                                 placeholder="40%"
                                 name="rentabilidad"
                                 value={rentabilidad}
-                                onChange={onChange}
+                                onChange={onChangeNumeros}
                             />
                         </div>
                             <div className="mb-4">
-                                <label htmlFor="precio_venta" className="text-gray-800  dark:text-gray-300 font-bold  ">Precio de venta en efectivo</label>
+                                <label htmlFor="precio_venta_efectivo" className="text-gray-800  dark:text-gray-300 font-bold  ">Precio de venta en efectivo</label>
                                 <input
                                     type="tel"
                                     autoComplete="off"
                                     className="mt-2 block w-full p-3 pr-0 hover:cursor-pointer  justify-end rounded-md font-bold text-red-600 bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                    id="precio_venta"
-                                    placeholder="$ 10.000"
-                                    name="precio_venta"
-                                    value={precio_venta}
+                                    id="precio_venta_efectivo"
+                                    placeholder="$0"
+                                    name="precio_venta_efectivo"
+                                    value={precio_venta_efectivo}
                                     readOnly={true}
                                     
                                 />

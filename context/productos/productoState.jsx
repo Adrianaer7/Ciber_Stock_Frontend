@@ -34,7 +34,7 @@ import {
     ORDENAR_NOMBRE_FILTRADO, 
     ORDENAR_PRECIO, 
     ORDENAR_PRECIO_FILTRADO, 
-    PRECIO_VENTA, 
+    PRECIO_VENTA_EFECTIVO,
     PRODUCTOS_CAMBIADOS, 
     PRODUCTO_ACTUAL,
     TRAER_DOLAR_BD, 
@@ -133,13 +133,12 @@ const ProductoState = ({children}) => {
     //modifico el producto
     const editarProducto = async (producto, cantidad, desdeForm) => {
         try {
-            const {data} = await clienteAxios.put(`/api/productos/${producto._id}`, {producto, cantidad})
+            const {data} = await clienteAxios.put(`/api/productos/${producto._id}`, {producto, desdeForm})
             dispatch({
                 type: EDITAR_PRODUCTO,
                 payload: data.producto
             })
             if(desdeForm) {
-
                 await clienteAxios.post("/api/compras", {producto, cantidad, desdeForm})
             }
             
@@ -284,37 +283,47 @@ const ProductoState = ({children}) => {
         }
     }
 
-    const precioVenta = (valor1, valor2, valor3, valor4) => {
-        if(valor1>0 && valor2>0 && valor3>0 && valor4 === "") {
+    const precioVenta = (valor1, valor2, valor3, valor4) => {   //valor_dolar_compra, precio_compra_dolar, precio_compra_peso, rentabilidad
+        if(valor1>0 && valor2>0 && valor4>0 && valor3 === "") {
             const val1 = parseFloat(valor1) //precio compra dolar
             const val2 = parseFloat(valor2) //valor dolar compra
+            const val4 = parseInt(valor4)   //rentabilidad
             const res1 = (val1 * val2)
-            const res2 = parseInt(Math.round(valor3))+100   //redondeo el porcentaje y convierto a integer el resultado de la operacion
+            const res2 = parseInt(Math.round(val4))+100   //redondeo el porcentaje y convierto a integer el resultado de la operacion
             const res3 = res1 *  res2
             const res4 = (res3 / 100).toFixed(2)
-            try {
-                dispatch({
-                    type: PRECIO_VENTA,
-                    payload: res4
-                })
-            } catch (error) {
-                console.log(error)
+
+            if(res4) {
+                try {
+                    dispatch({
+                        type: PRECIO_VENTA_EFECTIVO,
+                        payload: Number(res4)
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
             }
         } else {
             limpiarPrecioVenta()
         }
+        if(valor3>0 && valor4>0  && valor2==="") {
+            const val3 = parseFloat(valor3) //valor peso compra
+            const val4 = parseInt(valor4)   //rentabilidad
+            const res3 = parseInt((val3 * (parseInt(val4)+100)) / 100).toFixed(2)
 
-        if(valor3>0 && valor4>0 && valor1==="") {
-            const res3 = parseInt((valor4 * (parseInt(valor3)+100)) / 100).toFixed(2)
-            try {
-                dispatch({
-                    type: PRECIO_VENTA,
-                    payload: res3
-                })
-            } catch (error) {
-                console.log(error)
+            if(res3) {
+                try {
+                    dispatch({
+                        type: PRECIO_VENTA_EFECTIVO,
+                        payload: Number(res3)
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
+            } else {
+                limpiarPrecioVenta()
             }
-        } 
+        }
     }
 
     const limpiarPrecioVenta = () => {

@@ -17,7 +17,7 @@ import {
     ELIMINAR_PROVEEDORES,
     AGREGAR_PROVEEDOR,
     ERROR_AGREGAR_PROVEEDOR,
-    PRECIO_VENTA,
+    PRECIO_VENTA_EFECTIVO,
     LIMPIAR_VENTA,
     TRAER_DOLAR_BD,
     PRODUCTOS_CAMBIADOS,
@@ -183,7 +183,7 @@ export default function productoReducer(state, action) {
                 )
                 
             }
-        case PRECIO_VENTA:
+        case PRECIO_VENTA_EFECTIVO:
             return {
                 ...state,
                 valorDeVenta: action.payload
