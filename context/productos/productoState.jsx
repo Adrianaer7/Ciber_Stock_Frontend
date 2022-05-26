@@ -52,7 +52,7 @@ const ProductoState = ({children}) => {
         filtrados: [],  //guarda los productos filtrados,
         rubros: [], //guarda todos los rubros
         proveedores: [],
-        valorDeVenta: "",
+        valorDeVenta: 0,
         dolarBD: "",
     }
 

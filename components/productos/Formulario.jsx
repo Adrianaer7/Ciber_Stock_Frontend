@@ -401,18 +401,18 @@ const Formulario = ({productoEditar}) => {
                 }
             }
 
-            const boolean = productos.map(producto => producto._id === productoEditar._id ? producto.todos_proveedores.map(providers => providers !== valoresP ? true : false) : null)
-            const prov = boolean[1].includes(false)
-            if(!prov) {
+            const boolean = producto.todos_proveedores.map(provider => provider === proveedor ? true : false)
+            const prov = boolean.includes(true)
+            if(!prov || prov.length === 0) {
                 producto.todos_proveedores.push(valoresP)
             }
                 
             
         }
         if(proveedorSelect) {
-            const boolean = productos.map(producto => producto._id === productoEditar._id ? producto.todos_proveedores.map(providers => providers !== proveedorSelect ? true : false) : null)
-            const prov = boolean[1].includes(false)
-            if(!prov) {
+            const boolean = producto.todos_proveedores.map(provider => provider === proveedor ? true : false)
+            const prov = boolean.includes(true)
+            if(!prov || prov.length === 0) {
                 producto.todos_proveedores.push(proveedorSelect)
             }
             
@@ -471,6 +471,8 @@ const Formulario = ({productoEditar}) => {
             producto._id = productoEditar._id
             editarProducto(producto, cantidad, desdeForm)
             setCantidad("")
+            setProveedorSelect(producto.proveedor)
+            setValoresP("")
             traerProductos()
             alertaEditarCorrecto()
         }
@@ -744,7 +746,7 @@ const Formulario = ({productoEditar}) => {
                             <div className="flex gap-4">          
                                 <input
                                     type="button"
-                                    className={`w-2/4 lg:w-1/4 rounded-md mt-2 block p-3 ${valorFaltante ? "bg-blue-200" : "bg-gray-400 "}`}
+                                    className={`w-2/4 lg:w-1/4 rounded-md mt-2 block p-3 hover:cursor-pointer ${valorFaltante ? "bg-blue-200" : "bg-gray-400 "}`}
                                     onClick={() => setValorFaltante(!valorFaltante)}
                                     value={valorFaltante ? "Si"  : "No"}
                                 >

@@ -191,7 +191,7 @@ export default function productoReducer(state, action) {
         case LIMPIAR_VENTA:
             return {
                 ...state,
-                valorDeVenta: ""
+                valorDeVenta: 0
             }
         case TRAER_DOLAR_BD:
             return {
