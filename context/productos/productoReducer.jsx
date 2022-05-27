@@ -187,9 +187,9 @@ export default function productoReducer(state, action) {
             return {
                 ...state,
                 valorDeVenta: action.payload.res3,
-                valor: [action.payload.res3, action.payload.res4,action.payload.res5],
-                valorCon: action.payload.res3
-
+                valorDeVentaConocidos: action.payload.res3,
+                valorDeVentaEfectivo: action.payload.res4,
+                valorDeVentaTarjeta: action.payload.res5
             }
         case LIMPIAR_VENTA:
             return {

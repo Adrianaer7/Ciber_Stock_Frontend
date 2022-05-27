@@ -53,9 +53,9 @@ const ProductoState = ({children}) => {
         rubros: [], //guarda todos los rubros
         proveedores: [],
         valorDeVenta: 0,
-        valor: [],
-        valorCon: 0,
-        
+        valorDeVentaConocidos: 0,
+        valorDeVentaEfectivo: 0,
+        valorDeVentaTarjeta: 0,
         dolarBD: "",
     }
 
@@ -462,8 +462,9 @@ const ProductoState = ({children}) => {
                 rubros: state.rubros,
                 proveedores: state.proveedores,
                 valorDeVenta: state.valorDeVenta,
-                valor: state.valor,
-                valorCon: state.valorCon,
+                valorDeVentaConocidos: state.valorDeVentaConocidos,
+                valorDeVentaEfectivo: state.valorDeVentaEfectivo,
+                valorDeVentaTarjeta: state.valorDeVentaTarjeta,
                 dolarBD: state.dolarBD,
                 agregarProducto,
                 traerProductos,
