@@ -186,12 +186,17 @@ export default function productoReducer(state, action) {
         case PRECIO_VENTA_EFECTIVO:
             return {
                 ...state,
-                valorDeVenta: action.payload
+                valorDeVenta: action.payload.res3,
+                valor: [action.payload.res3, action.payload.res4,action.payload.res5],
+                valorCon: action.payload.res3
+
             }
         case LIMPIAR_VENTA:
             return {
                 ...state,
-                valorDeVenta: 0
+                valorDeVenta: 0,
+                valor: [],
+                valorCon: 0
             }
         case TRAER_DOLAR_BD:
             return {

@@ -53,6 +53,9 @@ const ProductoState = ({children}) => {
         rubros: [], //guarda todos los rubros
         proveedores: [],
         valorDeVenta: 0,
+        valor: [],
+        valorCon: 0,
+        
         dolarBD: "",
     }
 
@@ -288,16 +291,19 @@ const ProductoState = ({children}) => {
             const val1 = parseFloat(valor1) //precio compra dolar
             const val2 = parseFloat(valor2) //valor dolar compra
             const val4 = parseInt(valor4)   //rentabilidad
-            const res1 = (val1 * val2)
-            const res2 = parseInt(Math.round(val4))+100   //redondeo el porcentaje y convierto a integer el resultado de la operacion
-            const res3 = res1 *  res2
-            const res4 = (res3 / 100).toFixed(2)
-
-            if(res4) {
+            const res1 = (val1 * val2) * (parseInt(Math.round(val4))+100)   //redondeo el porcentaje y convierto a integer el resultado de la operacion
+            const res3 = Number((res1 / 100).toFixed(2))
+            if(res3) {
+                const res4 = Number(((res3 * 105) / 100).toFixed(2))
+                const res5 = Number(((res3 * 109) / 100).toFixed(2))
                 try {
                     dispatch({
                         type: PRECIO_VENTA_EFECTIVO,
-                        payload: Number(res4)
+                        payload: {
+                            res3,
+                            res4,
+                            res5
+                        }
                     })
                 } catch (error) {
                     console.log(error)
@@ -309,13 +315,18 @@ const ProductoState = ({children}) => {
         if(valor3>0 && valor4>0  && valor2==="") {
             const val3 = parseFloat(valor3) //valor peso compra
             const val4 = parseInt(valor4)   //rentabilidad
-            const res3 = parseInt((val3 * (parseInt(val4)+100)) / 100).toFixed(2)
-
+            const res3 = parseInt(((val3 * (parseInt(val4)+100)) / 100).toFixed(2))
             if(res3) {
+                const res4 = Number(((res3 * 105) / 100).toFixed(2))
+                const res5 = Number(((res4 * 109) / 100).toFixed(2))
                 try {
                     dispatch({
                         type: PRECIO_VENTA_EFECTIVO,
-                        payload: Number(res3)
+                        payload: {
+                            res3,
+                            res4,
+                            res5
+                        }
                     })
                 } catch (error) {
                     console.log(error)
@@ -451,6 +462,8 @@ const ProductoState = ({children}) => {
                 rubros: state.rubros,
                 proveedores: state.proveedores,
                 valorDeVenta: state.valorDeVenta,
+                valor: state.valor,
+                valorCon: state.valorCon,
                 dolarBD: state.dolarBD,
                 agregarProducto,
                 traerProductos,

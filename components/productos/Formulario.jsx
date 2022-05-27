@@ -31,13 +31,16 @@ const Formulario = ({productoEditar}) => {
         rubros, 
         proveedores, 
         traerProveedores, 
-        valorDeVenta, 
+        valorDeVenta,
+        valor,
+        valorCon,
         limpiarPrecioVenta, 
         precioVenta,
         traerDolarAPI, 
         traerDolarBD,
     } = productosContext
    
+    const [precioProducto, setPrecioProducto] = useState()
     const [valoresR, setValoresR] = useState("")    //contiene lo que voy escribiendo en rubro
     const [valoresP, setValoresP] = useState("")    //contiene lo que voy escribiendo en proveedor
     const [rubroSelect, setRubroSelect] = useState(productoEditar?.rubro ?? "")
@@ -53,7 +56,10 @@ const Formulario = ({productoEditar}) => {
         codigo: productoEditar?.codigo ?? "",
         barras: productoEditar?.barras ?? "",
         valor_dolar_compra: productoEditar?.valor_dolar_compra ?? "",
-        precio_venta_efectivo: productoEditar?.precio_venta_efectivo ?? "",
+        precio_venta: productoEditar?.precio_venta ?? 0,
+        precio_venta_conocidos: productoEditar?.precio_venta_conocidos ?? 0,
+        precio_venta_efectivo: productoEditar?.precio_venta_efectivo ?? 0,
+        precio_venta_tarjeta: productoEditar?.precio_venta_tarjeta ?? 0,
         precio_compra_dolar: productoEditar?.precio_compra_dolar ?? "",
         precio_compra_peso: productoEditar?.precio_compra_peso ?? "",
         rubro: productoEditar?.rubro ?? "",
@@ -67,9 +73,23 @@ const Formulario = ({productoEditar}) => {
         limiteFaltante: productoEditar?.limiteFaltante ?? "",
         añadirFaltante: productoEditar?.añadirFaltante ?? false
     })
-    const {nombre, marca, modelo, codigo, barras, rubro, precio_venta_efectivo, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, disponibles, rentabilidad, notas, limiteFaltante} = producto
+    const {nombre, marca, modelo, codigo, barras, rubro, precio_venta, precio_venta_conocidos, precio_venta_efectivo, precio_venta_tarjeta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, todos_proveedores, disponibles, rentabilidad, notas, faltante, limiteFaltante, añadirFaltante} = producto
     
-    
+  
+    useEffect(() => {
+        if(precioProducto){
+            producto.precio_venta = valorDeVenta
+            producto.precio_venta_conocidos = valorCon 
+            producto.precio_venta_efectivo = precioProducto[1] ?? 0
+            producto.precio_venta_tarjeta = precioProducto[2] ?? 0
+
+        } else {
+            producto.precio_venta = productoEditar?.precio_venta
+            producto.precio_venta_conocidos = productoEditar?.precio_venta_conocidos
+            producto.precio_venta_efectivo = productoEditar?.precio_venta_efectivo
+            producto.precio_venta_tarjeta = productoEditar?.precio_venta_tarjeta
+        }
+    }, [ valorDeVenta])
 
     //hago un get a todas estas colecciones para tenerlos en este componente
     useEffect(() => {
@@ -127,13 +147,7 @@ const Formulario = ({productoEditar}) => {
             [e.target.name]: e.target.value.replace(",", "."),
         })
     }
-
-    useEffect(() => {
-        setProducto({
-            ...producto,
-            precio_venta_efectivo: valorDeVenta
-        })
-    }, [valorDeVenta])
+    
     
     const onChangeRubroInput = e => {
         setValoresR(e.target.value.toUpperCase())
@@ -351,7 +365,7 @@ const Formulario = ({productoEditar}) => {
         }  
         
         //Validar el precio de venta
-        if(isNaN(precio_venta_efectivo) || precio_venta_efectivo < 0) {
+        if(isNaN(precio_venta) || precio_venta < 0) {
             Swal.fire({
                 icon: 'error',
                 title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
@@ -444,7 +458,7 @@ const Formulario = ({productoEditar}) => {
                 barras: "",
                 rubro: "",
                 proveedor: "",
-                precio_venta_efectivo: "", 
+                precio_venta: "", 
                 precio_compra_dolar: "", 
                 fecha_compra: hoy, 
                 precio_compra_peso: "", 
@@ -711,18 +725,58 @@ const Formulario = ({productoEditar}) => {
                             />
                         </div>
                             <div className="mb-4">
-                                <label htmlFor="precio_venta_efectivo" className="text-gray-800  dark:text-gray-300 font-bold  ">Precio de venta en efectivo</label>
-                                <input
-                                    type="tel"
-                                    autoComplete="off"
-                                    className="mt-2 block w-full p-3 pr-0 hover:cursor-pointer  justify-end rounded-md font-bold text-red-600 bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                    id="precio_venta_efectivo"
-                                    placeholder="$0"
-                                    name="precio_venta_efectivo"
-                                    value={precio_venta_efectivo}
-                                    readOnly={true}
-                                    
-                                />
+                                <div className="grid grid-cols-4">
+                                    <label htmlFor="precio_venta" className="text-gray-800  dark:text-gray-300 font-bold  ">$ al ingreso</label>
+                                    <label htmlFor="precio_venta" className="text-gray-800  dark:text-gray-300 font-bold  ">$ conocidos </label>
+                                    <label htmlFor="precio_venta" className="text-gray-800  dark:text-gray-300 font-bold  ">$ efectivo </label>
+                                    <label htmlFor="precio_venta" className="text-gray-800  dark:text-gray-300 font-bold  ">$ tarjeta </label>
+                                </div>
+                                <div className="grid grid-cols-4 gap-1">
+                                    <input
+                                        type="tel"
+                                        autoComplete="off"
+                                        className="mt-2  block w-full p-3 pr-0 hover:cursor-pointer  justify-end rounded-md font-bold text-red-600 bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                        id="precio_venta"
+                                        placeholder="$0"
+                                        name="precio_venta"
+                                        value={precio_venta}
+                                        readOnly={true}
+                                        
+                                    />
+                                    <input
+                                        type="tel"
+                                        autoComplete="off"
+                                        className="mt-2  block w-full p-3 pr-0 hover:cursor-pointer  justify-end rounded-md font-bold text-red-600 bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                        id="precio_venta_conocidos"
+                                        placeholder="$0"
+                                        name="precio_venta_conocidos"
+                                        value={precio_venta_conocidos}
+                                        readOnly={true}
+                                        
+                                    />
+                                    <input
+                                        type="tel"
+                                        autoComplete="off"
+                                        className="mt-2  block w-full p-3 pr-0 hover:cursor-pointer  justify-end rounded-md font-bold text-red-600 bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                        id="precio_venta_efectivo"
+                                        placeholder="$0"
+                                        name="precio_venta_efectivo"
+                                        value={precio_venta_efectivo}
+                                        readOnly={true}
+                                        
+                                    />
+                                    <input
+                                        type="tel"
+                                        autoComplete="off"
+                                        className="mt-2  block w-full p-3 pr-0 hover:cursor-pointer  justify-end rounded-md font-bold text-red-600 bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                        id="precio_venta_tarjeta"
+                                        placeholder="$0"
+                                        name="precio_venta_tarjeta"
+                                        value={precio_venta_tarjeta}
+                                        readOnly={true}
+                                        
+                                    />
+                                </div>
                             </div>
                             
                         <div className="mb-4">
