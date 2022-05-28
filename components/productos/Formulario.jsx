@@ -75,7 +75,6 @@ const Formulario = ({productoEditar}) => {
     })
     const {nombre, marca, modelo, codigo, barras, rubro, precio_venta, precio_venta_conocidos, precio_venta_efectivo, precio_venta_tarjeta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, todos_proveedores, disponibles, rentabilidad, notas, faltante, limiteFaltante, añadirFaltante} = producto
     
-   
 
     //hago un get a todas estas colecciones para tenerlos en este componente
     useEffect(() => {
@@ -165,6 +164,19 @@ const Formulario = ({productoEditar}) => {
         producto.añadirFaltante = true
     } else {
         producto.añadirFaltante = false
+    }
+
+    if(!valor_dolar_compra || !rentabilidad && precio_compra_peso) {
+        producto.precio_venta = 0
+        producto.precio_venta_conocidos = 0
+        producto.precio_venta_efectivo = 0
+        producto.precio_venta_tarjeta = 0
+    }
+    if(!valor_dolar_compra || !rentabilidad && precio_compra_dolar) {
+        producto.precio_venta = 0
+        producto.precio_venta_conocidos = 0
+        producto.precio_venta_efectivo = 0
+        producto.precio_venta_tarjeta = 0
     }
 
 
@@ -450,7 +462,10 @@ const Formulario = ({productoEditar}) => {
                 barras: "",
                 rubro: "",
                 proveedor: "",
-                precio_venta: "", 
+                precio_venta: "",
+                precio_venta_conocidos: "",
+                precio_venta_efectivo: "",
+                precio_venta_tarjeta: "",
                 precio_compra_dolar: "", 
                 fecha_compra: hoy, 
                 precio_compra_peso: "", 
@@ -473,6 +488,12 @@ const Formulario = ({productoEditar}) => {
                 if(cantidad && !disponibles) {
                     producto.disponibles = Number(cantidad)
                 }
+            }
+            if(valorDeVenta) {
+                producto.precio_venta = valorDeVenta
+                producto.precio_venta_conocidos = valorDeVentaConocidos
+                producto.precio_venta_efectivo = valorDeVentaEfectivo
+                producto.precio_venta_tarjeta = valorDeVentaTarjeta
             }
             producto._id = productoEditar._id
             editarProducto(producto, cantidad, desdeForm)
@@ -731,7 +752,7 @@ const Formulario = ({productoEditar}) => {
                                         id="precio_venta"
                                         placeholder="$0"
                                         name="precio_venta"
-                                        value={ productoEditar?.precio_venta ?? valorDeVenta ? `$ ${precio_venta}` : `$ 0`}
+                                        value={  valorDeVenta > 0 ? valorDeVenta :  precio_venta}
                                         readOnly={true}
                                         
                                     />
@@ -742,7 +763,7 @@ const Formulario = ({productoEditar}) => {
                                         id="precio_venta_conocidos"
                                         placeholder="$0"
                                         name="precio_venta_conocidos"
-                                        value={ productoEditar?.precio_venta_conocidos ?? valorDeVenta ? `$ ${valorDeVentaConocidos}` : `$ 0`}
+                                        value={ valorDeVentaConocidos > 0 ? valorDeVentaConocidos : precio_venta_conocidos}
                                         readOnly={true}
                                         
                                     />
@@ -753,7 +774,7 @@ const Formulario = ({productoEditar}) => {
                                         id="precio_venta_efectivo"
                                         placeholder="$0"
                                         name="precio_venta_efectivo"
-                                        value={ productoEditar?.precio_venta_efectivo ?? valorDeVenta ? `$ ${valorDeVentaEfectivo}` : `$ 0`}
+                                        value={ valorDeVentaEfectivo > 0 ? valorDeVentaEfectivo : precio_venta_efectivo}
                                         readOnly={true}
                                         
                                     />
@@ -764,7 +785,7 @@ const Formulario = ({productoEditar}) => {
                                         id="precio_venta_tarjeta"
                                         placeholder="$0"
                                         name="precio_venta_tarjeta"
-                                        value={ productoEditar?.precio_venta_tarjeta ?? valorDeVenta ? `$ ${valorDeVentaTarjeta}` : `$ 0`}
+                                        value={ valorDeVentaTarjeta > 0 ? valorDeVentaTarjeta : precio_venta_tarjeta}
                                         readOnly={true}
                                         
                                     />

@@ -195,8 +195,9 @@ export default function productoReducer(state, action) {
             return {
                 ...state,
                 valorDeVenta: 0,
-                valor: [],
-                valorCon: 0
+                valorDeVentaConocidos: 0,
+                valorDeVentaEfectivo: 0,
+                valorDeVentaTarjeta: 0
             }
         case TRAER_DOLAR_BD:
             return {

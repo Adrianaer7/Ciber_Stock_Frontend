@@ -312,7 +312,7 @@ const ProductoState = ({children}) => {
         } else {
             limpiarPrecioVenta()
         }
-        if(valor3>0 && valor4>0  && valor2==="") {
+        if(valor1>0 && valor4>0 && valor3>0 && valor2==="") {
             const val3 = parseFloat(valor3) //valor peso compra
             const val4 = parseInt(valor4)   //rentabilidad
             const res3 = parseInt(((val3 * (parseInt(val4)+100)) / 100).toFixed(2))
