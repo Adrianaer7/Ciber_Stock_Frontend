@@ -172,7 +172,7 @@ const Formulario = ({productoEditar}) => {
         producto.precio_venta_efectivo = 0
         producto.precio_venta_tarjeta = 0
     }
-    if(!valor_dolar_compra || !rentabilidad && precio_compra_dolar) {
+    if(!valor_dolar_compra || !rentabilidad && precio_compra_dolar || !precio_compra_dolar) {
         producto.precio_venta = 0
         producto.precio_venta_conocidos = 0
         producto.precio_venta_efectivo = 0

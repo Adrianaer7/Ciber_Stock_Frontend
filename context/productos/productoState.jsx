@@ -172,6 +172,7 @@ const ProductoState = ({children}) => {
     const traerProductos = async () => {
         try {
             const {data} = await clienteAxios.get("/api/productos")
+            console.log(data.productos)
             dispatch({
                 type: OBTENER_PRODUCTOS,
                 payload: data.productos

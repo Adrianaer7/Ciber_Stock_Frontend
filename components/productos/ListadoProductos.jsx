@@ -122,7 +122,7 @@ const ListadoProductos = () => {
 
     const onChangeFiltro = e => {
         setFiltrando(e.target.value)
-        filtro(e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))  //envio al productoState
+        filtro(e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, ''))  //envio al productoState
     }
 
     const ordenarCodigo = () => {
