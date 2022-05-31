@@ -99,7 +99,8 @@ const ListadoCompras = () => {
                         <input 
                             type="text" 
                             className="w-10/12 xl:w-11/12 p-2 focus:outline-none dark:bg-transparent" //outline-none le quita el borde default, focus-ring le pone borde
-                            placeholder="Consulta el historial"
+                            placeholder="Consulta el historial de compras"
+                            autoFocus={true}
                             onChange={onChangeFiltro}
                             value={filtrando}
                             onFocus={()=> setFocus(true)}

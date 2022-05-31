@@ -155,6 +155,7 @@ const ListadoProductos = () => {
                     type="text" 
                     className="w-10/12 xl:w-11/12 p-2 focus:outline-none dark:bg-transparent" //outline-none le quita el borde default, focus-ring le pone borde
                     placeholder="Buscar algún producto"
+                    autoFocus={true}
                     onChange={onChangeFiltro}
                     value={filtrando}
                     onFocus={()=> setFocus(true)}

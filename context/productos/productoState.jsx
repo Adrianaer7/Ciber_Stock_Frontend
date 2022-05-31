@@ -172,7 +172,6 @@ const ProductoState = ({children}) => {
     const traerProductos = async () => {
         try {
             const {data} = await clienteAxios.get("/api/productos")
-            console.log(data.productos)
             dispatch({
                 type: OBTENER_PRODUCTOS,
                 payload: data.productos
@@ -445,6 +444,11 @@ const ProductoState = ({children}) => {
         })
     }
 
+    const descargarPDF = async => {
+        const {data} = clienteAxios.get("api/descargas")
+        console.log(data)
+    }
+
     const limpiarApp = () => {
         dispatch({
             type: LIMPIAR_APP
@@ -499,7 +503,8 @@ const ProductoState = ({children}) => {
                 orderModeloFiltrados,
                 orderDisponibles,
                 orderDisponiblesFiltrados,
-                limpiarApp
+                limpiarApp,
+                descargarPDF
             }}
         >
             {children}

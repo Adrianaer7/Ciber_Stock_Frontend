@@ -528,6 +528,7 @@ const Formulario = ({productoEditar}) => {
                                 id="nombre"
                                 placeholder="Ej. Pendrive 8Gb 3.0"
                                 name="nombre"
+                                autoFocus={true}
                                 value={nombre}
                                 onChange={onChange}
                             />

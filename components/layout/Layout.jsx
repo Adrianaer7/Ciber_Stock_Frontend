@@ -12,7 +12,7 @@ const Layout = ({children, pagina}) => {
     const {usuario, cerrarSesion, token, traerTema} = AuthContext
 
     const productosContext = useContext(productoContext)
-    const {limpiarSeleccionado, limpiarApp} = productosContext
+    const {limpiarSeleccionado, limpiarApp, descargarPDF} = productosContext
 
     const [oscuro, setOscuro] = useState(false)
     const [panel, setPanel] = useState(false)
@@ -84,6 +84,12 @@ const Layout = ({children, pagina}) => {
                             >
                                 {oscuro ? "Tema claro" : "Tema oscuro"}
                             </button>
+                            <button
+                                onClick={descargarPDF}
+                                className="text-white text-left py-2 hover:text-blue-300 hover:translate-x-3"
+                            >
+                                Descargar PDF
+                            </button> 
                             <button
                                 onClick={vaciarStates}
                                 className="text-white text-left py-2 hover:text-blue-300 hover:translate-x-3"
