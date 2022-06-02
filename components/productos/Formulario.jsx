@@ -753,7 +753,7 @@ const Formulario = ({productoEditar}) => {
                                         id="precio_venta"
                                         placeholder="$0"
                                         name="precio_venta"
-                                        value={  valorDeVenta > 0 ? valorDeVenta :  precio_venta}
+                                        value= {`$ ${valorDeVenta > 0 ? valorDeVenta :  precio_venta}`}
                                         readOnly={true}
                                         
                                     />
@@ -764,7 +764,7 @@ const Formulario = ({productoEditar}) => {
                                         id="precio_venta_conocidos"
                                         placeholder="$0"
                                         name="precio_venta_conocidos"
-                                        value={ valorDeVentaConocidos > 0 ? valorDeVentaConocidos : precio_venta_conocidos}
+                                        value={ `$ ${valorDeVentaConocidos > 0 ? valorDeVentaConocidos : precio_venta_conocidos}`}
                                         readOnly={true}
                                         
                                     />
@@ -775,7 +775,7 @@ const Formulario = ({productoEditar}) => {
                                         id="precio_venta_efectivo"
                                         placeholder="$0"
                                         name="precio_venta_efectivo"
-                                        value={ valorDeVentaEfectivo > 0 ? valorDeVentaEfectivo : precio_venta_efectivo}
+                                        value={ `$ ${valorDeVentaEfectivo > 0 ? valorDeVentaEfectivo : precio_venta_efectivo}`}
                                         readOnly={true}
                                         
                                     />
@@ -786,7 +786,7 @@ const Formulario = ({productoEditar}) => {
                                         id="precio_venta_tarjeta"
                                         placeholder="$0"
                                         name="precio_venta_tarjeta"
-                                        value={ valorDeVentaTarjeta > 0 ? valorDeVentaTarjeta : precio_venta_tarjeta}
+                                        value={ `$ ${valorDeVentaTarjeta > 0 ? valorDeVentaTarjeta : precio_venta_tarjeta}`}
                                         readOnly={true}
                                         
                                     />
