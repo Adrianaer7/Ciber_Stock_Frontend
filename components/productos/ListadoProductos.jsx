@@ -71,7 +71,7 @@ const ListadoProductos = () => {
     useEffect(() => {
         setTimeout(() => {
             setSpinner(false)
-        }, 700);
+        }, 1000);
     }, [])
 
     useEffect(() => {
