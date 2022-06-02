@@ -3,6 +3,7 @@ import Producto from "./Producto";
 import productoContext from "../../context/productos/productoContext"
 import authContext from "../../context/auth/authContext";
 import Image from "next/image"
+import Spinner from "../layout/Spinner";
 
 
 const ListadoProductos = () => {
@@ -47,7 +48,7 @@ const ListadoProductos = () => {
     const [ordenModelo, setOrdenModelo] = useState(false)
     const [ordenDisponibles, setOrdenDisponibles] = useState(false)
     const [ordenPrecio, setOrdenPrecio] = useState(false)
-
+    const [spinner, setSpinner] = useState(true)
 
 
     useEffect(() => {
@@ -66,6 +67,12 @@ const ListadoProductos = () => {
         editarProductos(dolarBD)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dolarBD])
+
+    useEffect(() => {
+        setTimeout(() => {
+            setSpinner(false)
+        }, 700);
+    }, [])
 
     useEffect(() => {
         if(filtrando) {
@@ -147,6 +154,7 @@ const ListadoProductos = () => {
 
   return (
     <>
+
     <div className="min-w-full top-0 m-0">
         <h1 className="font-black dark:text-blue-300 text-3xl sm:text-4xl text-blue-900 text-center mt-2 sm:mt-0 mb-4 ">Listado de productos</h1>
         <div className="flex flex-col-reverse sm:flex-row justify-between mx-1 md:mx-0">
@@ -177,6 +185,8 @@ const ListadoProductos = () => {
             
         </div>    
     </div>
+    {spinner ? <Spinner/> : (
+
     <table className="top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-none md:rounded-lg dark:bg-gray-900 bg-white ">
         <thead className="bg-blue-800 text-white">
             <tr className="hover:cursor-pointer select-none">
@@ -218,6 +228,7 @@ const ListadoProductos = () => {
         </tbody>
         
     </table>
+    )}
     </>
     )
     
