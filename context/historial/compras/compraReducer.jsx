@@ -60,13 +60,11 @@ export default function comprareducer (state, action) {
             case ORDENAR_MARCA_COMPRA:
                 return {
                     ...state,
-                    //ordeno el state segun letra. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor.
                     compras: action.payload ? state.compras.sort((a,b) => b.marca > a.marca ? 1 : -1 ) : !action.payload ? state.compras.sort((a,b) => a.marca > b.marca ? 1 : -1 ) : state.compras
                 }
             case ORDENAR_MODELO_COMPRA:
                 return {
                     ...state,
-                    //ordeno el state segun letra. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor.
                     compras: action.payload ? state.compras.sort((a,b) => b.modelo > a.modelo ? 1 : -1 ) : !action.payload ? state.compras.sort((a,b) => a.modelo > b.modelo ? 1 : -1 ) : state.compras
                 }
             case ORDENAR_NOMBRE_COMPRA_FILTRADO: 

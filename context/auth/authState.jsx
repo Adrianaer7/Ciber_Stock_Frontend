@@ -84,7 +84,6 @@ const AuthState = ({children}) => {
             })
         }
 
-        //Limpia la alerta despues de 3s
         setTimeout(() => {
             dispatch({
                 type: OCULTAR_ALERTA,

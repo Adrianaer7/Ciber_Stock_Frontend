@@ -12,7 +12,7 @@ const Layout = ({children, pagina}) => {
     const {usuario, cerrarSesion, token, traerTema} = AuthContext
 
     const productosContext = useContext(productoContext)
-    const {limpiarSeleccionado, limpiarApp, descargarPDF} = productosContext
+    const {limpiarSeleccionado, limpiarApp} = productosContext
 
     const [oscuro, setOscuro] = useState(false)
     const [panel, setPanel] = useState(false)

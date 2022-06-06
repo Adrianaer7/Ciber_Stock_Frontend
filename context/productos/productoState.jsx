@@ -49,8 +49,8 @@ const ProductoState = ({children}) => {
         mensajeRubro: null,
         mensajeCodigo: null,
         mensajeProveedor: null,
-        filtrados: [],  //guarda los productos filtrados,
-        rubros: [], //guarda todos los rubros
+        filtrados: [],
+        rubros: [],
         proveedores: [],
         valorDeVenta: 0,
         valorDeVentaConocidos: 0,
@@ -59,7 +59,7 @@ const ProductoState = ({children}) => {
         dolarBD: "",
     }
 
-    const [state, dispatch] = useReducer(productoReducer, initialState) // se renombra initialState como state
+    const [state, dispatch] = useReducer(productoReducer, initialState)
 
     //crea un producto nuevo
     const agregarProducto = async (producto, cantidad, desdeForm) => {

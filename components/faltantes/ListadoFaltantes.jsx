@@ -32,9 +32,9 @@ const ListadoFaltantes = () => {
         orderDisponiblesFiltrados,
     } = faltantesContext
 
-    const [filtrando, setFiltrando] = useState("")    //contiene lo que voy escribiendo
-    const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
-    const [focus, setFocus] = useState(false)   //activar el ring en el buscador
+    const [filtrando, setFiltrando] = useState("") 
+    const [escribiendo, setEscribiendo] = useState(false)
+    const [focus, setFocus] = useState(false)
     const [ordenCodigo, setOrdenCodigo] = useState(false)
     const [ordenNombre, setOrdenNombre] = useState(false)
     const [ordenMarca, setOrdenMarca] = useState(false)
@@ -115,7 +115,7 @@ const ListadoFaltantes = () => {
 
     const onChangeFiltro = e => {
         setFiltrando(e.target.value)
-        filtroFaltante(e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))  //envio al productoState
+        filtroFaltante(e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
     }
 
     const ordenarCodigo = () => {
@@ -148,7 +148,7 @@ const ListadoFaltantes = () => {
                 <div className={`${focus && "ring-2"} relative my-auto p-2 w-full sm:w-2/6 xl:w-2/6 shadow dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 bg-white rounded-md md:rounded-lg`}>
                         <input 
                             type="text" 
-                            className="w-10/12 xl:w-11/12 p-2 focus:outline-none dark:bg-transparent" //outline-none le quita el borde default, focus-ring le pone borde
+                            className="w-10/12 xl:w-11/12 p-2 focus:outline-none dark:bg-transparent"
                             placeholder="Buscar algún faltante"
                             onChange={onChangeFiltro}
                             value={filtrando}

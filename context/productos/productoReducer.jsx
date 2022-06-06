@@ -138,9 +138,9 @@ export default function productoReducer(state, action) {
                 filtrados : state.productos.filter(producto => 
                         producto.nombre
                                 .toString()
-                                .toLowerCase()  //convierto el campo a string minuscula
+                                .toLowerCase() 
                                 .normalize("NFD").replace(/[\u0300-\u036f]/g, "")   //el normalice separa la tilde de la letra. el replace reemplaza la tilde por "", osea lo elimina
-                                .includes(action.payload ? action.payload  : producto) //trato de encontrar un producto que contenga lo que escribo en el buscador. Convierto el input a minusculas para comparar
+                                .includes(action.payload ? action.payload  : producto)
                         || producto.marca
                                 .toString()
                                 .toLowerCase()
@@ -212,8 +212,8 @@ export default function productoReducer(state, action) {
             mensajeRubro: null,
             mensajeCodigo: null,
             mensajeProveedor: null,
-            filtrados: [],  //guarda los productos filtrados
-            rubros: [], //guarda todos los rubros
+            filtrados: [], 
+            rubros: [],
             proveedores: [],
             valorDeVenta: "",
             dolarBD: "",
@@ -244,13 +244,11 @@ export default function productoReducer(state, action) {
         case ORDENAR_MODELO:
                 return {
                     ...state,
-                    //ordeno el state segun letra. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor.
                     productos: action.payload ? state.productos.sort((a,b) => b.modelo > a.modelo ? 1 : -1 ) : !action.payload ? state.productos.sort((a,b) => a.modelo > b.modelo ? 1 : -1 ) : state.productos
                 }
         case ORDENAR_DISPONIBLES:
             return {
                 ...state,
-                //ordeno el state segun numero. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor. La sintaxis de comparar numeros y letras es un poco diferente
                 productos: action.payload ? state.productos.sort((a,b) => b.disponibles - a.disponibles) : !action.payload ? state.productos.sort((a,b) => a.disponibles - b.disponibles ) : state.productos
             }
         case ORDENAR_CODIGO_FILTRADO: 

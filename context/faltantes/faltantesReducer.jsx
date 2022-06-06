@@ -92,25 +92,21 @@ export default function  faltantesReducer(state, action) {
         case ORDENAR_MARCA_FALTANTE:
             return {
                 ...state,
-                //ordeno el state segun letra. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor.
                 faltantes: action.payload ? state.faltantes.sort((a,b) => b.marca > a.marca ? 1 : -1 ) : !action.payload ? state.faltantes.sort((a,b) => a.marca > b.marca ? 1 : -1 ) : state.faltantes
             }
         case ORDENAR_MODELO_FALTANTE:
             return {
                 ...state,
-                //ordeno el state segun letra. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor.
                 faltantes: action.payload ? state.faltantes.sort((a,b) => b.modelo > a.modelo ? 1 : -1 ) : !action.payload ? state.faltantes.sort((a,b) => a.modelo > b.modelo ? 1 : -1 ) : state.faltantes
             }
         case ORDENAR_RUBRO_FALTANTE:
             return {
                 ...state,
-                //ordeno el state segun letra. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor.
                 faltantes: action.payload ? state.faltantes.sort((a,b) => b.rubro > a.rubro ? 1 : -1 ) : !action.payload ? state.faltantes.sort((a,b) => a.rubro > b.rubro ? 1 : -1 ) : state.faltantes
             }
         case ORDENAR_PROVEEDOR_FALTANTE:
             return {
                 ...state,
-                //ordeno el state segun letra. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor.
                 faltantes: action.payload ? state.faltantes.sort((a,b) => b.proveedor > a.proveedor ? 1 : -1 ) : !action.payload ? state.faltantes.sort((a,b) => a.proveedor > b.proveedor ? 1 : -1 ) : state.faltantes
             }
         case ORDENAR_DISPONIBLES_FALTANTE: 

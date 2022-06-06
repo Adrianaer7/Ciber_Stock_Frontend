@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react"
 import Rubro from "./Rubro"
 import Proveedor from "./Proveedor"
-import { generarFecha, hoy } from "../../helpers"
+import { hoy } from "../../helpers"
 import productoContext from "../../context/productos/productoContext"
 import authContext from "../../context/auth/authContext"
 import Swal from "sweetalert2"
@@ -23,9 +23,6 @@ const Formulario = ({productoEditar}) => {
         agregarRubro, 
         agregarProveedor, 
         editarProducto, 
-        mensajeCodigo, 
-        mensajeRubro, 
-        mensajeProveedor, 
         traerProductos, 
         traerRubros, 
         rubros, 
@@ -41,8 +38,8 @@ const Formulario = ({productoEditar}) => {
         traerDolarBD,
     } = productosContext
    
-    const [valoresR, setValoresR] = useState("")    //contiene lo que voy escribiendo en rubro
-    const [valoresP, setValoresP] = useState("")    //contiene lo que voy escribiendo en proveedor
+    const [valoresR, setValoresR] = useState("") 
+    const [valoresP, setValoresP] = useState("") 
     const [rubroSelect, setRubroSelect] = useState(productoEditar?.rubro ?? "")
     const [proveedorSelect, setProveedorSelect] = useState(productoEditar?.proveedor ?? "")
     const [valorFaltante, setValorFaltante] = useState(productoEditar?.añadirFaltante ?? false)
@@ -76,9 +73,8 @@ const Formulario = ({productoEditar}) => {
     const {nombre, marca, modelo, codigo, barras, rubro, precio_venta, precio_venta_conocidos, precio_venta_efectivo, precio_venta_tarjeta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, todos_proveedores, disponibles, rentabilidad, notas, faltante, limiteFaltante, añadirFaltante} = producto
     
 
-    //hago un get a todas estas colecciones para tenerlos en este componente
     useEffect(() => {
-        if(usuario) {   //solo hace estos get cuando exista el usuario
+        if(usuario) {   
             traerDolarBD()
             traerDolarAPI()
             traerRubros()
@@ -232,7 +228,7 @@ const Formulario = ({productoEditar}) => {
         }
         //convierto el valor del state a numero
         const codigoCambiado = Number(codigo)
-        if(!codigo || codigo < 1 || isNaN(codigo) || !Number.isInteger(codigoCambiado) ) {  //verifico si es numero entero con isInteger
+        if(!codigo || codigo < 1 || isNaN(codigo) || !Number.isInteger(codigoCambiado) ) {
             Swal.fire({
                 icon: 'error',
                 title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
@@ -251,8 +247,7 @@ const Formulario = ({productoEditar}) => {
             return
         }
        
-      //validar el nuevo rubro. Esto lo hago para que no se vacíe el campo en caso de que haya algun error de backend
-        if(valoresR) {  //si tiene algo el input de rubro
+        if(valoresR) { 
             if(rubroSelect && valoresR) {
                 Swal.fire({
                     icon: 'error',
@@ -262,7 +257,7 @@ const Formulario = ({productoEditar}) => {
                 })
                 return
             }
-            if(rubros) {    //si hay algun rubro creado
+            if(rubros) {    
                 const boolean = rubros.map(rubro => rubro.nombre == valoresR ? true : false )   //recorro el state de rubros
                 const contiene = boolean.includes(true) //devuelvo si existe un rubro con el mismo nombre
                 if(contiene) {  //lanzo el error en ese caso
@@ -278,7 +273,7 @@ const Formulario = ({productoEditar}) => {
         }
 
         const cantidadCambiada = Number(cantidad)
-        if(cantidad < 0 || isNaN(cantidad) || !Number.isInteger(cantidadCambiada) ) {  //verifico si es numero entero con isInteger
+        if(cantidad < 0 || isNaN(cantidad) || !Number.isInteger(cantidadCambiada) ) {
             Swal.fire({
                 icon: 'error',
                 title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
@@ -387,8 +382,7 @@ const Formulario = ({productoEditar}) => {
             return
         } 
         
-        //validar el nuevo proveedor. Esto lo hago para que no se vacíe el campo en caso de que haya algun error de backend
-        if(valoresP) {  //si tiene algo el input de proveedor
+        if(valoresP) { 
             if(proveedorSelect && valoresP) {
                 Swal.fire({
                     icon: 'error',

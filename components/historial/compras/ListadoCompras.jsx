@@ -24,13 +24,12 @@ const ListadoCompras = () => {
         orderModeloFiltrados,
     } = CompraContext
 
-    const [filtrando, setFiltrando] = useState("")    //contiene lo que voy escribiendo
-    const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
-    const [focus, setFocus] = useState(false)   //activar el ring en el buscador
+    const [filtrando, setFiltrando] = useState("")   
+    const [escribiendo, setEscribiendo] = useState(false)  
+    const [focus, setFocus] = useState(false)
     const [ordenNombre, setOrdenNombre] = useState(false)
     const [ordenMarca, setOrdenMarca] = useState(false)
     const [ordenModelo, setOrdenModelo] = useState(false)
-    const [ordenProveedor, setOrdenProveedor] = useState(false)
 
 
     useEffect(() => {
