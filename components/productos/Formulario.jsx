@@ -62,6 +62,8 @@ const Formulario = ({productoEditar}) => {
         rubro: productoEditar?.rubro ?? "",
         proveedor: productoEditar?.proveedor ?? "",
         todos_proveedores: productoEditar?.todos_proveedores ?? [],
+        factura: productoEditar?.factura ?? "",
+        garantia: productoEditar?.garantia ?? "",
         fecha_compra: productoEditar?.fecha_compra ?? hoy ?? "",
         disponibles: productoEditar?.disponibles ?? "",
         rentabilidad: productoEditar?.rentabilidad ?? "",
@@ -70,7 +72,7 @@ const Formulario = ({productoEditar}) => {
         limiteFaltante: productoEditar?.limiteFaltante ?? "",
         añadirFaltante: productoEditar?.añadirFaltante ?? false
     })
-    const {nombre, marca, modelo, codigo, barras, rubro, precio_venta, precio_venta_conocidos, precio_venta_efectivo, precio_venta_tarjeta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, todos_proveedores, disponibles, rentabilidad, notas, faltante, limiteFaltante, añadirFaltante} = producto
+    const {nombre, marca, modelo, codigo, barras, rubro, precio_venta, precio_venta_conocidos, precio_venta_efectivo, precio_venta_tarjeta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, todos_proveedores, factura, garantia, disponibles, rentabilidad, notas, faltante, limiteFaltante, añadirFaltante} = producto
     
 
     useEffect(() => {
@@ -220,7 +222,7 @@ const Formulario = ({productoEditar}) => {
                 Swal.fire({
                     icon: 'error',
                     title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                    html: `${modo ? '<p style="color:white">El <b>codigo</b> ya esta ingresado.</p>' : '<p style="color:#545454">El <b>codigo</b> ya esta ingresado.</p>'}`,
+                    html: `${modo ? '<p style="color:white">Nro. de artículo ya asignado.</p>' : '<p style="color:#545454">Nro. de artículo ya asignado.</p>'}`,
                     background: `${modo ? "rgb(31 41 55)" : "white"}`,
                   })
                 return
@@ -456,6 +458,8 @@ const Formulario = ({productoEditar}) => {
                 barras: "",
                 rubro: "",
                 proveedor: "",
+                factura: "",
+                garantia: "",
                 precio_venta: "",
                 precio_venta_conocidos: "",
                 precio_venta_efectivo: "",
@@ -670,6 +674,40 @@ const Formulario = ({productoEditar}) => {
                                 </select>
                             </div>
                         </div>     
+
+                        <div className="mb-4">
+                            <div className="flex justify-between">
+                                <label htmlFor="factura" className="text-gray-800 dark:text-gray-300 font-bold font ">Nro. factura compra</label>
+                            </div>
+                            <input
+                                type="text"
+                                step="any"
+                                autoComplete="off"
+                                className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                id="factura"
+                                placeholder="0014-232322"
+                                name="factura"
+                                value={factura}
+                                onChange={onChange}
+                            />
+                        </div>    
+
+                        <div className="mb-4">
+                            <div className="flex justify-between">
+                                <label htmlFor="garantia" className="text-gray-800 dark:text-gray-300 font-bold font ">Garantía</label>
+                            </div>
+                            <input
+                                type="text"
+                                step="any"
+                                autoComplete="off"
+                                className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                id="garantia"
+                                placeholder="2 meses"
+                                name="garantia"
+                                value={garantia}
+                                onChange={onChange}
+                            />
+                        </div>   
 
                         <div className="mb-4">
                             <div className="flex justify-between">

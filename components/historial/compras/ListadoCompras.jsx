@@ -126,6 +126,8 @@ const ListadoCompras = () => {
                     <th onClick={() => ordenarModelo()}>MODELO</th>
                     <th>CANTIDAD</th>
                     <th>FECHA DE COMPRA</th>
+                    <th>GARANTÍA</th>
+                    <th>FACTURA NRO</th>
                     <th>PROVEEDOR</th>
                     <th>VALOR DEL DOLAR</th>
                     <th className="rounded-tr-lg">PRECIO EN USD</th>
