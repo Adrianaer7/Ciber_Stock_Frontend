@@ -160,6 +160,11 @@ export default function productoReducer(state, action) {
                                     .toLowerCase()
                                     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                                     .includes(action.payload ? action.payload  : producto)
+                        || producto.factura
+                                    .toString()
+                                    .toLowerCase()
+                                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                                    .includes(action.payload ? action.payload  : producto)
                         || producto.proveedor
                                     .toString()
                                     .toLowerCase()
