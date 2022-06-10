@@ -32,3 +32,5 @@ variables.env
 .next
 # vercel
 .vercel
+iniciar.vbs
+iniciarservidor.bat
