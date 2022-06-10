@@ -33,4 +33,4 @@ variables.env
 # vercel
 .vercel
 iniciar.vbs
-iniciarservidor.bat
+iniciarcliente.bat
