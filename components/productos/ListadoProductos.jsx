@@ -195,7 +195,9 @@ const ListadoProductos = () => {
                 <th onClick={() => ordenarMarca()}>MARCA</th>
                 <th onClick={() => ordenarModelo()}>MODELO</th>
                 <th onClick={() => ordenarDisponibles()}>DISPONIBLES</th>
-                <th onClick={() => ordenarPrecio()}>PRECIO</th>
+                <th>GARANTÍA</th>
+                <th onClick={() => ordenarPrecio()}>CONTADO</th>
+                <th onClick={() => ordenarPrecio()}>AHORA 12</th>
                 <th className="md:rounded-tr-lg">ACCIONES</th>
             </tr>
         </thead>

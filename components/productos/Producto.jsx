@@ -14,7 +14,8 @@ const Producto = ({producto}) => {
         precio_venta_conocidos, 
         precio_venta_efectivo, 
         precio_venta_tarjeta, 
-        disponibles, 
+        disponibles,
+        garantia,
         modelo, 
         _id, 
         faltante,
@@ -24,6 +25,7 @@ const Producto = ({producto}) => {
     const conocidos = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_conocidos)).trim().replace(/\s\s+/g, ' ')   //datos que se copian al hacer click en el precio. El replace quita 2 o mas espacio entre palabra y palabra
     const efectivo = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_efectivo)).trim().replace(/\s\s+/g, ' ')
     const tarjeta = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_tarjeta)).trim().replace(/\s\s+/g, ' ')
+    const cuotas = precio_venta_tarjeta/3
 
     const AuthContext = useContext(authContext)
     const {modo} = AuthContext
@@ -165,11 +167,20 @@ const Producto = ({producto}) => {
             <td className="p-3 dark:text-gray-50 text-center">{marca}</td>
             <td className="p-3 dark:text-gray-50 text-center">{modelo}</td>
             <td className="dark:text-gray-50 text-center uppercase">{!disponibles ? <span className="bg-red-600 font-black text-white p-1  rounded-sm">Sin stock</span> : disponibles && !faltante && colorFaltante === null || disponibles && colorFaltante === false ? disponibles : disponibles && faltante || disponibles && colorFaltante || disponibles && faltante && colorFaltante === false ? <span className="text-red-600 font-bold">{disponibles}</span> : null}</td>
+            <td className="p-3 dark:text-gray-50 text-center">{garantia}</td>
+
             <td className="p-2 dark:text-gray-50 text-center  text-lg hover:cursor-pointer ">
                 <div className="flex flex-col">
                     <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-3xl font-black " onClick={copiarPrecioTarjeta}>${precio_venta_tarjeta}</p>
                     <p className="pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-2xl font-medium" onClick={copiarPrecioEfectivo}>${precio_venta_efectivo}</p>
                     <p className="mt-4 pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-xl" onClick={copiarPrecioConocidoss}>${precio_venta_conocidos}</p>
+                </div>
+            </td>
+            <td className="p-2 dark:text-gray-50 text-center  text-lg hover:cursor-pointer ">
+                <div className="flex flex-col">
+                    <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-3xl font-black " onClick={copiarPrecioTarjeta}>${cuotas}</p>
+                    <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-3xl font-black " onClick={copiarPrecioTarjeta}>${cuotas}</p>
+
                 </div>
             </td>
 

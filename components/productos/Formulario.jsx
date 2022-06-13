@@ -98,9 +98,9 @@ const Formulario = ({productoEditar}) => {
 
     //cada vez que escriba en los inputs se realiza el calculo aprox para el precio de la venta
     useEffect(() => {
-        precioVenta(valor_dolar_compra, precio_compra_dolar, precio_compra_peso, rentabilidad)
+        precioVenta(valor_dolar_compra, precio_compra_dolar, precio_compra_peso, rubro)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [valor_dolar_compra, precio_compra_dolar, precio_compra_peso, rentabilidad])
+    }, [valor_dolar_compra, precio_compra_dolar, precio_compra_peso, rubro])
 
 
     useEffect(() => {
@@ -146,13 +146,13 @@ const Formulario = ({productoEditar}) => {
         producto.añadirFaltante = false
     }
 
-    if(!valor_dolar_compra || !rentabilidad && precio_compra_peso) {
+    if(!valor_dolar_compra || !rubro && precio_compra_peso) {
         producto.precio_venta = 0
         producto.precio_venta_conocidos = 0
         producto.precio_venta_efectivo = 0
         producto.precio_venta_tarjeta = 0
     }
-    if(!valor_dolar_compra || !rentabilidad && precio_compra_dolar || !precio_compra_dolar) {
+    if(!valor_dolar_compra || !rubro && precio_compra_dolar || !precio_compra_dolar) {
         producto.precio_venta = 0
         producto.precio_venta_conocidos = 0
         producto.precio_venta_efectivo = 0
@@ -536,7 +536,7 @@ const Formulario = ({productoEditar}) => {
                             <input  
                                 type="tel"
                                 autoComplete="off"
-                                className=" mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                className=" mt-2 block w-full p-3 uppercase rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="barras"
                                 placeholder="893247539457"
                                 name="barras"
@@ -552,7 +552,7 @@ const Formulario = ({productoEditar}) => {
                                     onChange={onChange} 
                                     className="uppercase text-center mt-2 ml-4 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                     name="rubro"
-                                    value={ rubro}
+                                    value={rubro}
                                 >
                                     <Rubro
                                         key={producto._id}
@@ -618,7 +618,7 @@ const Formulario = ({productoEditar}) => {
                                 type="text"
                                 step="any"
                                 autoComplete="off"
-                                className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                className="mt-2 block w-full p-3 uppercase rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="factura"
                                 placeholder="0014-232322"
                                 name="factura"
@@ -635,7 +635,7 @@ const Formulario = ({productoEditar}) => {
                                 type="text"
                                 step="any"
                                 autoComplete="off"
-                                className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                className="mt-2 block w-full p-3 uppercase rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="garantia"
                                 placeholder="2 meses"
                                 name="garantia"
@@ -690,28 +690,14 @@ const Formulario = ({productoEditar}) => {
                                 onChange={onChangeNumeros}
                             />
                         </div>
-                        <div className="mb-4">
-                            <div className="flex justify-between">
-                                <label htmlFor="rentabilidad" className="text-gray-800 dark:text-gray-300 font-bold font ">Rentabilidad</label>
-                            </div>                            
-                            <input
-                                type="tel"
-                                autoComplete="off"
-                                className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                id="rentabilidad"
-                                placeholder="40%"
-                                name="rentabilidad"
-                                value={rubro.split(" ")[1]}
-                                onChange={onChangeNumeros}
-                            />
-                        </div>
+                        
                             <div className="mb-4">
                                     <label htmlFor="precio_venta" className="text-gray-800  dark:text-gray-300 font-bold  "> Precio de venta</label>
                                     
                                 <input
                                     type="tel"
                                     autoComplete="off"
-                                    className="mt-2 block w-full p-3 font-bold rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                    className="mt-2 block w-full p-3 font-black rounded-md bg-gray-50 text-red-600 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white hover:cursor-pointer focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                     id="precio_venta"
                                     placeholder="$0"
                                     name="precio_venta"

@@ -287,10 +287,11 @@ const ProductoState = ({children}) => {
     }
 
     const precioVenta = (valor1, valor2, valor3, valor4) => {   //valor_dolar_compra, precio_compra_dolar, precio_compra_peso, rentabilidad
-        if(valor1>0 && valor2>0 && valor4>0 && valor3 === "") {
+        if(valor1>0 && valor2>0 && valor4 && valor3 === "") {
             const val1 = parseFloat(valor1) //precio compra dolar
             const val2 = parseFloat(valor2) //valor dolar compra
-            const val4 = parseInt(valor4)   //rentabilidad
+            const val3 = (valor4.split(" ")[1].replace("%", ""))    //traigo el rubro con su porcentaje y extraigo el valor numerico
+            const val4 = parseInt(val3)   //rentabilidad
             const res1 = (val1 * val2) * (parseInt(Math.round(val4))+100)   //redondeo el porcentaje y convierto a integer el resultado de la operacion
             const res3 = Number((res1 / 100).toFixed(2))
             if(res3) {
@@ -312,9 +313,9 @@ const ProductoState = ({children}) => {
         } else {
             limpiarPrecioVenta()
         }
-        if(valor1>0 && valor4>0 && valor3>0 && valor2==="") {
+        if(valor1>0 && valor4 && valor3>0 && valor2==="") {
             const val3 = parseFloat(valor3) //valor peso compra
-            const val4 = parseInt(valor4)   //rentabilidad
+            const val4 = parseInt(valor4.split(" ")[1].replace("%", ""))  //rentabilidad
             const res3 = parseInt(((val3 * (parseInt(val4)+100)) / 100).toFixed(2))
             if(res3) {
                 const res4 = Number(((res3 * 105) / 100).toFixed(2))
