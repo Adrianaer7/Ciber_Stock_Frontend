@@ -20,12 +20,9 @@ const Formulario = ({productoEditar}) => {
         productos,
         productoSeleccionado, 
         agregarProducto, 
-        agregarRubro, 
         agregarProveedor, 
         editarProducto, 
         traerProductos, 
-        traerRubros, 
-        rubros, 
         proveedores, 
         traerProveedores, 
         valorDeVenta,
@@ -40,7 +37,6 @@ const Formulario = ({productoEditar}) => {
    
     const [valoresR, setValoresR] = useState("") 
     const [valoresP, setValoresP] = useState("") 
-    const [rubroSelect, setRubroSelect] = useState(productoEditar?.rubro ?? "")
     const [proveedorSelect, setProveedorSelect] = useState(productoEditar?.proveedor ?? "")
     const [valorFaltante, setValorFaltante] = useState(productoEditar?.añadirFaltante ?? false)
     const [cantidad, setCantidad] = useState("")
@@ -79,7 +75,6 @@ const Formulario = ({productoEditar}) => {
         if(usuario) {   
             traerDolarBD()
             traerDolarAPI()
-            traerRubros()
             traerProveedores()
             traerCompras()
         }
@@ -130,20 +125,7 @@ const Formulario = ({productoEditar}) => {
             [e.target.name]: e.target.value.replace(",", "."),
         })
     }
-    
-    
-    const onChangeRubroInput = e => {
-        setValoresR(e.target.value.toUpperCase())
-    }
-    const onChangeRubroSelect = e => {
-        setRubroSelect(e.target.value.toUpperCase())
-    }
-    if(valoresR && !rubroSelect) {
-        producto.rubro = valoresR
-    }
-    if(rubroSelect && !valoresR) {
-        producto.rubro = rubroSelect
-    }
+        
     
     const onChangeProveedorInput = e => {
         setValoresP(e.target.value.toUpperCase())
@@ -249,30 +231,6 @@ const Formulario = ({productoEditar}) => {
             return
         }
        
-        if(valoresR) { 
-            if(rubroSelect && valoresR) {
-                Swal.fire({
-                    icon: 'error',
-                    title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                    html: `${modo ? '<p style="color:white">Ingrese 1 solo <b>rubro</b> a la vez.</p>' : '<p style="color:#545454">Ingrese un solo <b>rubro</b> a la vez.</p>'}`,
-                    background: `${modo ? "rgb(31 41 55)" : "white"}`,
-                })
-                return
-            }
-            if(rubros) {    
-                const boolean = rubros.map(rubro => rubro.nombre == valoresR ? true : false )   //recorro el state de rubros
-                const contiene = boolean.includes(true) //devuelvo si existe un rubro con el mismo nombre
-                if(contiene) {  //lanzo el error en ese caso
-                    Swal.fire({
-                        icon: 'error',
-                        title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                        html: `${modo ? '<p style="color:white">El <b>rubro</b> ya está ingresado.</p>' : '<p style="color:#545454">El <b>rubro</b> ya está ingresado.</p>'}`,
-                        background: `${modo ? "rgb(31 41 55)" : "white"}`,
-                    })
-                    return
-                } 
-            }
-        }
 
         const cantidadCambiada = Number(cantidad)
         if(cantidad < 0 || isNaN(cantidad) || !Number.isInteger(cantidadCambiada) ) {
@@ -431,9 +389,7 @@ const Formulario = ({productoEditar}) => {
             agregarProveedor(proveedor)
         }
         //si no se cumple ninguna condicion que le puse arriba, y tampoco está vacio el input, lo envio a la bd
-        if(valoresR) {
-            agregarRubro(rubro)
-        }
+       
 
         //si es nuevo producto
         if(!productoEditar) {
@@ -448,7 +404,6 @@ const Formulario = ({productoEditar}) => {
             }
             agregarProducto(producto, cantidad, desdeForm)
             setCantidad("")
-            setRubroSelect("")
             setProveedorSelect("")
             setProducto({
                 nombre: "",
@@ -591,38 +546,18 @@ const Formulario = ({productoEditar}) => {
                         </div>
 
                         <div className="mb-4">
-                            <div className="flex justify-between">
-                                <label htmlFor="rubro" className="text-gray-800 dark:text-gray-300 font-bold ">Rubro</label>
-                                <label htmlFor="rubro" className="text-gray-800 dark:text-gray-300 font-bold ">Rubros</label>
-
-                            </div>
-                            <div className="flex">
-                                <input
-                                    type="text"
-                                    autoComplete="off"
-                                    className={` mt-2  block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
-                                    id="rubro"
-                                    placeholder="Cables"
-                                    name="rubro"
-                                    value={valoresR}
-                                    onChange={onChangeRubroInput}
-                                />
+                            <label htmlFor="rubro" className="text-gray-800 dark:text-gray-300 font-bold ">Rubro</label>
+                            <div>
                                 <select  
-                                    onChange={onChangeRubroSelect} 
-                                    value={rubroSelect} 
+                                    onChange={onChange} 
                                     className="uppercase text-center mt-2 ml-4 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                    name="rubro"
+                                    value={ rubro}
                                 >
-                                    <option value="" className="uppercase"> -- Seleccione --</option>
-                                    {Object.keys(rubros).length > 0  && (
-                                        <>
-                                            {rubros.map((rubro, i) => (
-                                                <Rubro
-                                                    key={i}
-                                                    rubro={rubro}
-                                                />
-                                            ))}
-                                        </>
-                                    )}
+                                    <Rubro
+                                        key={producto._id}
+                                        rubro={rubro}
+                                    />
                                 </select>
                             </div>
                         </div>
@@ -766,65 +701,27 @@ const Formulario = ({productoEditar}) => {
                                 id="rentabilidad"
                                 placeholder="40%"
                                 name="rentabilidad"
-                                value={rentabilidad}
+                                value={rubro.split(" ")[1]}
                                 onChange={onChangeNumeros}
                             />
                         </div>
                             <div className="mb-4">
-                                <div className="grid grid-cols-4">
-                                    <label htmlFor="precio_venta" className="text-gray-800  dark:text-gray-300 font-bold  "> al ingreso</label>
-                                    <label htmlFor="precio_venta_conocidos" className="text-gray-800  dark:text-gray-300 font-bold  "> conocidos </label>
-                                    <label htmlFor="precio_venta_efectivo" className="text-gray-800  dark:text-gray-300 font-bold  "> efectivo </label>
-                                    <label htmlFor="precio_venta_tarjeta" className="text-gray-800  dark:text-gray-300 font-bold  "> tarjeta </label>
-                                </div>
-                                <div className="grid grid-cols-4 gap-1">
-                                    <input
-                                        type="tel"
-                                        autoComplete="off"
-                                        className="mt-2  block w-full p-3 pr-0 hover:cursor-pointer  justify-end rounded-md font-bold text-red-600 bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                        id="precio_venta"
-                                        placeholder="$0"
-                                        name="precio_venta"
-                                        value= {`$ ${valorDeVenta > 0 ? valorDeVenta :  precio_venta}`}
-                                        readOnly={true}
-                                        
-                                    />
-                                    <input
-                                        type="tel"
-                                        autoComplete="off"
-                                        className="mt-2  block w-full p-3 pr-0 hover:cursor-pointer  justify-end rounded-md font-bold text-red-600 bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                        id="precio_venta_conocidos"
-                                        placeholder="$0"
-                                        name="precio_venta_conocidos"
-                                        value={ `$ ${valorDeVentaConocidos > 0 ? valorDeVentaConocidos : precio_venta_conocidos}`}
-                                        readOnly={true}
-                                        
-                                    />
-                                    <input
-                                        type="tel"
-                                        autoComplete="off"
-                                        className="mt-2  block w-full p-3 pr-0 hover:cursor-pointer  justify-end rounded-md font-bold text-red-600 bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                        id="precio_venta_efectivo"
-                                        placeholder="$0"
-                                        name="precio_venta_efectivo"
-                                        value={ `$ ${valorDeVentaEfectivo > 0 ? valorDeVentaEfectivo : precio_venta_efectivo}`}
-                                        readOnly={true}
-                                        
-                                    />
-                                    <input
-                                        type="tel"
-                                        autoComplete="off"
-                                        className="mt-2  block w-full p-3 pr-0 hover:cursor-pointer  justify-end rounded-md font-bold text-red-600 bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                        id="precio_venta_tarjeta"
-                                        placeholder="$0"
-                                        name="precio_venta_tarjeta"
-                                        value={ `$ ${valorDeVentaTarjeta > 0 ? valorDeVentaTarjeta : precio_venta_tarjeta}`}
-                                        readOnly={true}
-                                        
-                                    />
-                                   
-                                </div>
+                                    <label htmlFor="precio_venta" className="text-gray-800  dark:text-gray-300 font-bold  "> Precio de venta</label>
+                                    
+                                <input
+                                    type="tel"
+                                    autoComplete="off"
+                                    className="mt-2 block w-full p-3 font-bold rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                    id="precio_venta"
+                                    placeholder="$0"
+                                    name="precio_venta"
+                                    value= {`$ ${valorDeVenta > 0 ? valorDeVenta :  precio_venta}`}
+                                    readOnly={true}
+                                    
+                                />
                             </div>
+                                    
+                                   
                             
                         <div className="mb-4">
                             <label htmlFor="fecha_compra" className="text-gray-800 dark:text-gray-300 font-bold ">Fecha de compra</label>
