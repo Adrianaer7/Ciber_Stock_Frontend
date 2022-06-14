@@ -529,6 +529,22 @@ const Formulario = ({productoEditar}) => {
                             />
                         </div>
                         <div className="mb-4">
+                            <label htmlFor="codigoselect" className="text-gray-800 dark:text-gray-300 font-bold ">codigoselect</label>
+                            <div>
+                                <select  
+                                    onChange={onChange} 
+                                    className="uppercase text-center mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                    name="codigoselect"
+                                >
+                                    {Object.keys(productos).length > 0 ? (
+                                        productos.map(producto => {
+                                            producto.codigo !== 1 ? console.log("si") : console.log("no")
+                                        })
+                                    ) : <option></option>}
+                                </select>
+                            </div>
+                        </div>
+                        <div className="mb-4">
                             <div className="flex justify-between">
                                 <label htmlFor="barras" className="text-gray-800 dark:text-gray-300 font-bold">Código de barras</label>
 
@@ -550,7 +566,7 @@ const Formulario = ({productoEditar}) => {
                             <div>
                                 <select  
                                     onChange={onChange} 
-                                    className="uppercase text-center mt-2 ml-4 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                    className="uppercase text-center mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                     name="rubro"
                                     value={rubro}
                                 >
