@@ -23,7 +23,9 @@ const VerProducto = ({producto}) => {
         marca, 
         precio_venta_tarjeta, 
         precio_venta_efectivo, 
-        precio_venta_conocidos, 
+        precio_venta_conocidos,
+        precio_venta_ahoraDoce,
+        precio_venta_cuotas,
         precio_compra_dolar, 
         precio_compra_peso, 
         valor_dolar_compra, 
@@ -125,6 +127,16 @@ const VerProducto = ({producto}) => {
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700  justify-between grid  grid-cols-1 lg:grid-cols-2">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">PRECIO DE VENTA CON TARJETA</th>
                             <td className="px-6 py-4 text-left">{precio_venta_tarjeta ? "$" + precio_venta_tarjeta : "-"}</td>
+                        </tr>
+
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700  justify-between grid  grid-cols-1 lg:grid-cols-2">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">PRECIO DE VENTA AHORA 12</th>
+                            <td className="px-6 py-4 text-left">{precio_venta_ahoraDoce ? "$" + precio_venta_ahoraDoce : "-"}</td>
+                        </tr>
+
+                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700  justify-between grid  grid-cols-1 lg:grid-cols-2">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">PRECIO DE VENTA CUOTAS AHORA 12</th>
+                            <td className="px-6 py-4 text-left">{precio_venta_cuotas ? "$" + precio_venta_cuotas : "-"}</td>
                         </tr>
                     
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">

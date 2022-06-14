@@ -13,7 +13,9 @@ const Producto = ({producto}) => {
         codigo, 
         precio_venta_conocidos, 
         precio_venta_efectivo, 
-        precio_venta_tarjeta, 
+        precio_venta_tarjeta,
+        precio_venta_ahoraDoce,
+        precio_venta_cuotas, 
         disponibles,
         garantia,
         modelo, 
@@ -25,7 +27,7 @@ const Producto = ({producto}) => {
     const conocidos = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_conocidos)).trim().replace(/\s\s+/g, ' ')   //datos que se copian al hacer click en el precio. El replace quita 2 o mas espacio entre palabra y palabra
     const efectivo = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_efectivo)).trim().replace(/\s\s+/g, ' ')
     const tarjeta = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_tarjeta)).trim().replace(/\s\s+/g, ' ')
-    const cuotas = precio_venta_tarjeta/3
+    const textoUnPago = (nombre + " " + marca + " " + modelo + " " + "Total final ahora 12: " + "$" + Math.round(precio_venta_ahoraDoce)).trim().replace(/\s\s+/g, ' ') + " - " + "Valor de cada cuota: " + "$" + precio_venta_cuotas
 
     const AuthContext = useContext(authContext)
     const {modo} = AuthContext
@@ -150,7 +152,7 @@ const Producto = ({producto}) => {
             background: `${modo ? "#505050"  : "white"}`,
           })
     }
-    const copiarPrecioConocidoss = () => {
+    const copiarPrecioConocidos = () => {
         navigator.clipboard.writeText(`${conocidos}`)
           Copiado.fire({
             icon: 'success',
@@ -159,6 +161,16 @@ const Producto = ({producto}) => {
             background: `${modo ? "#505050"  : "white"}`,
           })
     }
+    const copiarAhoraDoce = () => {
+        navigator.clipboard.writeText(`${textoUnPago}`)
+          Copiado.fire({
+            icon: 'success',
+            title: 'Copiado',
+            color: `${modo ? "white" : "#545454"}`,
+            background: `${modo ? "#505050"  : "white"}`,
+          })
+    }
+    
 
     return (
         <tr className="border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 hover:cursor-pointer active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700">
@@ -168,18 +180,23 @@ const Producto = ({producto}) => {
             <td className="p-3 dark:text-gray-50 text-center">{modelo}</td>
             <td className="dark:text-gray-50 text-center uppercase">{!disponibles ? <span className="bg-red-600 font-black text-white p-1  rounded-sm">Sin stock</span> : disponibles && !faltante && colorFaltante === null || disponibles && colorFaltante === false ? disponibles : disponibles && faltante || disponibles && colorFaltante || disponibles && faltante && colorFaltante === false ? <span className="text-red-600 font-bold">{disponibles}</span> : null}</td>
             <td className="p-3 dark:text-gray-50 text-center">{garantia}</td>
-
             <td className="p-2 dark:text-gray-50 text-center  text-lg hover:cursor-pointer ">
                 <div className="flex flex-col">
                     <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-3xl font-black " onClick={copiarPrecioTarjeta}>${precio_venta_tarjeta}</p>
                     <p className="pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-2xl font-medium" onClick={copiarPrecioEfectivo}>${precio_venta_efectivo}</p>
-                    <p className="mt-4 pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-xl" onClick={copiarPrecioConocidoss}>${precio_venta_conocidos}</p>
+                    <p className="mt-4 pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-xl" onClick={copiarPrecioConocidos}>${precio_venta_conocidos}</p>
                 </div>
             </td>
             <td className="p-2 dark:text-gray-50 text-center  text-lg hover:cursor-pointer ">
                 <div className="flex flex-col">
-                    <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-3xl font-black " onClick={copiarPrecioTarjeta}>${cuotas}</p>
-                    <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-3xl font-black " onClick={copiarPrecioTarjeta}>${cuotas}</p>
+                    <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-xl font-normal " onClick={copiarAhoraDoce}>
+                        Un pago
+                        <span className="block font-black text-3xl">${precio_venta_ahoraDoce}</span>
+                    </p>
+                    <p className="pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-xl font-normal " onClick={copiarAhoraDoce}>
+                        Cuotas de:
+                        <span className="block font-black text-2xl">${precio_venta_cuotas}</span>
+                    </p>
 
                 </div>
             </td>
