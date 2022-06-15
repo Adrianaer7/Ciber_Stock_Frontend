@@ -515,37 +515,40 @@ const Formulario = ({productoEditar}) => {
                         </div>
                         
                         <div className="mb-4">
+                    
+
                             <div className="flex justify-between">
 
-                                <label htmlFor="codigo" className="text-gray-800 dark:text-gray-300 font-bold ">Código</label>
-                                <label htmlFor="barras" className="text-gray-800 dark:text-gray-300 font-bold ">Cod. barras</label>
-                            </div>
-
-                            <div className="flex gap-1">
-
-
-                                <select  
-                                    onChange={onChange} 
-                                    className="uppercase text-center  mt-2 ml-1 block col-span-4 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                    name="codigo"
-                                    value={codigo}
-                                >
-                                    <option value={codigo ? codigo : ""} className="uppercase hidden">{codigo ? codigo  : "Vacío"}</option>
-                                    <option value="" className="uppercase">Vacío</option>
-                                    {codigos.map((code, i) => <option value={code} key={i}>{code}</option>)}
-        
-                                </select>
-                                <input  
-                                    type="tel"
-                                    autoComplete="off"
-                                    className=" mt-2  p-3 uppercase w-full text-right rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                    id="barras"
-                                    placeholder="893247539457"
-                                    name="barras"
-                                    value={barras}
-                                    onChange={onChange}
-                                />
+                                <div className="w-full">
+                                    <label htmlFor="codigo" className="text-gray-800 dark:text-gray-300 font-bold ">Código</label>
+                                    
+                                    <select  
+                                        onChange={onChange} 
+                                        className="uppercase text-center  mt-2 ml-1 block p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                        name="codigo"
+                                        value={codigo}
+                                    >
+                                        <option value={codigo ? codigo : ""} className="uppercase hidden">{codigo ? codigo  : "Vacío"}</option>
+                                        <option value="" className="uppercase">Vacío</option>
+                                        {codigos.map((code, i) => <option value={code} key={i}>{code}</option>)}
+            
+                                    </select>
                                 </div>
+                                <div className="full">
+
+                                    <label htmlFor="barras" className="text-gray-800 dark:text-gray-300 font-bold ">Cod. barras</label>
+                                    <input  
+                                        type="tel"
+                                        autoComplete="off"
+                                        className=" mt-2  p-3 uppercase w-full rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                        id="barras"
+                                        placeholder="893247539457"
+                                        name="barras"
+                                        value={barras}
+                                        onChange={onChange}
+                                    />
+                                </div>
+                            </div>
                         </div>
                         
 
