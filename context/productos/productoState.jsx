@@ -45,6 +45,7 @@ const ProductoState = ({children}) => {
 
     const initialState = {
         productos: [],
+        codigos: [],
         productoSeleccionado: null,
         mensajeRubro: null,
         mensajeCodigo: null,
@@ -172,9 +173,13 @@ const ProductoState = ({children}) => {
     const traerProductos = async () => {
         try {
             const {data} = await clienteAxios.get("/api/productos")
+            const {productos, codigosDisponibles} = data
             dispatch({
                 type: OBTENER_PRODUCTOS,
-                payload: data.productos
+                payload: {
+                    productos,
+                    codigosDisponibles
+                }
             })
         } catch (error) {
             console.log(error)
@@ -460,6 +465,7 @@ const ProductoState = ({children}) => {
         <productoContext.Provider
             value={{
                 productos: state.productos,
+                codigos: state.codigos,
                 productoSeleccionado: state.productoSeleccionado,
                 mensajeCodigo: state.mensajeCodigo,
                 mensajeRubro: state.mensajeRubro,

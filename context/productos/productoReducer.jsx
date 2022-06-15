@@ -71,7 +71,8 @@ export default function productoReducer(state, action) {
         case OBTENER_PRODUCTOS:
             return {
                 ...state,
-                productos: action.payload,
+                productos: action.payload.productos,
+                codigos: action.payload.codigosDisponibles
             }
         case OBTENER_RUBROS:
             return {

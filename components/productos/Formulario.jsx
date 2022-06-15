@@ -18,6 +18,7 @@ const Formulario = ({productoEditar}) => {
     const productosContext = useContext(productoContext)
     const { 
         productos,
+        codigos,
         productoSeleccionado, 
         agregarProducto, 
         agregarProveedor, 
@@ -512,54 +513,41 @@ const Formulario = ({productoEditar}) => {
                                 onChange={onChange}
                             />
                         </div>
+                        
                         <div className="mb-4">
                             <div className="flex justify-between">
-                                <label htmlFor="codigo" className="text-gray-800 dark:text-gray-300 font-bold">Código *</label>
 
+                                <label htmlFor="codigo" className="text-gray-800 dark:text-gray-300 font-bold ">Código</label>
+                                <label htmlFor="barras" className="text-gray-800 dark:text-gray-300 font-bold ">Cod. barras</label>
                             </div>
-                            <input  
-                                type="tel"
-                                autoComplete="off"
-                                className=" mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                id="codigo"
-                                placeholder="123"
-                                name="codigo"
-                                value={codigo}
-                                onChange={onChange}
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="codigoselect" className="text-gray-800 dark:text-gray-300 font-bold ">codigoselect</label>
-                            <div>
+
+                            <div className="flex gap-1">
+
+
                                 <select  
                                     onChange={onChange} 
-                                    className="uppercase text-center mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                    name="codigoselect"
+                                    className="uppercase text-center  mt-2 ml-1 block col-span-4 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                    name="codigo"
+                                    value={codigo}
                                 >
-                                    {Object.keys(productos).length > 0 ? (
-                                        productos.map(producto => {
-                                            producto.codigo !== 1 ? console.log("si") : console.log("no")
-                                        })
-                                    ) : <option></option>}
+                                    <option value={codigo ? codigo : ""} className="uppercase hidden">{codigo ? codigo  : "Vacío"}</option>
+                                    <option value="" className="uppercase">Vacío</option>
+                                    {codigos.map((code, i) => <option value={code} key={i}>{code}</option>)}
+        
                                 </select>
-                            </div>
+                                <input  
+                                    type="tel"
+                                    autoComplete="off"
+                                    className=" mt-2  p-3 uppercase w-full text-right rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                    id="barras"
+                                    placeholder="893247539457"
+                                    name="barras"
+                                    value={barras}
+                                    onChange={onChange}
+                                />
+                                </div>
                         </div>
-                        <div className="mb-4">
-                            <div className="flex justify-between">
-                                <label htmlFor="barras" className="text-gray-800 dark:text-gray-300 font-bold">Código de barras</label>
-
-                            </div>
-                            <input  
-                                type="tel"
-                                autoComplete="off"
-                                className=" mt-2 block w-full p-3 uppercase rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                id="barras"
-                                placeholder="893247539457"
-                                name="barras"
-                                value={barras}
-                                onChange={onChange}
-                            />
-                        </div>
+                        
 
                         <div className="mb-4">
                             <label htmlFor="rubro" className="text-gray-800 dark:text-gray-300 font-bold ">Rubro</label>
