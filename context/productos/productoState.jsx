@@ -18,6 +18,7 @@ import {
     LIMPIAR_APP, 
     LIMPIAR_SELECCIONADO, 
     LIMPIAR_VENTA, 
+    OBTENER_CODIGOS, 
     OBTENER_PRODUCTOS, 
     OBTENER_PROVEEDORES, 
     OBTENER_RUBROS, 
@@ -173,20 +174,23 @@ const ProductoState = ({children}) => {
     const traerProductos = async () => {
         try {
             const {data} = await clienteAxios.get("/api/productos")
-            const {productos, codigosDisponibles} = data
             dispatch({
                 type: OBTENER_PRODUCTOS,
-                payload: {
-                    productos,
-                    codigosDisponibles
-                }
+                payload: data.productos
             })
         } catch (error) {
             console.log(error)
         }
     }
 
-    
+    const traerCodigos = async () => {
+        const {data} = await clienteAxios("/api/codigos")
+        dispatch({
+            type: OBTENER_CODIGOS,
+            payload: data.codigosDisponibles
+        })
+    }
+
     //trae todos los rubros creados
     const traerRubros = async () => {
         try {
@@ -222,6 +226,9 @@ const ProductoState = ({children}) => {
             console.log(error)
         }
     }
+
+    
+
     //saco el producto seleccionado del state cuando no estoy en la vista propia
     const limpiarSeleccionado = () => {
         try {
@@ -482,6 +489,7 @@ const ProductoState = ({children}) => {
                 traerProductos,
                 traerRubros,
                 traerProveedores,
+                traerCodigos,
                 productoActual,
                 editarProducto,
                 limpiarSeleccionado,

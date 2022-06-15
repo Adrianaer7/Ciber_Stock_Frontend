@@ -12,6 +12,7 @@ import {
     ERROR_AGREGAR_RUBRO,
     AGREGAR_RUBRO,
     OBTENER_PROVEEDORES,
+    OBTENER_CODIGOS,
     ELIMINAR_PRODUCTOS,
     ELIMINAR_RUBROS,
     ELIMINAR_PROVEEDORES,
@@ -33,7 +34,7 @@ import {
     ORDENAR_MODELO,
     ORDENAR_NOMBRE_FILTRADO,
     ORDENAR_MARCA_FILTRADO,
-    ORDENAR_MODELO_FILTRADO
+    ORDENAR_MODELO_FILTRADO,
 } from "../../types"
 
 export default function productoReducer(state, action) {
@@ -71,8 +72,12 @@ export default function productoReducer(state, action) {
         case OBTENER_PRODUCTOS:
             return {
                 ...state,
-                productos: action.payload.productos,
-                codigos: action.payload.codigosDisponibles
+                productos: action.payload,
+            }
+        case OBTENER_CODIGOS:
+            return {
+                ...state,
+                codigos: action.payload
             }
         case OBTENER_RUBROS:
             return {

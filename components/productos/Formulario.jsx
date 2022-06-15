@@ -25,7 +25,8 @@ const Formulario = ({productoEditar}) => {
         editarProducto, 
         traerProductos, 
         proveedores, 
-        traerProveedores, 
+        traerProveedores,
+        traerCodigos,
         valorDeVenta,
         valorDeVentaConocidos,
         valorDeVentaEfectivo,
@@ -77,6 +78,7 @@ const Formulario = ({productoEditar}) => {
             traerDolarBD()
             traerDolarAPI()
             traerProveedores()
+            traerCodigos()
             traerCompras()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -197,20 +199,22 @@ const Formulario = ({productoEditar}) => {
         }
         //valido codigo. Esto lo hago para que no se vacíe el campo en caso de que haya algun error de backend
         if(productos) { //si existe algun producto creado, hago un recorrido
-            const boolean = productos.map(producto => producto.codigo == codigo ? true : false )
-            const contiene = boolean.includes(true) //si existe el codigo del formulario en un producto ya creado guardo un true
-            const productoeditar = productoEditar?.codigo   //en caso de que el producto sea a editar, guardo su codigo
-
-            if(contiene && productoeditar !== codigo) { //si el codigo del form es igual al de algun producto que no estoy editando muestro error. Si es un producto editado, ignora esta linea y se valida el campo
-                Swal.fire({
-                    icon: 'error',
-                    title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                    html: `${modo ? '<p style="color:white">Nro. de artículo ya asignado.</p>' : '<p style="color:#545454">Nro. de artículo ya asignado.</p>'}`,
-                    background: `${modo ? "rgb(31 41 55)" : "white"}`,
-                  })
-                return
+            const boolean = productos.filter(producto => producto.codigo == codigo) //obtengo solo el producto que tenga el mismo codigo que el que ingreso del form
+            if(boolean.length > 0) {    //si existe algun producto con ese codigo
+                let id = boolean[0]._id
+                if(id !== productoEditar?._id) {  //si el id del producto no coincide con el del producto actual, es que quiero asignar un codigo que ya está ingresado
+                    Swal.fire({
+                        icon: 'error',
+                        title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                        html: `${modo ? '<p style="color:white">Nro. de artículo ya asignado.</p>' : '<p style="color:#545454">Nro. de artículo ya asignado.</p>'}`,
+                        background: `${modo ? "rgb(31 41 55)" : "white"}`,
+                    })
+                    return
+                }
             }
+            
         }
+        
         //convierto el valor del state a numero
         const codigoCambiado = Number(codigo)
         if(!codigo || codigo < 1 || isNaN(codigo) || !Number.isInteger(codigoCambiado) ) {
@@ -433,6 +437,7 @@ const Formulario = ({productoEditar}) => {
             setValoresR("")
             setValoresP("")
             traerProductos()
+            traerCodigos()
             alertaNuevoCorrecto()
         } else {
             //si hay que editar
@@ -455,6 +460,7 @@ const Formulario = ({productoEditar}) => {
             setProveedorSelect(producto.proveedor)
             setValoresP("")
             traerProductos()
+            traerCodigos()
             alertaEditarCorrecto()
         }
     }
@@ -515,39 +521,34 @@ const Formulario = ({productoEditar}) => {
                         </div>
                         
                         <div className="mb-4">
-                    
-
-                            <div className="flex justify-between">
-
-                                <div className="w-full">
-                                    <label htmlFor="codigo" className="text-gray-800 dark:text-gray-300 font-bold ">Código</label>
-                                    
-                                    <select  
-                                        onChange={onChange} 
-                                        className="uppercase text-center  mt-2 ml-1 block p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                        name="codigo"
-                                        value={codigo}
-                                    >
-                                        <option value={codigo ? codigo : ""} className="uppercase hidden">{codigo ? codigo  : "Vacío"}</option>
-                                        <option value="" className="uppercase">Vacío</option>
-                                        {codigos.map((code, i) => <option value={code} key={i}>{code}</option>)}
-            
-                                    </select>
-                                </div>
-                                <div className="full">
-
+                            <div className="flex">
+                                    <div className="w-1/5">
+                                        <label htmlFor="codigo" className="text-gray-800 dark:text-gray-300 font-bold ">Código</label>
+                                        <select  
+                                            onChange={onChange} 
+                                            className="uppercase text-center   mt-2 block p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                            name="codigo"
+                                            value={codigo}
+                                        >
+                                            <option value={codigo ? codigo : ""} className="uppercase hidden">{codigo ? codigo  : "Vacío"}</option>
+                                            <option value="" className="uppercase">Vacío</option>
+                                            {codigos.map((code, i) => <option value={code} key={i}>{code}</option>)}
+                
+                                        </select>
+                                    </div>
+                                    <div className="w-4/5 ">
                                     <label htmlFor="barras" className="text-gray-800 dark:text-gray-300 font-bold ">Cod. barras</label>
-                                    <input  
-                                        type="tel"
-                                        autoComplete="off"
-                                        className=" mt-2  p-3 uppercase w-full rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                        id="barras"
-                                        placeholder="893247539457"
-                                        name="barras"
-                                        value={barras}
-                                        onChange={onChange}
-                                    />
-                                </div>
+                                        <input  
+                                            type="tel"
+                                            autoComplete="off"
+                                            className=" mt-2  p-3 uppercase w-full rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                            id="barras"
+                                            placeholder="893247539457"
+                                            name="barras"
+                                            value={barras}
+                                            onChange={onChange}
+                                        />
+                                    </div>
                             </div>
                         </div>
                         
@@ -573,7 +574,7 @@ const Formulario = ({productoEditar}) => {
                             <div className="grid grid-cols-9">
                                 <label htmlFor="cantidad" className="text-gray-800 dark:text-gray-300 font-bold text-center col-span-1">N°</label>
                                 <label htmlFor="proveedor" className="text-gray-800 dark:text-gray-300 font-bold text-left col-span-4">Proveedor</label>
-                                <label htmlFor="selectp" className="text-gray-800 dark:text-gray-300 font-bold text-right col-span-4">Proveedores</label>
+                                <label htmlFor="selectp" className="text-gray-800 dark:text-gray-300 font-bold  col-span-4">Proveedores</label>
                             </div>
                             <div className="grid grid-cols-9">
                                 <input
@@ -745,7 +746,7 @@ const Formulario = ({productoEditar}) => {
                                 <input
                                     type="tel"
                                     autoComplete="off"
-                                    className={` ${!valorFaltante && "hover:cursor-not-allowed"} mt-2 block w-full p-3 text-right rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
+                                    className={` ${!valorFaltante && "hover:cursor-not-allowed"} mt-2 block w-full p-3  rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
                                     id="limiteFalante"
                                     placeholder="2 UNIDADES"
                                     name="limiteFaltante"
