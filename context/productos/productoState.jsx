@@ -38,7 +38,8 @@ import {
     PRECIO_VENTA_EFECTIVO,
     PRODUCTOS_CAMBIADOS, 
     PRODUCTO_ACTUAL,
-    TRAER_DOLAR_BD, 
+    TRAER_DOLAR_BD,
+    OBTENER_GARANTIAS, 
 } from "../../types";
 
 const ProductoState = ({children}) => {
@@ -54,6 +55,7 @@ const ProductoState = ({children}) => {
         filtrados: [],
         rubros: [],
         proveedores: [],
+        garantias: [],
         valorDeVenta: 0,
         valorDeVentaConocidos: 0,
         valorDeVentaEfectivo: 0,
@@ -75,6 +77,11 @@ const ProductoState = ({children}) => {
             //creo la nueva compra
             if(desdeForm && cantidad > 0) {
                 await clienteAxios.post("/api/compras", {producto, cantidad, desdeForm})
+            }
+            //creo la nueva garantia
+            if( cantidad > 0 && producto.proveedor && producto.garantia) {
+                const {garantia, proveedor, codigo} = producto
+                await clienteAxios.post("/api/garantias", {garantia, proveedor, codigo})
             }
             
 
@@ -135,6 +142,7 @@ const ProductoState = ({children}) => {
         }
     }
 
+
     //modifico el producto
     const editarProducto = async (producto, cantidad, desdeForm) => {
         try {
@@ -145,6 +153,10 @@ const ProductoState = ({children}) => {
             })
             if(desdeForm) {
                 await clienteAxios.post("/api/compras", {producto, cantidad, desdeForm})
+            }
+            if( cantidad > 0 && producto.proveedor && producto.garantia && desdeForm) {
+                const {garantia, proveedor, codigo} = producto
+                await clienteAxios.post("/api/garantias", {garantia, proveedor, codigo})
             }
             
         } catch (error) {
@@ -215,6 +227,15 @@ const ProductoState = ({children}) => {
             console.log(error)
         }
     }
+
+    const traerGarantias = async () => {
+        const {data} = await clienteAxios("/api/garantias")
+        dispatch({
+            type: OBTENER_GARANTIAS,
+            payload: data.garantias
+        })
+    }
+
     //guarda el producto seleccionado
     const productoActual = async producto => {
         try {
@@ -489,6 +510,7 @@ const ProductoState = ({children}) => {
                 traerProductos,
                 traerRubros,
                 traerProveedores,
+                traerGarantias,
                 traerCodigos,
                 productoActual,
                 editarProducto,

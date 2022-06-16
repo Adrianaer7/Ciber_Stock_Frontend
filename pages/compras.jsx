@@ -3,7 +3,7 @@ import ListadoCompras from "../components/historial/compras/ListadoCompras"
 
 const compras = () => {
   return (
-    <Layout>
+    <Layout pagina="Compras">
         <ListadoCompras/>
     </Layout>
   )

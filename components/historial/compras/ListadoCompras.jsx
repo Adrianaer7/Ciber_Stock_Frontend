@@ -127,6 +127,7 @@ const ListadoCompras = () => {
                     <th>CANTIDAD</th>
                     <th>FECHA DE COMPRA</th>
                     <th>GARANTÍA</th>
+                    <th>COD BARRAS</th>
                     <th>FACTURA NRO</th>
                     <th>PROVEEDOR</th>
                     <th>VALOR DEL DOLAR</th>

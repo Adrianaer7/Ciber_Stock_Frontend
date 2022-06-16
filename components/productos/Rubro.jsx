@@ -3,7 +3,7 @@ const Rubro = ({rubro}) => {
     <>
       <option value={rubro ? rubro : ""} className="uppercase hidden">{rubro ? rubro  : "--- Seleccione ---"}</option>
       <option value="" className="uppercase">--- Seleccione ---</option>
-      <option value="AUDIO 30%" className={rubro && rubro == "AUDIO 30%" && "hidden" }>AUDIO 30%</option>
+      <option value="AUDIO 30%" className={`${rubro && rubro  == "AUDIO 30%" && "hidden" }`}>AUDIO 30%</option>
       <option value="ACCESORIOS 20%" className={`${rubro && rubro  == "ACCESORIOS 20%" && "hidden" }`}>ACCESORIOS 20%</option>
       <option value="NETWORKING 30%" className={`${rubro && rubro  == "NETWORKING 30%" && "hidden" }`}>NETWORKING 30%</option>
       <option value="CONSUMIBLES 40%" className={`${rubro && rubro  == "CONSUMIBLES 40%" && "hidden" }`}>CONSUMIBLES 40%</option>

@@ -17,7 +17,8 @@ const ListadoProductos = () => {
         productos, 
         eliminarProductos, 
         eliminarProveedores, 
-        eliminarRubros, 
+        eliminarRubros,
+        traerGarantias,
         limpiarSeleccionado, 
         filtro, 
         filtrados, 
@@ -53,6 +54,7 @@ const ListadoProductos = () => {
 
     useEffect(() => {
         traerProductos()
+        traerGarantias()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
    
