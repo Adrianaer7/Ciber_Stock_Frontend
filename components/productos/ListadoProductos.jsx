@@ -8,6 +8,7 @@ import Spinner from "../layout/Spinner";
 
 const ListadoProductos = () => {
 
+   
 
     const AuthContext = useContext(authContext)
     const {modo} = AuthContext
