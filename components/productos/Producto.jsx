@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 
 const Producto = ({producto}) => {
     const [colorFaltante, setColorFaltante] = useState(null)
+    const [todasGarantias, setTodasGarantias] = useState([])
     const {
         nombre, 
         marca, 
@@ -33,10 +34,16 @@ const Producto = ({producto}) => {
     const {modo} = AuthContext
 
     const productosContext = useContext(productoContext)
-    const {productoActual, venderProducto} = productosContext
+    const {productoActual, venderProducto, garantias} = productosContext
 
     const faltantesContext = useContext(faltanteContext)
     const {agregarFaltante, eliminarFaltante} = faltantesContext
+
+    useEffect(() => {
+        const probar = garantias.find(garantia => garantia.idProducto == _id)
+        setTodasGarantias(probar.detalles)
+        
+    }, [])
 
 
     useEffect(() => {
@@ -179,7 +186,7 @@ const Producto = ({producto}) => {
             <td className="p-3 dark:text-gray-50 text-center">{marca}</td>
             <td className="p-3 dark:text-gray-50 text-center">{modelo}</td>
             <td className="dark:text-gray-50 text-center uppercase">{!disponibles ? <span className="bg-red-600 font-black text-white p-1  rounded-sm">Sin stock</span> : disponibles && !faltante && colorFaltante === null || disponibles && colorFaltante === false ? disponibles : disponibles && faltante || disponibles && colorFaltante || disponibles && faltante && colorFaltante === false ? <span className="text-red-600 font-bold">{disponibles}</span> : null}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{garantia}</td>
+            <td className="p-3 dark:text-gray-50 text-center">{todasGarantias.map(garantia => (<div><p className="font-medium ">{garantia.caducidad}</p><p className="mb-1">{garantia.proveedor}</p></div>))}</td>
             <td className="p-2 dark:text-gray-50 text-center  text-lg hover:cursor-pointer ">
                 <div className="flex flex-col">
                     <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-3xl font-black " onClick={copiarPrecioTarjeta}>${precio_venta_tarjeta}</p>

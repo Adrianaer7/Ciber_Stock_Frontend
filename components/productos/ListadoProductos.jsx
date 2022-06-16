@@ -8,9 +8,10 @@ import Spinner from "../layout/Spinner";
 
 const ListadoProductos = () => {
 
+
     const AuthContext = useContext(authContext)
     const {modo} = AuthContext
-
+    
     const productosContext = useContext(productoContext)
     const {
         traerProductos, 
@@ -51,13 +52,13 @@ const ListadoProductos = () => {
     const [ordenPrecio, setOrdenPrecio] = useState(false)
     const [spinner, setSpinner] = useState(true)
 
-
     useEffect(() => {
         traerProductos()
         traerGarantias()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
    
+
     useEffect(() => {
         limpiarSeleccionado()
         traerDolarBD()
@@ -153,7 +154,6 @@ const ListadoProductos = () => {
         setOrdenDisponibles(!ordenDisponibles)
     }
     
-
   return (
     <>
 

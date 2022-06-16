@@ -501,6 +501,7 @@ const ProductoState = ({children}) => {
                 filtrados: state.filtrados,
                 rubros: state.rubros,
                 proveedores: state.proveedores,
+                garantias: state.garantias,
                 valorDeVenta: state.valorDeVenta,
                 valorDeVentaConocidos: state.valorDeVentaConocidos,
                 valorDeVentaEfectivo: state.valorDeVentaEfectivo,
