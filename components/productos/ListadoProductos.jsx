@@ -21,7 +21,7 @@ const ListadoProductos = () => {
         eliminarRubros,
         traerGarantias,
         limpiarSeleccionado, 
-        filtro, 
+        filtro,
         filtrados, 
         traerDolarAPI, 
         traerDolarBD, 
@@ -51,6 +51,9 @@ const ListadoProductos = () => {
     const [ordenDisponibles, setOrdenDisponibles] = useState(false)
     const [ordenPrecio, setOrdenPrecio] = useState(false)
     const [spinner, setSpinner] = useState(true)
+
+    
+
 
     useEffect(() => {
         traerProductos()
@@ -132,7 +135,7 @@ const ListadoProductos = () => {
 
     const onChangeFiltro = e => {
         setFiltrando(e.target.value)
-        filtro(e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, ''))
+        filtro(e.target.value.toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))   //el normalice separa la tilde de la letra. el replace reemplaza la tilde por "", osea lo elimina
     }
 
     const ordenarCodigo = () => {

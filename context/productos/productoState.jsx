@@ -298,16 +298,34 @@ const ProductoState = ({children}) => {
         })
     }
     //filtro en el listado segun propiedades del producto
-    const filtro = valor => {
+    const filtro = palabras => {
+        let filtrados = []
+        state.productos.map(producto => {
+            const {descripcion} = producto
+
+            const incluyeTodas = () => {
+                return !palabras
+                        .split(' ')
+                        .some(p => !descripcion.includes(p))    //.some() devuelve true si encuentra algun producto que en la descripcion que tenga las mismas palabras que el array de palabras, sin importar el orden del array. Si !(niego) palabras y descripcion, me va a devolver true cuando encuentre el producto que contenga en la descripcion alguna de las palabras que hay en el array de palabras, sin importar el orden.
+            }
+            
+            const resultado = incluyeTodas()
+            console.log(resultado)
+            if(resultado) {
+                filtrados = [...filtrados, producto]
+            }
+        })
+        
         try {
             dispatch({
                 type: FILTRAR_PRODUCTO,
-                payload: valor
+                payload: filtrados
             })
         } catch (error) {
             console.log(error)
         }
     }
+
 
     //quito disponibilidad del producto
     const venderProducto = async (producto, unidades) => {

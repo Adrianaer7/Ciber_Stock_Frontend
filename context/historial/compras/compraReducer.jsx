@@ -31,31 +31,13 @@ export default function comprareducer (state, action) {
             case FILTRO_COMPRA:
                 return {
                     ...state,
-                    filtrados: state.compras.filter(compra => 
-                        compra.nombre
-                                .toString()
-                                .toLowerCase()
-                                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                                .includes(action.payload.toLowerCase() ? action.payload : compra)
-                        || compra.marca
-                                .toString()
-                                .toLowerCase()
-                                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                                .includes(action.payload.toLowerCase() ? action.payload : compra)
-                        || compra.modelo
-                                .toString()
-                                .toLowerCase()
-                                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                                .includes(action.payload.toLowerCase() ? action.payload : compra)
-                                
-                        
-                    )
+                    filtrados: action.payload
                 }
             case ORDENAR_NOMBRE_COMPRA:
                 return {
                     ...state,
                     //ordeno el state segun letra. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor.
-                    compras: action.payload ? state.compras.sort((a,b) => b.nombre > a.nombre ? 1 : -1 ) : !action.payload ? state.compras.sort((a,b) => a.nombre > b.nombre ? 1 : -1 ) : state.compras
+                    compras: action.payload ? state.compras.sort((a,b) => a.nombre > b.nombre ? 1 : -1 ) : !action.payload ? state.compras.sort((a,b) => b.nombre > a.nombre ? 1 : -1 ) : state.compras
                 }
             case ORDENAR_MARCA_COMPRA:
                 return {
@@ -65,12 +47,12 @@ export default function comprareducer (state, action) {
             case ORDENAR_MODELO_COMPRA:
                 return {
                     ...state,
-                    compras: action.payload ? state.compras.sort((a,b) => b.modelo > a.modelo ? 1 : -1 ) : !action.payload ? state.compras.sort((a,b) => a.modelo > b.modelo ? 1 : -1 ) : state.compras
+                    compras: action.payload ? state.compras.sort((a,b) => a.modelo > b.modelo ? 1 : -1 ) : !action.payload ? state.compras.sort((a,b) => b.modelo > a.modelo ? 1 : -1 ) : state.compras
                 }
             case ORDENAR_NOMBRE_COMPRA_FILTRADO: 
                 return {
                     ...state,
-                    filtrados: action.payload ? state.filtrados.sort((a,b) => b.nombre > a.nombre ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => a.nombre > b.nombre ? 1 : -1 ) : state.filtrados
+                    filtrados: action.payload ? state.filtrados.sort((a,b) => a.nombre > b.nombre ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => b.nombre > a.nombre ? 1 : -1 ) : state.filtrados
     
                 }
             case ORDENAR_MARCA_COMPRA_FILTRADO: 
@@ -82,7 +64,7 @@ export default function comprareducer (state, action) {
             case ORDENAR_MODELO_COMPRA_FILTRADO: 
                 return {
                     ...state,
-                    filtrados: action.payload ? state.filtrados.sort((a,b) => b.modelo > a.modelo ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => a.modelo > b.modelo ? 1 : -1) : state.filtrados
+                    filtrados: action.payload ? state.filtrados.sort((a,b) => a.modelo > b.modelo ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => b.modelo > a.modelo ? 1 : -1) : state.filtrados
     
                 }
             

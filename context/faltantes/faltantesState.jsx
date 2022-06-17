@@ -68,11 +68,26 @@ const FaltanteState = ({children}) => {
         }
     }    
     
-    const filtroFaltante = (filtro) => {
+    const filtroFaltante = (palabras) => {
+        let filtrados = []
+        state.faltantes.map(faltante => {
+            const {descripcion} = faltante
+
+            const incluyeTodas = () => {
+                return !palabras
+                        .split(' ')
+                        .some(p => !descripcion.includes(p))    //.some() comprueba si al menos 1 elemento cumple con la concidion.
+            }
+            
+            const resultado = incluyeTodas()
+            if(resultado) {
+                filtrados = [...filtrados, faltante]
+            }
+        })
         try {
             dispatch({
                 type: FILTRO_FALTANTE,
-                payload: filtro
+                payload: filtrados
             })
         } catch (error) {
             console.log(error)
