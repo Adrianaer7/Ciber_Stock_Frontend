@@ -66,13 +66,12 @@ const Formulario = ({productoEditar}) => {
         garantia: productoEditar?.garantia ?? "",
         fecha_compra: productoEditar?.fecha_compra ?? hoy ?? "",
         disponibles: productoEditar?.disponibles ?? "",
-        rentabilidad: productoEditar?.rentabilidad ?? "",
         notas: productoEditar?.notas ?? "",
         faltante: productoEditar?.faltante ?? false,
         limiteFaltante: productoEditar?.limiteFaltante ?? "",
         añadirFaltante: productoEditar?.añadirFaltante ?? false
     })
-    const {nombre, marca, modelo, codigo, barras, rubro, precio_venta, precio_venta_conocidos, precio_venta_efectivo, precio_venta_tarjeta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, todos_proveedores, factura, garantia, disponibles, rentabilidad, notas, faltante, limiteFaltante, añadirFaltante} = producto
+    const {nombre, marca, modelo, codigo, barras, rubro, precio_venta, precio_venta_conocidos, precio_venta_efectivo, precio_venta_tarjeta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, todos_proveedores, factura, garantia, disponibles, notas, faltante, limiteFaltante, añadirFaltante} = producto
     
 
     useEffect(() => {
@@ -199,24 +198,7 @@ const Formulario = ({productoEditar}) => {
               })
             return
         }
-        //valido codigo. Esto lo hago para que no se vacíe el campo en caso de que haya algun error de backend
-        if(productos) { //si existe algun producto creado, hago un recorrido
-            const boolean = productos.filter(producto => producto.codigo == codigo) //obtengo solo el producto que tenga el mismo codigo que el que ingreso del form
-            if(boolean.length > 0) {    //si existe algun producto con ese codigo
-                let id = boolean[0]._id
-                if(id !== productoEditar?._id) {  //si el id del producto no coincide con el del producto actual, es que quiero asignar un codigo que ya está ingresado
-                    Swal.fire({
-                        icon: 'error',
-                        title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                        html: `${modo ? '<p style="color:white">Nro. de artículo ya asignado.</p>' : '<p style="color:#545454">Nro. de artículo ya asignado.</p>'}`,
-                        background: `${modo ? "rgb(31 41 55)" : "white"}`,
-                    })
-                    return
-                }
-            }
-            
-        }
-        
+
         //convierto el valor del state a numero
         const codigoCambiado = Number(codigo)
         if(!codigo || codigo < 1 || isNaN(codigo) || !Number.isInteger(codigoCambiado) ) {
@@ -237,8 +219,23 @@ const Formulario = ({productoEditar}) => {
               })
             return
         }
-       
-
+        if(productos) { //si existe algun producto creado, hago un recorrido
+            const boolean = productos.filter(producto => producto.codigo == codigoCambiado) //obtengo solo el producto que tenga el mismo codigo que el que ingreso del form
+            if(boolean.length > 0) {    //si existe algun producto con ese codigo
+                let id = boolean[0]._id
+                if(id !== productoEditar?._id) {  //si el id del producto no coincide con el del producto actual, es que quiero asignar un codigo que ya está ingresado
+                    Swal.fire({
+                        icon: 'error',
+                        title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                        html: `${modo ? '<p style="color:white">Nro. de artículo ya asignado.</p>' : '<p style="color:#545454">Nro. de artículo ya asignado.</p>'}`,
+                        background: `${modo ? "rgb(31 41 55)" : "white"}`,
+                    })
+                    return
+                }
+            }
+            
+        }
+        
         const cantidadCambiada = Number(cantidad)
         if(cantidad < 0 || isNaN(cantidad) || !Number.isInteger(cantidadCambiada) ) {
             Swal.fire({
@@ -249,18 +246,9 @@ const Formulario = ({productoEditar}) => {
               })
             return
         }
-        if(codigo.length > 3) {
-            Swal.fire({
-                icon: 'error',
-                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                html: `${modo ? '<p style="color:white">El <b>código</b> debe ser un número menor a 4 dígitos</p>' : '<p style="color:#545454">El <b>código</b> debe ser un número menor a 4 dígitos</p>'}`,
-                background: `${modo ? "rgb(31 41 55)" : "white"}`,
-              })
-            return
-        }
-
-        //Validar precio del dolar
-        if(!valor_dolar_compra) {
+        
+        //si no existe el precio de venta, no exijo el valor del dolar
+        if(valorDeVenta > 0 && !valor_dolar_compra) {
             Swal.fire({
                 icon: 'error',
                 title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
@@ -312,17 +300,7 @@ const Formulario = ({productoEditar}) => {
               })
             return
         }
-
-        //validar rentabilidad
-        if(isNaN(rentabilidad) || rentabilidad < 0) {
-            Swal.fire({
-                icon: 'error',
-                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                html: `${modo ? '<p style="color:white">La <b>rentabilidad</b> tiene que ser mayor a 0.</p>' : '<p style="color:#545454">La <b>rentabilidad</b> tiene que ser mayor a 0.</p>'}`,
-                background: `${modo ? "rgb(31 41 55)" : "white"}`,
-              })
-            return
-        }  
+ 
         
         //Validar el precio de venta
         if(isNaN(precio_venta) || precio_venta < 0) {
@@ -433,7 +411,6 @@ const Formulario = ({productoEditar}) => {
                 fecha_compra: hoy, 
                 precio_compra_peso: "", 
                 valor_dolar_compra: "", 
-                rentabilidad: "", 
                 notas: "",
                 faltante: false,
                 limiteFaltante: "",
@@ -659,7 +636,7 @@ const Formulario = ({productoEditar}) => {
 
                         <div className="mb-4">
                             <div className="flex justify-between">
-                                <label htmlFor="valor_dolar_compra" className="text-gray-800 dark:text-gray-300 font-bold font ">Precio dolar *</label>
+                                <label htmlFor="valor_dolar_compra" className="text-gray-800 dark:text-gray-300 font-bold font ">Precio dolar</label>
                             </div>
                             <input
                                 type="tel"
