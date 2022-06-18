@@ -76,7 +76,7 @@ const ListadoCompras = () => {
 
     const onChangeFiltro = e => {
         setFiltrando(e.target.value)
-        filtroCompra(e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))  //envio al productoState
+        filtroCompra(e.target.value.toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))  //envio al productoState
     }
 
     const ordenarNombre = () => {

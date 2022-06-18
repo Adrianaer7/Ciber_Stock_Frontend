@@ -36,6 +36,7 @@ import {
     ORDENAR_MARCA_FILTRADO,
     ORDENAR_MODELO_FILTRADO,
     OBTENER_GARANTIAS,
+    FILTRO_PROVEEDOR,
 } from "../../types"
 
 export default function productoReducer(state, action) {
@@ -147,58 +148,13 @@ export default function productoReducer(state, action) {
         case FILTRAR_PRODUCTO:
             return {
                 ...state,
-                filtrados : state.productos.filter(producto => 
-                        producto.nombre
-                                .toString()
-                                .toLowerCase() 
-                                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")   //el normalice separa la tilde de la letra. el replace reemplaza la tilde por "", osea lo elimina
-                                .includes(action.payload ? action.payload  : producto)
-                        || producto.marca
-                                .toString()
-                                .toLowerCase()
-                                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                                .includes(action.payload ? action.payload  : producto)
-                        || producto.modelo
-                                    .toString()
-                                    .toLowerCase()
-                                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                                    .includes(action.payload ? action.payload  : producto)
-                        || producto.codigo
-                                    .toString()
-                                    .toLowerCase()
-                                    .includes(action.payload ? action.payload  : producto)
-                        || producto.barras
-                                    .toString()
-                                    .toLowerCase()
-                                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                                    .includes(action.payload ? action.payload  : producto)
-                        || producto.factura
-                                    .toString()
-                                    .toLowerCase()
-                                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                                    .includes(action.payload ? action.payload  : producto)
-                        || producto.proveedor
-                                    .toString()
-                                    .toLowerCase()
-                                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                                    .includes(action.payload ? action.payload  : producto)
-                        || producto.rubro
-                                    .toString()
-                                    .toLowerCase()
-                                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                                    .includes(action.payload ? action.payload  : producto)
-                        || producto.notas
-                                    .toString()
-                                    .toLowerCase()
-                                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                                    .includes(action.payload ? action.payload  : producto)
-                        || producto.descripcion
-                                    .toString()
-                                    .toLowerCase()
-                                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                                    .includes(action.payload ? action.payload  : producto)
-                )
-                
+                filtrados : action.payload
+
+            }
+        case FILTRO_PROVEEDOR:
+            return {
+                ...state,
+                proveedoresFiltrados: action.payload
             }
         case PRECIO_VENTA_EFECTIVO:
             return {
@@ -268,7 +224,7 @@ export default function productoReducer(state, action) {
                 ...state,
                 productos: action.payload ? state.productos.sort((a,b) => b.disponibles - a.disponibles) : !action.payload ? state.productos.sort((a,b) => a.disponibles - b.disponibles ) : state.productos
             }
-        case ORDENAR_CODIGO_FILTRADO: 
+        case ORDENAR_CODIGO_FILTRADO:
             return {
                 ...state,
                 filtrados: action.payload ? state.filtrados.sort((a,b) => b.codigo - a.codigo) : !action.payload ? state.filtrados.sort((a,b) => a.codigo - b.codigo ) : state.filtrados
@@ -277,13 +233,14 @@ export default function productoReducer(state, action) {
         case ORDENAR_PRECIO_FILTRADO:
             return {
                 ...state,
-                filtrados: action.payload ? state.filtrados.sort((a,b) => b.precio_venta_conocidos - a.precio_venta_conocidos) : !action.payload ? state.filtrados.sort((a,b) => a.precio_venta_conocidos - b.precio_venta_conocidos ) : state.filtrados
+                filtrados: action.payload ? state.filtrados.sort((a,b) => a.precio_venta_conocidos - b.precio_venta_conocidos) : !action.payload ? state.filtrados.sort((a,b) => b.precio_venta_conocidos - a.precio_venta_conocidos ) : state.filtrados
 
             }
         case ORDENAR_NOMBRE_FILTRADO:
+            console.log(action.payload)
             return {
                 ...state,
-                filtrados: action.payload ? state.filtrados.sort((a,b) => b.nombre > a.nombre ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => a.nombre > b.nombre ? 1 : -1) : state.filtrados
+                filtrados: action.payload ? state.filtrados.sort((a,b) => a.nombre > b.nombre ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => b.nombre > a.nombre ? 1 : -1) : state.filtrados
 
             }
         case ORDENAR_MARCA_FILTRADO:
@@ -295,13 +252,13 @@ export default function productoReducer(state, action) {
         case ORDENAR_MODELO_FILTRADO:
             return {
                 ...state,
-                filtrados: action.payload ? state.filtrados.sort((a,b) => b.modelo > a.modelo ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => a.modelo > b.modelo ? 1 : -1) : state.filtrados
+                filtrados: action.payload ? state.filtrados.sort((a,b) => a.modelo > b.modelo ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => b.modelo > a.modelo ? 1 : -1) : state.filtrados
 
             }
         case ORDENAR_DISPONIBLES_FILTRADO:
             return {
                 ...state,
-                filtrados: action.payload ? state.filtrados.sort((a,b) => b.disponibles - a.disponibles) : !action.payload ? state.filtrados.sort((a,b) => a.disponibles - b.disponibles ) : state.filtrados
+                filtrados: action.payload ? state.filtrados.sort((a,b) => a.disponibles - b.disponibles) : !action.payload ? state.filtrados.sort((a,b) => b.disponibles - a.disponibles ) : state.filtrados
 
             }
     default:

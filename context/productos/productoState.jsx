@@ -39,7 +39,8 @@ import {
     PRODUCTOS_CAMBIADOS, 
     PRODUCTO_ACTUAL,
     TRAER_DOLAR_BD,
-    OBTENER_GARANTIAS, 
+    OBTENER_GARANTIAS,
+    FILTRO_PROVEEDOR, 
 } from "../../types";
 
 const ProductoState = ({children}) => {
@@ -55,6 +56,7 @@ const ProductoState = ({children}) => {
         filtrados: [],
         rubros: [],
         proveedores: [],
+        proveedoresFiltrados: [],
         garantias: [],
         valorDeVenta: 0,
         valorDeVentaConocidos: 0,
@@ -122,9 +124,9 @@ const ProductoState = ({children}) => {
     }
 
     //crea un nuevo proveedor
-    const agregarProveedor = async nombre => {
+    const agregarProveedor = async proveedor => {
         try {
-            const {data} = await clienteAxios.post("/api/proveedores", {nombre})
+            const {data} = await clienteAxios.post("/api/proveedores", proveedor)
             dispatch({
                 type: AGREGAR_PROVEEDOR,
                 payload: data.proveedor
@@ -298,16 +300,34 @@ const ProductoState = ({children}) => {
         })
     }
     //filtro en el listado segun propiedades del producto
-    const filtro = valor => {
+    const filtro = palabras => {
+        let filtrados = []
+        state.productos.map(producto => {
+            const {descripcion} = producto
+
+            const incluyeTodas = () => {
+                return !palabras
+                        .split(' ') //creo un array y a cada palabra la pongo en un array
+                        .some(p => !descripcion.includes(p))    //.some() devuelve true si encuentra algun producto que en la descripcion que tenga las mismas palabras que el array de palabras, sin importar el orden del array. Si !(niego) palabras y descripcion, me va a devolver true cuando encuentre el producto que contenga en la descripcion alguna de las palabras que hay en el array de palabras, sin importar el orden.
+            }
+            
+            const resultado = incluyeTodas()
+            console.log(resultado)
+            if(resultado) {
+                filtrados = [...filtrados, producto]
+            }
+        })
+        
         try {
             dispatch({
                 type: FILTRAR_PRODUCTO,
-                payload: valor
+                payload: filtrados
             })
         } catch (error) {
             console.log(error)
         }
     }
+
 
     //quito disponibilidad del producto
     const venderProducto = async (producto, unidades) => {
@@ -478,6 +498,42 @@ const ProductoState = ({children}) => {
         })
     }
 
+    const orderEmpresa = (ordenEmpresa) => {
+        dispatch({
+
+        })
+    }
+    const orderEmpresaFiltrados = (ordenEmpresa) => {
+        dispatch({
+
+        })
+    }
+    const filtroProveedor = palabras => {
+        let filtrados = []
+        state.proveedores.map(proveedor => {
+            const {empresa} = proveedor
+
+            const incluyeTodas = () => {
+                return !palabras
+                        .split(' ')
+                        .some(p => !empresa.includes(p))    //.some() comprueba si al menos 1 elemento cumple con la concidion.
+            }
+            
+            const resultado = incluyeTodas()
+            if(resultado) {
+                filtrados = [...filtrados, proveedor]
+            }
+        })
+        try {
+            dispatch({
+                type: FILTRO_PROVEEDOR,
+                payload: filtrados
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const descargarPDF = async => {
         const {data} = clienteAxios.get("api/descargas")
         console.log(data)
@@ -501,6 +557,7 @@ const ProductoState = ({children}) => {
                 filtrados: state.filtrados,
                 rubros: state.rubros,
                 proveedores: state.proveedores,
+                proveedoresFiltrados: state.proveedoresFiltrados,
                 garantias: state.garantias,
                 valorDeVenta: state.valorDeVenta,
                 valorDeVentaConocidos: state.valorDeVentaConocidos,
@@ -518,6 +575,7 @@ const ProductoState = ({children}) => {
                 limpiarSeleccionado,
                 eliminarProducto,
                 filtro,
+                filtroProveedor,
                 agregarRubro,
                 venderProducto,
                 agregarProveedor,
@@ -541,6 +599,8 @@ const ProductoState = ({children}) => {
                 orderModeloFiltrados,
                 orderDisponibles,
                 orderDisponiblesFiltrados,
+                orderEmpresa,
+                orderEmpresaFiltrados,
                 limpiarApp,
                 descargarPDF
             }}

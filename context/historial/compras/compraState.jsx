@@ -42,11 +42,26 @@ const CompraState = ({children}) => {
         })
     }
 
-    const filtroCompra = (filtro) => {
+    const filtroCompra = palabras => {
+        let filtrados = []
+        state.compras.map(compra => {
+            const {descripcion} = compra
+
+            const incluyeTodas = () => {
+                return !palabras
+                        .split(' ')
+                        .some(p => !descripcion.includes(p))    //.some() comprueba si al menos 1 elemento cumple con la concidion.
+            }
+            
+            const resultado = incluyeTodas()
+            if(resultado) {
+                filtrados = [...filtrados, compra]
+            }
+        })
         try {
             dispatch({
                 type: FILTRO_COMPRA,
-                payload: filtro
+                payload: filtrados
             })
         } catch (error) {
             console.log(error)

@@ -114,6 +114,11 @@ const Layout = ({children, pagina}) => {
                             onClick={() => limpiarSeleccionado()}
                             className={`${urlActual === "/compras" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}>Compras</a>
                         </Link>
+                        <Link href="/proveedores">
+                            <a 
+                            onClick={() => limpiarSeleccionado()}
+                            className={`${urlActual === "/proveedores" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}>Proveedores</a>
+                        </Link>
                     </nav>
 
                     

@@ -35,7 +35,6 @@ const VerProducto = ({producto}) => {
         factura,
         garantia,
         disponibles, 
-        rentabilidad, 
         modelo, 
         notas
     } = producto
@@ -151,7 +150,7 @@ const VerProducto = ({producto}) => {
                         </tr>
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">PROVEEDORES</th>
-                            <td className="px-6 py-4 text-left">{todos_proveedores.length > 0 ? todos_proveedores.map((prov, i) => <p key={i} className="inline-block">{prov},</p>) : "-"}</td>
+                            <td className="px-6 py-4 text-left">{todos_proveedores.length > 0 ? todos_proveedores.map((prov, i) => <p key={i} className="inline-block"> {prov},</p>) : "-"}</td>
                         </tr>
 
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">
@@ -191,15 +190,8 @@ const VerProducto = ({producto}) => {
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">FECHA DE LA ULTIMA COMPRA</th>
                             <td className="px-6 py-4 uppercase">{fecha ? fecha : "-"}</td>
                         </tr>
-                    
-                       
-                       
-                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">RENTABILIDAD</th>
-                            <td className="px-6 py-4">{rentabilidad ? rentabilidad + "%" : "-"}</td>
-                        </tr>
-                    
-                    
+
+
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 break-words justify-between grid  grid-cols-1 lg:grid-cols-2">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">NOTAS</th>
                             <td className="px-6 py-4">{notas ? notas : "-"}</td>
