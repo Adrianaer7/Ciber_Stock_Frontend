@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react"
 import Rubro from "./Rubro"
-import Proveedor from "./Proveedor"
+import Proveedor from "../proveedores/Proveedor"
 import { hoy } from "../../helpers"
 import productoContext from "../../context/productos/productoContext"
 import authContext from "../../context/auth/authContext"
@@ -72,7 +72,7 @@ const Formulario = ({productoEditar}) => {
         añadirFaltante: productoEditar?.añadirFaltante ?? false
     })
     const {nombre, marca, modelo, codigo, barras, rubro, precio_venta, precio_venta_conocidos, precio_venta_efectivo, precio_venta_tarjeta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, todos_proveedores, factura, garantia, disponibles, notas, faltante, limiteFaltante, añadirFaltante} = producto
-    
+
 
     useEffect(() => {
         if(usuario) {   
@@ -114,7 +114,14 @@ const Formulario = ({productoEditar}) => {
         producto.proveedor = valoresP
     }, [valoresP])
 
-
+    const eliminarProveedor = e => {
+        console.log(producto.todos_proveedores)
+        const noEliminados = todos_proveedores.filter(todos => todos !== e)
+        setProducto({
+            ...producto,
+            todos_proveedores: noEliminados
+        })
+    }
 
     const onChange = e => {
         setProducto({
@@ -257,14 +264,16 @@ const Formulario = ({productoEditar}) => {
               })
             return
         } else {
-            if(isNaN(valor_dolar_compra) || valor_dolar_compra < 1) {
-                Swal.fire({
-                    icon: 'error',
-                    title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                    html: `${modo ? '<p style="color:white">El <b>precio del dolar</b> debe ser 1 como mínimo.</p>' : '<p style="color:#545454">El <b>precio del dolar</b> debe ser 1 como mínimo.</p>'}`,
-                    background: `${modo ? "rgb(31 41 55)" : "white"}`,
-                  })
-                return
+            if(precioVenta > 0) {
+                if(isNaN(valor_dolar_compra) || valor_dolar_compra < 1) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                        html: `${modo ? '<p style="color:white">El <b>precio del dolar</b> debe ser 1 como mínimo.</p>' : '<p style="color:#545454">El <b>precio del dolar</b> debe ser 1 como mínimo.</p>'}`,
+                        background: `${modo ? "rgb(31 41 55)" : "white"}`,
+                      })
+                    return
+                }
             }
         }
             
@@ -589,14 +598,37 @@ const Formulario = ({productoEditar}) => {
                                     {Object.keys(proveedores).length > 0  ? (
                                         <>
                                             {proveedores.map((proveedor, i) => (
-                                                <Proveedor
-                                                    key={i}
-                                                    proveedor={proveedor}
-                                                />
+                                                <option key={i} value={proveedor.nombre}>{proveedor.nombre}</option>
                                             ))}
                                         </>
                                     ) : null}
                                 </select>
+                                {Object.keys(todos_proveedores).length > 0  ? (
+                                        <>
+                                        <ul className="col-span-4 col-end-9">
+                                            {todos_proveedores.map((proveedor, i) => (
+                                                <div className="flex" key={i}>
+                                                    <li
+                                                       
+                                                        className="uppercase w-full text-center mt-2 ml-1 block  p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                                    >
+                                                        {proveedor}
+                                                    </li>
+                                                    <button
+                                                    
+                                                        type="button"
+                                                        className="font-bold p-3"
+                                                        value={proveedor}
+                                                        onClick={e => eliminarProveedor(e.target.value)}
+                                                    >
+                                                        X
+                                                    </button>
+                                                </div>
+                                            ))}
+
+                                        </ul>
+                                        </>
+                                ) : null}
                             </div>
                         </div>     
 

@@ -36,6 +36,7 @@ import {
     ORDENAR_MARCA_FILTRADO,
     ORDENAR_MODELO_FILTRADO,
     OBTENER_GARANTIAS,
+    FILTRO_PROVEEDOR,
 } from "../../types"
 
 export default function productoReducer(state, action) {
@@ -149,6 +150,11 @@ export default function productoReducer(state, action) {
                 ...state,
                 filtrados : action.payload
 
+            }
+        case FILTRO_PROVEEDOR:
+            return {
+                ...state,
+                proveedoresFiltrados: action.payload
             }
         case PRECIO_VENTA_EFECTIVO:
             return {

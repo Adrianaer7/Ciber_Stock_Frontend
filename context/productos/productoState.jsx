@@ -39,7 +39,8 @@ import {
     PRODUCTOS_CAMBIADOS, 
     PRODUCTO_ACTUAL,
     TRAER_DOLAR_BD,
-    OBTENER_GARANTIAS, 
+    OBTENER_GARANTIAS,
+    FILTRO_PROVEEDOR, 
 } from "../../types";
 
 const ProductoState = ({children}) => {
@@ -55,6 +56,7 @@ const ProductoState = ({children}) => {
         filtrados: [],
         rubros: [],
         proveedores: [],
+        proveedoresFiltrados: [],
         garantias: [],
         valorDeVenta: 0,
         valorDeVentaConocidos: 0,
@@ -496,6 +498,42 @@ const ProductoState = ({children}) => {
         })
     }
 
+    const orderEmpresa = (ordenEmpresa) => {
+        dispatch({
+
+        })
+    }
+    const orderEmpresaFiltrados = (ordenEmpresa) => {
+        dispatch({
+
+        })
+    }
+    const filtroProveedor = palabras => {
+        let filtrados = []
+        state.proveedores.map(proveedor => {
+            const {empresa} = proveedor
+
+            const incluyeTodas = () => {
+                return !palabras
+                        .split(' ')
+                        .some(p => !empresa.includes(p))    //.some() comprueba si al menos 1 elemento cumple con la concidion.
+            }
+            
+            const resultado = incluyeTodas()
+            if(resultado) {
+                filtrados = [...filtrados, proveedor]
+            }
+        })
+        try {
+            dispatch({
+                type: FILTRO_PROVEEDOR,
+                payload: filtrados
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const descargarPDF = async => {
         const {data} = clienteAxios.get("api/descargas")
         console.log(data)
@@ -519,6 +557,7 @@ const ProductoState = ({children}) => {
                 filtrados: state.filtrados,
                 rubros: state.rubros,
                 proveedores: state.proveedores,
+                proveedoresFiltrados: state.proveedoresFiltrados,
                 garantias: state.garantias,
                 valorDeVenta: state.valorDeVenta,
                 valorDeVentaConocidos: state.valorDeVentaConocidos,
@@ -536,6 +575,7 @@ const ProductoState = ({children}) => {
                 limpiarSeleccionado,
                 eliminarProducto,
                 filtro,
+                filtroProveedor,
                 agregarRubro,
                 venderProducto,
                 agregarProveedor,
@@ -559,6 +599,8 @@ const ProductoState = ({children}) => {
                 orderModeloFiltrados,
                 orderDisponibles,
                 orderDisponiblesFiltrados,
+                orderEmpresa,
+                orderEmpresaFiltrados,
                 limpiarApp,
                 descargarPDF
             }}
