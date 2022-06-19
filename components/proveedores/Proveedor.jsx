@@ -1,16 +1,55 @@
 import Link from "next/link"
-import Image from "next/image"
 import { useContext } from "react"
 import productoContext from "../../context/productos/productoContext"
+import authContext from "../../context/auth/authContext";
+import Swal from "sweetalert2";
+
 const Proveedor = ({proveedor}) => {
+
+    const AuthContext = useContext(authContext)
+    const {modo, usuarioAutenticado} = AuthContext
 
     const productosContext = useContext(productoContext)
     const {eliminarProveedor} = productosContext
 
-  const {id_, nombre, empresa, telPersonal, telEmpresa} = proveedor
+    const {_id, nombre, empresa, telPersonal, telEmpresa} = proveedor
+
+    const Eliminado = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    })
+
+    const eliminar = async () => {
+        await eliminarProveedor(_id)
+    }
 
     const eliminarElProveedor = async () => {
-        await eliminarProveedor(_id)
+
+        Swal.fire({
+            title: `${modo ? '<h5 style="color:white">¿Estás seguro?</h5>' : '<h5 style="color:#545454">¿Estás seguro?</h5>'}`,
+            text:"¡No se puede revertir esto!",
+            icon: 'warning',
+            color: `${modo ? "white" : "#545454"}`,
+            showCloseButton: true,
+            showCancelButton: true,
+            confirmButtonText:'<b>Si, eliminar!</b>',
+            confirmButtonColor: '#d33',
+            cancelButtonText:'<p>Cancelar</p>',
+            background: `${modo ? "rgb(31 41 55)" : "white"}`,
+            }).then((result) => {
+            if (result.isConfirmed) {
+                eliminar()
+                Eliminado.fire({
+                    icon: 'success',
+                    title: "Se eliminó el proveedor correctamente",
+                    background: `${modo ? "#505050" : "white"}`,
+                    width: "25%",
+                    color: `${modo ? "white" : "#545454"}`,
+                })
+            }
+        })
     }
 
   return (

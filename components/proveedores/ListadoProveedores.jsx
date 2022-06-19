@@ -108,7 +108,7 @@ const ListadoProveedores = () => {
                         onBlur={()=> setFocus(false)}
                     />
                     <div className="absolute mr-2 -inset-y-1 flex right-0 opacity-40">
-                       {/* <Image
+                        <Image
                             src={`${modo && escribiendo ? "/close_dark.svg" : !modo && escribiendo ? "/close_light.svg": modo && !escribiendo ? "/search_light.svg" : "/search_dark.svg"}`}
                             alt="Cerrar"
                             width={30} 
@@ -116,7 +116,7 @@ const ListadoProveedores = () => {
                             priority={true}
                             className="cursor-pointer"
                             onClick={escribiendo ? () => setFiltrando("") : null}
-                        /> */}
+                        />
                     </div> 
                 </div>  
                 <button
@@ -127,48 +127,52 @@ const ListadoProveedores = () => {
                 </button>
             </div> 
         </div>
-            {crearNuevo ? (
-                <div className="py-3">
+            {crearNuevo && (
+                <div className="dark:bg-gray-900 py-3 bg-white rounded-lg mt-6 mx-auto">
 
                     <form 
                         onSubmit={onSubmit}
                     >
-                        <div className="flex justify-center gap-1">
+                        <div className="flex justify-between px-2 gap-2">
                             <div>
-                                <label htmlFor="nombre" className="text-gray-800 dark:text-gray-300 font-bold font ">Nombre y apellido</label>
+                                <label htmlFor="nombre" className="text-gray-800 dark:text-gray-300 font-bold font">Nombre y apellido</label>
                                 <input
                                     name="nombre"
-                                    className="bg-white uppercase w-full p-2 rounded-md border-none hover:ring-1 focus:outline-none shadow-sm"
+                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 rounded-md border-none active:ring-1 shadow-sm"
+                                    placeholder="Juan Pérez"
                                     value={nombre}
                                     onChange={onChange}
                                 />
                             </div>
                             <div>
-                                <label htmlFor="empresa" className="text-gray-800 dark:text-gray-300 font-bold font ">Empresa</label>
+                                <label htmlFor="empresa" className="text-gray-800 dark:text-gray-300 font-bold font">Empresa</label>
 
                                 <input
                                     name="empresa"
-                                    className="bg-white uppercase w-full p-2 rounded-md border-none hover:ring-1 focus:outline-none shadow-sm"
+                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300  uppercase w-full p-2 rounded-md border-none active:ring-1 shadow-sm"
+                                    placeholder="Mercadolibre"
                                     value={empresa}
                                     onChange={onChange}
                                 />
                             </div>
                             <div>
-                                <label htmlFor="telpersonal" className="text-gray-800 dark:text-gray-300 font-bold font ">Tel. Personal</label>
+                                <label htmlFor="telpersonal" className="text-gray-800 dark:text-gray-300 font-bold font">Tel. Personal</label>
 
                                 <input
                                     name="telPersonal"
-                                    className="bg-white uppercase w-full p-2 rounded-md border-none hover:ring-1 focus:outline-none shadow-sm"
+                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 rounded-md border-none active:ring-1  shadow-sm"
+                                    placeholder="3446101010"
                                     value={telPersonal}
                                     onChange={onChange}
                                 />
                             </div>
                             <div>
-                                <label htmlFor="telempresa" className="text-gray-800 dark:text-gray-300 font-bold font ">Tel. Empresa</label>
+                                <label htmlFor="telempresa" className="text-gray-800 dark:text-gray-300 font-bold font">Tel. Empresa</label>
 
                                 <input
                                     name="telEmpresa"
-                                    className="bg-white uppercase w-full p-2 rounded-md border-none hover:ring-1 focus:outline-none shadow-sm"
+                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 rounded-md border-none active:ring-1 shadow-sm"
+                                    placeholder="3446101010"
                                     value={telEmpresa}
                                     onChange={onChange}
                                 />
@@ -182,7 +186,7 @@ const ListadoProveedores = () => {
                     </form>
                 </div>
             ) 
-            : null}
+            }
         <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
             <thead className="bg-green-600 text-white">
                 <tr onClick={() => ordenarEmpresa()} className="hover:cursor-pointer select-none">

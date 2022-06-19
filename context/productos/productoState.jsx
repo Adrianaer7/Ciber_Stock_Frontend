@@ -40,7 +40,8 @@ import {
     PRODUCTO_ACTUAL,
     TRAER_DOLAR_BD,
     OBTENER_GARANTIAS,
-    FILTRO_PROVEEDOR, 
+    FILTRO_PROVEEDOR,
+    ELIMINAR_PROVEEDOR, 
 } from "../../types";
 
 const ProductoState = ({children}) => {
@@ -533,6 +534,18 @@ const ProductoState = ({children}) => {
             console.log(error)
         }
     }
+    const eliminarProveedor = async id => {
+        try {
+            await clienteAxios.delete(`/api/proveedores/${id}`)
+            dispatch({
+                type: ELIMINAR_PROVEEDOR,
+                payload: id
+            })  
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const descargarPDF = async => {
         const {data} = clienteAxios.get("api/descargas")
@@ -582,6 +595,7 @@ const ProductoState = ({children}) => {
                 eliminarProductos,
                 eliminarRubros,
                 eliminarProveedores,
+                eliminarProveedor,
                 precioVenta,
                 limpiarPrecioVenta,
                 traerDolarAPI,
