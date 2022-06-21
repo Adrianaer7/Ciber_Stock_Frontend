@@ -597,21 +597,22 @@ const Formulario = ({productoEditar}) => {
                                         </>
                                     ) : null}
                                 </select>
+                            </div>
                                 {Object.keys(todos_proveedores).length > 0  ? (
                                         <>
-                                        <ul className="col-span-5 col-end-7">
+                                        <ul>
                                             {todos_proveedores.map((proveedor, i) => (
-                                                <div className="flex" key={i}>
+                                                <div className="flex justify-end" key={i}>
                                                     <li
                                                        
-                                                        className="uppercase w-full text-center mt-2 ml-1 block  p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                                        className="uppercase text-center mt-2 ml-1 block  p-0 rounded-md  bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                                     >
                                                         {proveedor}
                                                     </li>
                                                     <button
                                                     
                                                         type="button"
-                                                        className="uppercase text-center mt-2 ml-1 block w-full  p-3 rounded-full bg-red-500 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                                        className="uppercase text-center mt-2 ml-1 block px-2 text-gray-600  h-50 rounded-full bg-gray-50 hover:bg-gray-200 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                                         value={proveedor}
                                                         onClick={e => eliminarProveedor(e.target.value)}
                                                     >
@@ -623,7 +624,6 @@ const Formulario = ({productoEditar}) => {
                                         </ul>
                                         </>
                                 ) : null}
-                            </div>
                         </div>     
 
                         <div className="mb-4">
