@@ -115,12 +115,16 @@ const Formulario = ({productoEditar}) => {
     }, [valoresP])
 
     const eliminarProveedor = e => {
-        console.log(producto.todos_proveedores)
-        const noEliminados = todos_proveedores.filter(todos => todos !== e)
+        const noEliminados = todos_proveedores.filter(todos => todos !== e) //traigo todos los distintos al que elimine
         setProducto({
             ...producto,
-            todos_proveedores: noEliminados
+            todos_proveedores: noEliminados,    //los coloco aca
         })
+        if(noEliminados.length > 0) {
+            setProveedorSelect(noEliminados[noEliminados.length -1])    //si tengo historial con algun proveedor, en el select pongo el ultimo
+        } else {
+            setProveedorSelect("")  //sino dejo el select vacio
+        }
     }
 
     const onChange = e => {
@@ -564,8 +568,7 @@ const Formulario = ({productoEditar}) => {
                         <div className="mb-4">
                             <div className="grid grid-cols-9">
                                 <label htmlFor="cantidad" className="text-gray-800 dark:text-gray-300 font-bold text-center col-span-1">N°</label>
-                                <label htmlFor="proveedor" className="text-gray-800 dark:text-gray-300 font-bold text-left col-span-4">Proveedor</label>
-                                <label htmlFor="selectp" className="text-gray-800 dark:text-gray-300 font-bold  col-span-4">Proveedores</label>
+                                <label htmlFor="selectp" className="text-gray-800 dark:text-gray-300 font-bold  col-span-8 text-center">Proveedores</label>
                             </div>
                             <div className="grid grid-cols-9">
                                 <input
@@ -577,20 +580,11 @@ const Formulario = ({productoEditar}) => {
                                     value={cantidad}
                                     onChange={e => setCantidad(e.target.value)}
                                 />
-                                <input
-                                    type="text"
-                                    autoComplete="off"
-                                    className={` mt-2 ml-1 col-span-4 block  p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
-                                    id="proveedor"
-                                    placeholder="MercadoLibre"
-                                    name="proveedor"
-                                    value={valoresP}
-                                    onChange={onChangeProveedorInput}
-                                />
+                               
                                 
                                 <select 
                                     id="selectp" 
-                                    className="uppercase text-center mt-2 ml-1 block col-span-4 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                    className="uppercase text-center mt-2 ml-1 block col-span-8 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                     value={proveedorSelect} 
                                     onChange={onChangeProveedorSelect} 
                                 >
@@ -598,14 +592,14 @@ const Formulario = ({productoEditar}) => {
                                     {Object.keys(proveedores).length > 0  ? (
                                         <>
                                             {proveedores.map((proveedor, i) => (
-                                                <option key={i} value={proveedor.nombre}>{proveedor.nombre}</option>
+                                                <option key={i} value={proveedor.empresa}>{proveedor.empresa}</option>
                                             ))}
                                         </>
                                     ) : null}
                                 </select>
                                 {Object.keys(todos_proveedores).length > 0  ? (
                                         <>
-                                        <ul className="col-span-4 col-end-9">
+                                        <ul className="col-span-5 col-end-7">
                                             {todos_proveedores.map((proveedor, i) => (
                                                 <div className="flex" key={i}>
                                                     <li
@@ -617,7 +611,7 @@ const Formulario = ({productoEditar}) => {
                                                     <button
                                                     
                                                         type="button"
-                                                        className="font-bold p-3"
+                                                        className="uppercase text-center mt-2 ml-1 block w-full  p-3 rounded-full bg-red-500 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                                         value={proveedor}
                                                         onClick={e => eliminarProveedor(e.target.value)}
                                                     >

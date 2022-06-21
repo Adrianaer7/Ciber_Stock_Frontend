@@ -43,7 +43,10 @@ const Producto = ({producto}) => {
         if(garantias.length > 0) {
 
             const probar = garantias.find(garantia => garantia.idProducto == _id)
-            setTodasGarantias(probar.detalles)
+            if(probar) {
+
+                setTodasGarantias(probar.detalles)
+            }
         }
         
     }, [])
@@ -220,18 +223,18 @@ const Producto = ({producto}) => {
                     >Vender</button>
                 </Link>
                 <Link passHref href={`/producto/${_id}`}>
-                    <button
+                    <a
                         type="button"
-                        className="bg-blue-600 hover:bg-blue-900 mb-2 w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
+                        className="bg-blue-600 hover:bg-blue-900 mb-2 w-full text-white text-center p-2 uppercase font-bold text-xs mr-3 rounded-md"
                         onClick={() => productoActual(producto)}
-                    >Detalles</button>
+                    >Detalles</a>
                 </Link>
                 <Link passHref href={`/producto/editar/${_id}`}>
-                    <button
+                    <a
                         type="button"
-                        className="bg-green-600 hover:bg-green-900 mb-2 w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
+                        className="bg-green-600 hover:bg-green-900 mb-2 w-full text-white text-center p-2 uppercase font-bold text-xs mr-3 rounded-md"
                         onClick={() => productoActual(producto)}
-                    >Editar</button>
+                    >Editar</a>
                 </Link>
                 <Link passHref href="">
                     <button

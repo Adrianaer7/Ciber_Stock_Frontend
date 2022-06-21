@@ -403,7 +403,8 @@ const ProductoState = ({children}) => {
             const url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
             const respuesta = await fetch(url)
             const resultado = await respuesta.json()
-            const valor = {precio: parseInt(resultado[0].casa.venta)}
+            const resultado2 = Number((resultado[0].casa.venta).replace(",", "."))
+            const valor = {precio: Number((resultado[0].casa.venta).replace(",","."))}
             await clienteAxios.post("/api/dolares", valor)
         } catch (error) {
             console.log(error)
