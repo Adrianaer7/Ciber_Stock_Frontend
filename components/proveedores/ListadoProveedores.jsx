@@ -209,7 +209,7 @@ const ListadoProveedores = () => {
                         onBlur={()=> setFocus(false)}
                     />
                     <div className="absolute mr-2 -inset-y-1 flex right-0 opacity-40">
-                        {/*<Image
+                        <Image
                             src={`${modo && escribiendo ? "/close_dark.svg" : !modo && escribiendo ? "/close_light.svg": modo && !escribiendo ? "/search_light.svg" : "/search_dark.svg"}`}
                             alt="Cerrar"
                             width={30} 
@@ -217,7 +217,7 @@ const ListadoProveedores = () => {
                             priority={true}
                             className="cursor-pointer"
                             onClick={escribiendo ? () => setFiltrando("") : null}
-                        />*/}
+                        />
                     </div> 
                 </div>  
                 <button

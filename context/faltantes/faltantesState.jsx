@@ -72,7 +72,6 @@ const FaltanteState = ({children}) => {
         let filtrados = []
         state.faltantes.map(faltante => {
             const {descripcion} = faltante
-
             const incluyeTodas = () => {
                 return !palabras
                         .split(' ')

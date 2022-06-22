@@ -96,12 +96,12 @@ const ProveedorState = ({children}) => {
     const filtroProveedor = palabras => {
         let filtrados = []
         state.proveedores.map(proveedor => {
-            const {empresa} = proveedor
-
+            const {datos} = proveedor
+            console.log(datos)
             const incluyeTodas = () => {
                 return !palabras
                         .split(' ')
-                        .some(p => !empresa.includes(p))    //.some() comprueba si al menos 1 elemento cumple con la concidion.
+                        .some(p => !datos.includes(p))    //.some() comprueba si al menos 1 elemento cumple con la concidion.
             }
             
             const resultado = incluyeTodas()
