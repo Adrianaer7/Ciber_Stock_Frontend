@@ -11,13 +11,9 @@ import {
     ERROR_AGREGAR_PRODUCTO,
     ERROR_AGREGAR_RUBRO,
     AGREGAR_RUBRO,
-    OBTENER_PROVEEDORES,
     OBTENER_CODIGOS,
     ELIMINAR_PRODUCTOS,
     ELIMINAR_RUBROS,
-    ELIMINAR_PROVEEDORES,
-    AGREGAR_PROVEEDOR,
-    ERROR_AGREGAR_PROVEEDOR,
     PRECIO_VENTA_EFECTIVO,
     LIMPIAR_VENTA,
     TRAER_DOLAR_BD,
@@ -36,8 +32,6 @@ import {
     ORDENAR_MARCA_FILTRADO,
     ORDENAR_MODELO_FILTRADO,
     OBTENER_GARANTIAS,
-    FILTRO_PROVEEDOR,
-    ELIMINAR_PROVEEDOR,
 } from "../../types"
 
 export default function productoReducer(state, action) {
@@ -52,11 +46,7 @@ export default function productoReducer(state, action) {
                 ...state,
                 rubros: [...state.rubros, action.payload]
             }
-        case AGREGAR_PROVEEDOR:
-            return {
-                ...state,
-                proveedores: [...state.proveedores, action.payload]
-            }
+        
         case ERROR_AGREGAR_PRODUCTO:
             return {
                 ...state,
@@ -67,11 +57,7 @@ export default function productoReducer(state, action) {
                 ...state,
                 mensajeRubro: action.payload
             }
-        case ERROR_AGREGAR_PROVEEDOR:
-            return {
-                ...state,
-                mensajeProveedor: action.payload
-            }
+        
         case OBTENER_PRODUCTOS:
             return {
                 ...state,
@@ -87,11 +73,7 @@ export default function productoReducer(state, action) {
                 ...state,
                 rubros: action.payload
             }
-        case OBTENER_PROVEEDORES:
-        return {
-            ...state,
-            proveedores: action.payload
-        }
+        
         case OBTENER_GARANTIAS:
             return {
                 ...state,
@@ -107,11 +89,7 @@ export default function productoReducer(state, action) {
                 ...state,
                 rubros: []
             }
-        case ELIMINAR_PROVEEDORES:
-            return {
-                ...state,
-                proveedores: []
-            }
+        
         case PRODUCTO_ACTUAL:
             return {
                 ...state,
@@ -144,7 +122,6 @@ export default function productoReducer(state, action) {
                 ...state,
                 mensajeCodigo: null,
                 mensajeRubro: null,
-                mensajeProveedor: null
             }
         case FILTRAR_PRODUCTO:
             return {
@@ -152,16 +129,8 @@ export default function productoReducer(state, action) {
                 filtrados : action.payload
 
             }
-        case FILTRO_PROVEEDOR:
-            return {
-                ...state,
-                proveedoresFiltrados: action.payload
-            }
-        case ELIMINAR_PROVEEDOR: 
-            return {
-                ...state,
-                proveedores: state.proveedores.filter(proveedor => proveedor._id !== action.payload)
-            }
+        
+        
         case PRECIO_VENTA_EFECTIVO:
             return {
                 ...state,
@@ -190,10 +159,8 @@ export default function productoReducer(state, action) {
             productoSeleccionado: null,
             mensajeRubro: null,
             mensajeCodigo: null,
-            mensajeProveedor: null,
             filtrados: [], 
             rubros: [],
-            proveedores: [],
             valorDeVenta: "",
             dolarBD: "",
             }

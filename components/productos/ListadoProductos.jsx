@@ -17,9 +17,6 @@ const ListadoProductos = () => {
     const {
         traerProductos, 
         productos, 
-        eliminarProductos, 
-        eliminarProveedores, 
-        eliminarRubros,
         traerGarantias,
         limpiarSeleccionado, 
         filtro,

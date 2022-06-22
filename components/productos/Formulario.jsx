@@ -4,6 +4,7 @@ import Proveedor from "../proveedores/Proveedor"
 import { hoy } from "../../helpers"
 import productoContext from "../../context/productos/productoContext"
 import authContext from "../../context/auth/authContext"
+import proveedorContext from "../../context/proveedores/proveedorContext"
 import Swal from "sweetalert2"
 import compraContext from "../../context/historial/compras/compraContext"
 
@@ -15,17 +16,17 @@ const Formulario = ({productoEditar}) => {
     const CompraContext = useContext(compraContext)
     const {traerCompras} = CompraContext
 
+    const ProveedorContext = useContext(proveedorContext)
+    const {agregarProveedor, traerProveedores, proveedores} = ProveedorContext
+
     const productosContext = useContext(productoContext)
     const { 
         productos,
         codigos,
         productoSeleccionado, 
         agregarProducto, 
-        agregarProveedor, 
         editarProducto, 
         traerProductos, 
-        proveedores, 
-        traerProveedores,
         traerCodigos,
         valorDeVenta,
         valorDeVentaConocidos,
@@ -565,7 +566,7 @@ const Formulario = ({productoEditar}) => {
                             </div>
                         </div>
 
-                        <div className="mb-4">
+                        <div className="">
                             <div className="grid grid-cols-9">
                                 <label htmlFor="cantidad" className="text-gray-800 dark:text-gray-300 font-bold text-center col-span-1">N°</label>
                                 <label htmlFor="selectp" className="text-gray-800 dark:text-gray-300 font-bold  col-span-8 text-center">Proveedores</label>
@@ -605,7 +606,7 @@ const Formulario = ({productoEditar}) => {
                                                 <div className="flex justify-end" key={i}>
                                                     <li
                                                        
-                                                        className="uppercase text-center mt-2 ml-1 block  p-0 rounded-md  bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                                        className="uppercase text-center mt-2 ml-1 block px-2 rounded-md  bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                                     >
                                                         {proveedor}
                                                     </li>

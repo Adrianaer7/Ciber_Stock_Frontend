@@ -1,18 +1,19 @@
-import Link from "next/link"
-import { useContext } from "react"
-import productoContext from "../../context/productos/productoContext"
+import Image from "next/image";
+import { useContext, useEffect } from "react"
 import authContext from "../../context/auth/authContext";
+import proveedorContext from "../../context/proveedores/proveedorContext";
 import Swal from "sweetalert2";
 
 const Proveedor = ({proveedor}) => {
 
     const AuthContext = useContext(authContext)
-    const {modo, usuarioAutenticado} = AuthContext
+    const {modo} = AuthContext
 
-    const productosContext = useContext(productoContext)
-    const {eliminarProveedor} = productosContext
+    const ProveedorContext = useContext(proveedorContext)
+    const {eliminarUnProveedor, proveedorActual, editarProveedor, proveedorSeleccionado} = ProveedorContext
 
     const {_id, nombre, empresa, telPersonal, telEmpresa} = proveedor
+    
 
     const Eliminado = Swal.mixin({
         toast: true,
@@ -21,12 +22,7 @@ const Proveedor = ({proveedor}) => {
         timer: 3000
     })
 
-    const eliminar = async () => {
-        await eliminarProveedor(_id)
-    }
-
     const eliminarElProveedor = async () => {
-
         Swal.fire({
             title: `${modo ? '<h5 style="color:white">¿Estás seguro?</h5>' : '<h5 style="color:#545454">¿Estás seguro?</h5>'}`,
             text:"¡No se puede revertir esto!",
@@ -38,12 +34,12 @@ const Proveedor = ({proveedor}) => {
             confirmButtonColor: '#d33',
             cancelButtonText:'<p>Cancelar</p>',
             background: `${modo ? "rgb(31 41 55)" : "white"}`,
-            }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-                eliminar()
+                eliminarUnProveedor(_id)
                 Eliminado.fire({
                     icon: 'success',
-                    title: "Se eliminó el proveedor correctamente",
+                    title: "Se eliminó correctamente",
                     background: `${modo ? "#505050" : "white"}`,
                     width: "25%",
                     color: `${modo ? "white" : "#545454"}`,
@@ -51,31 +47,39 @@ const Proveedor = ({proveedor}) => {
             }
         })
     }
+    
 
   return (
-    <tr className="border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 hover:cursor-pointer active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700">
-            <td className="p-3 dark:text-gray-50 text-center ">{nombre}</td>
-            <td className="dark:text-gray-50 p-3 text-center">{empresa}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{telPersonal}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{telEmpresa}</td>
+      <tr className="border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700">
+            <td className="p-1 dark:text-gray-50 text-center ">{nombre}</td>
+            <td className="p-1 dark:text-gray-50 text-center">{empresa}</td>
+            <td className="p-1 dark:text-gray-50 text-center">{telPersonal}</td>
+            <td className="p-1 dark:text-gray-50 text-center">{telEmpresa}</td>
 
-            <td className="p-3 w-40 mt-2  ">
-                <div className="flex">
+            <td className="p-1 w-40 mt-2  ">
+                <div className="flex justify-evenly">
+                    <div className="hover:bg-gray-200 dark:hover:bg-gray-600 p-1 pb-0 items-center rounded-md hover:cursor-pointer">
 
-                    <Link passHref href="">
-                        <button
-                            type="button"
-                            className="bg-green-600 hover:bg-red-900 mb-2 w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
+                        <Image 
+                            src={`${modo ? "/editar_light.svg" : "/editar_dark.svg"}`}
+                            alt="Eliminar"
+                            width={30} 
+                            height={30}
+                            priority={true}
+                            onClick={() => proveedorActual(_id)}
+                            />
+                    </div>
+                    <div className="hover:bg-gray-200 dark:hover:bg-gray-600 p-1 pb-0 items-center rounded-md hover:cursor-pointer">
+
+                        <Image 
+                            src={`${modo ? "/delete_light.svg" : "/delete_dark.svg"}`}
+                            alt="Eliminar"
+                            width={30} 
+                            height={30}
+                            priority={true}
                             onClick={eliminarElProveedor}
-                        >X</button>
-                    </Link>
-                    <Link passHref href="">
-                        <button
-                            type="button"
-                            className="bg-red-600 hover:bg-red-900 mb-2 w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
-                            onClick={eliminarElProveedor}
-                        >X</button>
-                    </Link>
+                        />
+                    </div>
                 </div>
                 
             </td>

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import Proveedor from "./Proveedor";
-import productoContext from "../../context/productos/productoContext";
+import proveedorContext from "../../context/proveedores/proveedorContext";
 import authContext from "../../context/auth/authContext";
 import Image from "next/image";
 import Swal from "sweetalert2";
@@ -10,24 +10,36 @@ const ListadoProveedores = () => {
     const AuthContext = useContext(authContext)
     const {modo, usuarioAutenticado} = AuthContext
 
-    const productosContext = useContext(productoContext)
-
+    const ProveedorContext = useContext(proveedorContext)
     const {
         proveedores, 
         agregarProveedor,
-        traerProveedores, 
-        proveedoresFiltrados, 
+        proveedorSeleccionado,
+        traerProveedores,
+        editarProveedor,
+        proveedoresFiltrados,
         filtroProveedor,
         orderEmpresa,
         orderEmpresaFiltrados,
-    } = productosContext
+        limpiarSeleccionado
+    } = ProveedorContext
+
 
     const [filtrando, setFiltrando] = useState("") 
     const [escribiendo, setEscribiendo] = useState(false)
     const [focus, setFocus] = useState(false)
     const [ordenEmpresa, setOrdenEmpresa] = useState(false)
     const [crearNuevo, setCrearNuevo] = useState(false)
+    const [editar, setEditar] = useState(proveedorSeleccionado ? true : false)
+    
+    const [proveedor, setProveedor] = useState({
+        nombre: "",
+        empresa: "",
+        telEmpresa: "",
+        telPersonal: ""
+    })
 
+    const {nombre, empresa, telPersonal, telEmpresa} = proveedor
 
     useEffect(() => {
         usuarioAutenticado()
@@ -36,6 +48,7 @@ const ListadoProveedores = () => {
 
     useEffect(() => {
         traerProveedores()
+        limpiarSeleccionado()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -47,7 +60,7 @@ const ListadoProveedores = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[ordenEmpresa])
     
-
+    
     useEffect(() => {
         if(filtrando) {
             setEscribiendo(true)
@@ -55,78 +68,122 @@ const ListadoProveedores = () => {
             setEscribiendo(false)
         }
     }, [filtrando])
+    
+    useEffect(() => {
+        if(proveedorSeleccionado) {
+
+            setProveedor({
+                nombre: proveedorSeleccionado.nombre,
+                empresa: proveedorSeleccionado.empresa,
+                telPersonal: proveedorSeleccionado.telPersonal,
+                telEmpresa: proveedorSeleccionado.telEmpresa
+            })
+            setEditar(true)
+        }
+    },[proveedorSeleccionado])
+
+    useEffect(() => {
+        if(crearNuevo) {
+            limpiarSeleccionado()
+        }
+    },[crearNuevo])
+
+    const crearEditar = () => {
+        if(!crearNuevo && !proveedorSeleccionado) {
+            setCrearNuevo(!crearNuevo)
+            setEditar(false)
+        } else {
+           if(!crearNuevo) {
+            limpiarSeleccionado()
+            setCrearNuevo(true)  
+        } else {
+            setCrearNuevo(false)
+        }
+            
+        }
+        if(proveedorSeleccionado) {
+            setEditar(false)
+            setCrearNuevo(false)
+            limpiarSeleccionado()
+            setProveedor({
+                nombre: "",
+                empresa: "",
+                telPersonal: "",
+                telEmpresa: ""
+            })
+        }
+    }
 
     const onChangeFiltro = e => {
         setFiltrando(e.target.value)
         filtroProveedor(e.target.value.toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
     }
 
-    
+    const onChange = e => {
+        setProveedor({
+            ...proveedor,
+            [e.target.name]: e.target.value
+        })
+    }
 
     const ordenarEmpresa = () => {
         setOrdenEmpresa(!ordenEmpresa)
     }
-    
 
-    const modal = async() => {
-        const { value: formValues } = await Swal.fire({
-            title: `${modo ? '<h5 style="color:white">Agregar proveedor</h5>' : '<h5 style="color:#545454">Agregar proveedor</h5>'}`,
-            background: `${modo ? "rgb(31 41 55)" : "white"}`,
-            html:`${modo ?
-                '<input id="swal-input1" class="swal2-input" placeholder="Nombre y apellido" style="color:white">' +
-                '<input id="swal-input2" class="swal2-input" placeholder="Empresa" style="color:white">' +
-                '<input id="swal-input3" class="swal2-input" placeholder="Tel. Empresa" style="color:white">' +
-                '<input id="swal-input4" class="swal2-input" placeholder="Tel. Empresa" style="color:white">'
-            :
-                '<input id="swal-input1" class="swal2-input" placeholder="Nombre y apellido">' +
-                '<input id="swal-input2" class="swal2-input" placeholder="Empresa">' +
-                '<input id="swal-input3" class="swal2-input" placeholder="Tel. Empresa">' +
-                '<input id="swal-input4" class="swal2-input" placeholder="Tel. Empresa">'
-            }
-            
-            `,
-            focusConfirm: false,
-            preConfirm: () => {
-              return [
-                document.getElementById('swal-input1').value,
-                document.getElementById('swal-input2').value,
-                document.getElementById('swal-input3').value,
-                document.getElementById('swal-input4').value
-              ]
-            }
-          })
-          
-          if (formValues) {
-            if(formValues[1]) {
-
-                const funcion = async () => {
-    
-                    const proveedor = {
-                        nombre: formValues[0],
-                        empresa: formValues[1],
-                        telPersonal: formValues[2],
-                        telEmpresa: formValues[3]
-                    }
-                    await agregarProveedor(proveedor)
-                    traerProveedores()
-                }
-                funcion()
-            } else {
-                await Swal.fire({ //le pongo el await para que la siguiente funcion se ejecute cuando quite el modal de error
-                    icon: 'error',
-                    title: 'Error',
-                    color:`${modo ? "white" : "rgb(31 41 55)"}`,
-                    background: `${modo ? "rgb(31 41 55)" : "white"}`,
-                    html: `${modo ? '<p style="color:white">El <b>nombre de la empresa</b> es obligatorio.</p>' : '<p style="color: black">El <b>nombre de la empresa</b> es obligatorio.</p>'}`,
-                })
-                return modal()
-            }
-          } 
-    }
+    const Editado = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    })
+    const editadoExito = () => {
+        Editado.fire({
+            icon: 'success',
+            title: "Se editó correctamente",
+            background: `${modo ? "#505050" : "white"}`,
+            width: "25%",
+            color: `${modo ? "white" : "#545454"}`,
+        })
+    } 
+    const Agregado = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    })
+    const agregadoExito = () => {
+        Agregado.fire({  
+            icon: 'success',
+            title: "Se agregó correctamente",
+            background: `${modo ? "#505050" : "white"}`,
+            width: "25%",
+            color: `${modo ? "white" : "#545454"}`,
+        })
+    } 
 
     const onSubmit = e => {
         e.preventDefault()
-        agregarProveedor(proveedor)
+
+        if(!proveedor.empresa) {
+            Swal.fire({
+                icon: 'error',
+                title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                html: `${modo ? '<p style="color:white">El <b>nombre de la empresa</b> es obligatorio.</p>' : '<p style="color:#545454">El <b>nombre de la empresa</b> es obligatorio.</p>'}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
+                })
+            return
+        }
+        
+        if(!proveedorSeleccionado) {
+            agregarProveedor(proveedor)
+            setCrearNuevo(!crearNuevo)
+            agregadoExito()
+        } else { 
+            proveedor._id = proveedorSeleccionado._id
+            editarProveedor(proveedor)
+            limpiarSeleccionado()
+            editadoExito()
+        }
 
         setProveedor({
             nombre: "",
@@ -134,7 +191,6 @@ const ListadoProveedores = () => {
             telPersonal: "",
             telEmpresa: ""
         })
-        setCrearNuevo(!crearNuevo)
     }
     
   return (
@@ -166,16 +222,133 @@ const ListadoProveedores = () => {
                 </div>  
                 <button
                     className="bg-green-800 hover:bg-green-900 rounded-lg text-white shadow-md px-4 font-bold uppercase "
-                    onClick={() => modal()}
+                    onClick={crearEditar}
                 >
-                    {crearNuevo ? "CANCELAR" : "AGREGAR"}
+                    {crearNuevo || proveedorSeleccionado? "CANCELAR" : "AGREGAR"}
                 </button>
             </div> 
         </div>
-            {crearNuevo && modal()
-                
-            
+            {crearNuevo && (
+                <div className="dark:bg-gray-900 py-3 bg-white rounded-lg mt-6 mx-auto">
+
+                    <form 
+                        onSubmit={onSubmit}
+                    >
+                        <div className="flex justify-between px-2 gap-2">
+                            <div>
+                                <label htmlFor="nombre" className="text-gray-800 dark:text-gray-300 font-bold font">Nombre y apellido</label>
+                                <input
+                                    name="nombre"
+                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 rounded-md border-none active:ring-1 shadow-sm"
+                                    placeholder="Juan Pérez"
+                                    value={nombre}
+                                    onChange={onChange}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="empresa" className="text-gray-800 dark:text-gray-300 font-bold font">Empresa</label>
+
+                                <input
+                                    name="empresa"
+                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300  uppercase w-full p-2 rounded-md border-none active:ring-1 shadow-sm"
+                                    placeholder="Mercadolibre"
+                                    value={empresa}
+                                    onChange={onChange}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="telpersonal" className="text-gray-800 dark:text-gray-300 font-bold font">Tel. Personal</label>
+
+                                <input
+                                    name="telPersonal"
+                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 rounded-md border-none active:ring-1  shadow-sm"
+                                    placeholder="3446101010"
+                                    value={telPersonal}
+                                    onChange={onChange}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="telempresa" className="text-gray-800 dark:text-gray-300 font-bold font">Tel. Empresa</label>
+
+                                <input
+                                    name="telEmpresa"
+                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 rounded-md border-none active:ring-1 shadow-sm"
+                                    placeholder="3446101010"
+                                    value={telEmpresa}
+                                    onChange={onChange}
+                                />
+                            </div>
+                        <button
+                            className=" mt-5 bg-blue-900 text-white px-2 items-end rounded-lg font-bold uppercase"
+                        >
+                            Guardar
+                        </button>
+                        </div>
+                    </form>
+                </div>
+            ) 
             }
+            {proveedorSeleccionado && (
+                <div className="dark:bg-gray-900 py-3 bg-white rounded-lg mt-6 mx-auto">
+
+                    <form 
+                        onSubmit={onSubmit}
+                    >
+                        <div className="flex justify-between px-2 gap-2">
+                            <div>
+                                <label htmlFor="nombre" className="text-gray-800 dark:text-gray-300 font-bold font">Nombre y apellido</label>
+                                <input
+                                    name="nombre"
+                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 rounded-md border-none active:ring-1 shadow-sm"
+                                    placeholder="Juan Pérez"
+                                    value={nombre}
+                                    onChange={onChange}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="empresa" className="text-gray-800 dark:text-gray-300 font-bold font">Empresa</label>
+
+                                <input
+                                    name="empresa"
+                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300  uppercase w-full p-2 rounded-md border-none active:ring-1 shadow-sm"
+                                    placeholder="Mercadolibre"
+                                    value={empresa}
+                                    onChange={onChange}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="telpersonal" className="text-gray-800 dark:text-gray-300 font-bold font">Tel. Personal</label>
+
+                                <input
+                                    name="telPersonal"
+                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 rounded-md border-none active:ring-1  shadow-sm"
+                                    placeholder="3446101010"
+                                    value={telPersonal}
+                                    onChange={onChange}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="telempresa" className="text-gray-800 dark:text-gray-300 font-bold font">Tel. Empresa</label>
+
+                                <input
+                                    name="telEmpresa"
+                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 rounded-md border-none active:ring-1 shadow-sm"
+                                    placeholder="3446101010"
+                                    value={telEmpresa}
+                                    onChange={onChange}
+                                />
+                            </div>
+                        <button
+                            className=" mt-5 bg-blue-900 text-white px-2 items-end rounded-lg font-bold uppercase"
+                        >
+                            Guardar
+                        </button>
+                        </div>
+                    </form>
+                </div>
+            ) 
+            }
+            
         <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
             <thead className="bg-green-600 text-white">
                 <tr onClick={() => ordenarEmpresa()} className="hover:cursor-pointer select-none">

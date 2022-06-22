@@ -4,15 +4,12 @@ import productoReducer from "./productoReducer";
 import clienteAxios from "../../config/axios"
 import {
     AGREGAR_PRODUCTO, 
-    AGREGAR_PROVEEDOR, 
     AGREGAR_RUBRO, 
     EDITAR_PRODUCTO, 
     ELIMINAR_PRODUCTO, 
     ELIMINAR_PRODUCTOS, 
-    ELIMINAR_PROVEEDORES, 
     ELIMINAR_RUBROS, 
     ERROR_AGREGAR_PRODUCTO, 
-    ERROR_AGREGAR_PROVEEDOR, 
     ERROR_AGREGAR_RUBRO, 
     FILTRAR_PRODUCTO, 
     LIMPIAR_APP, 
@@ -20,7 +17,6 @@ import {
     LIMPIAR_VENTA, 
     OBTENER_CODIGOS, 
     OBTENER_PRODUCTOS, 
-    OBTENER_PROVEEDORES, 
     OBTENER_RUBROS, 
     OCULTAR_ALERTA, 
     ORDENAR_CODIGO, 
@@ -40,8 +36,6 @@ import {
     PRODUCTO_ACTUAL,
     TRAER_DOLAR_BD,
     OBTENER_GARANTIAS,
-    FILTRO_PROVEEDOR,
-    ELIMINAR_PROVEEDOR, 
 } from "../../types";
 
 const ProductoState = ({children}) => {
@@ -53,11 +47,8 @@ const ProductoState = ({children}) => {
         productoSeleccionado: null,
         mensajeRubro: null,
         mensajeCodigo: null,
-        mensajeProveedor: null,
         filtrados: [],
         rubros: [],
-        proveedores: [],
-        proveedoresFiltrados: [],
         garantias: [],
         valorDeVenta: 0,
         valorDeVentaConocidos: 0,
@@ -124,26 +115,7 @@ const ProductoState = ({children}) => {
         }
     }
 
-    //crea un nuevo proveedor
-    const agregarProveedor = async proveedor => {
-        try {
-            const {data} = await clienteAxios.post("/api/proveedores", proveedor)
-            dispatch({
-                type: AGREGAR_PROVEEDOR,
-                payload: data.proveedor
-            })
-        } catch (error) {
-            dispatch({
-                type: ERROR_AGREGAR_PROVEEDOR,
-                payload: error.response.data.msg
-            })
-            setTimeout(() => {
-                dispatch({
-                    type: OCULTAR_ALERTA
-                })
-            }, 3000);
-        }
-    }
+    
 
 
     //modifico el producto
@@ -219,17 +191,7 @@ const ProductoState = ({children}) => {
         }
     }
 
-    const traerProveedores = async () => {
-        try {
-            const {data} = await clienteAxios.get("/api/proveedores")
-            dispatch({
-                type: OBTENER_PROVEEDORES,
-                payload: data.proveedores
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    
 
     const traerGarantias = async () => {
         const {data} = await clienteAxios("/api/garantias")
@@ -294,12 +256,7 @@ const ProductoState = ({children}) => {
         })
     }
 
-    const eliminarProveedores = async () => {
-        await clienteAxios.delete("/api/proveedores")
-        dispatch({
-            type: ELIMINAR_PROVEEDORES
-        })
-    }
+    
     //filtro en el listado segun propiedades del producto
     const filtro = palabras => {
         let filtrados = []
@@ -500,54 +457,8 @@ const ProductoState = ({children}) => {
         })
     }
 
-    const orderEmpresa = (ordenEmpresa) => {
-        dispatch({
-
-        })
-    }
-    const orderEmpresaFiltrados = (ordenEmpresa) => {
-        dispatch({
-
-        })
-    }
-    const filtroProveedor = palabras => {
-        let filtrados = []
-        state.proveedores.map(proveedor => {
-            const {empresa} = proveedor
-
-            const incluyeTodas = () => {
-                return !palabras
-                        .split(' ')
-                        .some(p => !empresa.includes(p))    //.some() comprueba si al menos 1 elemento cumple con la concidion.
-            }
-            
-            const resultado = incluyeTodas()
-            if(resultado) {
-                filtrados = [...filtrados, proveedor]
-            }
-        })
-        try {
-            dispatch({
-                type: FILTRO_PROVEEDOR,
-                payload: filtrados
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    const eliminarProveedor = async id => {
-        try {
-            await clienteAxios.delete(`/api/proveedores/${id}`)
-            dispatch({
-                type: ELIMINAR_PROVEEDOR,
-                payload: id
-            })  
-            
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
+    
+    
     const descargarPDF = async => {
         const {data} = clienteAxios.get("api/descargas")
         console.log(data)
@@ -567,11 +478,8 @@ const ProductoState = ({children}) => {
                 productoSeleccionado: state.productoSeleccionado,
                 mensajeCodigo: state.mensajeCodigo,
                 mensajeRubro: state.mensajeRubro,
-                mensajeProveedor: state.mensajeProveedor,
                 filtrados: state.filtrados,
                 rubros: state.rubros,
-                proveedores: state.proveedores,
-                proveedoresFiltrados: state.proveedoresFiltrados,
                 garantias: state.garantias,
                 valorDeVenta: state.valorDeVenta,
                 valorDeVentaConocidos: state.valorDeVentaConocidos,
@@ -581,7 +489,6 @@ const ProductoState = ({children}) => {
                 agregarProducto,
                 traerProductos,
                 traerRubros,
-                traerProveedores,
                 traerGarantias,
                 traerCodigos,
                 productoActual,
@@ -589,14 +496,10 @@ const ProductoState = ({children}) => {
                 limpiarSeleccionado,
                 eliminarProducto,
                 filtro,
-                filtroProveedor,
                 agregarRubro,
                 venderProducto,
-                agregarProveedor,
                 eliminarProductos,
                 eliminarRubros,
-                eliminarProveedores,
-                eliminarProveedor,
                 precioVenta,
                 limpiarPrecioVenta,
                 traerDolarAPI,
@@ -614,8 +517,6 @@ const ProductoState = ({children}) => {
                 orderModeloFiltrados,
                 orderDisponibles,
                 orderDisponiblesFiltrados,
-                orderEmpresa,
-                orderEmpresaFiltrados,
                 limpiarApp,
                 descargarPDF
             }}

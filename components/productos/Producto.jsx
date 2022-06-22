@@ -215,13 +215,11 @@ const Producto = ({producto}) => {
             </td>
 
             <td className="p-3 w-40 mt-2  ">
-                <Link passHref href="">
-                    <button
-                        type="button"
-                        className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 mb-2 w-full text-black p-2 uppercase font-bold text-xs mr-3 rounded-md"
-                        onClick={venderElProducto}
-                    >Vender</button>
-                </Link>
+                <button
+                    type="button"
+                    className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 mb-2 w-full text-black p-2 uppercase font-bold text-xs mr-3 rounded-md"
+                    onClick={venderElProducto}
+                >Vender</button>
                 <Link passHref href={`/producto/${_id}`}>
                     <a
                         type="button"
@@ -236,13 +234,11 @@ const Producto = ({producto}) => {
                         onClick={() => productoActual(producto)}
                     >Editar</a>
                 </Link>
-                <Link passHref href="">
-                    <button
-                        type="button"
-                        className="bg-red-600 hover:bg-red-900  w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
-                        onClick={añadirFaltante}
-                    >{!faltante && colorFaltante === null || !faltante && colorFaltante === false || faltante && colorFaltante === false ? "Agregar faltante" : "Quitar faltante"}</button>
-                </Link>
+                <button
+                    type="button"
+                    className="bg-red-600 hover:bg-red-900  w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
+                    onClick={añadirFaltante}
+                >{!faltante && colorFaltante === null || !faltante && colorFaltante === false || faltante && colorFaltante === false ? "Agregar faltante" : "Quitar faltante"}</button>
                 
             </td>
         </tr>
