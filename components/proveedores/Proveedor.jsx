@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import authContext from "../../context/auth/authContext";
 import proveedorContext from "../../context/proveedores/proveedorContext";
 import Swal from "sweetalert2";
