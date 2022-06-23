@@ -196,11 +196,15 @@ const ProductoState = ({children}) => {
     
 
     const traerGarantias = async () => {
-        const {data} = await clienteAxios("/api/garantias")
-        dispatch({
-            type: OBTENER_GARANTIAS,
-            payload: data.garantias
-        })
+        try {
+            const {data} = await clienteAxios("/api/garantias")
+            dispatch({
+                type: OBTENER_GARANTIAS,
+                payload: data.garantias
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     //guarda el producto seleccionado
