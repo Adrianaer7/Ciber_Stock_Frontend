@@ -10,7 +10,7 @@ const Producto = ({producto}) => {
     const {modo} = AuthContext
 
     const productosContext = useContext(productoContext)
-    const {productoActual, venderProducto, garantias} = productosContext
+    const {productos, productoActual, venderProducto, garantias} = productosContext
 
     const faltantesContext = useContext(faltanteContext)
     const {agregarFaltante, eliminarFaltante} = faltantesContext
@@ -48,7 +48,7 @@ const Producto = ({producto}) => {
                 setTodasGarantias(probar.detalles)
             }
         }
-    }, [])
+    }, [productos])
 
 
     useEffect(() => {

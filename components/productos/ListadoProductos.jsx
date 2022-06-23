@@ -72,10 +72,8 @@ const ListadoProductos = () => {
     }, [dolarBD])
 
     useEffect(() => {
-        setTimeout(() => {
-            setSpinner(false)
-        }, 1000);
-    }, [])
+        setSpinner(false)
+    },[])
 
     useEffect(() => {
         if(filtrando) {
@@ -222,6 +220,7 @@ const ListadoProductos = () => {
             : (
             <>
                 {productos.map(producto => (
+                    
                     <Producto
                         key={producto._id}
                         producto={producto}
