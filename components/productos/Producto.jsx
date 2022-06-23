@@ -1,11 +1,20 @@
-import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
+import Link from "next/link";
 import productoContext from "../../context/productos/productoContext";
 import faltanteContext from "../../context/faltantes/faltantesContext";
 import authContext from "../../context/auth/authContext";
 import Swal from "sweetalert2";
 
 const Producto = ({producto}) => {
+    const AuthContext = useContext(authContext)
+    const {modo} = AuthContext
+
+    const productosContext = useContext(productoContext)
+    const {productoActual, venderProducto, garantias} = productosContext
+
+    const faltantesContext = useContext(faltanteContext)
+    const {agregarFaltante, eliminarFaltante} = faltantesContext
+
     const [colorFaltante, setColorFaltante] = useState(null)
     const [todasGarantias, setTodasGarantias] = useState([])
     const {
@@ -30,25 +39,15 @@ const Producto = ({producto}) => {
     const tarjeta = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_tarjeta)).trim().replace(/\s\s+/g, ' ')
     const textoUnPago = (nombre + " " + marca + " " + modelo + " " + "Total final ahora 12: " + "$" + Math.round(precio_venta_ahoraDoce)).trim().replace(/\s\s+/g, ' ') + " - " + "Valor de cada cuota: " + "$" + precio_venta_cuotas
 
-    const AuthContext = useContext(authContext)
-    const {modo} = AuthContext
 
-    const productosContext = useContext(productoContext)
-    const {productoActual, venderProducto, garantias} = productosContext
-
-    const faltantesContext = useContext(faltanteContext)
-    const {agregarFaltante, eliminarFaltante} = faltantesContext
 
     useEffect(() => {
         if(garantias.length > 0) {
-
             const probar = garantias.find(garantia => garantia.idProducto == _id)
             if(probar) {
-
                 setTodasGarantias(probar.detalles)
             }
         }
-        
     }, [])
 
 

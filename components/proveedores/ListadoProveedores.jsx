@@ -161,7 +161,7 @@ const ListadoProveedores = () => {
         })
     } 
 
-    const onSubmit = e => {
+    const onSubmit = async e => {
         e.preventDefault()
 
         if(!proveedor.empresa) {
@@ -176,12 +176,12 @@ const ListadoProveedores = () => {
         
         if(!proveedorSeleccionado) {
             agregarProveedor(proveedor)
-            setCrearNuevo(!crearNuevo)
+            await setCrearNuevo(!crearNuevo)
             agregadoExito()
         } else { 
             proveedor._id = proveedorSeleccionado._id
             editarProveedor(proveedor)
-            limpiarSeleccionado()
+            await limpiarSeleccionado()
             editadoExito()
         }
 
