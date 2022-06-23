@@ -16,6 +16,7 @@ const ListadoProductos = () => {
         traerProductos, 
         productos, 
         traerGarantias,
+        garantias,
         limpiarSeleccionado, 
         filtro,
         filtrados, 
@@ -224,6 +225,7 @@ const ListadoProductos = () => {
                     <Producto
                         key={producto._id}
                         producto={producto}
+                        garantia={garantias.find(garantia => garantia.idProducto == producto._id)}
                     />
                 ))}
             </>
