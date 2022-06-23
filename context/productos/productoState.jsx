@@ -36,6 +36,7 @@ import {
     PRODUCTO_ACTUAL,
     TRAER_DOLAR_BD,
     OBTENER_GARANTIAS,
+    AGREGAR_GARANTIA,
 } from "../../types";
 
 const ProductoState = ({children}) => {
@@ -76,6 +77,7 @@ const ProductoState = ({children}) => {
             if( cantidad > 0 && producto.proveedor && producto.garantia) {
                 const {garantia, proveedor, codigo} = producto
                 await clienteAxios.post("/api/garantias", {garantia, proveedor, codigo})
+                
             }
             
 

@@ -36,6 +36,7 @@ const Formulario = ({productoEditar}) => {
         precioVenta,
         traerDolarAPI, 
         traerDolarBD,
+        traerGarantias
     } = productosContext
    
     const [valoresR, setValoresR] = useState("") 
