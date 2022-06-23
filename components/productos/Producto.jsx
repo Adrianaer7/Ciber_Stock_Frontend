@@ -118,9 +118,12 @@ const Producto = ({producto}) => {
                 width: "25%",
                 color: `${modo ? "white" : "#545454"}`,
                 })
-
-            const resta = disponibles - limiteFaltante
-            if(resta == 1) { //si el producto que vendi entró a faltantes, muestro alerta luego de la alerta de vendido
+            
+            let resta
+            if(limiteFaltante !== null) {
+                resta = disponibles - unidades  //obtengo cuantas unidades me quedan
+            }
+            if(resta <= limiteFaltante) { //si el producto que vendi entró a faltantes, muestro alerta luego de la alerta de vendido
                 Copiado.fire({
                     icon: 'success',
                     title: 'Agregado a faltante',
