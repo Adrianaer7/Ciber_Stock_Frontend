@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { generarFecha } from '../../helpers';
 import {useRouter} from "next/router"
 import productoContext from "../../context/productos/productoContext";
@@ -6,14 +6,15 @@ import authContext from "../../context/auth/authContext";
 import Swal from "sweetalert2";
 
 
-const VerProducto = ({producto}) => {
+const VerProducto = ({producto, laGarantia}) => {
     const router = useRouter()
     const productosContext = useContext(productoContext)
     const {eliminarProducto} = productosContext
 
     const AuthContext = useContext(authContext)
-    const {modo} = AuthContext
+    const {modo, usuario} = AuthContext
 
+    const [todasGarantias, setTodasGarantias] = useState([])
     const {
         _id, 
         nombre, 
@@ -39,6 +40,9 @@ const VerProducto = ({producto}) => {
         notas
     } = producto
 
+
+    
+    
     let fecha //formateo la fecha ya que me llega y-m-d
     if(fecha_compra) {
         fecha = generarFecha(fecha_compra)
@@ -143,24 +147,19 @@ const VerProducto = ({producto}) => {
                             <td className="px-6 py-4 text-left">{rubro ? rubro : "-"}</td>
                         </tr>
                     
-                    
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">ÚLTIMO PROVEEDOR </th>
-                            <td className="px-6 py-4 text-left">{proveedor ? proveedor : "-"}</td>
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">GARANTIAS</th>
+                            <td className="px-6 py-4 text-left">{laGarantia.length > 0 ? laGarantia.map((warranty, i) => <div key={i} className="mb-2"><p key={i} className="inline-block"> Proveedor: {warranty.proveedor}</p><p> Caducidad: {warranty.caducidad}</p></div>) : "-"}</td>
                         </tr>
+                        
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">PROVEEDORES</th>
-                            <td className="px-6 py-4 text-left">{todos_proveedores.length > 0 ? todos_proveedores.map((prov, i) => <p key={i} className="inline-block"> {prov},</p>) : "-"}</td>
+                            <td className="px-6 py-4 text-left">{todos_proveedores.length > 0 ? todos_proveedores.map((prov, i) => <p key={i}> {prov},</p>) : "-"}</td>
                         </tr>
 
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">FACTURA DE COMPRA </th>
                             <td className="px-6 py-4 text-left">{factura ? factura : "-"}</td>
-                        </tr>
-
-                        <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">GARANTÍA </th>
-                            <td className="px-6 py-4 text-left">{garantia ? garantia : "-"}</td>
                         </tr>
 
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">

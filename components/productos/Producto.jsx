@@ -191,10 +191,10 @@ const Producto = ({producto}) => {
         <tr className="border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 hover:cursor-pointer active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700">
             <td className="p-3 dark:text-gray-50 text-center font-semibold">{codigo}</td>
             <td className="dark:text-gray-50 p-3 text-center">{nombre}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{marca}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{modelo}</td>
+            <td className="p-3 dark:text-gray-50 text-center">{marca ? marca : "-"}</td>
+            <td className="p-3 dark:text-gray-50 text-center">{modelo ? modelo : "-"}</td>
             <td className="dark:text-gray-50 text-center uppercase">{!disponibles ? <span className="bg-red-600 font-black text-white p-1  rounded-sm">Sin stock</span> : disponibles && !faltante && colorFaltante === null || disponibles && colorFaltante === false ? disponibles : disponibles && faltante || disponibles && colorFaltante || disponibles && faltante && colorFaltante === false ? <span className="text-red-600 font-bold">{disponibles}</span> : null}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{todasGarantias.map((garantia, i) => (<div key={i}><p key={i} className="font-medium ">{garantia.caducidad}</p><p className="mb-1">{garantia.proveedor}</p></div>))}</td>
+            <td className="p-3 dark:text-gray-50 text-center">{todasGarantias.length > 0 ? todasGarantias.map((garantia, i) => (<div key={i}><p key={i} className="font-medium ">{garantia.caducidad}</p><p className="mb-1">{garantia.proveedor}</p></div>)) : "-"}</td>
             <td className="p-2 dark:text-gray-50 text-center  text-lg hover:cursor-pointer ">
                 <div className="flex flex-col">
                     <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-3xl font-black " onClick={copiarPrecioTarjeta}>${precio_venta_tarjeta}</p>

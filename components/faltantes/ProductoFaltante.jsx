@@ -39,11 +39,11 @@ const ProductoFaltante = ({producto}) => {
     return (
         <tr className="border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 hover:cursor-pointer active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700">
             <td className="p-1 dark:text-gray-50 text-center font-semibold">{codigo}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{nombre}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{marca}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{modelo}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{rubro}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{proveedor}</td>
+            <td className="p-1 dark:text-gray-50 text-center">{nombre ? nombre : "-"}</td>
+            <td className="p-1 dark:text-gray-50 text-center">{marca ? marca : "-"}</td>
+            <td className="p-1 dark:text-gray-50 text-center">{modelo ? modelo : "-"}</td>
+            <td className="p-1 dark:text-gray-50 text-center">{rubro ? rubro : "-"}</td>
+            <td className="p-1 dark:text-gray-50 text-center">{proveedor ? proveedor : "-"}</td>
 
             <td className="p-1 dark:text-gray-50 text-center uppercase">{disponibles && faltante ? <span className="font-bold text-red-600 p-1">{disponibles}</span> : disponibles && !faltante ? disponibles : <span className="font-black text-white bg-red-600 p-1 uppercase">Sin stock</span>}</td>
             <td className="p-1 w-40 mt-2  ">

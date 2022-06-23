@@ -25,10 +25,10 @@ const Ver = ({producto}) => {
   const {usuarioAutenticado, usuario} = AuthContext
   
   const productosContext = useContext(productoContext)
-  const {productoActual} = productosContext
+  const {productoActual, traerGarantias, garantias} = productosContext 
 
   const [coincide, setCoincide] = useState(true)
-
+  const [todasGarantias, setTodasGarantias] = useState([])
   //Autentico al usuario y agrego el producto actual al state
   useEffect(() => {
     usuarioAutenticado()
@@ -36,15 +36,25 @@ const Ver = ({producto}) => {
   },[])
   
   //Cuando me autentique, verifico que el producto que traigo es el del usuario que está logueado
-   useEffect(() => {
-    if(usuario) {
-      productoActual(producto)
-      if(producto.creador !== usuario._id) {
-        setCoincide(false)
-      }
+  useEffect(() => {
+  if(usuario) {
+    productoActual(producto)
+    if(producto.creador !== usuario._id) {
+      setCoincide(false)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [usuario])
+    traerGarantias()
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [usuario])
+
+  useEffect(() => {
+    if(garantias.length > 0) {
+        const probar = garantias.find(garantia => garantia.idProducto == producto._id)
+        if(probar) {
+          setTodasGarantias(probar.detalles)
+        }
+    }
+  }, [garantias])
 
   return (
     <>
@@ -53,6 +63,7 @@ const Ver = ({producto}) => {
           <VerProducto
             key={producto._id}
             producto={producto}
+            laGarantia={todasGarantias}
           />
         </Layout>
       ): <NoEncontrado/>

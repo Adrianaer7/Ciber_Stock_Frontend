@@ -51,10 +51,10 @@ const Proveedor = ({proveedor}) => {
 
   return (
       <tr className="border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700">
-            <td className="p-1 dark:text-gray-50 text-center ">{nombre}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{empresa}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{telPersonal}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{telEmpresa}</td>
+            <td className="p-1 dark:text-gray-50 text-center ">{nombre ? nombre : "-"}</td>
+            <td className="p-1 dark:text-gray-50 text-center">{empresa ? empresa : "-"}</td>
+            <td className="p-1 dark:text-gray-50 text-center">{telPersonal ? telPersonal : "-"}</td>
+            <td className="p-1 dark:text-gray-50 text-center">{telEmpresa ? telEmpresa : "-"}</td>
 
             <td className="p-1 w-40 mt-2  ">
                 <div className="flex justify-evenly">

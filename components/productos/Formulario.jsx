@@ -518,12 +518,12 @@ const Formulario = ({productoEditar}) => {
                         </div>
                         
                         <div className="mb-4">
-                            <div className="flex">
+                            <div className="flex gap-1">
                                     <div className="w-1/5">
                                         <label htmlFor="codigo" className="text-gray-800 dark:text-gray-300 font-bold ">Código</label>
                                         <select  
                                             onChange={onChange} 
-                                            className="uppercase text-center   mt-2 block p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                            className="uppercase text-center w-full  mt-2 block p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                             name="codigo"
                                             value={codigo}
                                         >
@@ -550,168 +550,83 @@ const Formulario = ({productoEditar}) => {
                         </div>
                         
 
-                        <div className="mb-4">
-                            <label htmlFor="rubro" className="text-gray-800 dark:text-gray-300 font-bold ">Rubro</label>
-                            <div>
-                                <select  
-                                    onChange={onChange} 
-                                    className="uppercase text-center mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                    name="rubro"
-                                    value={rubro}
-                                >
-                                    <Rubro
-                                        key={producto._id}
-                                        rubro={rubro}
-                                    />
-                                </select>
-                            </div>
-                        </div>
 
-                        <div className="">
-                            <div className="grid grid-cols-9">
-                                <label htmlFor="cantidad" className="text-gray-800 dark:text-gray-300 font-bold text-center col-span-1">N°</label>
-                                <label htmlFor="selectp" className="text-gray-800 dark:text-gray-300 font-bold  col-span-8 text-center">Proveedores</label>
+                        <div className="mb-4 flex flex-row gap-1">
+                            <div className="basis-1/2">
+                                <label htmlFor="garantia" className="text-gray-800 dark:text-gray-300 font-bold font ">Garantía</label>
+                                <input
+                                    type="text"
+                                    step="any"
+                                    autoComplete="off"
+                                    className="mt-2 block w-full p-3 uppercase rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                    id="garantia"
+                                    placeholder="2 meses"
+                                    name="garantia"
+                                    value={garantia}
+                                    onChange={onChange}
+                                />
                             </div>
-                            <div className="grid grid-cols-9">
+                            <div className="basis-1/2">
+                                <label htmlFor="factura" className="text-gray-800 dark:text-gray-300 font-bold font ">Nro. factura compra</label>
+                                <input
+                                    type="text"
+                                    step="any"
+                                    autoComplete="off"
+                                    className="mt-2 block w-full p-3 uppercase rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                    id="factura"
+                                    placeholder="0014-232322"
+                                    name="factura"
+                                    value={factura}
+                                    onChange={onChange}
+                                />
+                            </div>
+                        </div>   
+
+                        <div className="mb-4 flex flex-row gap-1">
+                            <div className="basis-1/2">
+                                <label htmlFor="valor_dolar_compra" className="text-gray-800 dark:text-gray-300 font-bold font ">Valor dolar</label>
                                 <input
                                     type="tel"
                                     autoComplete="off"
-                                    className={`text-center mt-2 block col-span-1 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
-                                    id="cantidad"
-                                    name="cantidad"
-                                    value={cantidad}
-                                    onChange={e => setCantidad(e.target.value)}
+                                    className="mt-2 block w-full p-3 uppercase rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                    id="valor_dolar_compra"
+                                    placeholder="$130"
+                                    name="valor_dolar_compra"
+                                    value={valor_dolar_compra}
+                                    onChange={onChangeNumeros}
                                 />
-                               
-                                
-                                <select 
-                                    id="selectp" 
-                                    className="uppercase text-center mt-2 ml-1 block col-span-8 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                    value={proveedorSelect} 
-                                    onChange={onChangeProveedorSelect} 
-                                >
-                                    <option value="" className="uppercase">-- Seleccione --</option>
-                                    {Object.keys(proveedores).length > 0  ? (
-                                        <>
-                                            {proveedores.map((proveedor, i) => (
-                                                <option key={i} value={proveedor.empresa}>{proveedor.empresa}</option>
-                                            ))}
-                                        </>
-                                    ) : null}
-                                </select>
                             </div>
-                                {Object.keys(todos_proveedores).length > 0  ? (
-                                        <>
-                                        <ul>
-                                            {todos_proveedores.map((proveedor, i) => (
-                                                <div className="flex justify-end" key={i}>
-                                                    <li
-                                                       
-                                                        className="uppercase text-center mt-2 ml-1 block px-2 rounded-md  bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                                    >
-                                                        {proveedor}
-                                                    </li>
-                                                    <button
-                                                    
-                                                        type="button"
-                                                        className="uppercase text-center mt-2 ml-1 block px-2 text-gray-600  h-50 rounded-full bg-gray-50 hover:bg-gray-200 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                                        value={proveedor}
-                                                        onClick={e => eliminarProveedor(e.target.value)}
-                                                    >
-                                                        X
-                                                    </button>
-                                                </div>
-                                            ))}
-
-                                        </ul>
-                                        </>
-                                ) : null}
-                        </div>     
-
-                        <div className="mb-4">
-                            <div className="flex justify-between">
-                                <label htmlFor="factura" className="text-gray-800 dark:text-gray-300 font-bold font ">Nro. factura compra</label>
+                            <div className="basis-1/2">
+                                <label htmlFor="precio_compra_dolar" className="text-gray-800 dark:text-gray-300 font-bold font ">Precio compra dolar</label>
+                                <input
+                                    type="tel"
+                                    autoComplete="off"
+                                    className="mt-2 block w-full p-3 uppercase rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                    id="precio_compra_dolar"
+                                    placeholder="$20.23"
+                                    name="precio_compra_dolar"
+                                    value={precio_compra_dolar}
+                                    onChange={onChangeNumeros}
+                                />
                             </div>
-                            <input
-                                type="text"
-                                step="any"
-                                autoComplete="off"
-                                className="mt-2 block w-full p-3 uppercase rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                id="factura"
-                                placeholder="0014-232322"
-                                name="factura"
-                                value={factura}
-                                onChange={onChange}
-                            />
-                        </div>    
-
-                        <div className="mb-4">
-                            <div className="flex justify-between">
-                                <label htmlFor="garantia" className="text-gray-800 dark:text-gray-300 font-bold font ">Garantía</label>
-                            </div>
-                            <input
-                                type="text"
-                                step="any"
-                                autoComplete="off"
-                                className="mt-2 block w-full p-3 uppercase rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                id="garantia"
-                                placeholder="2 meses"
-                                name="garantia"
-                                value={garantia}
-                                onChange={onChange}
-                            />
                         </div>   
+                        <div className="mb-4 flex flex-row gap-1">
+                            <div className="basis-1/2">
 
-                        <div className="mb-4">
-                            <div className="flex justify-between">
-                                <label htmlFor="valor_dolar_compra" className="text-gray-800 dark:text-gray-300 font-bold font ">Precio dolar</label>
-                            </div>
-                            <input
-                                type="tel"
-                                step="any"
-                                autoComplete="off"
-                                className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                id="valor_dolar_compra"
-                                placeholder="$112"
-                                name="valor_dolar_compra"
-                                value={valor_dolar_compra}
-                                onChange={onChangeNumeros}
-                            />
-                        </div>                 
-                        <div className="mb-4">
-                            <div className="flex justify-between">
-                                <label htmlFor="precio_compra_dolar" className="text-gray-800 dark:text-gray-300 font-bold font ">Precio compra en USD</label>
-                            </div>                            
-                            <input
-                                type="tel"
-                                autoComplete="off"
-                                className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                id="precio_compra_dolar"
-                                placeholder="$28,84"
-                                name="precio_compra_dolar"
-                                value={precio_compra_dolar}
-                                onChange={onChangeNumeros}
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <div className="flex justify-between">
                                 <label htmlFor="precio_compra_peso" className="text-gray-800 dark:text-gray-300 font-bold font ">Precio compra en AR$</label>
-                            </div>                          
-                            <input
-                                type="tel"
-                                autoComplete="off"
-                                className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                id="precio_compra_peso"
-                                placeholder="$1250"
-                                name="precio_compra_peso"
-                                value={precio_compra_peso}
-                                onChange={onChangeNumeros}
-                            />
-                        </div>
-                        
-                            <div className="mb-4">
-                                    <label htmlFor="precio_venta" className="text-gray-800  dark:text-gray-300 font-bold  "> Precio de venta</label>
-                                    
+                                <input
+                                    type="tel"
+                                    autoComplete="off"
+                                    className="mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                    id="precio_compra_peso"
+                                    placeholder="$1250"
+                                    name="precio_compra_peso"
+                                    value={precio_compra_peso}
+                                    onChange={onChangeNumeros}
+                                />
+                            </div>
+                            <div className="basis-1/2">
+                                <label htmlFor="precio_venta" className="text-gray-800  dark:text-gray-300 font-bold  "> Precio de venta</label> 
                                 <input
                                     type="tel"
                                     autoComplete="off"
@@ -724,49 +639,131 @@ const Formulario = ({productoEditar}) => {
                                     
                                 />
                             </div>
-                                    
-                                   
-                            
-                        <div className="mb-4">
-                            <label htmlFor="fecha_compra" className="text-gray-800 dark:text-gray-300 font-bold ">Fecha de compra</label>
-                            <input
-                                type="date"
-                                autoComplete="off"
-                                className="mt-2 block w-full p-3 appearance-none rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                id="fecha_compra"
-                                placeholder="fecha_compra"
-                                name="fecha_compra"
-                                value={fecha_compra}
-                                onChange={onChange}
-                            />
                         </div>
                         
-                        <div className="mb-4">
-                            <div className="flex justify-between">
-                                <label htmlFor="limiteFaltante" className="text-gray-800  dark:text-gray-300 font-bold  ">Añadir como faltante cuanto llegue a: </label>
-                            </div>  
-                            <div className="flex gap-4">          
+
+                        <div className="mb-4 flex flex-row gap-3">
+                            <div className="basis-1/2">
+                                <label htmlFor="fecha_compra" className="text-gray-800 dark:text-gray-300 font-bold ">Fecha de compra</label>
                                 <input
-                                    type="button"
-                                    className={`w-2/4 lg:w-1/4 rounded-md mt-2 block p-3 hover:cursor-pointer ${valorFaltante ? "bg-blue-200" : "bg-gray-400 "}`}
-                                    onClick={() => setValorFaltante(!valorFaltante)}
-                                    value={valorFaltante ? "Si"  : "No"}
-                                >
-                                </input>
-                                <input
-                                    type="tel"
+                                    type="date"
                                     autoComplete="off"
-                                    className={` ${!valorFaltante && "hover:cursor-not-allowed"} mt-2 block w-full p-3  rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
-                                    id="limiteFalante"
-                                    placeholder="2 UNIDADES"
-                                    name="limiteFaltante"
-                                    value={limiteFaltante}
+                                    className="mt-2 block w-full p-3 appearance-none rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                    id="fecha_compra"
+                                    placeholder="fecha_compra"
+                                    name="fecha_compra"
+                                    value={fecha_compra}
                                     onChange={onChange}
-                                    disabled={!valorFaltante}
                                 />
-                            </div>                                    
+                            </div>
+                            <div className="basis-1/2">
+
+                                <label htmlFor="limiteFaltante" className="text-gray-800  dark:text-gray-300 font-bold  ">Añadir como faltante a las: </label>
+                                <div className="flex gap-1">          
+                                    <input
+                                        type="button"
+                                        className={`w-2/4 lg:w-1/4 rounded-md mt-2 block p-3 hover:cursor-pointer ${valorFaltante ? "bg-blue-200" : "bg-gray-400 "}`}
+                                        onClick={() => setValorFaltante(!valorFaltante)}
+                                        value={valorFaltante ? "Si"  : "No"}
+                                    >
+                                    </input>
+                                    <input
+                                        type="tel"
+                                        autoComplete="off"
+                                        className={` ${!valorFaltante && "hover:cursor-not-allowed"} mt-2 block w-full p-3  rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
+                                        id="limiteFalante"
+                                        placeholder="2 UNIDADES"
+                                        name="limiteFaltante"
+                                        value={limiteFaltante}
+                                        onChange={onChange}
+                                        disabled={!valorFaltante}
+                                    />
+                                </div>                                    
+                            </div>
                         </div>
-                    </div>
+                        
+                        <div>
+                            <div className="grid grid-cols-9">
+                                <label htmlFor="cantidad" className="text-gray-800 dark:text-gray-300 font-bold  col-span-1 col-start-1">N°</label>
+                                <label htmlFor="selectp" className="text-gray-800 dark:text-gray-300 font-bold  col-span-4 col-start-2 col-end-4">Proveedores</label>
+                                <label htmlFor="rubro" className="text-gray-800 dark:text-gray-300 font-bold  col-span-4 col-start-6 col-end-9">Rubro</label>
+                            </div>
+                            <div className="grid grid-cols-9 gap-1">
+                                <div className="col-span-1">
+                                    <input
+                                        type="tel"
+                                        autoComplete="off"
+                                        className={`text-center mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
+                                        id="cantidad"
+                                        name="cantidad"
+                                        value={cantidad}
+                                        onChange={e => setCantidad(e.target.value)}
+                                    />
+                                </div>
+                               
+                                <div className="col-span-4">
+
+                                    <select 
+                                        id="selectp" 
+                                        className="uppercase text-center mt-2 w-full block col-span-4 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                        value={proveedorSelect} 
+                                        onChange={onChangeProveedorSelect} 
+                                    >
+                                        <option value="" className="uppercase">-- Seleccione --</option>
+                                        {Object.keys(proveedores).length > 0  ? (
+                                            <>
+                                                {proveedores.map((proveedor, i) => (
+                                                    <option key={i} value={proveedor.empresa}>{proveedor.empresa}</option>
+                                                ))}
+                                            </>
+                                        ) : null}
+                                    </select>
+                                    {Object.keys(todos_proveedores).length > 0  ? (
+                                            <>
+                                            <ul>
+                                                {todos_proveedores.map((proveedor, i) => (
+                                                    <div className="flex " key={i}>
+                                                        <li
+                                                        
+                                                            className="uppercase  mt-2 ml-1 block px-2 rounded-md  bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                                        >
+                                                            {proveedor}
+                                                        </li>
+                                                        <button
+                                                        
+                                                            type="button"
+                                                            className="uppercase text-center mt-2 ml-1 block px-2 text-gray-600  h-50 rounded-full bg-gray-50 hover:bg-gray-200 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                                            value={proveedor}
+                                                            onClick={e => eliminarProveedor(e.target.value)}
+                                                        >
+                                                            X
+                                                        </button>
+                                                    </div>
+                                                ))}
+
+                                            </ul>
+                                            </>
+                                    ) : null}
+                                </div>
+                                <div className="col-span-4">
+
+                                    <select  
+                                        onChange={onChange} 
+                                        className="uppercase text-center mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                        name="rubro"
+                                        value={rubro}
+                                    >
+                                        <Rubro
+                                            key={producto._id}
+                                            rubro={rubro}
+                                        />
+                                    </select>
+                                </div>
+                            </div>
+                        </div>     
+
+                        
+                        </div>
                     
                     <div className="mb-4">
                         <label htmlFor="notas" className="text-gray-800 dark:text-gray-300 font-bold ">Notas</label>
