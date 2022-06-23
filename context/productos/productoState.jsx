@@ -71,12 +71,12 @@ const ProductoState = ({children}) => {
             })
             //creo la nueva compra
             if(desdeForm && cantidad > 0) {
-                await clienteAxios.post("/api/compras", {producto, cantidad, desdeForm})
+                clienteAxios.post("/api/compras", {producto, cantidad, desdeForm})
             }
             //creo la nueva garantia
             if( cantidad > 0 && producto.proveedor && producto.garantia) {
                 const {garantia, proveedor, codigo} = producto
-                await clienteAxios.post("/api/garantias", {garantia, proveedor, codigo})
+                clienteAxios.post("/api/garantias", {garantia, proveedor, codigo})
                 
             }
             
@@ -129,11 +129,11 @@ const ProductoState = ({children}) => {
                 payload: data.producto
             })
             if(desdeForm) {
-                await clienteAxios.post("/api/compras", {producto, cantidad, desdeForm})
+                clienteAxios.post("/api/compras", {producto, cantidad, desdeForm})
             }
             if( cantidad > 0 && producto.proveedor && producto.garantia && desdeForm) {
                 const {garantia, proveedor, codigo} = producto
-                await clienteAxios.post("/api/garantias", {garantia, proveedor, codigo})
+                clienteAxios.post("/api/garantias", {garantia, proveedor, codigo})
             }
             
         } catch (error) {

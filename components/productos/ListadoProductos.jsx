@@ -16,7 +16,6 @@ const ListadoProductos = () => {
         traerProductos, 
         productos, 
         traerGarantias,
-        garantias,
         limpiarSeleccionado, 
         filtro,
         filtrados, 
@@ -73,8 +72,10 @@ const ListadoProductos = () => {
     }, [dolarBD])
 
     useEffect(() => {
-        setSpinner(false)
-    },[])
+        setTimeout(() => {
+            setSpinner(false)
+        }, 1000);
+    }, [])
 
     useEffect(() => {
         if(filtrando) {
@@ -221,11 +222,9 @@ const ListadoProductos = () => {
             : (
             <>
                 {productos.map(producto => (
-                    
                     <Producto
                         key={producto._id}
                         producto={producto}
-                        garantia={garantias.find(garantia => garantia.idProducto == producto._id)}
                     />
                 ))}
             </>
