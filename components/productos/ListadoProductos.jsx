@@ -53,14 +53,11 @@ const ListadoProductos = () => {
 
     useEffect(() => {
         traerProductos()
+        traerGarantias()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
    
 
-    useEffect(() => {
-        traerGarantias()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [productos])
 
     useEffect(() => {
         limpiarSeleccionado()
