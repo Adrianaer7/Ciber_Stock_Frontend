@@ -197,7 +197,7 @@ const ProductoState = ({children}) => {
 
     const traerGarantias = async () => {
         try {
-            const {data} = await clienteAxios("/api/garantias")
+            const {data} = await clienteAxios.get("/api/garantias")
             dispatch({
                 type: OBTENER_GARANTIAS,
                 payload: data.garantias
