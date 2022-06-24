@@ -209,7 +209,7 @@ const Producto = ({producto}) => {
                         <span className="block font-black text-3xl">${precio_venta_ahoraDoce}</span>
                     </p>
                     <p className="pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-xl font-normal " onClick={copiarAhoraDoce}>
-                        Cuotas de:
+                        12 cuotas de:
                         <span className="block font-black text-2xl">${precio_venta_cuotas}</span>
                     </p>
 
