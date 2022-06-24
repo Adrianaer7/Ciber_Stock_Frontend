@@ -36,11 +36,8 @@ const Formulario = ({productoEditar}) => {
         precioVenta,
         traerDolarAPI, 
         traerDolarBD,
-        traerGarantias
     } = productosContext
    
-    const [valoresR, setValoresR] = useState("") 
-    const [valoresP, setValoresP] = useState("") 
     const [proveedorSelect, setProveedorSelect] = useState(productoEditar?.proveedor ?? "")
     const [valorFaltante, setValorFaltante] = useState(productoEditar?.añadirFaltante ?? false)
     const [cantidad, setCantidad] = useState("")
@@ -112,9 +109,7 @@ const Formulario = ({productoEditar}) => {
     useEffect(() => {
         producto.proveedor = proveedorSelect
     }, [proveedorSelect])
-    useEffect(() => {
-        producto.proveedor = valoresP
-    }, [valoresP])
+
 
     const eliminarProveedor = e => {
         const noEliminados = todos_proveedores.filter(todos => todos !== e) //traigo todos los distintos al que elimine
@@ -144,19 +139,10 @@ const Formulario = ({productoEditar}) => {
     }
         
     
-    const onChangeProveedorInput = e => {
-        setValoresP(e.target.value.toUpperCase())
-    }
     const onChangeProveedorSelect = e => {
         setProveedorSelect(e.target.value.toUpperCase())
     }
-    if(valoresP && !proveedorSelect) {
-        producto.proveedor = valoresP
-     }
-    if(proveedorSelect && !valoresP) {
-        producto.proveedor = proveedorSelect
-    } 
-
+    
     if(valorFaltante) {
         producto.añadirFaltante = true
     } else {
@@ -341,40 +327,7 @@ const Formulario = ({productoEditar}) => {
             })
             return
         } 
-        
-        if(valoresP) { 
-            if(proveedorSelect && valoresP) {
-                Swal.fire({
-                    icon: 'error',
-                    title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                    html: `${modo ? '<p style="color:white">Ingrese 1 solo <b>proveedor</b> a la vez.</p>' : '<p style="color:#545454">Ingrese un solo <b>proveedor</b> a la vez.</p>'}`,
-                    background: `${modo ? "rgb(31 41 55)" : "white"}`,
-                })
-                return
-            }
 
-            if(proveedores) {    //si hay algun proveedor creado
-                const boolean = proveedores.map(proveedor => proveedor.nombre == valoresP ? true : false )   //recorro el state de proveedores
-                const contiene = boolean.includes(true) //devuelvo si existe un proveedor con el mismo nombre
-                if(contiene) {  //lanzo el error en ese caso
-                    Swal.fire({
-                        icon: 'error',
-                        title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                        html: `${modo ? '<p style="color:white">El <b>proveedor</b> ya está ingresado.</p>' : '<p style="color:#545454">El <b>proveedor</b> ya está ingresado.</p>'}`,
-                        background: `${modo ? "rgb(31 41 55)" : "white"}`,
-                    })
-                    return
-                }
-            }
-
-            const boolean = producto.todos_proveedores.map(provider => provider === proveedor ? true : false)
-            const prov = boolean.includes(true)
-            if(!prov || prov.length === 0) {
-                producto.todos_proveedores.push(valoresP)
-            }
-                
-            
-        }
         if(proveedorSelect) {
             const boolean = producto.todos_proveedores.map(provider => provider === proveedor ? true : false)
             const prov = boolean.includes(true)
@@ -383,12 +336,6 @@ const Formulario = ({productoEditar}) => {
             }
             
         }
-
-        //si no se cumple ninguna condicion que le puse arriba, y tampoco está vacio el input, lo envio a la bd
-        if(valoresP) {
-            agregarProveedor(proveedor)
-        }
-        //si no se cumple ninguna condicion que le puse arriba, y tampoco está vacio el input, lo envio a la bd
        
 
         //si es nuevo producto
@@ -431,8 +378,6 @@ const Formulario = ({productoEditar}) => {
                 limiteFaltante: "",
                 añadirFaltante: false
                 })
-            setValoresR("")
-            setValoresP("")
             traerProductos()
             traerCodigos()
             alertaNuevoCorrecto()
@@ -455,7 +400,6 @@ const Formulario = ({productoEditar}) => {
             editarProducto(producto, cantidad, desdeForm)
             setCantidad("")
             setProveedorSelect(producto.proveedor)
-            setValoresP("")
             traerProductos()
             traerCodigos()
             alertaEditarCorrecto()
