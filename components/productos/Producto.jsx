@@ -216,29 +216,29 @@ const Producto = ({producto}) => {
                 </div>
             </td>
 
-            <td className="p-3 w-40 mt-2  ">
+            <td className="p-3 mt-2 flex flex-col  ">
                 <button
                     type="button"
-                    className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 mb-2 w-full text-black p-2 uppercase font-bold text-xs mr-3 rounded-md"
+                    className=" bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 mb-2 w-full cursor-pointer text-black p-2 uppercase font-bold text-xs mr-3 rounded-md"
                     onClick={venderElProducto}
                 >Vender</button>
                 <Link passHref href={`/producto/${_id}`}>
                     <a
                         type="button"
-                        className="bg-blue-600 hover:bg-blue-900 mb-2 w-full text-white text-center p-2 uppercase font-bold text-xs mr-3 rounded-md"
+                        className="bg-blue-600 hover:bg-blue-900 mb-2 w-full cursor-pointer text-white text-center p-2 uppercase font-bold text-xs mr-3 rounded-md"
                         onClick={() => productoActual(producto)}
                     >Detalles</a>
                 </Link>
                 <Link passHref href={`/producto/editar/${_id}`}>
                     <a
                         type="button"
-                        className="bg-green-600 hover:bg-green-900 mb-2 w-full text-white text-center p-2 uppercase font-bold text-xs mr-3 rounded-md"
+                        className="bg-green-600 hover:bg-green-900 mb-2 w-full cursor-pointer text-white text-center p-2 uppercase font-bold text-xs mr-3 rounded-md"
                         onClick={() => productoActual(producto)}
                     >Editar</a>
                 </Link>
                 <button
                     type="button"
-                    className="bg-red-600 hover:bg-red-900  w-full text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
+                    className="bg-red-600 hover:bg-red-900  w-full cursor-pointer text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
                     onClick={añadirFaltante}
                 >{!faltante && colorFaltante === null || !faltante && colorFaltante === false || faltante && colorFaltante === false ? "Agregar faltante" : "Quitar faltante"}</button>
                 

@@ -63,7 +63,7 @@ const Layout = ({children, pagina}) => {
             </Head>
 
             <div className={`lg:flex md:min-h-screen sm:min-h-screen bg-gray-100 ${oscuro && "dark"}`}>
-                <div className="lg:w-1/5 bg-blue-900    dark:bg-gray-900 flex flex-col  justify-between lg:justify-start ">
+                <div className="lg:w-1/6 bg-blue-900    dark:bg-gray-900 flex flex-col  justify-between lg:justify-start ">
                     <div className="flex justify-between mt-1 px-5">
                         <p className="text-white text-2xl md:text-4xl font-black text-center">Hola, {usuario ? <span>{usuario.nombre}</span> : null}</p>
                         <Image 
@@ -124,7 +124,7 @@ const Layout = ({children, pagina}) => {
                     
                 </div>
                 
-                <div className=" lg:w-4/5 lg:p-10 h-screen  dark:bg-gray-800 overflow-x-auto ">
+                <div className=" lg:w-5/6 lg:p-10 h-screen  dark:bg-gray-800 overflow-x-auto ">
                     {children}      
                 </div>
                 

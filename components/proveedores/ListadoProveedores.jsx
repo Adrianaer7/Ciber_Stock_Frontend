@@ -239,6 +239,7 @@ const ListadoProveedores = () => {
                                 <label htmlFor="nombre" className="text-gray-800 dark:text-gray-300 font-bold font">Nombre y apellido</label>
                                 <input
                                     name="nombre"
+                                    autoComplete="off"
                                     className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 rounded-md border-none active:ring-1 shadow-sm"
                                     placeholder="Juan Pérez"
                                     value={nombre}
@@ -250,17 +251,25 @@ const ListadoProveedores = () => {
 
                                 <input
                                     name="empresa"
+                                    autoComplete="off"
+                                    list="empresas"
                                     className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300  uppercase w-full p-2 rounded-md border-none active:ring-1 shadow-sm"
                                     placeholder="Mercadolibre"
                                     value={empresa}
                                     onChange={onChange}
                                 />
+                                <datalist id="empresas">
+                                    {proveedores.map(proveedor =>
+                                        <option key={proveedor._id} value={proveedor.empresa}></option>
+                                    )}
+                                </datalist>
                             </div>
                             <div>
                                 <label htmlFor="telpersonal" className="text-gray-800 dark:text-gray-300 font-bold font">Tel. Personal</label>
 
                                 <input
                                     name="telPersonal"
+                                    autoComplete="off"
                                     className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 rounded-md border-none active:ring-1  shadow-sm"
                                     placeholder="3446101010"
                                     value={telPersonal}
@@ -272,6 +281,7 @@ const ListadoProveedores = () => {
 
                                 <input
                                     name="telEmpresa"
+                                    autoComplete="off"
                                     className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 rounded-md border-none active:ring-1 shadow-sm"
                                     placeholder="3446101010"
                                     value={telEmpresa}
@@ -310,11 +320,18 @@ const ListadoProveedores = () => {
 
                                 <input
                                     name="empresa"
+                                    autoComplete="off"
+                                    list="empresas"
                                     className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300  uppercase w-full p-2 rounded-md border-none active:ring-1 shadow-sm"
                                     placeholder="Mercadolibre"
                                     value={empresa}
                                     onChange={onChange}
                                 />
+                                <datalist id="empresas">
+                                    {proveedores.map(proveedor =>
+                                        <option key={proveedor._id} value={proveedor.empresa}></option>
+                                    )}
+                                </datalist>
                             </div>
                             <div>
                                 <label htmlFor="telpersonal" className="text-gray-800 dark:text-gray-300 font-bold font">Tel. Personal</label>

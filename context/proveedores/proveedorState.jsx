@@ -97,8 +97,7 @@ const ProveedorState = ({children}) => {
         let filtrados = []
         state.proveedores.map(proveedor => {
             const {datos} = proveedor
-            console.log(datos)
-            const incluyeTodas = () => {
+                const incluyeTodas = () => {
                 return !palabras
                         .split(' ')
                         .some(p => !datos.includes(p))    //.some() comprueba si al menos 1 elemento cumple con la concidion.

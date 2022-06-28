@@ -435,7 +435,7 @@ const Formulario = ({productoEditar}) => {
                                 onChange={onChange}
                             />
                             <datalist id="nombres">
-                                {productos.map(producto =>
+                                {productos.map(producto => producto.nombre !== productoEditar?.nombre &&
                                     <option key={producto._id} value={producto.nombre}></option>
                                 )}
                             </datalist>
@@ -454,7 +454,7 @@ const Formulario = ({productoEditar}) => {
                                 onChange={onChange}
                             />
                             <datalist id="marcas">
-                                {productos.map(producto =>
+                                {productos.map(producto => producto.marca !== "" && producto.marca !== productoEditar?.marca &&
                                     <option key={producto._id} value={producto.marca}></option>
                                 )}
                             </datalist>
@@ -473,7 +473,7 @@ const Formulario = ({productoEditar}) => {
                                 onChange={onChange}
                             />
                             <datalist id="modelos">
-                                {productos.map(producto =>
+                                {productos.map(producto => producto.modelo !== "" && producto.marca !== productoEditar?.marca &&
                                     <option key={producto._id} value={producto.modelo}></option>
                                 )}
                             </datalist>

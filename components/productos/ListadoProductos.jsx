@@ -200,7 +200,7 @@ const ListadoProductos = () => {
                 <th>GARANTÍA</th>
                 <th onClick={() => ordenarPrecio()}>CONTADO</th>
                 <th onClick={() => ordenarPrecio()}>AHORA 12</th>
-                <th className="md:rounded-tr-lg">ACCIONES</th>
+                <th className="md:rounded-tr-lg w-40">ACCIONES</th>
             </tr>
         </thead>
         <tbody>
