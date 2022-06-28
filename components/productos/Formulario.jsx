@@ -425,6 +425,7 @@ const Formulario = ({productoEditar}) => {
                             <input
                                 type="text"
                                 autoComplete="off"
+                                list="nombres"
                                 className="mt-2 uppercase block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="nombre"
                                 placeholder="Ej. Pendrive 8Gb 3.0"
@@ -433,12 +434,18 @@ const Formulario = ({productoEditar}) => {
                                 value={nombre}
                                 onChange={onChange}
                             />
+                            <datalist id="nombres">
+                                {productos.map(producto =>
+                                    <option key={producto._id} value={producto.nombre}></option>
+                                )}
+                            </datalist>
                         </div>
                         <div className="mb-4">
                             <label htmlFor="marca" className="text-gray-800 dark:text-gray-300 font-bold font ">Marca</label>
                             <input
                                 type="text"
                                 autoComplete="off"
+                                list="marcas"
                                 className="mt-2 uppercase block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="marca"
                                 placeholder="Ej. Kingston"
@@ -446,12 +453,18 @@ const Formulario = ({productoEditar}) => {
                                 value={marca}
                                 onChange={onChange}
                             />
+                            <datalist id="marcas">
+                                {productos.map(producto =>
+                                    <option key={producto._id} value={producto.marca}></option>
+                                )}
+                            </datalist>
                         </div>
                         <div className="mb-4">
                             <label htmlFor="modelo" className="text-gray-800 dark:text-gray-300 font-bold ">Modelo</label>
                             <input
                                 type="text"
                                 autoComplete="off"
+                                list="modelos"
                                 className="mt-2 uppercase block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                 id="modelo"
                                 placeholder="DTKN/64GB"
@@ -459,6 +472,11 @@ const Formulario = ({productoEditar}) => {
                                 value={modelo}
                                 onChange={onChange}
                             />
+                            <datalist id="modelos">
+                                {productos.map(producto =>
+                                    <option key={producto._id} value={producto.modelo}></option>
+                                )}
+                            </datalist>
                         </div>
                         
                         <div className="mb-4">
