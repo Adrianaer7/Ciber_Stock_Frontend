@@ -4,6 +4,7 @@ import proveedorContext from "../../context/proveedores/proveedorContext";
 import authContext from "../../context/auth/authContext";
 import Image from "next/image";
 import Swal from "sweetalert2";
+import PDFFile from "../../pdf/PDFFile";
 
 const ListadoProveedores = () => {
 
@@ -31,7 +32,7 @@ const ListadoProveedores = () => {
     const [ordenEmpresa, setOrdenEmpresa] = useState(false)
     const [crearNuevo, setCrearNuevo] = useState(false)
     const [editar, setEditar] = useState(proveedorSeleccionado ? true : false)
-    
+    const elNombre = "Adrian"
     const [proveedor, setProveedor] = useState({
         nombre: "",
         empresa: "",
@@ -176,7 +177,7 @@ const ListadoProveedores = () => {
         
         if(!proveedorSeleccionado) {
             agregarProveedor(proveedor)
-            await setCrearNuevo(!crearNuevo)
+            setCrearNuevo(!crearNuevo)
             agregadoExito()
         } else { 
             proveedor._id = proveedorSeleccionado._id
@@ -197,6 +198,7 @@ const ListadoProveedores = () => {
     <>   
         <div className="absolute lg:relative min-w-full m-0">
             <h1 className="font-black dark:text-green-500 text-3xl sm:text-4xl text-green-900 text-center mt-2 sm:mt-0 mb-4 ">Listado de proveedores</h1>
+
             <div className="flex flex-col-reverse sm:flex-row justify-between ">
                 <div className={`${focus && "ring-2"} relative my-auto p-2 w-full sm:w-2/6 xl:w-2/6 shadow dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 bg-white rounded-md md:rounded-lg`}>
                     <input 
@@ -389,6 +391,7 @@ const ListadoProveedores = () => {
                             <Proveedor
                                 key={proveedor._id}
                                 proveedor={proveedor}
+                                crearNuevo={crearNuevo}
                             />
                         ))}
                     </>)
@@ -399,6 +402,7 @@ const ListadoProveedores = () => {
                         <Proveedor
                             key={proveedor._id}
                             proveedor={proveedor}
+                            crearNuevo={crearNuevo}
                         />
                     ))}
                 </>

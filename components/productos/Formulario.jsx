@@ -185,7 +185,7 @@ const Formulario = ({productoEditar}) => {
     }
 
     //! ENVIAR FORMULARIO
-    const onSubmit = e => {
+    const onSubmit = async e => {
         e.preventDefault()
         //Validar nombre
         if(nombre === ""){
@@ -337,72 +337,75 @@ const Formulario = ({productoEditar}) => {
             
         }
        
-
-        //si es nuevo producto
-        if(!productoEditar) {
-            if(cantidad) {
-                producto.disponibles = cantidad
-            }
-            if(valorDeVenta) {
-                producto.precio_venta = valorDeVenta
-                producto.precio_venta_conocidos = valorDeVentaConocidos
-                producto.precio_venta_efectivo = valorDeVentaEfectivo
-                producto.precio_venta_tarjeta = valorDeVentaTarjeta
-            }
-            agregarProducto(producto, cantidad, desdeForm)
-            setCantidad("")
-            setProveedorSelect("")
-            setProducto({
-                nombre: "",
-                marca: "", 
-                modelo: "", 
-                codigo: "",
-                barras: "",
-                rubro: "",
-                proveedor: "",
-                todos_proveedores: [],
-                factura: "",
-                garantia: "",
-                precio_venta: 0,
-                precio_venta_conocidos: 0,
-                precio_venta_efectivo: 0,
-                precio_venta_tarjeta: 0,
-                precio_venta_ahoraDoce: 0,
-                precio_venta_cuotas: 0,
-                precio_compra_dolar: "",
-                fecha_compra: hoy, 
-                precio_compra_peso: "", 
-                valor_dolar_compra: "", 
-                notas: "",
-                faltante: false,
-                limiteFaltante: "",
-                añadirFaltante: false
-                })
-            traerProductos()
-            traerCodigos()
-            alertaNuevoCorrecto()
-        } else {
-            //si hay que editar
-            if(cantidad && disponibles) {
-                producto.disponibles = Number(producto.disponibles) + Number(cantidad)
-            } else {
-                if(cantidad && !disponibles) {
-                    producto.disponibles = Number(cantidad)
+        try {
+            //si es nuevo producto
+            if(!productoEditar) {
+                if(cantidad) {
+                    producto.disponibles = cantidad
                 }
+                if(valorDeVenta) {
+                    producto.precio_venta = valorDeVenta
+                    producto.precio_venta_conocidos = valorDeVentaConocidos
+                    producto.precio_venta_efectivo = valorDeVentaEfectivo
+                    producto.precio_venta_tarjeta = valorDeVentaTarjeta
+                }
+                await agregarProducto(producto, cantidad, desdeForm)
+                setCantidad("")
+                setProveedorSelect("")
+                setProducto({
+                    nombre: "",
+                    marca: "", 
+                    modelo: "", 
+                    codigo: "",
+                    barras: "",
+                    rubro: "",
+                    proveedor: "",
+                    todos_proveedores: [],
+                    factura: "",
+                    garantia: "",
+                    precio_venta: 0,
+                    precio_venta_conocidos: 0,
+                    precio_venta_efectivo: 0,
+                    precio_venta_tarjeta: 0,
+                    precio_venta_ahoraDoce: 0,
+                    precio_venta_cuotas: 0,
+                    precio_compra_dolar: "",
+                    fecha_compra: hoy, 
+                    precio_compra_peso: "", 
+                    valor_dolar_compra: "", 
+                    notas: "",
+                    faltante: false,
+                    limiteFaltante: "",
+                    añadirFaltante: false
+                    })
+                traerProductos()
+                await traerCodigos()
+                alertaNuevoCorrecto()
+            } else {
+                //si hay que editar
+                if(cantidad && disponibles) {
+                    producto.disponibles = Number(producto.disponibles) + Number(cantidad)
+                } else {
+                    if(cantidad && !disponibles) {
+                        producto.disponibles = Number(cantidad)
+                    }
+                }
+                if(valorDeVenta) {
+                    producto.precio_venta = valorDeVenta
+                    producto.precio_venta_conocidos = valorDeVentaConocidos
+                    producto.precio_venta_efectivo = valorDeVentaEfectivo
+                    producto.precio_venta_tarjeta = valorDeVentaTarjeta
+                }
+                producto._id = productoEditar._id
+                await editarProducto(producto, cantidad, desdeForm)
+                setCantidad("")
+                setProveedorSelect(producto.proveedor)
+                traerProductos()
+                await traerCodigos()
+                alertaEditarCorrecto()
             }
-            if(valorDeVenta) {
-                producto.precio_venta = valorDeVenta
-                producto.precio_venta_conocidos = valorDeVentaConocidos
-                producto.precio_venta_efectivo = valorDeVentaEfectivo
-                producto.precio_venta_tarjeta = valorDeVentaTarjeta
-            }
-            producto._id = productoEditar._id
-            editarProducto(producto, cantidad, desdeForm)
-            setCantidad("")
-            setProveedorSelect(producto.proveedor)
-            traerProductos()
-            traerCodigos()
-            alertaEditarCorrecto()
+        } catch (error) {
+            console.log(error)
         }
     }
 
