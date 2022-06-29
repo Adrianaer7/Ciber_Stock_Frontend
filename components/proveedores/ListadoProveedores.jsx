@@ -197,8 +197,8 @@ const ListadoProveedores = () => {
   return (
     <>   
         <div className="absolute lg:relative min-w-full m-0">
+            
             <h1 className="font-black dark:text-green-500 text-3xl sm:text-4xl text-green-900 text-center mt-2 sm:mt-0 mb-4 ">Listado de proveedores</h1>
-
             <div className="flex flex-col-reverse sm:flex-row justify-between ">
                 <div className={`${focus && "ring-2"} relative my-auto p-2 w-full sm:w-2/6 xl:w-2/6 shadow dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 bg-white rounded-md md:rounded-lg`}>
                     <input 
@@ -230,6 +230,11 @@ const ListadoProveedores = () => {
                 </button>
             </div> 
         </div>
+            {/*<div>
+                <PDFFile>
+                    {proveedor}
+                </PDFFile>
+            </div>*/}
             {crearNuevo && (
                 <div className="dark:bg-gray-900 py-3 bg-white rounded-lg mt-6 mx-auto">
 

@@ -56,7 +56,7 @@ const Proveedor = ({proveedor, crearNuevo}) => {
             <td className="p-1 dark:text-gray-50 text-center">{telPersonal ? telPersonal : "-"}</td>
             <td className="p-1 dark:text-gray-50 text-center">{telEmpresa ? telEmpresa : "-"}</td>
 
-            <td className="p-1 w-40 mt-2  ">
+            <td className="p-1 w-40 mt-2">
                 <div className="flex justify-evenly">
                     <div className={`${crearNuevo && "hidden"} hover:bg-gray-200 dark:hover:bg-gray-600 p-1 pb-0 items-center rounded-md hover:cursor-pointer`}>
 
