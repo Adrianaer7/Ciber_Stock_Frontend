@@ -5,39 +5,61 @@ function PDFFile({children}) {
         pagina: {
             backgroundColor: "white",
             color: "black",
+            
         },
-        seccion: {
+        general: {
             marginBottom: 10,
             marginTop: 20,
             paddingHorizontal: 35,
         },
-        header: {
-          fontSize: 24, 
-          
+          header: {
+            backgroundColor: "#f1f5f9",
+            fontSize: 36,
+            flexDirection: "row",
+            marginBottom: 60,
+            height: "100"
         },
-        texto: {
-            fontSize: 12,
-          },
+        fecha: {
+          fontSize: 13,
+          textAlign: "right",
+        },
+        cuerpo: {
+          fontSize: 13,
+          marginTop: 40
+        },
+        cajonFirma: {
+        },
+        firma: {
+          marginTop: "200",
+          fontSize: 13,
+          marginBottom: "100"
+        }
         
     });
   
     const MyDoc = () => (
-            
-            <Document>
-            
-                <Page size="A4" style={estilos.pagina}>
-                    <View style={estilos.seccion}>
-                        <Text style={estilos.header}>RECIBO</Text>
-                        
-                    </View>
-                   <View style={estilos.seccion}>
-                        <Text style={estilos.texto}>Recibí de {children.nombre} la suma de $760 en concepto de aksldksdjfksdfj</Text>
+      <Document>
+        <Page size="A4" style={estilos.pagina}>
+            <View style={estilos.general}>
+              <View style={estilos.header}>
+                <Text style={{marginTop: "30", marginLeft: "5"}}>RECIBO</Text>                      
+              </View>
+              <View>
+                <Text style={estilos.fecha}>23 de Septiembre de 2022</Text>
+              </View>
+              <View>
+                <Text style={estilos.cuerpo}>Recibí de PEPE la suma de $760 (pesos) en concepto de ascilo a PERSONA por el mes de MES/AÑO </Text>
 
-                   </View>
-            
-                </Page>
-            </Document>
+              </View>
+              <View style={estilos.cajonFirma}>
+                <Text style={estilos.firma}>Firma y aclaracion</Text>
+              </View>
+            </View>
+        </Page>
+      </Document>
     )
+
+
     return (
         <div>
             <PDFDownloadLink document={<MyDoc />} fileName={`Recibo ${children.nombre}`}>
