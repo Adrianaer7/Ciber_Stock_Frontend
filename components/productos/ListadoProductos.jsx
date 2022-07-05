@@ -38,6 +38,7 @@ const ListadoProductos = () => {
     } = productosContext
 
     const [filtrando, setFiltrando] = useState("")    //contiene lo que voy escribiendo
+    const [conStock, setConStock] = useState(false)
     const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
     const [focus, setFocus] = useState(false)   //activar el ring en el buscador
     const [ordenCodigo, setOrdenCodigo] = useState(false)
@@ -129,10 +130,13 @@ const ListadoProductos = () => {
         }
     }, [filtrando])
 
+    useEffect(() => {
+        onChangeFiltro()
+    }, [conStock])
 
     const onChangeFiltro = e => {
         setFiltrando(e.target.value)
-        filtro(e.target.value.toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))   //el normalice separa la tilde de la letra. el replace reemplaza la tilde por "", osea lo elimina
+        filtro(e.target.value.toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), conStock)   //el normalice separa la tilde de la letra. el replace reemplaza la tilde por "", osea lo elimina
     }
 
     const ordenarCodigo = () => {
@@ -159,33 +163,48 @@ const ListadoProductos = () => {
 
     <div className="min-w-full top-0 m-0">
         <h1 className="font-black dark:text-blue-300 text-3xl sm:text-4xl text-blue-900 text-center mt-2 sm:mt-0 mb-4 ">Listado de productos</h1>
-        <div className="flex flex-col-reverse sm:flex-row justify-between mx-1 md:mx-0">
-            <div className={`${focus && "ring-2"} relative my-auto p-2 w-full sm:w-2/6 xl:w-2/6 shadow dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 bg-white rounded-md md:rounded-lg`}>
-                <input 
-                    type="text" 
-                    className="w-10/12 xl:w-11/12 p-2 focus:outline-none dark:bg-transparent" //outline-none le quita el borde default, focus-ring le pone borde
-                    placeholder="Buscar algún producto"
-                    onChange={onChangeFiltro}
-                    value={filtrando}
-                    onFocus={()=> setFocus(true)}
-                    onBlur={()=> setFocus(false)}
-                />
-                <div className="absolute mr-2 -inset-y-1 flex right-0 opacity-40">
-                    <Image
-                        src={`${modo && escribiendo ? "/close_dark.svg" : !modo && escribiendo ? "/close_light.svg": modo && !escribiendo ? "/search_light.svg" : "/search_dark.svg"}`}
-                        alt="Cerrar"
-                        width={30} 
-                        height={30}
-                        priority={true}
-                        className="cursor-pointer"
-                        onClick={escribiendo ? () => setFiltrando("") : null}
+        <div className="flex justify-between">
+
+            <div className="flex flex-col-reverse gap-1 sm:flex-row w-full sm:w-2/6 xl:w-3/6 mx-1 md:mx-0">
+                <div className={`${focus && "ring-2"} relative my-auto p-2 w-full sm:w-2/6 xl:w-full shadow dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 bg-white rounded-md md:rounded-lg`}>
+                    <input 
+                        type="text" 
+                        className="w-10/12 xl:w-11/12 p-2 focus:outline-none dark:bg-transparent" //outline-none le quita el borde default, focus-ring le pone borde
+                        placeholder="Buscar algún producto"
+                        onChange={onChangeFiltro}
+                        value={filtrando}
+                        onFocus={()=> setFocus(true)}
+                        onBlur={()=> setFocus(false)}
                     />
-                </div> 
-            </div>
-            
-            {dolarBD && <p className=" p-4 pl-0 my-auto font-bold dark:text-white">Dolar hoy: <span className="text-red-600">${dolarBD}</span></p>}
-            
-        </div>    
+                    
+                    <div className="absolute mr-2 -inset-y-1 flex right-0 opacity-40">
+                        <Image
+                            src={`${modo && escribiendo ? "/close_dark.svg" : !modo && escribiendo ? "/close_light.svg": modo && !escribiendo ? "/search_light.svg" : "/search_dark.svg"}`}
+                            alt="Cerrar"
+                            width={30} 
+                            height={30}
+                            priority={true}
+                            className="cursor-pointer"
+                            onClick={escribiendo ? () => setFiltrando("") : null}
+                        />
+                    </div> 
+                </div>
+                <div className="my-auto whitespace-nowrap ">
+                    <label className="flex">
+                    
+                        <input
+                            type="checkbox"
+                            onClick={() => setConStock(!conStock)}
+                        />
+                        <div className="ml-2">Con stock</div>
+                    </label>
+                    
+                </div>
+                
+                
+            </div>    
+                {dolarBD && <p className=" p-4 pl-0 my-auto font-bold whitespace-nowrap dark:text-white ">Dolar hoy: <span className="text-red-600">${dolarBD}</span></p>}
+        </div>
     </div>
     {spinner ? <Spinner/> : (
 
