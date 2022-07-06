@@ -404,37 +404,45 @@ const ProductoState = ({children}) => {
 
 
     const traerDolarBD = async () => {
-        const {data} = await clienteAxios.get("/api/dolares")
-        if(!data.dolar[0]) {  //si no existe ningun dolar, creo uno trayendolo de la api
-            traerDolarAPI()
-        }
-        if(data.dolar[0]) {
-            const {dolar} = data
-            if(dolar[0].automatico) {   //si ya existe el un dolar automatico creado, le envio el nuevo valor
+        try {
+            const {data} = await clienteAxios.get("/api/dolares")
+            if(!data.dolar[0]) {  //si no existe ningun dolar, creo uno trayendolo de la api
                 traerDolarAPI()
-            } else {    //si existe un dolar pero no es automatico, solamente me traigo el valor que haya en la bd
-                dispatch({
-                    type: TRAER_DOLAR_BD,
-                    payload: data.dolar[0].precio
-                })
             }
+            if(data.dolar[0]) {
+                const {dolar} = data
+                if(dolar[0].automatico) {   //si ya existe el un dolar automatico creado, le envio el nuevo valor
+                    traerDolarAPI()
+                } else {    //si existe un dolar pero no es automatico, solamente me traigo el valor que haya en la bd
+                    dispatch({
+                        type: TRAER_DOLAR_BD,
+                        payload: data.dolar[0].precio
+                    })
+                }
+            }
+        } catch (error) {
+            console.log(error)
         }
         
     }
 
     const editarDolarDB = async (dolarManual, automatico) => {
-        if(!automatico) {
-            const {data} = await clienteAxios.put("/api/dolares", {dolarManual, automatico})
-            dispatch({
-                type: EDITAR_DOLAR,
-                payload: {
-                    precio: data.dolar.precio,
-                    automatico
-                }
-            })
-        } else {
-            await clienteAxios.put("/api/dolares", {automatico})
-            traerDolarAPI()
+        try {
+            if(!automatico) {
+                const {data} = await clienteAxios.put("/api/dolares", {dolarManual, automatico})
+                dispatch({
+                    type: EDITAR_DOLAR,
+                    payload: {
+                        precio: data.dolar.precio,
+                        automatico
+                    }
+                })
+            } else {
+                await clienteAxios.put("/api/dolares", {automatico})
+                traerDolarAPI()
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
 

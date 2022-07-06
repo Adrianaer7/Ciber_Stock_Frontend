@@ -232,11 +232,26 @@ const ListadoProductos = () => {
                 
             </div>
                 {dolarBD && 
-                    <p className=" p-4 pl-0 my-auto text-right w-auto font-bold whitespace-nowrap dark:text-white">
-                        {dolarAutomatico ? (<p>Dolar hoy: <span className="hover:cursor-pointer text-red-600" onClick={() => setDolarAutomatico(!dolarAutomatico)}>${dolarBD}</span>{elDolarAutomatico == false && <button className="pl-1" onClick={() => eliminarDolarManual()}>X</button>}</p>) : (
+                    <div className=" p-4 pl-0 my-auto text-right w-auto font-bold whitespace-nowrap dark:text-white">
+                        {dolarAutomatico ? 
+                            (<p>Dolar hoy: 
+                                <span 
+                                    className="hover:cursor-pointer text-red-600 mr-1" 
+                                    onClick={() => setDolarAutomatico(!dolarAutomatico)}
+                                > ${dolarBD}
+                                </span>
+                                {elDolarAutomatico == false && 
+                                    <button 
+                                        className={`dark:bg-gray-700 dark:hover:bg-gray-600 bg-gray-200 hover:bg-gray-300 rounded-full px-2`} 
+                                        onClick={() => eliminarDolarManual()}
+                                    >
+                                        X
+                                    </button>}
+                             </p>) 
+                        : (
                             <div className="flex justify-end">
                             
-                                <p className="mr-1">Dolar hoy: $</p>
+                                <p className="mr-1">Dolar hoy: $ </p>
                                 <form onSubmit={onSubmit} className="w-1/4" >
                                     <input
                                         type="tel"
@@ -250,7 +265,7 @@ const ListadoProductos = () => {
                                 </form>
                             </div>
                         )}
-                    </p>   
+                    </div>   
                    
                     
                 }

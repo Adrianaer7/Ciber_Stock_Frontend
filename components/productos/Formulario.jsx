@@ -34,7 +34,6 @@ const Formulario = ({productoEditar}) => {
         valorDeVentaTarjeta,
         limpiarPrecioVenta, 
         precioVenta,
-        traerDolarAPI, 
         traerDolarBD,
     } = productosContext
    
@@ -76,7 +75,6 @@ const Formulario = ({productoEditar}) => {
     useEffect(() => {
         if(usuario) {   
             traerDolarBD()
-            traerDolarAPI()
             traerProveedores()
             traerCodigos()
             traerCompras()
@@ -383,10 +381,10 @@ const Formulario = ({productoEditar}) => {
                 alertaNuevoCorrecto()
             } else {
                 //si hay que editar
-                if(cantidad && disponibles) {
+                if(cantidad && disponibles) {   //si ya hay stock y quiero agregar mas
                     producto.disponibles = Number(producto.disponibles) + Number(cantidad)
                 } else {
-                    if(cantidad && !disponibles) {
+                    if(cantidad && !disponibles) {  //si no hay stock
                         producto.disponibles = Number(cantidad)
                     }
                 }
