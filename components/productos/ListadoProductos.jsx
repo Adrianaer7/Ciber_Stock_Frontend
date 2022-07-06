@@ -19,9 +19,12 @@ const ListadoProductos = () => {
         limpiarSeleccionado, 
         filtro,
         filtrados, 
-        traerDolarAPI, 
-        traerDolarBD, 
+        crearDolarDB,
+        traerDolarBD,
+        editarDolarDB,
         dolarBD, 
+        eliminarDolarAutomatico,
+        elDolarAutomatico,
         editarProductos, 
         orderCodigo, 
         orderCodigoFiltrados, 
@@ -41,7 +44,6 @@ const ListadoProductos = () => {
     const [conStock, setConStock] = useState(false)
     const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
     const [focus, setFocus] = useState(false)   //activar el ring en el buscador
-    const [dolarAutomatico, setDolarAutomatico] = useState(true)
     const [spinner, setSpinner] = useState(true)
     const [ordenCodigo, setOrdenCodigo] = useState(false)
     const [ordenNombre, setOrdenNombre] = useState(false)
@@ -49,9 +51,12 @@ const ListadoProductos = () => {
     const [ordenModelo, setOrdenModelo] = useState(false)
     const [ordenDisponibles, setOrdenDisponibles] = useState(false)
     const [ordenPrecio, setOrdenPrecio] = useState(false)
-
-    
-
+    const [dolarAutomatico, setDolarAutomatico] = useState(true)    //pasa a false cuando lo quiero editar
+    const [dolarManual, setDolarManual] = useState({
+        precio: "",
+    })
+    let automatico
+    const {precio} = dolarManual
 
     useEffect(() => {
         traerProductos()
@@ -64,7 +69,6 @@ const ListadoProductos = () => {
     useEffect(() => {
         limpiarSeleccionado()
         traerDolarBD()
-        traerDolarAPI()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
@@ -139,6 +143,7 @@ const ListadoProductos = () => {
         setFiltrando(e.target.value)
     }
 
+
     const ordenarCodigo = () => {
         setOrdenCodigo(!ordenCodigo)
     }
@@ -156,6 +161,29 @@ const ListadoProductos = () => {
     }
     const ordenarDisponibles = () => {
         setOrdenDisponibles(!ordenDisponibles)
+    }
+
+    const onChange = e => {
+        setDolarManual({
+            ...dolarManual,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const eliminarDolarManual = () => {
+        editarDolarDB(dolarManual,automatico= true) //la funcion toma 2 valores, le paso dolarManual para completar los valores
+        setDolarManual({    //
+            precio: ""
+        })
+    }
+
+    const onSubmit = async e => {
+        e.preventDefault()
+        await editarDolarDB(dolarManual, automatico = false)    //envio manualmente el dolar
+        setDolarManual({
+            precio: ""
+        })
+        setDolarAutomatico(!dolarAutomatico)    //oculto el input de dolar
     }
     
   return (
@@ -205,14 +233,18 @@ const ListadoProductos = () => {
             </div>
                 {dolarBD && 
                     <p className=" p-4 pl-0 my-auto text-right w-auto font-bold whitespace-nowrap dark:text-white">
-                        {dolarAutomatico ? (<p>Dolar hoy: <span className="hover:cursor-pointer text-red-600" onClick={() => setDolarAutomatico(!dolarAutomatico)}>${dolarBD}</span></p>) : (
+                        {dolarAutomatico ? (<p>Dolar hoy: <span className="hover:cursor-pointer text-red-600" onClick={() => setDolarAutomatico(!dolarAutomatico)}>${dolarBD}</span>{elDolarAutomatico == false && <button className="pl-1" onClick={() => eliminarDolarManual()}>X</button>}</p>) : (
                             <div className="flex justify-end">
                             
                                 <p className="mr-1">Dolar hoy: $</p>
-                                <form className="w-1/4" >
+                                <form onSubmit={onSubmit} className="w-1/4" >
                                     <input
                                         type="tel"
+                                        name="precio"
+                                        id="precio"
                                         className={`w-full  dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 bg-white rounded-sm md:rounded-sm`}
+                                        value={precio}
+                                        onChange={onChange}
                                     />
                                             
                                 </form>

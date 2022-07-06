@@ -37,6 +37,8 @@ import {
     TRAER_DOLAR_BD,
     OBTENER_GARANTIAS,
     AGREGAR_GARANTIA,
+    CREAR_DOLAR,
+    EDITAR_DOLAR,
 } from "../../types";
 
 const ProductoState = ({children}) => {
@@ -56,6 +58,7 @@ const ProductoState = ({children}) => {
         valorDeVentaEfectivo: 0,
         valorDeVentaTarjeta: 0,
         dolarBD: "",
+        elDolarAutomatico: null
     }
 
     const [state, dispatch] = useReducer(productoReducer, initialState)
@@ -375,31 +378,63 @@ const ProductoState = ({children}) => {
         })
     }
 
+
     const traerDolarAPI = async () => {
         try {
             const url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
             const respuesta = await fetch(url)
             const resultado = await respuesta.json()
-            const resultado2 = Number((resultado[0].casa.venta).replace(",", "."))
-            const valor = {precio: Number((resultado[0].casa.venta).replace(",","."))}
-            await clienteAxios.post("/api/dolares", valor)
+            const valor = {precio: Number((resultado[0].casa.venta).replace(",",".")), automatico: true}
+            const {data} = await clienteAxios.post("/api/dolares", valor)
+            if(data.dolar) {    //cuando se crea el dolar automatico por 1° vez me devuelve el objeto dolar
+                dispatch({
+                    type: CREAR_DOLAR,
+                    payload: data.dolar.precio
+                })
+            } else {    //si ya está creado el dolar automatico, y tiene el mismo valor que el que le quiero pasar, no me devuelve "dolar", sino el precio
+                dispatch({
+                    type: CREAR_DOLAR,
+                    payload: data.precio
+                })
+            }
         } catch (error) {
             console.log(error)
         }
     }
 
+
     const traerDolarBD = async () => {
-        try {
-            const {data} = await clienteAxios.get("/api/dolares")
-            if(data.dolar.length !== 0) {
-                const dolar = data.dolar[0].precio
+        const {data} = await clienteAxios.get("/api/dolares")
+        if(!data.dolar[0]) {  //si no existe ningun dolar, creo uno trayendolo de la api
+            traerDolarAPI()
+        }
+        if(data.dolar[0]) {
+            const {dolar} = data
+            if(dolar[0].automatico) {   //si ya existe el un dolar automatico creado, le envio el nuevo valor
+                traerDolarAPI()
+            } else {    //si existe un dolar pero no es automatico, solamente me traigo el valor que haya en la bd
                 dispatch({
-                type: TRAER_DOLAR_BD,
-                payload: dolar
-            })
+                    type: TRAER_DOLAR_BD,
+                    payload: data.dolar[0].precio
+                })
             }
-        } catch (error) {
-            console.log(error)
+        }
+        
+    }
+
+    const editarDolarDB = async (dolarManual, automatico) => {
+        if(!automatico) {
+            const {data} = await clienteAxios.put("/api/dolares", {dolarManual, automatico})
+            dispatch({
+                type: EDITAR_DOLAR,
+                payload: {
+                    precio: data.dolar.precio,
+                    automatico
+                }
+            })
+        } else {
+            await clienteAxios.put("/api/dolares", {automatico})
+            traerDolarAPI()
         }
     }
 
@@ -479,8 +514,8 @@ const ProductoState = ({children}) => {
 
     
     
-    const descargarPDF = async => {
-        const {data} = clienteAxios.get("api/descargas")
+    const descargarPDF = async () => {
+        const {data} = await clienteAxios.get("api/descargas")
         console.log(data)
     }
 
@@ -506,6 +541,7 @@ const ProductoState = ({children}) => {
                 valorDeVentaEfectivo: state.valorDeVentaEfectivo,
                 valorDeVentaTarjeta: state.valorDeVentaTarjeta,
                 dolarBD: state.dolarBD,
+                elDolarAutomatico: state.elDolarAutomatico,
                 agregarProducto,
                 traerProductos,
                 traerRubros,
@@ -524,6 +560,7 @@ const ProductoState = ({children}) => {
                 limpiarPrecioVenta,
                 traerDolarAPI,
                 traerDolarBD,
+                editarDolarDB,
                 editarProductos,
                 orderCodigo,
                 orderCodigoFiltrados,

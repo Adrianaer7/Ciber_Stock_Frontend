@@ -33,6 +33,8 @@ import {
     ORDENAR_MODELO_FILTRADO,
     OBTENER_GARANTIAS,
     AGREGAR_GARANTIA,
+    CREAR_DOLAR,
+    EDITAR_DOLAR,
 } from "../../types"
 
 export default function productoReducer(state, action) {
@@ -155,7 +157,20 @@ export default function productoReducer(state, action) {
         case TRAER_DOLAR_BD:
             return {
                 ...state,
-                dolarBD: action.payload
+                dolarBD: action.payload,
+                elDolarAutomatico: false
+            }
+        case CREAR_DOLAR:
+            return {
+                ...state,
+                dolarBD: action.payload,
+                elDolarAutomatico: true
+            }
+        case EDITAR_DOLAR:
+            return {
+                ...state,
+                dolarBD: action.payload.precio,
+                elDolarAutomatico: action.payload.automatico
             }
         case LIMPIAR_APP: 
             return {
