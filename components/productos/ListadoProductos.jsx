@@ -41,13 +41,14 @@ const ListadoProductos = () => {
     const [conStock, setConStock] = useState(false)
     const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
     const [focus, setFocus] = useState(false)   //activar el ring en el buscador
+    const [dolarAutomatico, setDolarAutomatico] = useState(true)
+    const [spinner, setSpinner] = useState(true)
     const [ordenCodigo, setOrdenCodigo] = useState(false)
     const [ordenNombre, setOrdenNombre] = useState(false)
     const [ordenMarca, setOrdenMarca] = useState(false)
     const [ordenModelo, setOrdenModelo] = useState(false)
     const [ordenDisponibles, setOrdenDisponibles] = useState(false)
     const [ordenPrecio, setOrdenPrecio] = useState(false)
-    const [spinner, setSpinner] = useState(true)
 
     
 
@@ -131,10 +132,7 @@ const ListadoProductos = () => {
     }, [filtrando])
 
     useEffect(() => {
-        if(filtrando) {
-            filtro(filtrando.toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), conStock)   //el normalice separa la tilde de la letra. el replace reemplaza la tilde por "", osea lo elimina
-
-        }
+        filtro(filtrando.toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), conStock)   //el normalice separa la tilde de la letra. el replace reemplaza la tilde por "", osea lo elimina
     }, [filtrando, conStock])
 
     const onChangeFiltro = e => {
@@ -198,14 +196,32 @@ const ListadoProductos = () => {
                             type="checkbox"
                             onClick={() => setConStock(!conStock)}
                         />
-                        <div className={`${modo && "text-white"} ml-2`}>Con stock</div>
+                        <div className="ml-2 dark:text-white">Con stock</div>
                     </label>
                     
                 </div>
                 
                 
-            </div>    
-                {dolarBD && <p className=" p-4 pl-0 my-auto font-bold whitespace-nowrap dark:text-white ">Dolar hoy: <span className="text-red-600">${dolarBD}</span></p>}
+            </div>
+                {dolarBD && 
+                    <p className=" p-4 pl-0 my-auto text-right w-auto font-bold whitespace-nowrap dark:text-white">
+                        {dolarAutomatico ? (<p>Dolar hoy: <span className="hover:cursor-pointer text-red-600" onClick={() => setDolarAutomatico(!dolarAutomatico)}>${dolarBD}</span></p>) : (
+                            <div className="flex justify-end">
+                            
+                                <p className="mr-1">Dolar hoy: $</p>
+                                <form className="w-1/4" >
+                                    <input
+                                        type="tel"
+                                        className={`w-full  dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 bg-white rounded-sm md:rounded-sm`}
+                                    />
+                                            
+                                </form>
+                            </div>
+                        )}
+                    </p>   
+                   
+                    
+                }
         </div>
     </div>
     {spinner ? <Spinner/> : (

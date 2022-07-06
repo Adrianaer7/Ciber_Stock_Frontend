@@ -269,30 +269,31 @@ const ProductoState = ({children}) => {
         let resultado
         if(palabras) {
             state.productos.map(producto => {
-                const {descripcion} = producto
-                
-                const incluyeTodas = () => {
-                    return !palabras
-                            .split(' ') //creo un array y a cada palabra la pongo en un array
-                            .some(p => !descripcion.includes(p))    //.some() devuelve true si encuentra algun producto que en la descripcion que tenga las mismas palabras que el array de palabras, sin importar el orden del array. Si !(niego) palabras y descripcion, me va a devolver true cuando encuentre el producto que contenga en la descripcion alguna de las palabras que hay en el array de palabras, sin importar el orden.
-                }
-                
-                resultado = incluyeTodas()
-                
-                   
-                
-                if(resultado) {
-                    filtrados = [...filtrados, producto]
+                const {descripcion, disponibles} = producto
+                if(stock) {
+                    const incluyeTodas = () => {
+                        return !palabras
+                                .split(' ') //creo un array y a cada palabra la pongo en un array
+                                .some(p => !descripcion.includes(p))    //.some() devuelve true si encuentra algun producto que en la descripcion que tenga las mismas palabras que el array de palabras, sin importar el orden del array. Si !(niego) palabras y descripcion, me va a devolver true cuando encuentre el producto que contenga en la descripcion alguna de las palabras que hay en el array de palabras, sin importar el orden.
+                    }
+                    if(disponibles > 0) {
+                        resultado = incluyeTodas()
+                        if(resultado) {
+                            filtrados = [...filtrados, producto]
+                        }
+                    }
                 } else {
-                    filtrados = []
+                    const incluyeTodas = () => {
+                        return !palabras
+                                .split(' ') //creo un array y a cada palabra la pongo en un array
+                                .some(p => !descripcion.includes(p))    //.some() devuelve true si encuentra algun producto que en la descripcion que tenga las mismas palabras que el array de palabras, sin importar el orden del array. Si !(niego) palabras y descripcion, me va a devolver true cuando encuentre el producto que contenga en la descripcion alguna de las palabras que hay en el array de palabras, sin importar el orden.
+                    }
+                    resultado = incluyeTodas()
+                    if(resultado) {
+                        filtrados = [...filtrados, producto]
+                    } 
                 }
             })
-        }
-        if(filtrados.length > 0 && stock) {
-            const conStock = state.filtrados.filter(filtrado => filtrado.disponibles > 0)
-            if(conStock) {
-                filtrados = conStock
-            }
         }
         
         try {
