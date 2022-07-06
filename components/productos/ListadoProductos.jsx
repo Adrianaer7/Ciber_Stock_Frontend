@@ -131,12 +131,14 @@ const ListadoProductos = () => {
     }, [filtrando])
 
     useEffect(() => {
-        onChangeFiltro()
-    }, [conStock])
+        if(filtrando) {
+            filtro(filtrando.toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), conStock)   //el normalice separa la tilde de la letra. el replace reemplaza la tilde por "", osea lo elimina
+
+        }
+    }, [filtrando, conStock])
 
     const onChangeFiltro = e => {
         setFiltrando(e.target.value)
-        filtro(e.target.value.toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), conStock)   //el normalice separa la tilde de la letra. el replace reemplaza la tilde por "", osea lo elimina
     }
 
     const ordenarCodigo = () => {
@@ -190,13 +192,13 @@ const ListadoProductos = () => {
                     </div> 
                 </div>
                 <div className="my-auto whitespace-nowrap ">
-                    <label className="flex">
+                    <label className="flex ml-2">
                     
                         <input
                             type="checkbox"
                             onClick={() => setConStock(!conStock)}
                         />
-                        <div className="ml-2">Con stock</div>
+                        <div className={`${modo && "text-white"} ml-2`}>Con stock</div>
                     </label>
                     
                 </div>
