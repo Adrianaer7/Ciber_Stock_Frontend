@@ -5,6 +5,7 @@ import Image from "next/image"
 import { useRouter } from "next/router"
 import authContext from "../../context/auth/authContext"
 import productoContext from "../../context/productos/productoContext"
+import favicon from "../../public/favicon.ico"
 
 const Layout = ({children, pagina}) => {
 
@@ -59,7 +60,8 @@ const Layout = ({children, pagina}) => {
     return (
         <div className="min-h-screen">
             <Head>
-                <title>Inventario - {pagina}</title>  
+                <title>Inventario - {pagina}</title>
+                <link rel="shortcut icon" type="image/x-icon" href={favicon.src}/> 
             </Head>
 
             <div className={`lg:flex md:min-h-screen sm:min-h-screen bg-gray-100 ${oscuro && "dark"}`}>

@@ -593,7 +593,7 @@ const Formulario = ({productoEditar}) => {
                                 <input
                                     type="tel"
                                     autoComplete="off"
-                                    className="mt-2 block w-full p-3 font-black rounded-md bg-gray-50 text-red-600 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white hover:cursor-pointer focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                                    className="mt-2 block w-full p-3 font-black rounded-md bg-gray-50 text-red-600 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-red-600 hover:cursor-pointer focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                     id="precio_venta"
                                     placeholder="$0"
                                     name="precio_venta"
