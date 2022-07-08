@@ -327,9 +327,8 @@ const Formulario = ({productoEditar}) => {
         } 
 
         if(proveedorSelect) {
-            const boolean = producto.todos_proveedores.map(provider => provider === proveedor ? true : false)
-            const prov = boolean.includes(true)
-            if(!prov || prov.length === 0) {
+            const proveedorIgual = producto.todos_proveedores.filter(provider => provider === proveedorSelect) //busca un proveedor agregado al producto que sea igual al que tengo en el select
+            if(!proveedorIgual.length) {   //si no es igual, lo agrega
                 producto.todos_proveedores.push(proveedorSelect)
             }
             
