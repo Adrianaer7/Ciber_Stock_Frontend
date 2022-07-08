@@ -217,9 +217,9 @@ const Formulario = ({productoEditar}) => {
             return
         }
         if(productos) { //si existe algun producto creado, hago un recorrido
-            const boolean = productos.filter(producto => producto.codigo == codigoCambiado) //obtengo solo el producto que tenga el mismo codigo que el que ingreso del form
-            if(boolean.length > 0) {    //si existe algun producto con ese codigo
-                let id = boolean[0]._id
+            const productoIgual = productos.find(producto => producto.codigo == codigoCambiado) //obtengo solo el producto que tenga el mismo codigo que el que ingreso del form
+            if(productoIgual) {    //si existe algun producto con ese codigo
+                let id = productoIgual._id
                 if(id !== productoEditar?._id) {  //si el id del producto no coincide con el del producto actual, es que quiero asignar un codigo que ya está ingresado
                     Swal.fire({
                         icon: 'error',
@@ -327,9 +327,9 @@ const Formulario = ({productoEditar}) => {
         } 
 
         if(proveedorSelect) {
-            const proveedorIgual = producto.todos_proveedores.filter(provider => provider === proveedorSelect) //busca un proveedor agregado al producto que sea igual al que tengo en el select
-            if(!proveedorIgual.length) {   //si no es igual, lo agrega
-                producto.todos_proveedores.push(proveedorSelect)
+            const proveedorIgual = producto.todos_proveedores.find(provider => provider === proveedorSelect) //busca un proveedor agregado al producto que sea igual al que tengo en el select
+            if(!proveedorIgual) {   //si no es igual, lo agrega
+                producto.todos_proveedores = [...producto.todos_proveedores, proveedorSelect]
             }
             
         }
