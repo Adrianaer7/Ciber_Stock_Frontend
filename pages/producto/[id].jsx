@@ -1,12 +1,11 @@
-import Layout from '../../components/layout/Layout';
-import VerProducto from '../../components/productos/VerProducto';
+import { useContext, useEffect, useState } from 'react';
 import clienteAxios from "../../config/axios"
 import authContext from '../../context/auth/authContext';
-import { useContext, useEffect, useState } from 'react';
 import productoContext from '../../context/productos/productoContext';
+import proveedorContext from "../../context/proveedores/proveedorContext"
+import Layout from '../../components/layout/Layout';
+import VerProducto from '../../components/productos/VerProducto';
 import NoEncontrado from '../../components/productos/NoEncontrado';
-
-
 
 
 export async function getServerSideProps({ params: {id} }) {
@@ -27,8 +26,12 @@ const Ver = ({producto}) => {
   const productosContext = useContext(productoContext)
   const {productoActual, traerGarantias, garantias} = productosContext 
 
+  const ProveedorContext = useContext(proveedorContext)
+  const {traerProveedores, proveedores} = ProveedorContext
+
   const [coincide, setCoincide] = useState(true)
   const [todasGarantias, setTodasGarantias] = useState([])
+
   //Autentico al usuario y agrego el producto actual al state
   useEffect(() => {
     usuarioAutenticado()
@@ -43,6 +46,7 @@ const Ver = ({producto}) => {
       setCoincide(false)
     }
     traerGarantias()
+    traerProveedores()
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usuario])
@@ -64,6 +68,7 @@ const Ver = ({producto}) => {
             key={producto._id}
             producto={producto}
             laGarantia={todasGarantias}
+            proveedores={proveedores}
           />
         </Layout>
       ): <NoEncontrado/>

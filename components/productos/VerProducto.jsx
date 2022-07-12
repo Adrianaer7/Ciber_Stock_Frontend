@@ -6,15 +6,14 @@ import authContext from "../../context/auth/authContext";
 import Swal from "sweetalert2";
 
 
-const VerProducto = ({producto, laGarantia}) => {
-    const router = useRouter()
+const VerProducto = ({producto, laGarantia, proveedores}) => {
+    const AuthContext = useContext(authContext)
+    const {modo} = AuthContext
+    
     const productosContext = useContext(productoContext)
     const {eliminarProducto} = productosContext
+    
 
-    const AuthContext = useContext(authContext)
-    const {modo, usuario} = AuthContext
-
-    const [todasGarantias, setTodasGarantias] = useState([])
     const {
         _id, 
         nombre, 
@@ -31,18 +30,17 @@ const VerProducto = ({producto, laGarantia}) => {
         precio_compra_peso, 
         valor_dolar_compra, 
         fecha_compra, 
-        proveedor,
         todos_proveedores,
         factura,
-        garantia,
         disponibles, 
         modelo, 
         notas
     } = producto
-
-
     
+    const router = useRouter()
     
+    const proveedoresIguales = proveedores.filter(prov => todos_proveedores.includes(prov._id))
+
     let fecha //formateo la fecha ya que me llega y-m-d
     if(fecha_compra) {
         fecha = generarFecha(fecha_compra)
@@ -154,7 +152,7 @@ const VerProducto = ({producto, laGarantia}) => {
                         
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">PROVEEDORES</th>
-                            <td className="px-6 py-4 text-left">{todos_proveedores.length > 0 ? todos_proveedores.map((prov, i) => <p key={i}> {prov},</p>) : "-"}</td>
+                            <td className="px-6 py-4 text-left">{proveedoresIguales.length > 0 ? proveedoresIguales.map((prov, i) => <p key={i}>{prov.empresa}</p>): "-"}</td>
                         </tr>
 
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">

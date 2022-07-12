@@ -193,7 +193,7 @@ const ListadoProductos = () => {
         <h1 className="font-black dark:text-blue-300 text-3xl sm:text-4xl text-blue-900 text-center mt-2 sm:mt-0 mb-4 ">Listado de productos</h1>
         <div className="flex justify-between">
 
-            <div className="flex flex-col-reverse gap-1 sm:flex-row w-full sm:w-2/6 xl:w-3/6 mx-1 md:mx-0">
+            <div className="flex flex-col-reverse gap-1 sm:flex-row w-full sm:w-4/12 xl:w-5/12 mx-1 md:mx-0">
                 <div className={`${focus && "ring-2"} relative my-auto p-2 w-full sm:w-2/6 xl:w-full shadow dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 bg-white rounded-md md:rounded-lg`}>
                     <input 
                         type="text" 
@@ -256,6 +256,7 @@ const ListadoProductos = () => {
                                     <input
                                         type="tel"
                                         name="precio"
+                                        autoComplete="off"
                                         id="precio"
                                         className={`w-full  dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 bg-white rounded-sm md:rounded-sm`}
                                         value={precio}

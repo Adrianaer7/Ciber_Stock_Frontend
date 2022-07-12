@@ -72,18 +72,7 @@ const Formulario = ({productoEditar}) => {
     })
     const {nombre, marca, modelo, codigo, barras, rubro, precio_venta, precio_venta_conocidos, precio_venta_efectivo, precio_venta_tarjeta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, todos_proveedores, factura, garantia, disponibles, notas, faltante, limiteFaltante, añadirFaltante} = producto
 
-    //guardar en el state los proveedores que tengan mismo id que los de todos_proveedores
-    useEffect(() => {
-        if(productoEditar) {
-            if(proveedores.length > 0) {
-                const todos = proveedores.filter(provider => producto.todos_proveedores.includes(provider._id))
-                if(todos) {
-                    setProveedoresIguales(todos)
-                }
-            }
-        }
-    }, [productos, producto.todos_proveedores]) //se ejecuta al cargar los productos, cuando se modifica, y cuando quito y/o agrego proveedores al producto
-
+    
     useEffect(() => {
         if(usuario) {   
             traerDolarBD()
@@ -99,27 +88,38 @@ const Formulario = ({productoEditar}) => {
             traerProductos()
         }
     }, [usuario])
-
-
+    
+    
     //cada vez que cambie el producto seleccionado me vacia el input de precio sugerido
     useEffect(() => {
         limpiarPrecioVenta()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productoSeleccionado])
     
-   
-
+    
+    
     //cada vez que escriba en los inputs se realiza el calculo aprox para el precio de la venta
     useEffect(() => {
         precioVenta(valor_dolar_compra, precio_compra_dolar, precio_compra_peso, rubro)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [valor_dolar_compra, precio_compra_dolar, precio_compra_peso, rubro])
-
-
+    
+    //lo que vaya selecciondo con el select lo pongo en el producto, cuando cargue el componente, el select carga lo que haya en producto
     useEffect(() => {
         producto.proveedor = proveedorSelect
     }, [proveedorSelect])
-
+    
+    //guardar en el state los proveedores que tengan mismo id que los de todos_proveedores
+    useEffect(() => {
+        if(productoEditar) {
+            if(proveedores.length > 0) {
+                const todos = proveedores.filter(provider => producto.todos_proveedores.includes(provider._id))
+                if(todos) {
+                    setProveedoresIguales(todos)
+                }
+            }
+        }
+    }, [productos, todos_proveedores]) //se ejecuta al cargar los productos, cuando se modifica, y cuando quito y/o agrego proveedores al producto
 
     const eliminarProveedor = e => {
         const noEliminados = todos_proveedores.filter(todos => todos !== e) //traigo todos los distintos al que elimine
