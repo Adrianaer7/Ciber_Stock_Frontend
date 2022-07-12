@@ -37,7 +37,8 @@ const Formulario = ({productoEditar}) => {
         traerDolarBD,
     } = productosContext
    
-    const [proveedorSelect, setProveedorSelect] = useState(productoEditar?.proveedor ?? "")
+    const [proveedorSelect, setProveedorSelect] = useState(productoEditar?.proveedor ?? "") //dejo el select del formulario cargado con el ultimo proveedor
+    const [proveedoresIguales, setProveedoresIguales] = useState([])    //guardo los proveedores que sean iguales a los que hay en todos_proveedores
     const [valorFaltante, setValorFaltante] = useState(productoEditar?.añadirFaltante ?? false)
     const [cantidad, setCantidad] = useState("")
     const desdeForm = true  //con esto me aseguro que los datos que envio para agregar producto/compra o editar producto/compra, vienen desde el formulario, y no se editan en el listado
@@ -71,6 +72,17 @@ const Formulario = ({productoEditar}) => {
     })
     const {nombre, marca, modelo, codigo, barras, rubro, precio_venta, precio_venta_conocidos, precio_venta_efectivo, precio_venta_tarjeta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, todos_proveedores, factura, garantia, disponibles, notas, faltante, limiteFaltante, añadirFaltante} = producto
 
+    //guardar en el state los proveedores que tengan mismo id que los de todos_proveedores
+    useEffect(() => {
+        if(productoEditar) {
+            if(proveedores.length > 0) {
+                const todos = proveedores.filter(provider => producto.todos_proveedores.includes(provider._id))
+                if(todos) {
+                    setProveedoresIguales(todos)
+                }
+            }
+        }
+    }, [productos, producto.todos_proveedores]) //se ejecuta al cargar los productos, cuando se modifica, y cuando quito y/o agrego proveedores al producto
 
     useEffect(() => {
         if(usuario) {   
@@ -138,7 +150,7 @@ const Formulario = ({productoEditar}) => {
         
     
     const onChangeProveedorSelect = e => {
-        setProveedorSelect(e.target.value.toUpperCase())
+        setProveedorSelect(e.target.value)
     }
     
     if(valorFaltante) {
@@ -664,18 +676,17 @@ const Formulario = ({productoEditar}) => {
                                 </div>
                                
                                 <div className="col-span-4">
-
                                     <select 
                                         id="selectp" 
                                         className="uppercase text-center mt-2 w-full block col-span-4 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                        value={proveedorSelect} 
+                                        value={proveedorSelect} //tomo el valor de proveedor, si no existe se modifica con el option
                                         onChange={onChangeProveedorSelect} 
                                     >
                                         <option value="" className="uppercase">-- Seleccione --</option>
                                         {Object.keys(proveedores).length > 0  ? (
                                             <>
                                                 {proveedores.map((proveedor, i) => (
-                                                    <option key={i} value={proveedor.empresa}>{proveedor.empresa}</option>
+                                                    <option key={i} value={proveedor._id}>{proveedor.empresa}</option>  //el option envia el id al proveedorselect
                                                 ))}
                                             </>
                                         ) : null}
@@ -683,19 +694,19 @@ const Formulario = ({productoEditar}) => {
                                     {Object.keys(todos_proveedores).length > 0  ? (
                                             <>
                                             <ul>
-                                                {todos_proveedores.map((proveedor, i) => (
+                                                {proveedoresIguales.map((proveedor, i) => (
                                                     <div className="flex " key={i}>
                                                         <li
                                                         
                                                             className="uppercase  mt-2 ml-1 block px-2 rounded-md  bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                                         >
-                                                            {proveedor}
+                                                            {proveedor.empresa}
                                                         </li>
                                                         <button
                                                         
                                                             type="button"
                                                             className="uppercase text-center mt-2 ml-1 block px-2 text-gray-600  h-50 rounded-full bg-gray-50 hover:bg-gray-200 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                                            value={proveedor}
+                                                            value={proveedor._id}
                                                             onClick={e => eliminarProveedor(e.target.value)}
                                                         >
                                                             X
