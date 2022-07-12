@@ -5,7 +5,7 @@ import faltanteContext from "../../context/faltantes/faltantesContext";
 import authContext from "../../context/auth/authContext";
 import Swal from "sweetalert2";
 
-const Producto = ({producto}) => {
+const Producto = ({producto, proveedores}) => {
     const AuthContext = useContext(authContext)
     const {modo} = AuthContext
 
@@ -27,7 +27,6 @@ const Producto = ({producto}) => {
         precio_venta_ahoraDoce,
         precio_venta_cuotas, 
         disponibles,
-        garantia,
         modelo, 
         _id, 
         faltante,
@@ -40,13 +39,14 @@ const Producto = ({producto}) => {
     const textoUnPago = (nombre + " " + marca + " " + modelo + " " + "Total final ahora 12: " + "$" + Math.round(precio_venta_ahoraDoce)).trim().replace(/\s\s+/g, ' ') + " - " + "Valor de cada cuota: " + "$" + precio_venta_cuotas
 
 
-
+    
     useEffect(() => {
         if(garantias.length > 0) {
             const probar = garantias.find(garantia => garantia.idProducto == _id)
             if(probar) {
                 setTodasGarantias(probar.detalles)
             }
+            garantias.forEach((garantia) => console.log(garantia.detalles.map(detalle => detalle.proveedor)))
         }
     }, [])
 

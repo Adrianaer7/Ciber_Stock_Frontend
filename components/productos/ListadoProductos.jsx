@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import Producto from "./Producto";
 import productoContext from "../../context/productos/productoContext"
 import authContext from "../../context/auth/authContext";
+import proveedorContext from "../../context/proveedores/proveedorContext"
 import Image from "next/image"
 import Spinner from "../layout/Spinner";
 
@@ -11,6 +12,9 @@ const ListadoProductos = () => {
     const AuthContext = useContext(authContext)
     const {modo} = AuthContext
     
+    const ProveedorContext = useContext(proveedorContext)
+    const {traerProveedores, proveedores} = ProveedorContext
+
     const productosContext = useContext(productoContext)
     const {
         traerProductos, 
@@ -55,12 +59,12 @@ const ListadoProductos = () => {
     const [dolarManual, setDolarManual] = useState({
         precio: "",
     })
-    let automatico
     const {precio} = dolarManual
 
     useEffect(() => {
         traerProductos()
         traerGarantias()
+        traerProveedores()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
    
@@ -301,6 +305,7 @@ const ListadoProductos = () => {
                         <Producto
                             key={producto._id}
                             producto={producto}
+                            proveedores={proveedores}
                         />
                     ))}
                 </>)
@@ -310,6 +315,7 @@ const ListadoProductos = () => {
                     <Producto
                         key={producto._id}
                         producto={producto}
+                        proveedores={proveedores}
                     />
                 ))}
             </>
