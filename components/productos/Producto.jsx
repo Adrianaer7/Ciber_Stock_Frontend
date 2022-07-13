@@ -3,14 +3,18 @@ import Link from "next/link";
 import productoContext from "../../context/productos/productoContext";
 import faltanteContext from "../../context/faltantes/faltantesContext";
 import authContext from "../../context/auth/authContext";
+import proveedorContext from "../../context/proveedores/proveedorContext"
 import Swal from "sweetalert2";
 
-const Producto = ({producto, proveedores}) => {
+const Producto = ({producto}) => {
     const AuthContext = useContext(authContext)
     const {modo} = AuthContext
 
     const productosContext = useContext(productoContext)
     const {productoActual, venderProducto, garantias} = productosContext
+
+    const ProveedorContext = useContext(proveedorContext)
+    const {proveedores} = ProveedorContext
 
     const faltantesContext = useContext(faltanteContext)
     const {agregarFaltante, eliminarFaltante} = faltantesContext
@@ -44,12 +48,12 @@ const Producto = ({producto, proveedores}) => {
         if(garantias.length > 0) {
             const probar = garantias.find(garantia => garantia.idProducto == _id)
             if(probar) {
-                setTodasGarantias(probar.detalles)
+                probar.detalles.map(todas => proveedores.map(proveedor => todas.proveedor.includes(proveedor._id) && todasGarantias.push({proveedor: proveedor.empresa, garantia: todas.caducidad})))
             }
-            garantias.forEach((garantia) => console.log(garantia.detalles.map(detalle => detalle.proveedor)))
         }
     }, [])
-
+    
+ 
 
     useEffect(() => {
         if(colorFaltante) {
@@ -73,6 +77,7 @@ const Producto = ({producto, proveedores}) => {
         showConfirmButton: false,
         timer: 3000
     })
+
 
     const venderElProducto = async () => {
         const valor = await Swal.fire({ //modal del input
@@ -194,7 +199,7 @@ const Producto = ({producto, proveedores}) => {
             <td className="p-3 dark:text-gray-50 text-center">{marca ? marca : "-"}</td>
             <td className="p-3 dark:text-gray-50 text-center">{modelo ? modelo : "-"}</td>
             <td className="dark:text-gray-50 text-center uppercase">{!disponibles ? <span className="bg-red-600 font-black text-white p-1  rounded-sm">Sin stock</span> : disponibles && !faltante && colorFaltante === null || disponibles && colorFaltante === false ? disponibles : disponibles && faltante || disponibles && colorFaltante || disponibles && faltante && colorFaltante === false ? <span className="text-red-600 font-bold">{disponibles}</span> : null}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{todasGarantias.length > 0 ? todasGarantias.map((garantia, i) => (<div key={i}><p key={i} className="font-medium ">{garantia.caducidad}</p><p className="mb-1">{garantia.proveedor}</p></div>)) : "-"}</td>
+            <td className="p-3 dark:text-gray-50 text-center">{todasGarantias.length > 0 ? todasGarantias.map((garantia, i) => (<div key={i}><p key={i} className="font-medium ">{garantia.garantia}</p><p className="mb-1">{garantia.proveedor}</p></div>)) : "-"} </td>
             <td className="p-2 dark:text-gray-50 text-center  text-lg hover:cursor-pointer ">
                 <div className="flex flex-col">
                     <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-3xl font-black " onClick={copiarPrecioTarjeta}>${precio_venta_tarjeta}</p>

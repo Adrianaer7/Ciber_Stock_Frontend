@@ -13,7 +13,7 @@ const ListadoProductos = () => {
     const {modo} = AuthContext
     
     const ProveedorContext = useContext(proveedorContext)
-    const {traerProveedores, proveedores} = ProveedorContext
+    const {traerProveedores} = ProveedorContext
 
     const productosContext = useContext(productoContext)
     const {
@@ -23,11 +23,9 @@ const ListadoProductos = () => {
         limpiarSeleccionado, 
         filtro,
         filtrados, 
-        crearDolarDB,
         traerDolarBD,
         editarDolarDB,
         dolarBD, 
-        eliminarDolarAutomatico,
         elDolarAutomatico,
         editarProductos, 
         orderCodigo, 
@@ -305,7 +303,6 @@ const ListadoProductos = () => {
                         <Producto
                             key={producto._id}
                             producto={producto}
-                            proveedores={proveedores}
                         />
                     ))}
                 </>)
@@ -315,7 +312,6 @@ const ListadoProductos = () => {
                     <Producto
                         key={producto._id}
                         producto={producto}
-                        proveedores={proveedores}
                     />
                 ))}
             </>
