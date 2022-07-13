@@ -42,15 +42,17 @@ const Producto = ({producto}) => {
     const tarjeta = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_tarjeta)).trim().replace(/\s\s+/g, ' ')
     const textoUnPago = (nombre + " " + marca + " " + modelo + " " + "Total final ahora 12: " + "$" + Math.round(precio_venta_ahoraDoce)).trim().replace(/\s\s+/g, ' ') + " - " + "Valor de cada cuota: " + "$" + precio_venta_cuotas
 
-
     
     useEffect(() => {
-        if(garantias.length > 0) {
-            const probar = garantias.find(garantia => garantia.idProducto == _id)
-            if(probar) {
-                probar.detalles.map(todas => proveedores.map(proveedor => todas.proveedor.includes(proveedor._id) && todasGarantias.push({proveedor: proveedor.empresa, garantia: todas.caducidad})))
+        const warranty = [] //guardo momentaneamente las garantias
+        if(garantias.length > 0) {  //garantias del state
+            const garantiasProducto = garantias.find(garantia => garantia.idProducto == _id)    //garantia que contiene id de este producto
+            if(garantiasProducto) {
+                
+                garantiasProducto.detalles.map(todas => proveedores.map(proveedor => todas.proveedor.includes(proveedor._id) && warranty.push({proveedor: proveedor.empresa, garantia: todas.caducidad})))
             }
         }
+        setTodasGarantias(warranty)
     }, [])
     
  
