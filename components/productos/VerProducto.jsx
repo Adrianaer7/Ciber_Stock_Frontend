@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { generarFecha } from '../../helpers';
 import {useRouter} from "next/router"
+import { generarFecha } from '../../helpers';
 import productoContext from "../../context/productos/productoContext";
 import authContext from "../../context/auth/authContext";
 import Swal from "sweetalert2";
@@ -13,7 +13,6 @@ const VerProducto = ({producto, laGarantia, proveedores}) => {
     const productosContext = useContext(productoContext)
     const {eliminarProducto} = productosContext
     
-
     const {
         _id, 
         nombre, 
@@ -147,7 +146,7 @@ const VerProducto = ({producto, laGarantia, proveedores}) => {
                     
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">GARANTIAS</th>
-                            <td className="px-6 py-4 text-left">{laGarantia.length > 0 ? laGarantia.map((warranty, i) => <div key={i} className="mb-2"><p key={i} className="inline-block"> Proveedor: {warranty.proveedor}</p><p> Caducidad: {warranty.caducidad}</p></div>) : "-"}</td>
+                            <td className="px-6 py-4 text-left">{laGarantia.length > 0 ? laGarantia.map((warranty, i) => <div key={i} className="mb-2"><p key={i} className="inline-block"> Proveedor: {warranty.proveedor}</p><p> Caducidad: {warranty.garantia}</p></div>) : "-"}</td>
                         </tr>
                         
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">

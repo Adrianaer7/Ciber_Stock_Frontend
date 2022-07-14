@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import clienteAxios from "../../config/axios"
 import authContext from '../../context/auth/authContext';
 import productoContext from '../../context/productos/productoContext';
@@ -32,6 +33,9 @@ const Ver = ({producto}) => {
   const [coincide, setCoincide] = useState(true)
   const [todasGarantias, setTodasGarantias] = useState([])
 
+  const router = useRouter()
+  const {id} = router.query
+
   //Autentico al usuario y agrego el producto actual al state
   useEffect(() => {
     usuarioAutenticado()
@@ -52,13 +56,15 @@ const Ver = ({producto}) => {
   }, [usuario])
 
   useEffect(() => {
-    if(garantias.length > 0) {
-        const probar = garantias.find(garantia => garantia.idProducto == producto._id)
-        if(probar) {
-          setTodasGarantias(probar.detalles)
+    const warranty = [] //guardo momentaneamente las garantias
+    if(garantias.length > 0) {  //garantias del state
+        const garantiasProducto = garantias.find(garantia => garantia.idProducto == id)    //garantia que contiene id de este producto
+        if(garantiasProducto) {
+            garantiasProducto.detalles.map(todas => proveedores.map(proveedor => todas.proveedor.includes(proveedor._id) && warranty.push({proveedor: proveedor.empresa, garantia: todas.caducidad})))
         }
     }
-  }, [garantias])
+    setTodasGarantias(warranty)
+  }, [garantias, proveedores])
 
   return (
     <>
