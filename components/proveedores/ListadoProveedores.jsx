@@ -384,13 +384,13 @@ const ListadoProveedores = () => {
                 </tr>
             </thead>
             <tbody>
-                {Object.keys(proveedoresFiltrados).length === 0 && escribiendo ? (
+                {!proveedoresFiltrados.length && escribiendo ? (
                     <>
                         <tr className="relative p-3 text-2xl dark:text-gray-50">
                             <td>No hay resultados</td>
                         </tr>
                     </>) 
-                : Object.keys(proveedoresFiltrados).length > 0 && escribiendo ?(
+                : proveedoresFiltrados.length && escribiendo ?(
                     <>
                         {proveedoresFiltrados.map(proveedor => (
                             <Proveedor

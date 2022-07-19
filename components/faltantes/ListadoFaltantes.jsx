@@ -183,13 +183,13 @@ const ListadoFaltantes = () => {
                 </tr>
             </thead>
             <tbody>
-                {Object.keys(filtrados).length === 0 && escribiendo ? (
+                {!filtrados.length && escribiendo ? (
                     <>
                         <tr className="relative p-3 text-2xl dark:text-gray-50">
                             <td>No hay resultados</td>
                         </tr>
                     </>) 
-                : Object.keys(filtrados).length > 0 && escribiendo ?(
+                : filtrados.length && escribiendo ?(
                     <>
                         {filtrados.map(producto => (
                             <ProductoFaltante

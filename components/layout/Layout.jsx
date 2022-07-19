@@ -61,7 +61,7 @@ const Layout = ({children, pagina}) => {
         <div className="min-h-screen">
             <Head>
                 <title>Inventario - {pagina}</title>
-                <link rel="shortcut icon" type="image/x-icon" href={favicon.src}/> 
+                <link rel="shortcut icon" type="image/x-icon" href={favicon.src}/>
             </Head>
 
             <div className={`lg:flex md:min-h-screen sm:min-h-screen bg-gray-100 ${oscuro && "dark"}`}>

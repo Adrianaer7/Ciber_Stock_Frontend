@@ -683,7 +683,7 @@ const Formulario = ({productoEditar}) => {
                                         onChange={onChangeProveedorSelect} 
                                     >
                                         <option value="" className="uppercase">-- Seleccione --</option>
-                                        {Object.keys(proveedores).length > 0  ? (
+                                        {proveedores.length ? (
                                             <>
                                                 {proveedores.map((proveedor, i) => (
                                                     <option key={i} value={proveedor._id}>{proveedor.empresa}</option>  //el option envia el id al proveedorselect
@@ -691,7 +691,7 @@ const Formulario = ({productoEditar}) => {
                                             </>
                                         ) : null}
                                     </select>
-                                    {Object.keys(todos_proveedores).length > 0  ? (
+                                    {todos_proveedores.length ? (
                                             <>
                                             <ul>
                                                 {proveedoresIguales.map((proveedor, i) => (
