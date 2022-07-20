@@ -408,8 +408,7 @@ const ProductoState = ({children}) => {
             const {data} = await clienteAxios.get("/api/dolares")
             if(!data.dolar[0]) {  //si no existe ningun dolar, creo uno trayendolo de la api
                 traerDolarAPI()
-            }
-            if(data.dolar[0]) {
+            } else {
                 const {dolar} = data
                 if(dolar[0].automatico) {   //si ya existe el un dolar automatico creado, le envio el nuevo valor
                     traerDolarAPI()

@@ -176,7 +176,7 @@ const ListadoProveedores = () => {
         }
         
         if(!proveedorSeleccionado) {
-            agregarProveedor(proveedor)
+            await agregarProveedor(proveedor)
             setCrearNuevo(!crearNuevo)
             agregadoExito()
         } else { 

@@ -58,6 +58,8 @@ const ListadoProductos = () => {
         precio: "",
     })
     const {precio} = dolarManual
+    let automatico
+
 
     useEffect(() => {
         traerProductos()
@@ -245,7 +247,7 @@ const ListadoProductos = () => {
                                 {elDolarAutomatico == false && 
                                     <button 
                                         className={`dark:bg-gray-700 dark:hover:bg-gray-600 bg-gray-200 hover:bg-gray-300 rounded-full px-2`} 
-                                        onClick={() => eliminarDolarManual()}
+                                        onClick={eliminarDolarManual}
                                     >
                                         X
                                     </button>}
