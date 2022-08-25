@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import compraContext from "../../../context/historial/compras/compraContext";
 import { generarFecha } from "../../../helpers";
-const Compra = ({producto}) => {
+const Compra = ({producto, proveedores}) => {
     const {
         nombre, 
         marca, 
@@ -11,6 +11,10 @@ const Compra = ({producto}) => {
     } = producto
 
     const [detalles, setDetalles] = useState(false)
+
+
+    const historialProveedores = historial.map(historia => historia.proveedor)
+    const proveedoresIguales = proveedores.filter(prov => historialProveedores.includes(prov._id))
 
     return (
 
@@ -26,7 +30,7 @@ const Compra = ({producto}) => {
             <td className="p-3 dark:text-gray-50 text-center"><ul>{detalles ? historial.map((historia, i) => <li key={i}>{historia.garantia ? historia.garantia : "-"}</li>) :  "+"}</ul></td>
             <td className="p-3 dark:text-gray-50 text-center"><ul>{detalles ? historial.map((historia, i) => <li key={i}>{historia.barras ? historia.barras : "-"}</li>) :  "+"}</ul></td>
             <td className="p-3 dark:text-gray-50 text-center"><ul>{detalles ? historial.map((historia, i) => <li key={i}>{historia.factura ? historia.factura : "-"}</li>) :  "+"}</ul></td>
-            <td className="p-3 dark:text-gray-50 text-center"><ul>{detalles ? historial.map((historia, i) => <li key={i}>{historia.proveedor ? historia.proveedor : "-"}</li>) :  "+"}</ul></td>
+            <td className="p-3 dark:text-gray-50 text-center"><ul>{detalles ? proveedoresIguales.length > 0 ? proveedoresIguales.map((prov, i) => <p key={i}>{prov.empresa}</p>): "-" : "-"}</ul></td>
             <td className="p-3 dark:text-gray-50 text-center"><ul>{detalles ? historial.map((historia, i) => <li key={i}>{historia.valor_dolar_compra ? historia.valor_dolar_compra : "-"}</li>) :  "+"}</ul></td>
             <td className="p-3 dark:text-gray-50 text-center"><ul>{detalles ? historial.map((historia, i) => <li  key={i}>{historia.precio_compra_dolar ? historia.precio_compra_dolar : "-"}</li>) :  "+"}</ul></td>
         </tr>

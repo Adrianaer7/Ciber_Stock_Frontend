@@ -11,6 +11,8 @@ const ListadoProveedores = () => {
     const AuthContext = useContext(authContext)
     const {modo, usuarioAutenticado} = AuthContext
 
+     
+
     const ProveedorContext = useContext(proveedorContext)
     const {
         proveedores, 
