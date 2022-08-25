@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Compra from "./Compra";
 import compraContext from "../../../context/historial/compras/compraContext";
+import proveedorContext from "../../../context/proveedores/proveedorContext";
 import authContext from "../../../context/auth/authContext";
 import Image from "next/image";
 
@@ -8,6 +9,9 @@ const ListadoCompras = () => {
 
     const AuthContext = useContext(authContext)
     const {modo, usuarioAutenticado} = AuthContext
+
+    const ProveedorContext = useContext(proveedorContext)
+    const {traerProveedores, proveedores} = ProveedorContext
 
     const CompraContext = useContext(compraContext)
 
@@ -39,6 +43,7 @@ const ListadoCompras = () => {
 
     useEffect(() => {
         traerCompras()
+        traerProveedores()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -148,6 +153,7 @@ const ListadoCompras = () => {
                             <Compra
                                 key={producto._id}
                                 producto={producto}
+                                proveedores={proveedores}
                             />
                         ))}
                     </>)
@@ -157,6 +163,7 @@ const ListadoCompras = () => {
                         <Compra
                             key={producto._id}
                             producto={producto}
+                            proveedores={proveedores}
                         />
                     ))}
                 </>

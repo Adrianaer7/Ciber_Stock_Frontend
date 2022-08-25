@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import ProductoFaltante from "./ProductoFaltante";
+import proveedorContext from "../../context/proveedores/proveedorContext";
 import faltanteContext from "../../context/faltantes/faltantesContext";
 import authContext from "../../context/auth/authContext";
 import Image from "next/image";
@@ -8,6 +9,9 @@ const ListadoFaltantes = () => {
 
     const AuthContext = useContext(authContext)
     const {modo, usuarioAutenticado} = AuthContext
+
+    const ProveedorContext = useContext(proveedorContext)
+    const {traerProveedores, proveedores} = ProveedorContext
 
     const faltantesContext = useContext(faltanteContext)
 
@@ -51,6 +55,7 @@ const ListadoFaltantes = () => {
 
     useEffect(() => {
         traerFaltantes()
+        traerProveedores()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -195,6 +200,7 @@ const ListadoFaltantes = () => {
                             <ProductoFaltante
                                 key={producto._id}
                                 producto={producto}
+                                proveedores={proveedores}
                             />
                         ))}
                     </>)
@@ -204,6 +210,7 @@ const ListadoFaltantes = () => {
                         <ProductoFaltante
                             key={producto._id}
                             producto={producto}
+                            proveedores={proveedores}
                         />
                     ))}
                 </>

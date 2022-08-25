@@ -7,8 +7,8 @@ import authContext from "../../context/auth/authContext";
 
 import Swal from "sweetalert2";
 
-const ProductoFaltante = ({producto}) => {
-    const {nombre, marca, codigo, disponibles, modelo, rubro, _id, faltante, proveedor} = producto
+const ProductoFaltante = ({producto, proveedores}) => {
+    const {nombre, marca, codigo, disponibles, modelo, rubro, _id, faltante, proveedor, todos_proveedores} = producto
 
     const AuthContext = useContext(authContext)
     const {modo} = AuthContext
@@ -18,6 +18,8 @@ const ProductoFaltante = ({producto}) => {
 
     const faltantesContext = useContext(faltanteContext)
     const {eliminarFaltante} = faltantesContext
+
+    const proveedoresIguales = proveedores.filter(prov => todos_proveedores.includes(prov._id))
 
     const Eliminado = Swal.mixin({
         toast: true,
@@ -43,7 +45,7 @@ const ProductoFaltante = ({producto}) => {
             <td className="p-1 dark:text-gray-50 text-center">{marca ? marca : "-"}</td>
             <td className="p-1 dark:text-gray-50 text-center">{modelo ? modelo : "-"}</td>
             <td className="p-1 dark:text-gray-50 text-center">{rubro ? rubro : "-"}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{proveedor ? proveedor : "-"}</td>
+            <td className="p-1 dark:text-gray-50 text-center">{proveedoresIguales.length > 0 ? proveedoresIguales.map((prov, i) => <p key={i}>{prov.empresa}</p>): "-"}</td>
 
             <td className="p-1 dark:text-gray-50 text-center uppercase">{disponibles && faltante ? <span className="font-bold text-red-600 p-1">{disponibles}</span> : disponibles && !faltante ? disponibles : <span className="font-black text-white bg-red-600 p-1 uppercase">Sin stock</span>}</td>
             <td className="p-1 w-40 mt-2  ">
