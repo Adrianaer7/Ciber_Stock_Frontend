@@ -1,12 +1,12 @@
 import { useState, useContext, useEffect } from "react"
-import Rubro from "./Rubro"
-import Proveedor from "../proveedores/Proveedor"
-import { hoy } from "../../helpers"
 import productoContext from "../../context/productos/productoContext"
 import authContext from "../../context/auth/authContext"
 import proveedorContext from "../../context/proveedores/proveedorContext"
-import Swal from "sweetalert2"
 import compraContext from "../../context/historial/compras/compraContext"
+import rubroContext from "../../context/rubros/rubroContext"
+import { hoy } from "../../helpers"
+import Swal from "sweetalert2"
+import Rubro from "../rubros/Rubro"
 
 const Formulario = ({productoEditar}) => {
 
@@ -17,7 +17,10 @@ const Formulario = ({productoEditar}) => {
     const {traerCompras} = CompraContext
 
     const ProveedorContext = useContext(proveedorContext)
-    const {agregarProveedor, traerProveedores, proveedores} = ProveedorContext
+    const {traerProveedores, proveedores} = ProveedorContext
+
+    const RubroContext = useContext(rubroContext)
+    const {rubros, traerRubros} = RubroContext
 
     const productosContext = useContext(productoContext)
     const { 
@@ -29,9 +32,6 @@ const Formulario = ({productoEditar}) => {
         traerProductos, 
         traerCodigos,
         valorDeVenta,
-        valorDeVentaConocidos,
-        valorDeVentaEfectivo,
-        valorDeVentaTarjeta,
         limpiarPrecioVenta, 
         precioVenta,
         traerDolarBD,
@@ -41,6 +41,7 @@ const Formulario = ({productoEditar}) => {
     const [proveedoresIguales, setProveedoresIguales] = useState([])    //guardo los proveedores que sean iguales a los que hay en todos_proveedores
     const [valorFaltante, setValorFaltante] = useState(productoEditar?.añadirFaltante ?? false)
     const [cantidad, setCantidad] = useState("")
+    const [visible, setVisible] = useState(productoEditar?.visibilidad ?? true) //boton para que el producto se vea o no en el listado
     const desdeForm = true  //con esto me aseguro que los datos que envio para agregar producto/compra o editar producto/compra, vienen desde el formulario, y no se editan en el listado
 
     const [producto, setProducto] = useState({
@@ -68,7 +69,8 @@ const Formulario = ({productoEditar}) => {
         notas: productoEditar?.notas ?? "",
         faltante: productoEditar?.faltante ?? false,
         limiteFaltante: productoEditar?.limiteFaltante ?? "",
-        añadirFaltante: productoEditar?.añadirFaltante ?? false
+        añadirFaltante: productoEditar?.añadirFaltante ?? false,
+        visibilidad: productoEditar?.visibilidad ?? true
     })
     const {nombre, marca, modelo, codigo, barras, rubro, precio_venta, precio_venta_conocidos, precio_venta_efectivo, precio_venta_tarjeta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, todos_proveedores, factura, garantia, disponibles, notas, faltante, limiteFaltante, añadirFaltante} = producto
 
@@ -79,6 +81,7 @@ const Formulario = ({productoEditar}) => {
             traerProveedores()
             traerCodigos()
             traerCompras()
+            traerRubros()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [usuario, productos])    //cuando cambie cualquiera de las 2 se ejecuta el useefect
@@ -88,14 +91,6 @@ const Formulario = ({productoEditar}) => {
             traerProductos()
         }
     }, [usuario])
-    
-    
-    //cada vez que cambie el producto seleccionado me vacia el input de precio sugerido
-    useEffect(() => {
-        limpiarPrecioVenta()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [productoSeleccionado])
-    
     
     
     //cada vez que escriba en los inputs se realiza el calculo aprox para el precio de la venta
@@ -108,6 +103,10 @@ const Formulario = ({productoEditar}) => {
     useEffect(() => {
         producto.proveedor = proveedorSelect
     }, [proveedorSelect])
+
+    useEffect(() => {
+        producto.visibilidad = visible
+    }, [visible])
     
     //guardar en el state los proveedores que tengan mismo id que los de todos_proveedores
     useEffect(() => {
@@ -193,6 +192,7 @@ const Formulario = ({productoEditar}) => {
             background: `${modo ? "rgb(31 41 55)" : "white"}`,
         })
     }
+
 
     //! ENVIAR FORMULARIO
     const onSubmit = async e => {
@@ -354,9 +354,6 @@ const Formulario = ({productoEditar}) => {
                 }
                 if(valorDeVenta) {
                     producto.precio_venta = valorDeVenta
-                    producto.precio_venta_conocidos = valorDeVentaConocidos
-                    producto.precio_venta_efectivo = valorDeVentaEfectivo
-                    producto.precio_venta_tarjeta = valorDeVentaTarjeta
                 }
                 await agregarProducto(producto, cantidad, desdeForm)
                 setCantidad("")
@@ -385,7 +382,8 @@ const Formulario = ({productoEditar}) => {
                     notas: "",
                     faltante: false,
                     limiteFaltante: "",
-                    añadirFaltante: false
+                    añadirFaltante: false,
+                    visibilidad: true
                     })
                 traerProductos()
                 await traerCodigos()
@@ -401,9 +399,6 @@ const Formulario = ({productoEditar}) => {
                 }
                 if(valorDeVenta) {
                     producto.precio_venta = valorDeVenta
-                    producto.precio_venta_conocidos = valorDeVentaConocidos
-                    producto.precio_venta_efectivo = valorDeVentaEfectivo
-                    producto.precio_venta_tarjeta = valorDeVentaTarjeta
                 }
                 producto._id = productoEditar._id
                 await editarProducto(producto, cantidad, desdeForm)
@@ -558,7 +553,7 @@ const Formulario = ({productoEditar}) => {
 
                         <div className="mb-4 flex flex-row gap-1">
                             <div className="basis-1/2">
-                                <label htmlFor="valor_dolar_compra" className="text-gray-800 dark:text-gray-300 font-bold font ">Valor dolar</label>
+                                <label htmlFor="valor_dolar_compra" className="text-gray-800 dark:text-gray-300 font-bold font ">Cotizacion U$S</label>
                                 <input
                                     type="tel"
                                     autoComplete="off"
@@ -587,7 +582,7 @@ const Formulario = ({productoEditar}) => {
                         <div className="mb-4 flex flex-row gap-1">
                             <div className="basis-1/2">
 
-                                <label htmlFor="precio_compra_peso" className="text-gray-800 dark:text-gray-300 font-bold font ">Precio compra en AR$</label>
+                                <label htmlFor="precio_compra_peso" className="text-gray-800 dark:text-gray-300 font-bold font ">Precio compra AR$</label>
                                 <input
                                     type="tel"
                                     autoComplete="off"
@@ -608,7 +603,7 @@ const Formulario = ({productoEditar}) => {
                                     id="precio_venta"
                                     placeholder="$0"
                                     name="precio_venta"
-                                    value= {`$ ${valorDeVenta > 0 ? valorDeVenta :  precio_venta}`}
+                                    value= {`$ ${valorDeVenta}`}
                                     readOnly={true}
                                     
                                 />
@@ -652,13 +647,14 @@ const Formulario = ({productoEditar}) => {
                                         onChange={onChange}
                                         disabled={!valorFaltante}
                                     />
+                                    
                                 </div>                                    
                             </div>
                         </div>
                         
                         <div>
                             <div className="grid grid-cols-9">
-                                <label htmlFor="cantidad" className="text-gray-800 dark:text-gray-300 font-bold  col-span-1 col-start-1">N°</label>
+                                <label htmlFor="cantidad" className="text-gray-800 dark:text-gray-300 font-bold  col-span-1 col-start-1">Cant.</label>
                                 <label htmlFor="selectp" className="text-gray-800 dark:text-gray-300 font-bold  col-span-4 col-start-2 col-end-4">Proveedores</label>
                                 <label htmlFor="rubro" className="text-gray-800 dark:text-gray-300 font-bold  col-span-4 col-start-6 col-end-9">Rubro</label>
                             </div>
@@ -726,22 +722,34 @@ const Formulario = ({productoEditar}) => {
                                         name="rubro"
                                         value={rubro}
                                     >
-                                        <Rubro
-                                            key={producto._id}
-                                            rubro={rubro}
-                                        />
+                                        <option value="">--Seleccione--</option>
+                                        {rubros.length ? (
+                                            rubros.map((rubro, i) => (
+                                                <option value={rubro.rentabilidad}>{`${rubro.nombre} ${rubro.rentabilidad}%`}</option>
+                                            ))
+                                        ) : null }
+                                        
                                     </select>
                                 </div>
                             </div>
-                        </div>     
+                        </div>    
+                        <div className="mb-4">
+                            <label htmlFor="modelo" className="text-gray-800 dark:text-gray-300 font-bold ">Visibilidad</label>
+                            <input
+                                type="button"
+                                className={`w-full rounded-md mt-2 block p-3 hover:cursor-pointer ${visible ? "bg-blue-200" : "bg-gray-400 "}`}
+                                onClick={() => setVisible(!visible)}
+                                value={visible ? "Visible"  : "Oculto"}
+                            />
+                        </div> 
+                    </div>
 
-                        
-                        </div>
+
                     
                     <div className="mb-4">
                         <label htmlFor="notas" className="text-gray-800 dark:text-gray-300 font-bold ">Notas</label>
                         <textarea
-                            className=" mt-2 block w-full h-48 p-3 rounded-md  bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
+                            className=" mt-2 block w-full h-28 p-3 rounded-md  bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                             id="notas"
                             placeholder="Ingresa tu notas"
                             name="notas"
@@ -751,7 +759,7 @@ const Formulario = ({productoEditar}) => {
                     </div>
                     <input
                         type="submit"
-                        value={productoEditar ? "Editar producto" : "Agregar producto"}
+                        value={productoEditar ? "Guardar cambios" : "Agregar producto"}
                         className={`${productoEditar ? "bg-green-600 active:bg-green-700 dark:bg-green-800 dark:active:bg-green-900" : "bg-blue-800 active:bg-blue-900 dark:bg-blue-500 dark:active:bg-blue-600"} mt-5 w-full  p-3 text-white uppercase font-bold text-lg rounded-md cursor-pointer`}
                     />
                 </form>

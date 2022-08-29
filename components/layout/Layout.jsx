@@ -17,10 +17,10 @@ const Layout = ({children, pagina}) => {
 
     const [oscuro, setOscuro] = useState(false)
     const [panel, setPanel] = useState(false)
+    const [mostrarVarios, setMostrarVarios] = useState(false)
 
     const router = useRouter()
     const urlActual = router.route
-  
 
     useEffect(() => {
         if(!token) {
@@ -29,7 +29,6 @@ const Layout = ({children, pagina}) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[token])
 
-    
 
     //traigo el tema del LS
     useEffect(() => {
@@ -57,6 +56,8 @@ const Layout = ({children, pagina}) => {
         cerrarSesion()
         limpiarApp()
     }
+
+
     return (
         <div className="min-h-screen">
             <Head>
@@ -97,33 +98,79 @@ const Layout = ({children, pagina}) => {
                     : null}
                     
                     <nav className="grid grid-cols-4 lg:px-5 mt-4 sm:mt-10 lg:flex lg:flex-col lg:justify-start h-5/6">
-                        <Link href="/productos">
-                            <a className={`${urlActual === "/productos" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"}  text-sm text-center lg:text-left sm:text-xl lg:text-2xl  block p-2 mt-2 hover:text-blue-300`}>Productos</a> 
-                        </Link>
-
-                        <Link href="/nuevoproducto">
-                            <a 
-                            onClick={() => limpiarSeleccionado()}
-                            className={`${urlActual === "/nuevoproducto" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}>Nuevo Producto</a>
-                        </Link>
-                        <Link href="/faltantes">
-                            <a 
-                            onClick={() => limpiarSeleccionado()}
-                            className={`${urlActual === "/faltantes" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block  p-2 mt-2 hover:text-blue-300`}>Faltantes</a>
-                        </Link>
-                        <Link href="/compras">
-                            <a 
-                            onClick={() => limpiarSeleccionado()}
-                            className={`${urlActual === "/compras" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}>Compras</a>
-                        </Link>
-                        <Link href="/proveedores">
-                            <a 
-                            onClick={() => limpiarSeleccionado()}
-                            className={`${urlActual === "/proveedores" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}>Proveedores</a>
-                        </Link>
-                    </nav>
-
-                    
+                        <ul>
+                            <li >
+                                <Link href="/productos">
+                                    <a
+                                        className={`${urlActual === "/productos" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"}  text-sm text-center lg:text-left sm:text-xl lg:text-2xl  block p-2 mt-2 hover:text-blue-300`}
+                                    >   Productos
+                                    </a> 
+                                </Link>
+                            </li>
+                            <li >
+                                <Link href="/nuevoproducto">
+                                    <a 
+                                        className={`${urlActual === "/nuevoproducto" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
+                                        onClick={() => limpiarSeleccionado()}
+                                    >   Nuevo Producto
+                                    </a>
+                                </Link>
+                            </li>
+                            <li >
+                                <Link href="/faltantes">
+                                    <a 
+                                        className={`${urlActual === "/faltantes" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block  p-2 mt-2 hover:text-blue-300`}
+                                        onClick={() => limpiarSeleccionado()}
+                                    >   Faltantes
+                                    </a>
+                                </Link>
+                            </li>
+                            <li >
+                                <Link href="/compras">
+                                    <a 
+                                        className={`${urlActual === "/compras" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
+                                        onClick={() => limpiarSeleccionado()}
+                                    >   Compras</a>
+                                </Link>
+                            </li>
+                            <li 
+                                className="lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300 hover:cursor-pointer"
+                                onClick={() => setMostrarVarios(!mostrarVarios)}
+                            > Varios
+                                {mostrarVarios || urlActual === "/proveedores" || urlActual === "/rubros" || urlActual === "/porcentajes" ? (
+                                    <ul className="ml-3">
+                                        <li >
+                                            <Link href="/proveedores">
+                                                <a 
+                                                    className={`${urlActual === "/proveedores" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
+                                                    onClick={() => limpiarSeleccionado()}
+                                                >   Proveedores
+                                                </a>
+                                            </Link>
+                                        </li>
+                                        <li >
+                                            <Link href="/rubros">
+                                                <a 
+                                                    className={`${urlActual === "/rubros" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
+                                                    onClick={() => limpiarSeleccionado()}
+                                                >   Rubros
+                                                </a>
+                                            </Link>
+                                        </li>
+                                        <li >
+                                            <Link href="/porcentajes">
+                                                <a 
+                                                    className={`${urlActual === "/porcentajes" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
+                                                    onClick={() => limpiarSeleccionado()}
+                                                >   Porcentajes
+                                                </a>
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                ): null}
+                            </li>
+                        </ul>
+                    </nav> 
                 </div>
                 
                 <div className=" lg:w-5/6 lg:p-10 h-screen  dark:bg-gray-800 overflow-x-auto ">

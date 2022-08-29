@@ -1,18 +1,18 @@
 import Image from "next/image";
 import { useContext } from "react"
 import authContext from "../../context/auth/authContext";
-import proveedorContext from "../../context/proveedores/proveedorContext";
+import rubroContext from "../../context/rubros/rubroContext";
 import Swal from "sweetalert2";
 
-const Proveedor = ({proveedor, crearNuevo}) => {
+const Rubro = ({rubro, crearNuevo}) => {
     
     const AuthContext = useContext(authContext)
     const {modo} = AuthContext
 
-    const ProveedorContext = useContext(proveedorContext)
-    const {eliminarUnProveedor, proveedorActual, limpiarSeleccionado} = ProveedorContext
+    const RubroContext = useContext(rubroContext)
+    const {eliminarUnRubro, rubroActual, limpiarSeleccionado} = RubroContext
 
-    const {_id, nombre, empresa, telPersonal, telEmpresa, email} = proveedor
+    const {_id, nombre, rentabilidad} = rubro
     
 
     const Eliminado = Swal.mixin({
@@ -22,7 +22,9 @@ const Proveedor = ({proveedor, crearNuevo}) => {
         timer: 3000
     })
 
-    const eliminarElProveedor = async () => {
+   
+
+    const eliminarElRubro = async () => {
         await limpiarSeleccionado()
         Swal.fire({
             title: `${modo ? '<h5 style="color:white">¿Estás seguro?</h5>' : '<h5 style="color:#545454">¿Estás seguro?</h5>'}`,
@@ -37,7 +39,7 @@ const Proveedor = ({proveedor, crearNuevo}) => {
             background: `${modo ? "rgb(31 41 55)" : "white"}`,
         }).then((result) => {
             if (result.isConfirmed) {
-                eliminarUnProveedor(_id)
+                eliminarUnRubro(_id)
                 Eliminado.fire({
                     icon: 'success',
                     title: "Se eliminó correctamente",
@@ -53,10 +55,7 @@ const Proveedor = ({proveedor, crearNuevo}) => {
   return (
       <tr className="border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700">
             <td className="p-1 dark:text-gray-50 text-center ">{nombre ? nombre : "-"}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{empresa ? empresa : "-"}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{telPersonal ? telPersonal : "-"}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{telEmpresa ? telEmpresa : "-"}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{email ? email : "-"}</td>
+            <td className="p-1 dark:text-gray-50 text-center">{rentabilidad ? rentabilidad : "0"}%</td>
             <td className="p-1 w-40 mt-2">
                 <div className="flex justify-evenly">
                     <div className={`${crearNuevo && "hidden"} hover:bg-gray-200 dark:hover:bg-gray-600 p-1 pb-0 items-center rounded-md hover:cursor-pointer`}>
@@ -67,10 +66,10 @@ const Proveedor = ({proveedor, crearNuevo}) => {
                             width={30} 
                             height={30}
                             priority={true}
-                            onClick={() => proveedorActual(_id)}
+                            onClick={() => rubroActual(_id)}
                             />
                     </div>
-                    <div className="hover:bg-gray-200 dark:hover:bg-gray-600 p-1 pb-0 items-center rounded-md hover:cursor-pointer">
+                    <div className={` hover:bg-gray-200 dark:hover:bg-gray-600 p-1 pb-0 items-center rounded-md hover:cursor-pointer`}>
 
                         <Image 
                             src={`${modo ? "/delete_light.svg" : "/delete_dark.svg"}`}
@@ -78,7 +77,7 @@ const Proveedor = ({proveedor, crearNuevo}) => {
                             width={30} 
                             height={30}
                             priority={true}
-                            onClick={eliminarElProveedor}
+                            onClick={eliminarElRubro}
                         />
                     </div>
                 </div>
@@ -88,4 +87,4 @@ const Proveedor = ({proveedor, crearNuevo}) => {
   )
 }
 
-export default Proveedor
+export default Rubro

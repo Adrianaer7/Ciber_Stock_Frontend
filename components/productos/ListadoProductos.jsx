@@ -22,7 +22,8 @@ const ListadoProductos = () => {
         traerGarantias,
         limpiarSeleccionado, 
         filtro,
-        filtrados, 
+        filtrados,
+        filtrarOcultos,
         traerDolarBD,
         editarDolarDB,
         dolarBD, 
@@ -44,6 +45,7 @@ const ListadoProductos = () => {
 
     const [filtrando, setFiltrando] = useState("")    //contiene lo que voy escribiendo
     const [conStock, setConStock] = useState(false)
+    const [oculto, setOculto] = useState(false)
     const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
     const [focus, setFocus] = useState(false)   //activar el ring en el buscador
     const [spinner, setSpinner] = useState(true)
@@ -143,6 +145,10 @@ const ListadoProductos = () => {
         filtro(filtrando.toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), conStock)   //el normalice separa la tilde de la letra. el replace reemplaza la tilde por "", osea lo elimina
     }, [filtrando, conStock])
 
+    useEffect(() => {
+        filtrarOcultos()
+    }, [oculto])
+
     const onChangeFiltro = e => {
         setFiltrando(e.target.value)
     }
@@ -232,6 +238,17 @@ const ListadoProductos = () => {
                     </label>
                     
                 </div>
+                <div className="my-auto whitespace-nowrap ">
+                    <label className="flex ml-2">
+                    
+                        <input
+                            type="checkbox"
+                            onClick={() => setOculto(!oculto)}
+                        />
+                        <div className="ml-2 dark:text-white">Ocultos</div>
+                    </label>
+                    
+                </div>
                 
                 
             </div>
@@ -305,6 +322,7 @@ const ListadoProductos = () => {
                         <Producto
                             key={producto._id}
                             producto={producto}
+                            oculto={oculto}
                         />
                     ))}
                 </>)
@@ -314,6 +332,7 @@ const ListadoProductos = () => {
                     <Producto
                         key={producto._id}
                         producto={producto}
+                        oculto={oculto}
                     />
                 ))}
             </>

@@ -39,6 +39,7 @@ import {
     AGREGAR_GARANTIA,
     CREAR_DOLAR,
     EDITAR_DOLAR,
+    FILTRAR_OCULTOS,
 } from "../../types";
 
 const ProductoState = ({children}) => {
@@ -51,6 +52,7 @@ const ProductoState = ({children}) => {
         mensajeRubro: null,
         mensajeCodigo: null,
         filtrados: [],
+        ocultosFiltrados: [],
         rubros: [],
         garantias: [],
         valorDeVenta: 0,
@@ -309,6 +311,15 @@ const ProductoState = ({children}) => {
         }
     }
 
+    const filtrarOcultos = () => {
+        try {
+            dispatch({
+                type: FILTRAR_OCULTOS
+            })
+        } catch (error) {
+            
+        }
+    }
 
     //quito disponibilidad del producto
     const venderProducto = async (producto, unidades) => {
@@ -324,20 +335,14 @@ const ProductoState = ({children}) => {
         if(valor1>0 && valor2>0 && valor4 && valor3 === "") {
             const val1 = parseFloat(valor1) //precio compra dolar
             const val2 = parseFloat(valor2) //valor dolar compra
-            const val3 = (valor4.split(" ")[1].replace("%", ""))    //traigo el rubro con su porcentaje y extraigo el valor numerico
-            const val4 = parseInt(val3)   //rentabilidad
-            const res1 = (val1 * val2) * (parseInt(Math.round(val4))+100)   //redondeo el porcentaje y convierto a integer el resultado de la operacion
+            const res1 = (val1 * val2) * (parseInt(Math.round(parseFloat(valor4)))+100)   //redondeo el porcentaje y convierto a integer el resultado de la operacion
             const res3 = Number((res1 / 100).toFixed(2))
             if(res3) {
-                const res4 = Number(((res3 * 105) / 100).toFixed(2))
-                const res5 = Number(((res3 * 109) / 100).toFixed(2))
                 try {
                     dispatch({
                         type: PRECIO_VENTA_EFECTIVO,
                         payload: {
-                            res3,
-                            res4,
-                            res5
+                            res3
                         }
                     })
                 } catch (error) {
@@ -347,20 +352,16 @@ const ProductoState = ({children}) => {
         } else {
             limpiarPrecioVenta()
         }
+        
         if(valor1>0 && valor4 && valor3>0 && valor2==="") {
             const val3 = parseFloat(valor3) //valor peso compra
-            const val4 = parseInt(valor4.split(" ")[1].replace("%", ""))  //rentabilidad
-            const res3 = parseInt(((val3 * (parseInt(val4)+100)) / 100).toFixed(2))
+            const res3 = (val3 * (parseInt(Math.round(parseFloat(valor4)))+100) / 100)
             if(res3) {
-                const res4 = Number(((res3 * 105) / 100).toFixed(2))
-                const res5 = Number(((res4 * 109) / 100).toFixed(2))
                 try {
                     dispatch({
                         type: PRECIO_VENTA_EFECTIVO,
                         payload: {
-                            res3,
-                            res4,
-                            res5
+                            res3
                         }
                     })
                 } catch (error) {
@@ -541,6 +542,7 @@ const ProductoState = ({children}) => {
                 mensajeCodigo: state.mensajeCodigo,
                 mensajeRubro: state.mensajeRubro,
                 filtrados: state.filtrados,
+                ocultosFiltrados: state.ocultosFiltrados,
                 rubros: state.rubros,
                 garantias: state.garantias,
                 valorDeVenta: state.valorDeVenta,
@@ -559,6 +561,7 @@ const ProductoState = ({children}) => {
                 limpiarSeleccionado,
                 eliminarProducto,
                 filtro,
+                filtrarOcultos,
                 agregarRubro,
                 venderProducto,
                 eliminarProductos,
