@@ -23,7 +23,6 @@ const ListadoProductos = () => {
         limpiarSeleccionado, 
         filtro,
         filtrados,
-        filtrarOcultos,
         traerDolarBD,
         editarDolarDB,
         dolarBD, 
@@ -142,12 +141,9 @@ const ListadoProductos = () => {
     }, [filtrando])
 
     useEffect(() => {
-        filtro(filtrando.toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), conStock)   //el normalice separa la tilde de la letra. el replace reemplaza la tilde por "", osea lo elimina
-    }, [filtrando, conStock])
+        filtro(filtrando.toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), conStock, oculto)   //el normalice separa la tilde de la letra. el replace reemplaza la tilde por "", osea lo elimina
+    }, [filtrando, conStock, oculto])
 
-    useEffect(() => {
-        filtrarOcultos()
-    }, [oculto])
 
     const onChangeFiltro = e => {
         setFiltrando(e.target.value)
@@ -316,27 +312,30 @@ const ListadoProductos = () => {
                         <td>No hay resultados</td>
                     </tr>
                 </>) 
+            : filtrados.length && !escribiendo ?(
+                <>
+                    {filtrados.map(producto => (
+                        <Producto
+                            key={producto._id}
+                            producto={producto}
+                        />
+                    ))}
+                </>)
             : filtrados.length && escribiendo ?(
                 <>
                     {filtrados.map(producto => (
                         <Producto
                             key={producto._id}
                             producto={producto}
-                            oculto={oculto}
                         />
                     ))}
                 </>)
-            : (
-            <>
-                {productos.map(producto => (
+                : productos.map(producto => producto.visibilidad ? (
                     <Producto
-                        key={producto._id}
-                        producto={producto}
-                        oculto={oculto}
-                    />
-                ))}
-            </>
-            )}  
+                            key={producto._id}
+                            producto={producto}
+                        />
+                ) : null)} 
         </tbody>
         
     </table>

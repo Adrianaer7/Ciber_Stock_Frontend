@@ -6,7 +6,7 @@ import authContext from "../../context/auth/authContext";
 import proveedorContext from "../../context/proveedores/proveedorContext"
 import Swal from "sweetalert2";
 
-const Producto = ({producto, oculto}) => {
+const Producto = ({producto}) => {
     const AuthContext = useContext(authContext)
     const {modo} = AuthContext
 
@@ -196,7 +196,7 @@ const Producto = ({producto, oculto}) => {
     
 
     return (
-        <tr className={`${!visibilidad && !oculto && "hidden"} border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 hover:cursor-pointer active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700`}>
+        <tr className={`border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 hover:cursor-pointer active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700`}>
             <td className="p-3 dark:text-gray-50 text-center font-semibold">{codigo}</td>
             <td className="dark:text-gray-50 p-3 text-center">{nombre}</td>
             <td className="p-3 dark:text-gray-50 text-center">{marca ? marca : "-"}</td>

@@ -52,7 +52,6 @@ const ProductoState = ({children}) => {
         mensajeRubro: null,
         mensajeCodigo: null,
         filtrados: [],
-        ocultosFiltrados: [],
         rubros: [],
         garantias: [],
         valorDeVenta: 0,
@@ -269,37 +268,73 @@ const ProductoState = ({children}) => {
 
     
     //filtro en el listado segun propiedades del producto
-    const filtro = (palabras, stock) => {
+    const filtro = (palabras, stock, oculto) => {
         let filtrados = []
         let resultado
-        if(palabras) {
-            state.productos.map(producto => {
-                const {descripcion, disponibles} = producto
-                if(stock) {
-                    const incluyeTodas = () => {
-                        return !palabras
-                                .split(' ') //creo un array y a cada palabra la pongo en un array
-                                .some(p => !descripcion.includes(p))    //.some() devuelve true si encuentra algun producto que en la descripcion que tenga las mismas palabras que el array de palabras, sin importar el orden del array. Si !(niego) palabras y descripcion, me va a devolver true cuando encuentre el producto que contenga en la descripcion alguna de las palabras que hay en el array de palabras, sin importar el orden.
-                    }
-                    if(disponibles > 0) {
-                        resultado = incluyeTodas()
+        const incluyeTodas = (descripcion) => {
+            return !palabras
+                    .split(' ') //creo un array y a cada palabra la pongo en un array
+                    .some(p => !descripcion.includes(p))    //.some() devuelve true si encuentra algun producto que en la descripcion que tenga las mismas palabras que el array de palabras, sin importar el orden del array. Si !(niego) palabras y descripcion, me va a devolver true cuando encuentre el producto que contenga en la descripcion alguna de las palabras que hay en el array de palabras, sin importar el orden.
+        }
+        
+        state.productos.map(producto => {
+            const {descripcion, disponibles, visibilidad} = producto
+            if(palabras) {
+                if(!stock && !oculto) { //no checkeo nada -----
+                        resultado = incluyeTodas(descripcion)
+                        if(resultado) {
+                            filtrados = [...filtrados, producto]
+                        }
+                    
+                }
+                if(stock && !oculto) {  //checkeo stock ----
+                    if(disponibles > 0 && visibilidad) {
+                        resultado = incluyeTodas(descripcion)
                         if(resultado) {
                             filtrados = [...filtrados, producto]
                         }
                     }
-                } else {
-                    const incluyeTodas = () => {
-                        return !palabras
-                                .split(' ') //creo un array y a cada palabra la pongo en un array
-                                .some(p => !descripcion.includes(p))    //.some() devuelve true si encuentra algun producto que en la descripcion que tenga las mismas palabras que el array de palabras, sin importar el orden del array. Si !(niego) palabras y descripcion, me va a devolver true cuando encuentre el producto que contenga en la descripcion alguna de las palabras que hay en el array de palabras, sin importar el orden.
+                } 
+                if(!stock && oculto) {  //checkeo oculto ----
+                    if(!visibilidad) {
+                        resultado = incluyeTodas(descripcion)
+                        if(resultado) {
+                            filtrados = [...filtrados, producto]
+                        }
                     }
-                    resultado = incluyeTodas()
-                    if(resultado) {
-                        filtrados = [...filtrados, producto]
-                    } 
                 }
-            })
-        }
+                if(stock && oculto) {   //checkeo stock y oculto
+                    if(disponibles > 0 && !visibilidad) {
+                        resultado = incluyeTodas(descripcion)
+                        if(resultado) {
+                            filtrados = [...filtrados, producto]
+                        }
+                    }
+                }
+            
+            } else {   
+                if(!stock && !oculto) {
+                    if(visibilidad) {
+                        filtrados = [...filtrados, producto]
+                    }
+                }
+                if(stock && !oculto) {  //checkeo stock ----
+                    if(disponibles > 0 && visibilidad) {
+                        filtrados = [...filtrados, producto]
+                    }
+                } 
+                if(!stock && oculto) {  //checkeo oculto ----
+                    if(!visibilidad) {
+                        filtrados = [...filtrados, producto]
+                    }
+                }
+                if(stock && oculto) {   //checkeo stock y oculto
+                    if(disponibles > 0 && !visibilidad) {
+                        filtrados = [...filtrados, producto]
+                    }
+                }
+            }
+        })
         
         try {
             dispatch({
@@ -311,15 +346,7 @@ const ProductoState = ({children}) => {
         }
     }
 
-    const filtrarOcultos = () => {
-        try {
-            dispatch({
-                type: FILTRAR_OCULTOS
-            })
-        } catch (error) {
-            
-        }
-    }
+
 
     //quito disponibilidad del producto
     const venderProducto = async (producto, unidades) => {
@@ -542,7 +569,6 @@ const ProductoState = ({children}) => {
                 mensajeCodigo: state.mensajeCodigo,
                 mensajeRubro: state.mensajeRubro,
                 filtrados: state.filtrados,
-                ocultosFiltrados: state.ocultosFiltrados,
                 rubros: state.rubros,
                 garantias: state.garantias,
                 valorDeVenta: state.valorDeVenta,
@@ -561,7 +587,6 @@ const ProductoState = ({children}) => {
                 limpiarSeleccionado,
                 eliminarProducto,
                 filtro,
-                filtrarOcultos,
                 agregarRubro,
                 venderProducto,
                 eliminarProductos,

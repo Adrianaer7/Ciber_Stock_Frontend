@@ -137,11 +137,6 @@ export default function productoReducer(state, action) {
                 filtrados : action.payload
 
             }
-        case FILTRAR_OCULTOS: 
-            return {
-                ...state,
-                ocultosFiltrados: state.productos.filter(producto => producto.visibilidad !== true)
-            }
         case PRECIO_VENTA_EFECTIVO:
             return {
                 ...state,
@@ -228,7 +223,6 @@ export default function productoReducer(state, action) {
 
             }
         case ORDENAR_NOMBRE_FILTRADO:
-            console.log(action.payload)
             return {
                 ...state,
                 filtrados: action.payload ? state.filtrados.sort((a,b) => a.nombre > b.nombre ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => b.nombre > a.nombre ? 1 : -1) : state.filtrados
