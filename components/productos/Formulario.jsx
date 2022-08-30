@@ -725,7 +725,7 @@ const Formulario = ({productoEditar}) => {
                                         <option value="">--Seleccione--</option>
                                         {rubros.length ? (
                                             rubros.map((rubro, i) => (
-                                                <option value={rubro.rentabilidad}>{`${rubro.nombre} ${rubro.rentabilidad}%`}</option>
+                                                <option key={i} value={rubro.rentabilidad}>{`${rubro.nombre} ${rubro.rentabilidad}%`}</option>
                                             ))
                                         ) : null }
                                         
