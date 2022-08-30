@@ -10,15 +10,8 @@ const ListadoCompras = () => {
     const AuthContext = useContext(authContext)
     const {modo, usuarioAutenticado} = AuthContext
 
-<<<<<<< HEAD
-    const ProveedorContext = useContext(proveedorContext)
-    const {traerProveedores, proveedores} = ProveedorContext
-
-    const CompraContext = useContext(compraContext)
-=======
     const ProvedorContext = useContext(proveedorContext)
     const {traerProveedores, proveedores} = ProvedorContext
->>>>>>> 2111c7654a44c348223a49ffaf12c9fbe4ea0d1f
 
     const CompraContext = useContext(compraContext)
     const {

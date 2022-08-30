@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import ProductoFaltante from "./ProductoFaltante";
-import proveedorContext from "../../context/proveedores/proveedorContext";
 import faltanteContext from "../../context/faltantes/faltantesContext";
 import proveedorContext from "../../context/proveedores/proveedorContext";
 import authContext from "../../context/auth/authContext";
