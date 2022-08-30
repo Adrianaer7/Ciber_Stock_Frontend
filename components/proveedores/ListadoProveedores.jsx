@@ -210,7 +210,7 @@ const ListadoProveedores = () => {
     <>   
         <div className="absolute lg:relative min-w-full m-0">
             
-            <h1 className="font-black dark:text-green-500 text-3xl sm:text-4xl text-green-900 text-center mt-2 sm:mt-0 mb-4 ">Listado de proveedores</h1>
+            <h1 className="font-black dark:text-emerald-500 text-3xl sm:text-4xl text-emerald-900 text-center mt-2 sm:mt-0 mb-4 ">Listado de proveedores</h1>
             <div className="flex flex-col-reverse sm:flex-row justify-between ">
                 <div className={`${focus && "ring-2"} relative my-auto p-2 w-full sm:w-2/6 xl:w-2/6 shadow dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 bg-white rounded-md md:rounded-lg`}>
                     <input 
@@ -235,7 +235,7 @@ const ListadoProveedores = () => {
                     </div> 
                 </div>  
                 <button
-                    className="bg-green-800 hover:bg-green-900 rounded-lg text-white shadow-md px-4 font-bold uppercase "
+                    className="bg-emerald-800 hover:bg-emerald-900 rounded-lg text-white shadow-md px-4 font-bold uppercase "
                     onClick={crearEditar}
                 >
                     {crearNuevo || proveedorSeleccionado? "CANCELAR" : "AGREGAR"}
@@ -416,7 +416,7 @@ const ListadoProveedores = () => {
             }
             
         <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
-            <thead className="bg-green-600 text-white">
+            <thead className="bg-emerald-600 text-white">
                 <tr onClick={() => ordenarEmpresa()} className="hover:cursor-pointer select-none">
                     <th className="p-2 rounded-tl-lg">NOMBRE Y APELLIDO</th>
                     <th>EMPRESA</th>

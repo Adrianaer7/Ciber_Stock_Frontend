@@ -173,11 +173,11 @@ const ListadoRubros = () => {
     <>   
         <div className="absolute lg:relative  min-w-full m-0">
             
-            <h1 className="font-black dark:text-green-500 text-3xl sm:text-4xl text-green-900 text-center mt-2 sm:mt-0 mb-4 ">Listado de rubros</h1>
+            <h1 className="font-black dark:text-teal-500 text-3xl sm:text-4xl text-teal-900 text-center mt-2 sm:mt-0 mb-4 ">Listado de rubros</h1>
             <div className="flex flex-col-reverse sm:flex-row justify-end ">
                 
                 <button
-                    className="bg-green-800 hover:bg-green-900 rounded-lg text-white shadow-md p-4 font-bold uppercase "
+                    className="bg-teal-800 hover:bg-teal-900 rounded-lg text-white shadow-md p-4 font-bold uppercase "
                     onClick={crearEditar}
                 >
                     {crearNuevo || rubroSeleccionado ? "CANCELAR" : "AGREGAR"}
@@ -271,7 +271,7 @@ const ListadoRubros = () => {
             }
             
         <table className="relative top-44 sm:top-44 lg:top-0 lg:w-2/4 mx-auto mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
-            <thead className="bg-green-600 text-white">
+            <thead className="bg-teal-600 text-white">
                 <tr onClick={() => ordenarEmpresa()} className="hover:cursor-pointer select-none">
                     <th className="p-2 rounded-tl-lg">Nombre</th>
                     <th>RENTABILIDAD</th>
