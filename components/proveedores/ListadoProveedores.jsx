@@ -4,12 +4,13 @@ import proveedorContext from "../../context/proveedores/proveedorContext";
 import authContext from "../../context/auth/authContext";
 import Image from "next/image";
 import Swal from "sweetalert2";
-import PDFFile from "../../pdf/PDFFile";
 
 const ListadoProveedores = () => {
 
     const AuthContext = useContext(authContext)
     const {modo, usuarioAutenticado} = AuthContext
+
+     
 
     const ProveedorContext = useContext(proveedorContext)
     const {
@@ -32,15 +33,16 @@ const ListadoProveedores = () => {
     const [ordenEmpresa, setOrdenEmpresa] = useState(false)
     const [crearNuevo, setCrearNuevo] = useState(false)
     const [editar, setEditar] = useState(proveedorSeleccionado ? true : false)
-    const elNombre = "Adrian"
+    
     const [proveedor, setProveedor] = useState({
         nombre: "",
         empresa: "",
         telEmpresa: "",
-        telPersonal: ""
+        telPersonal: "",
+        email: ""
     })
 
-    const {nombre, empresa, telPersonal, telEmpresa} = proveedor
+    const {nombre, empresa, telPersonal, telEmpresa, email} = proveedor
 
     useEffect(() => {
         usuarioAutenticado()
@@ -77,9 +79,18 @@ const ListadoProveedores = () => {
                 nombre: proveedorSeleccionado.nombre,
                 empresa: proveedorSeleccionado.empresa,
                 telPersonal: proveedorSeleccionado.telPersonal,
-                telEmpresa: proveedorSeleccionado.telEmpresa
+                telEmpresa: proveedorSeleccionado.telEmpresa,
+                email: proveedorSeleccionado.email
             })
             setEditar(true)
+        } else {
+            setProveedor({
+                nombre: "",
+                empresa: "",
+                telPersonal: "",
+                telEmpresa: "",
+                email: ""
+            })
         }
     },[proveedorSeleccionado])
 
@@ -110,7 +121,8 @@ const ListadoProveedores = () => {
                 nombre: "",
                 empresa: "",
                 telPersonal: "",
-                telEmpresa: ""
+                telEmpresa: "",
+                email: ""
             })
         }
     }
@@ -176,7 +188,7 @@ const ListadoProveedores = () => {
         }
         
         if(!proveedorSeleccionado) {
-            agregarProveedor(proveedor)
+            await agregarProveedor(proveedor)
             setCrearNuevo(!crearNuevo)
             agregadoExito()
         } else { 
@@ -204,7 +216,7 @@ const ListadoProveedores = () => {
                     <input 
                         type="text" 
                         className="w-10/12 xl:w-11/12 p-2 focus:outline-none dark:bg-transparent"
-                        placeholder="Buscar algún faltante"
+                        placeholder="Buscar algún proveedor"
                         onChange={onChangeFiltro}
                         value={filtrando}
                         onFocus={()=> setFocus(true)}
@@ -245,6 +257,7 @@ const ListadoProveedores = () => {
                             <div>
                                 <label htmlFor="nombre" className="text-gray-800 dark:text-gray-300 font-bold font">Nombre y apellido</label>
                                 <input
+                                    type="text"
                                     name="nombre"
                                     autoComplete="off"
                                     className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 rounded-md border-none active:ring-1 shadow-sm"
@@ -257,6 +270,7 @@ const ListadoProveedores = () => {
                                 <label htmlFor="empresa" className="text-gray-800 dark:text-gray-300 font-bold font">Empresa</label>
 
                                 <input
+                                    type="text"
                                     name="empresa"
                                     autoComplete="off"
                                     list="empresas"
@@ -275,6 +289,7 @@ const ListadoProveedores = () => {
                                 <label htmlFor="telpersonal" className="text-gray-800 dark:text-gray-300 font-bold font">Tel. Personal</label>
 
                                 <input
+                                    type="tel"
                                     name="telPersonal"
                                     autoComplete="off"
                                     className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 rounded-md border-none active:ring-1  shadow-sm"
@@ -287,11 +302,25 @@ const ListadoProveedores = () => {
                                 <label htmlFor="telempresa" className="text-gray-800 dark:text-gray-300 font-bold font">Tel. Empresa</label>
 
                                 <input
+                                    type="tel"
                                     name="telEmpresa"
                                     autoComplete="off"
                                     className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 rounded-md border-none active:ring-1 shadow-sm"
                                     placeholder="3446101010"
                                     value={telEmpresa}
+                                    onChange={onChange}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="email" className="text-gray-800 dark:text-gray-300 font-bold font">Email</label>
+
+                                <input
+                                    type="email"
+                                    name="email"
+                                    autoComplete="off"
+                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 lowercase rounded-md border-none active:ring-1 shadow-sm"
+                                    placeholder="correo@correo.com"
+                                    value={email}
                                     onChange={onChange}
                                 />
                             </div>
@@ -362,6 +391,19 @@ const ListadoProveedores = () => {
                                     onChange={onChange}
                                 />
                             </div>
+                            <div>
+                                <label htmlFor="email" className="text-gray-800 dark:text-gray-300 font-bold font">Email</label>
+
+                                <input
+                                    type="email"
+                                    name="email"
+                                    autoComplete="off"
+                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 lowercase rounded-md border-none active:ring-1 shadow-sm"
+                                    placeholder="correo@correo.com"
+                                    value={email}
+                                    onChange={onChange}
+                                />
+                            </div>
                         <button
                             className=" mt-5 bg-blue-900 text-white px-2 items-end rounded-lg font-bold uppercase"
                         >
@@ -380,17 +422,18 @@ const ListadoProveedores = () => {
                     <th>EMPRESA</th>
                     <th>TEL. PERSONAL</th>
                     <th>TEL. EMPRESA</th>
+                    <th>EMAIL</th>
                     <th className="rounded-tr-lg">ACCIONES</th>
                 </tr>
             </thead>
             <tbody>
-                {Object.keys(proveedoresFiltrados).length === 0 && escribiendo ? (
+                {!proveedoresFiltrados.length && escribiendo ? (
                     <>
                         <tr className="relative p-3 text-2xl dark:text-gray-50">
                             <td>No hay resultados</td>
                         </tr>
                     </>) 
-                : Object.keys(proveedoresFiltrados).length > 0 && escribiendo ?(
+                : proveedoresFiltrados.length && escribiendo ?(
                     <>
                         {proveedoresFiltrados.map(proveedor => (
                             <Proveedor

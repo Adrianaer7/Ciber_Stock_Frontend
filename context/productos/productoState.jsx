@@ -39,6 +39,7 @@ import {
     AGREGAR_GARANTIA,
     CREAR_DOLAR,
     EDITAR_DOLAR,
+    FILTRAR_OCULTOS,
 } from "../../types";
 
 const ProductoState = ({children}) => {
@@ -267,37 +268,75 @@ const ProductoState = ({children}) => {
 
     
     //filtro en el listado segun propiedades del producto
-    const filtro = (palabras, stock) => {
+    const filtro = (palabras, stock, oculto) => {
         let filtrados = []
         let resultado
-        if(palabras) {
-            state.productos.map(producto => {
-                const {descripcion, disponibles} = producto
-                if(stock) {
-                    const incluyeTodas = () => {
-                        return !palabras
-                                .split(' ') //creo un array y a cada palabra la pongo en un array
-                                .some(p => !descripcion.includes(p))    //.some() devuelve true si encuentra algun producto que en la descripcion que tenga las mismas palabras que el array de palabras, sin importar el orden del array. Si !(niego) palabras y descripcion, me va a devolver true cuando encuentre el producto que contenga en la descripcion alguna de las palabras que hay en el array de palabras, sin importar el orden.
-                    }
-                    if(disponibles > 0) {
-                        resultado = incluyeTodas()
+        const incluyeTodas = (descripcion) => {
+            return !palabras
+                    .split(' ') //creo un array y a cada palabra la pongo en un array
+                    .some(p => !descripcion.includes(p))    //.some() devuelve true si encuentra algun producto que en la descripcion que tenga las mismas palabras que el array de palabras, sin importar el orden del array. Si !(niego) palabras y descripcion, me va a devolver true cuando encuentre el producto que contenga en la descripcion alguna de las palabras que hay en el array de palabras, sin importar el orden.
+        }
+        
+        state.productos.map(producto => {
+            const {descripcion, disponibles, visibilidad} = producto
+            if(palabras) {
+                if(!stock && !oculto) { //no checkeo nada -----
+                    if(visibilidad) {   //muestro todos los visibles
+                        resultado = incluyeTodas(descripcion)
                         if(resultado) {
                             filtrados = [...filtrados, producto]
                         }
                     }
-                } else {
-                    const incluyeTodas = () => {
-                        return !palabras
-                                .split(' ') //creo un array y a cada palabra la pongo en un array
-                                .some(p => !descripcion.includes(p))    //.some() devuelve true si encuentra algun producto que en la descripcion que tenga las mismas palabras que el array de palabras, sin importar el orden del array. Si !(niego) palabras y descripcion, me va a devolver true cuando encuentre el producto que contenga en la descripcion alguna de las palabras que hay en el array de palabras, sin importar el orden.
-                    }
-                    resultado = incluyeTodas()
-                    if(resultado) {
-                        filtrados = [...filtrados, producto]
-                    } 
+                    
                 }
-            })
-        }
+                if(stock && !oculto) {  //checkeo stock ----
+                    if(disponibles > 0 && visibilidad) {
+                        resultado = incluyeTodas(descripcion)
+                        if(resultado) {
+                            filtrados = [...filtrados, producto]
+                        }
+                    }
+                } 
+                if(!stock && oculto) {  //checkeo oculto ----
+                    if(!visibilidad) {
+                        resultado = incluyeTodas(descripcion)
+                        if(resultado) {
+                            filtrados = [...filtrados, producto]
+                        }
+                    }
+                }
+                if(stock && oculto) {   //checkeo stock y oculto
+                    if(disponibles > 0 && !visibilidad) {
+                        resultado = incluyeTodas(descripcion)
+                        if(resultado) {
+                            filtrados = [...filtrados, producto]
+                        }
+                    }
+                }
+            
+            } else {   
+                if(!stock && !oculto) {
+                    if(visibilidad) {
+                        filtrados = [...filtrados, producto]
+                    }
+                }
+                if(stock && !oculto) {  //checkeo stock ----
+                    if(disponibles > 0 && visibilidad) {
+                        filtrados = [...filtrados, producto]
+                    }
+                } 
+                if(!stock && oculto) {  //checkeo oculto ----
+                    if(!visibilidad) {
+                        filtrados = [...filtrados, producto]
+                    }
+                }
+                if(stock && oculto) {   //checkeo stock y oculto
+                    if(disponibles > 0 && !visibilidad) {
+                        filtrados = [...filtrados, producto]
+                    }
+                }
+            }
+        })
         
         try {
             dispatch({
@@ -308,6 +347,7 @@ const ProductoState = ({children}) => {
             console.log(error)
         }
     }
+
 
 
     //quito disponibilidad del producto
@@ -324,20 +364,14 @@ const ProductoState = ({children}) => {
         if(valor1>0 && valor2>0 && valor4 && valor3 === "") {
             const val1 = parseFloat(valor1) //precio compra dolar
             const val2 = parseFloat(valor2) //valor dolar compra
-            const val3 = (valor4.split(" ")[1].replace("%", ""))    //traigo el rubro con su porcentaje y extraigo el valor numerico
-            const val4 = parseInt(val3)   //rentabilidad
-            const res1 = (val1 * val2) * (parseInt(Math.round(val4))+100)   //redondeo el porcentaje y convierto a integer el resultado de la operacion
+            const res1 = (val1 * val2) * (parseInt(Math.round(parseFloat(valor4)))+100)   //redondeo el porcentaje y convierto a integer el resultado de la operacion
             const res3 = Number((res1 / 100).toFixed(2))
             if(res3) {
-                const res4 = Number(((res3 * 105) / 100).toFixed(2))
-                const res5 = Number(((res3 * 109) / 100).toFixed(2))
                 try {
                     dispatch({
                         type: PRECIO_VENTA_EFECTIVO,
                         payload: {
-                            res3,
-                            res4,
-                            res5
+                            res3
                         }
                     })
                 } catch (error) {
@@ -347,20 +381,16 @@ const ProductoState = ({children}) => {
         } else {
             limpiarPrecioVenta()
         }
+        
         if(valor1>0 && valor4 && valor3>0 && valor2==="") {
             const val3 = parseFloat(valor3) //valor peso compra
-            const val4 = parseInt(valor4.split(" ")[1].replace("%", ""))  //rentabilidad
-            const res3 = parseInt(((val3 * (parseInt(val4)+100)) / 100).toFixed(2))
+            const res3 = (val3 * (parseInt(Math.round(parseFloat(valor4)))+100) / 100)
             if(res3) {
-                const res4 = Number(((res3 * 105) / 100).toFixed(2))
-                const res5 = Number(((res4 * 109) / 100).toFixed(2))
                 try {
                     dispatch({
                         type: PRECIO_VENTA_EFECTIVO,
                         payload: {
-                            res3,
-                            res4,
-                            res5
+                            res3
                         }
                     })
                 } catch (error) {
@@ -408,8 +438,7 @@ const ProductoState = ({children}) => {
             const {data} = await clienteAxios.get("/api/dolares")
             if(!data.dolar[0]) {  //si no existe ningun dolar, creo uno trayendolo de la api
                 traerDolarAPI()
-            }
-            if(data.dolar[0]) {
+            } else {
                 const {dolar} = data
                 if(dolar[0].automatico) {   //si ya existe el un dolar automatico creado, le envio el nuevo valor
                     traerDolarAPI()

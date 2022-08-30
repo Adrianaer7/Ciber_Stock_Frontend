@@ -22,7 +22,7 @@ const ListadoProductos = () => {
         traerGarantias,
         limpiarSeleccionado, 
         filtro,
-        filtrados, 
+        filtrados,
         traerDolarBD,
         editarDolarDB,
         dolarBD, 
@@ -44,6 +44,7 @@ const ListadoProductos = () => {
 
     const [filtrando, setFiltrando] = useState("")    //contiene lo que voy escribiendo
     const [conStock, setConStock] = useState(false)
+    const [oculto, setOculto] = useState(false)
     const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
     const [focus, setFocus] = useState(false)   //activar el ring en el buscador
     const [spinner, setSpinner] = useState(true)
@@ -58,6 +59,8 @@ const ListadoProductos = () => {
         precio: "",
     })
     const {precio} = dolarManual
+    let automatico
+
 
     useEffect(() => {
         traerProductos()
@@ -138,8 +141,9 @@ const ListadoProductos = () => {
     }, [filtrando])
 
     useEffect(() => {
-        filtro(filtrando.toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), conStock)   //el normalice separa la tilde de la letra. el replace reemplaza la tilde por "", osea lo elimina
-    }, [filtrando, conStock])
+        filtro(filtrando.toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), conStock, oculto)   //el normalice separa la tilde de la letra. el replace reemplaza la tilde por "", osea lo elimina
+    }, [filtrando, conStock, oculto])
+
 
     const onChangeFiltro = e => {
         setFiltrando(e.target.value)
@@ -230,6 +234,17 @@ const ListadoProductos = () => {
                     </label>
                     
                 </div>
+                <div className="my-auto whitespace-nowrap ">
+                    <label className="flex ml-2">
+                    
+                        <input
+                            type="checkbox"
+                            onClick={() => setOculto(!oculto)}
+                        />
+                        <div className="ml-2 dark:text-white">Ocultos</div>
+                    </label>
+                    
+                </div>
                 
                 
             </div>
@@ -245,7 +260,7 @@ const ListadoProductos = () => {
                                 {elDolarAutomatico == false && 
                                     <button 
                                         className={`dark:bg-gray-700 dark:hover:bg-gray-600 bg-gray-200 hover:bg-gray-300 rounded-full px-2`} 
-                                        onClick={() => eliminarDolarManual()}
+                                        onClick={eliminarDolarManual}
                                     >
                                         X
                                     </button>}
@@ -291,13 +306,13 @@ const ListadoProductos = () => {
             </tr>
         </thead>
         <tbody>
-            {Object.keys(filtrados).length === 0 && escribiendo ? (
+            {!filtrados.length && escribiendo ? (
                 <>
                     <tr className="relative p-3 dark:text-gray-50 text-2xl">
                         <td>No hay resultados</td>
                     </tr>
                 </>) 
-            : Object.keys(filtrados).length > 0 && escribiendo ?(
+            : filtrados.length && !escribiendo ?(
                 <>
                     {filtrados.map(producto => (
                         <Producto
@@ -306,16 +321,21 @@ const ListadoProductos = () => {
                         />
                     ))}
                 </>)
-            : (
-            <>
-                {productos.map(producto => (
+            : filtrados.length && escribiendo ?(
+                <>
+                    {filtrados.map(producto => (
+                        <Producto
+                            key={producto._id}
+                            producto={producto}
+                        />
+                    ))}
+                </>)
+                : productos.map(producto => producto.visibilidad ? (
                     <Producto
-                        key={producto._id}
-                        producto={producto}
-                    />
-                ))}
-            </>
-            )}  
+                            key={producto._id}
+                            producto={producto}
+                        />
+                ) : null)} 
         </tbody>
         
     </table>

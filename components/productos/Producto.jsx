@@ -34,7 +34,8 @@ const Producto = ({producto}) => {
         modelo, 
         _id, 
         faltante,
-        limiteFaltante
+        limiteFaltante,
+        visibilidad
     } = producto
     
     const conocidos = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_conocidos)).trim().replace(/\s\s+/g, ' ')   //datos que se copian al hacer click en el precio. El replace quita 2 o mas espacio entre palabra y palabra
@@ -195,7 +196,7 @@ const Producto = ({producto}) => {
     
 
     return (
-        <tr className="border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 hover:cursor-pointer active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700">
+        <tr className={`border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 hover:cursor-pointer active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700`}>
             <td className="p-3 dark:text-gray-50 text-center font-semibold">{codigo}</td>
             <td className="dark:text-gray-50 p-3 text-center">{nombre}</td>
             <td className="p-3 dark:text-gray-50 text-center">{marca ? marca : "-"}</td>

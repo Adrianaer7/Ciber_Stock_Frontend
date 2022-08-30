@@ -10,11 +10,17 @@ const ListadoCompras = () => {
     const AuthContext = useContext(authContext)
     const {modo, usuarioAutenticado} = AuthContext
 
+<<<<<<< HEAD
     const ProveedorContext = useContext(proveedorContext)
     const {traerProveedores, proveedores} = ProveedorContext
 
     const CompraContext = useContext(compraContext)
+=======
+    const ProvedorContext = useContext(proveedorContext)
+    const {traerProveedores, proveedores} = ProvedorContext
+>>>>>>> 2111c7654a44c348223a49ffaf12c9fbe4ea0d1f
 
+    const CompraContext = useContext(compraContext)
     const {
         compras, 
         traerCompras, 
@@ -141,13 +147,13 @@ const ListadoCompras = () => {
             </thead>
             <tbody>
             
-            {Object.keys(filtrados).length === 0 && escribiendo ? (
+            {!filtrados.length && escribiendo ? (
                     <>
                         <tr className="relative p-3 text-2xl dark:text-gray-50">
                             <td>No hay resultados</td>
                         </tr>
                     </>) 
-                : Object.keys(filtrados).length > 0 && escribiendo ?(
+                : filtrados.length && escribiendo ?(
                     <>
                         {filtrados.map(producto => (
                             <Compra

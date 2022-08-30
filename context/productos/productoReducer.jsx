@@ -35,6 +35,7 @@ import {
     AGREGAR_GARANTIA,
     CREAR_DOLAR,
     EDITAR_DOLAR,
+    FILTRAR_OCULTOS,
 } from "../../types"
 
 export default function productoReducer(state, action) {
@@ -136,23 +137,15 @@ export default function productoReducer(state, action) {
                 filtrados : action.payload
 
             }
-        
-        
         case PRECIO_VENTA_EFECTIVO:
             return {
                 ...state,
                 valorDeVenta: action.payload.res3,
-                valorDeVentaConocidos: action.payload.res3,
-                valorDeVentaEfectivo: action.payload.res4,
-                valorDeVentaTarjeta: action.payload.res5
             }
         case LIMPIAR_VENTA:
             return {
                 ...state,
                 valorDeVenta: 0,
-                valorDeVentaConocidos: 0,
-                valorDeVentaEfectivo: 0,
-                valorDeVentaTarjeta: 0
             }
         case TRAER_DOLAR_BD:
             return {
@@ -230,7 +223,6 @@ export default function productoReducer(state, action) {
 
             }
         case ORDENAR_NOMBRE_FILTRADO:
-            console.log(action.payload)
             return {
                 ...state,
                 filtrados: action.payload ? state.filtrados.sort((a,b) => a.nombre > b.nombre ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => b.nombre > a.nombre ? 1 : -1) : state.filtrados
