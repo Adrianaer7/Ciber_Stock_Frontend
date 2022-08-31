@@ -1,4 +1,4 @@
-import ListadoVentas from "../components/ventas/ListadoVentas"
+import ListadoVentas from "../components/historial/ventas/ListadoVentas"
 import Layout from "../components/layout/Layout"
 
 const Ventas = () => {

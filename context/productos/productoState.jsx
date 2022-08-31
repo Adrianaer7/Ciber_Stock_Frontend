@@ -39,7 +39,6 @@ import {
     AGREGAR_GARANTIA,
     CREAR_DOLAR,
     EDITAR_DOLAR,
-    FILTRAR_OCULTOS,
 } from "../../types";
 
 const ProductoState = ({children}) => {

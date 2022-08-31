@@ -2,8 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import productoContext from "../../context/productos/productoContext";
 import faltanteContext from "../../context/faltantes/faltantesContext";
+import ventaContext from "../../context/historial/ventas/ventaContext";
 import authContext from "../../context/auth/authContext";
 import proveedorContext from "../../context/proveedores/proveedorContext"
+import { hoy } from "../../helpers";
 import Swal from "sweetalert2";
 
 const Producto = ({producto}) => {
@@ -11,14 +13,16 @@ const Producto = ({producto}) => {
     const {modo} = AuthContext
 
     const productosContext = useContext(productoContext)
-    const {productoActual, venderProducto, garantias} = productosContext
-
+    const {productoActual, venderProducto, garantias, dolarBD} = productosContext
     const ProveedorContext = useContext(proveedorContext)
     const {proveedores} = ProveedorContext
 
     const faltantesContext = useContext(faltanteContext)
     const {agregarFaltante, eliminarFaltante} = faltantesContext
 
+    const ventasContext = useContext(ventaContext)
+    const {agregarVenta} = ventasContext
+    
     const [colorFaltante, setColorFaltante] = useState(null)
     const [todasGarantias, setTodasGarantias] = useState([])
     const {
@@ -34,8 +38,7 @@ const Producto = ({producto}) => {
         modelo, 
         _id, 
         faltante,
-        limiteFaltante,
-        visibilidad
+        limiteFaltante
     } = producto
     
     const conocidos = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_conocidos)).trim().replace(/\s\s+/g, ' ')   //datos que se copian al hacer click en el precio. El replace quita 2 o mas espacio entre palabra y palabra
@@ -43,7 +46,6 @@ const Producto = ({producto}) => {
     const tarjeta = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_tarjeta)).trim().replace(/\s\s+/g, ' ')
     const textoUnPago = (nombre + " " + marca + " " + modelo + " " + "Total final ahora 12: " + "$" + Math.round(precio_venta_ahoraDoce)).trim().replace(/\s\s+/g, ' ') + " - " + "Valor de cada cuota: " + "$" + precio_venta_cuotas
 
-    
     useEffect(() => {
         const warranty = [] //guardo momentaneamente las garantias
         if(garantias.length > 0) {  //garantias del state
@@ -119,6 +121,7 @@ const Producto = ({producto}) => {
                 return venderElProducto()
             }
             await venderProducto(producto, unidades)
+            await agregarVenta(producto, dolarBD, unidades, hoy)
             await Copiado.fire({    //luego de descontar de la bd, muestro alerta de venta correcta
                 icon: 'success',
                 title: `${unidades > 1 ? "Se vendieron " + unidades + " unidades de" + nombre : "Se vendió " + unidades + " unidad de " + nombre }`,

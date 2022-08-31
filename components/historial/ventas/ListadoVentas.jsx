@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Venta from "./Venta";
-import ventaContext from "../../context/historial/ventas/ventaContext";
-import authContext from "../../context/auth/authContext";
+import ventaContext from "../../../context/historial/ventas/ventaContext";
+import authContext from "../../../context/auth/authContext";
 import Image from "next/image";
 
 const ListadoVentas = () => {
@@ -79,12 +79,16 @@ const ListadoVentas = () => {
         <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
             <thead className="bg-yellow-500 text-white">
                 <tr className="hover:cursor-pointer select-none">
+                <th className="p-2 rounded-tl-lg">CODIGO</th>
                     <th>NOMBRE</th>
                     <th>MARCA</th>
                     <th>MODELO</th>
-                    <th>CANTIDAD</th>
                     <th>COD BARRAS</th>
-                    <th className="rounded-tr-lg">PRECIO EN USD</th>
+                    <th> VENTA</th>
+                    <th>COTIZACIÓN USD</th>
+                    <th>PRECIO EN USD</th>
+                    <th>CANTIDAD</th>
+                    <th className="rounded-tr-lg">ACCIONES</th>
                 </tr>
             </thead>
             <tbody>

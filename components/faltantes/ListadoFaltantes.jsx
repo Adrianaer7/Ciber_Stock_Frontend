@@ -187,7 +187,7 @@ const ListadoFaltantes = () => {
                     <th className="rounded-tr-lg">ACCIONES</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody> 
                 {!filtrados.length && escribiendo ? (
                     <>
                         <tr className="relative p-3 text-2xl dark:text-gray-50">
