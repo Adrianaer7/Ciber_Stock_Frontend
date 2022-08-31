@@ -133,6 +133,14 @@ const Layout = ({children, pagina}) => {
                                     >   Compras</a>
                                 </Link>
                             </li>
+                            <li >
+                                <Link href="/ventas">
+                                    <a 
+                                        className={`${urlActual === "/ventas" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
+                                        onClick={() => limpiarSeleccionado()}
+                                    >   Ventas</a>
+                                </Link>
+                            </li>
                             <li 
                                 className="lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300 hover:cursor-pointer"
                                 onClick={() => setMostrarVarios(!mostrarVarios)}

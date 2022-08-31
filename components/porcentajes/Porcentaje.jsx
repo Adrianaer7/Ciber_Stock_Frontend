@@ -3,13 +3,13 @@ import Image from "next/image";
 import authContext from "../../context/auth/authContext";
 import porcentajeContext from "../../context/porcentajes/porcentajeContext";
 
-const Porcentaje = ({porcentaje, crearNuevo}) => {
+const Porcentaje = ({porcentaje}) => {
     
     const AuthContext = useContext(authContext)
     const {modo} = AuthContext
 
     const PorcentajeContext = useContext(porcentajeContext)
-    const {eliminarUnPorcentaje, porcentajeActual, limpiarSeleccionado} = PorcentajeContext
+    const {porcentajeActual} = PorcentajeContext
 
     const {_id, nombre, comision} = porcentaje
 

@@ -1,5 +1,6 @@
 import Layout from "../components/layout/Layout"
 import ListadoPorcentajes from "../components/porcentajes/ListadoPorcentajes";
+
 const Porcentajes = () => {
 
   return (

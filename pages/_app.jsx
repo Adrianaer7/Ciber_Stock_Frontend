@@ -6,6 +6,7 @@ import CompraState from '../context/historial/compras/compraState'
 import ProveedorState from '../context/proveedores/proveedorState'
 import RubroState from '../context/rubros/rubroState'
 import PorcentajeState from '../context/porcentajes/porcentajeState'
+import VentaState from '../context/historial/ventas/ventaState'
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -13,6 +14,7 @@ function MyApp({ Component, pageProps }) {
       <ProductoState>
         <FaltanteState>
           <CompraState>
+            <VentaState>
             <ProveedorState>
               <RubroState>
                 <PorcentajeState>
@@ -20,6 +22,7 @@ function MyApp({ Component, pageProps }) {
                 </PorcentajeState>
               </RubroState>
             </ProveedorState>
+            </VentaState>
           </CompraState>
         </FaltanteState>
       </ProductoState>

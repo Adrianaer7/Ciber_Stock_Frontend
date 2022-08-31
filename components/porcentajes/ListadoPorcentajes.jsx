@@ -274,7 +274,7 @@ const ListadoPorcentajes = () => {
             
         <table className="relative top-44 sm:top-44 lg:top-0 lg:w-2/4 mx-auto mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
             <thead className="bg-green-600 text-white">
-                <tr onClick={() => ordenarEmpresa()} className="hover:cursor-pointer select-none">
+                <tr className="hover:cursor-pointer select-none">
                     <th className="p-2 rounded-tl-lg">Nombre</th>
                     <th>Comisión</th>
                     <th className="rounded-tr-lg">ACCIONES</th>
