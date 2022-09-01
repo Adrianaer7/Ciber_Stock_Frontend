@@ -62,9 +62,9 @@ const VentaState = ({children}) => {
         
     }
 
-    const editarVenta = async(id, cantidad) => {
+    const editarVenta = async(id, idProducto, cantidad) => {
         try {
-            const {data} = await clienteAxios.put(`/api/ventas/${id}`, {cantidad})
+            const {data} = await clienteAxios.put(`/api/ventas/${id}`, {idProducto, cantidad})
             dispatch({
                 type: EDITAR_VENTA,
                 payload: data.venta
@@ -75,9 +75,9 @@ const VentaState = ({children}) => {
         
     }
 
-    const eliminarVenta = async (id) => {
+    const eliminarVenta = async (id, idProducto, cantidad) => {
         try {
-            clienteAxios.delete(`/api/ventas/${id}`)
+            clienteAxios.delete(`/api/ventas/${id}`, {idProducto, cantidad})
             dispatch({
                 type: ELIMINAR_VENTA,
                 payload: id

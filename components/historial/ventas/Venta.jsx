@@ -24,7 +24,8 @@ const Venta = ({producto}) => {
         fecha,
         dolar,
         precioEnDolar,
-        unidades
+        unidades,
+        idProducto
     } = producto
 
     const Copiado = Swal.mixin({
@@ -78,7 +79,7 @@ const Venta = ({producto}) => {
                 return editarLaVenta()
             }
             if(unidades == cantidad) {
-                await eliminarVenta(_id)
+                await eliminarVenta(_id, idProducto, unidades)
                 return Eliminado.fire({
                     icon: 'success',
                     title: `Se devolvió ${nombre} correctamente`,
@@ -87,7 +88,7 @@ const Venta = ({producto}) => {
                     color: `${modo ? "white" : "#545454"}`,
                 })
             }
-            await editarVenta(_id, cantidad)
+            await editarVenta(_id, idProducto, cantidad)
             await Copiado.fire({    //luego de descontar de la bd, muestro alerta de venta correcta
                 icon: 'success',
                 title: `${unidades > 1 ? "Se devolvieron " + unidades + " unidades de " + nombre : "Se devolvieron " + unidades + " unidades de " + nombre }`,
@@ -113,7 +114,7 @@ const Venta = ({producto}) => {
             background: `${modo ? "rgb(31 41 55)" : "white"}`,
         }).then((result) => {
             if (result.isConfirmed) {
-                eliminarVenta(_id)
+                eliminarVenta(_id, idProducto, unidades)
                 Eliminado.fire({
                     icon: 'success',
                     title: "Se eliminó correctamente",
