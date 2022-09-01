@@ -134,7 +134,7 @@ const Producto = ({producto}) => {
             if(limiteFaltante !== null) {
                 resta = disponibles - unidades  //obtengo cuantas unidades me quedan
             }
-            if(resta <= limiteFaltante) { //si el producto que vendi entró a faltantes, muestro alerta luego de la alerta de vendido
+            if(resta <= limiteFaltante && !faltante) { //si el producto que vendi entró a faltantes, muestro alerta luego de la alerta de vendido
                 Copiado.fire({
                     icon: 'success',
                     title: 'Agregado a faltante',
