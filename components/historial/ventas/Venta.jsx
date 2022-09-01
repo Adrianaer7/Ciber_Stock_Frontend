@@ -24,6 +24,7 @@ const Venta = ({producto}) => {
         fecha,
         dolar,
         precioEnDolar,
+        precioEnArs,
         unidades,
         idProducto
     } = producto
@@ -126,6 +127,7 @@ const Venta = ({producto}) => {
         })
     }
 
+
     return (
 
         <tr className={` border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 hover:cursor-pointer active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700`}>
@@ -135,8 +137,9 @@ const Venta = ({producto}) => {
             <td className="p-3 dark:text-gray-50 text-center">{!modelo ? "-" : modelo}</td>
             <td className="p-3 dark:text-gray-50 text-center">{!barras ? "-" : barras}</td>
             <td className="p-3 dark:text-gray-50 text-center">{!fecha ? "-" : generarFecha(fecha)}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{!dolar ? "-" : dolar}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{!precioEnDolar ? "-" : precioEnDolar}</td>
+            <td className="p-3 dark:text-gray-50 text-center">{!dolar ? "-" : `$ ${dolar}`}</td>
+            <td className="p-3 dark:text-gray-50 text-center">{!precioEnDolar ? "-" : `$ ${precioEnDolar}`}</td>
+            <td className="p-3 dark:text-gray-50 text-center">{!precioEnArs ? "-" : `$ ${precioEnArs}`}</td>
             <td className="p-3 dark:text-gray-50 text-center">{!unidades ? "-" : unidades}</td>
             <td className="p-1 w-40 mt-2  ">
                 <div className="flex justify-evenly">

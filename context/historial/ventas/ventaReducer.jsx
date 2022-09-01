@@ -1,6 +1,7 @@
 import { 
     CREAR_VENTA,
     EDITAR_VENTA,
+    FILTRO_VENTA,
     ELIMINAR_VENTA,
     TRAER_VENTAS,
 
@@ -27,6 +28,11 @@ export default function ventareducer (state, action) {
             return {
                 ...state,
                 ventas: state.ventas.map(venta => venta._id === action.payload._id ? action.payload : venta)
+            }
+        case FILTRO_VENTA: 
+            return {
+                ...state,
+                filtradas: action.payload
             }
         default:
             return state;

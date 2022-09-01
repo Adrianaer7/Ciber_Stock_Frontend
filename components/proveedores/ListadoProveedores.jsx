@@ -242,11 +242,7 @@ const ListadoProveedores = () => {
                 </button>
             </div> 
         </div>
-            {/*<div>
-                <PDFFile>
-                    {proveedor}
-                </PDFFile>
-            </div>*/}
+
             {crearNuevo && (
                 <div className="dark:bg-gray-900 py-3 bg-white rounded-lg mt-6 mx-auto">
 
@@ -427,36 +423,44 @@ const ListadoProveedores = () => {
                 </tr>
             </thead>
             <tbody>
-                {!proveedoresFiltrados.length && escribiendo ? (
-                    <>
-                        <tr className="relative p-3 text-2xl dark:text-gray-50">
-                            <td>No hay resultados</td>
-                        </tr>
-                    </>) 
-                : proveedoresFiltrados.length && escribiendo ?(
-                    <>
-                        {proveedoresFiltrados.map(proveedor => (
-                            <Proveedor
-                                key={proveedor._id}
-                                proveedor={proveedor}
-                                crearNuevo={crearNuevo}
-                            />
-                        ))}
-                    </>)
-                : 
-                (
-                <>
-                    {proveedores.map(proveedor => (
-                        <Proveedor
-                            key={proveedor._id}
-                            proveedor={proveedor}
-                            crearNuevo={crearNuevo}
-                        />
-                    ))}
-                </>
+                {!proveedoresFiltrados.length && escribiendo 
+                    ? null 
+                    : proveedoresFiltrados.length && escribiendo ?(
+                        <>
+                            {proveedoresFiltrados.map(proveedor => (
+                                <Proveedor
+                                    key={proveedor._id}
+                                    proveedor={proveedor}
+                                    crearNuevo={crearNuevo}
+                                />
+                            ))}
+                        </>)
+                    : (
+                        <>
+                            {proveedores.map(proveedor => (
+                                <Proveedor
+                                    key={proveedor._id}
+                                    proveedor={proveedor}
+                                    crearNuevo={crearNuevo}
+                                />
+                            ))}
+                        </>
                 )}  
             </tbody>
         </table>
+        {!proveedoresFiltrados.length && escribiendo ? (
+            <div className="mx-auto mt-10 w-1/4">
+                <Image
+                    className="max-w-sm"
+                    src="/lupanoencontrado.png"
+                    alt="NoEncontrada"
+                    width={400} 
+                    height={400}
+                    priority={true}
+                />
+                <p className={`${modo && "text-white" } text-center text-2xl`}>No hay resultados</p>
+            </div>) 
+        : null}
     </>
   )
 }

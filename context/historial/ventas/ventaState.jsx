@@ -21,7 +21,7 @@ const VentaState = ({children}) => {
     const [state, dispatch] = useReducer(ventaReducer, initialState)
 
     const agregarVenta = async (producto, valor_dolar, unidades, fecha) => {
-        const {_id, codigo, nombre, marca, modelo, barras, precio_venta_tarjeta, descripcion } = producto
+        const {_id, codigo, nombre, marca, modelo, barras, precio_venta_tarjeta, precio_venta_pesos, descripcion } = producto
 
         const venta = {
             idProducto: _id,
@@ -33,6 +33,7 @@ const VentaState = ({children}) => {
             descripcion,
             dolar: valor_dolar,
             precioEnDolar: (precio_venta_tarjeta / valor_dolar).toFixed(2),
+            precioEnArs: precio_venta_tarjeta,
             unidades,
             fecha
         }
@@ -75,6 +76,55 @@ const VentaState = ({children}) => {
         
     }
 
+    const filtroVenta = (palabras, fechaDesde, fechaHasta) => {
+        let filtradas = []
+        const incluyeTodas = (descripcion) => {
+            return !palabras
+                    .split(' ')
+                    .some(p => !descripcion.includes(p))    //.some() comprueba si al menos 1 elemento cumple con la concidion.
+        }
+        state.ventas.map(venta => {
+            const {descripcion, fecha} = venta
+            if(palabras) {
+                if(fechaDesde && fechaHasta) {
+                    if(fechaDesde <= fechaHasta) {
+                        if(fecha >= fechaDesde && fecha <= fechaHasta) {
+                            const resultado = incluyeTodas(descripcion)
+                            if(resultado) {
+                                filtradas = [...filtradas, venta]
+                            }
+                        }
+                    }
+                } else {
+                    const resultado = incluyeTodas(descripcion)
+                    if(resultado) {
+                        filtradas = [...filtradas, venta]
+                    }
+                }
+            } else {
+                if(fechaDesde && fechaHasta) {
+                    if(fechaDesde <= fechaHasta) {
+                        if(fecha >= fechaDesde && fecha <= fechaHasta) {
+                            const resultado = incluyeTodas(descripcion)
+                            if(resultado) {
+                                filtradas = [...filtradas, venta]
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        try {
+            dispatch({
+                type: FILTRO_VENTA,
+                payload: filtradas
+            })
+        } catch (error) {
+            console.log(error)
+        }
+        
+    }
+
     const eliminarVenta = async (id, idProducto, cantidad) => {
         try {
             clienteAxios.delete(`/api/ventas/${id}`, {idProducto, cantidad})
@@ -85,36 +135,7 @@ const VentaState = ({children}) => {
         } catch (error) {
             console.log(error)
         }
-    }
-
-    const filtroVenta = palabras => {
-        let filtrados = []
-        state.ventas.map(venta => {
-            const {descripcion} = venta
-
-            const incluyeTodas = () => {
-                return !palabras
-                        .split(' ')
-                        .some(p => !descripcion.includes(p))    //.some() comprueba si al menos 1 elemento cumple con la concidion.
-            }
-            
-            const resultado = incluyeTodas()
-            if(resultado) {
-                filtrados = [...filtrados, venta]
-            }
-        })
-        try {
-            dispatch({
-                type: FILTRO_VENTA,
-                payload: filtrados
-            })
-        } catch (error) {
-            console.log(error)
-        }
-        
-    }
-
-   
+    }   
 
 
   return (
@@ -125,6 +146,7 @@ const VentaState = ({children}) => {
             agregarVenta,
             traerVentas,
             editarVenta,
+            filtroVenta,
             eliminarVenta
         }}
     >

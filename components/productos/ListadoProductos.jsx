@@ -305,12 +305,8 @@ const ListadoProductos = () => {
             </tr>
         </thead>
         <tbody>
-            {!filtrados.length && escribiendo ? (
-                <>
-                    <tr className="relative p-3 dark:text-gray-50 text-2xl">
-                        <td>No hay resultados</td>
-                    </tr>
-                </>) 
+            {!filtrados.length && escribiendo 
+            ? null 
             : filtrados.length && !escribiendo ?(
                 <>
                     {filtrados.map(producto => (
@@ -338,7 +334,21 @@ const ListadoProductos = () => {
         </tbody>
         
     </table>
+    
     )}
+    {!filtrados.length && escribiendo ? (
+        <div className="mx-auto mt-10 w-1/4">
+            <Image
+                className="max-w-sm"
+                src="/lupanoencontrado.png"
+                alt="NoEncontrada"
+                width={400} 
+                height={400}
+                priority={true}
+            />
+            <p className={`${modo && "text-white" } text-center text-2xl`}>No hay resultados</p>
+        </div>) 
+    : null}
     </>
     )
     
