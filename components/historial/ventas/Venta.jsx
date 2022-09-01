@@ -117,7 +117,7 @@ const Venta = ({producto}) => {
                 eliminarVenta(_id, idProducto, unidades)
                 Eliminado.fire({
                     icon: 'success',
-                    title: "Se eliminó correctamente",
+                    title: "Se eliminó la venta correctamente",
                     background: `${modo ? "#505050" : "white"}`,
                     width: "25%",
                     color: `${modo ? "white" : "#545454"}`,

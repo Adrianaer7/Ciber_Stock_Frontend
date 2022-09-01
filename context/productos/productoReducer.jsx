@@ -65,6 +65,7 @@ export default function productoReducer(state, action) {
             return {
                 ...state,
                 productos: action.payload,
+                filtrados: []
             }
         case OBTENER_CODIGOS:
             return {

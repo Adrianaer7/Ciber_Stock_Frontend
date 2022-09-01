@@ -50,7 +50,7 @@ const ListadoVentas = () => {
   return (
     <>   
         <div className="absolute lg:relative min-w-full m-0">
-            <h1 className="font-black dark:text-yellow-500 text-3xl sm:text-4xl text-yellow-500 text-center mt-2 sm:mt-0 mb-4 ">Listado de ventas</h1>
+            <h1 className="font-black dark:text-pink-500 text-3xl sm:text-4xl text-pink-500 text-center mt-2 sm:mt-0 mb-4 ">Listado de ventas</h1>
             <div className="flex flex-col-reverse sm:flex-row justify-between ">
                 <div className={`${focus && "ring-2"} relative my-auto p-2 w-full sm:w-2/6 xl:w-2/6 shadow dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 bg-white rounded-md md:rounded-lg`}>
                         <input 
@@ -77,7 +77,7 @@ const ListadoVentas = () => {
                 </div>    
         </div>
         <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
-            <thead className="bg-yellow-500 text-white">
+            <thead className="bg-pink-500 text-white">
                 <tr className="hover:cursor-pointer select-none">
                 <th className="p-2 rounded-tl-lg">CODIGO</th>
                     <th>NOMBRE</th>
