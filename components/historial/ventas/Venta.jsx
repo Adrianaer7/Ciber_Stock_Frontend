@@ -26,7 +26,8 @@ const Venta = ({producto}) => {
         precioEnDolar,
         precioEnArs,
         unidades,
-        idProducto
+        idProducto,
+        existeProducto
     } = producto
 
     const Copiado = Swal.mixin({
@@ -142,29 +143,32 @@ const Venta = ({producto}) => {
             <td className="p-3 dark:text-gray-50 text-center">{!precioEnArs ? "-" : `$ ${precioEnArs}`}</td>
             <td className="p-3 dark:text-gray-50 text-center">{!unidades ? "-" : unidades}</td>
             <td className="p-1 w-40 mt-2  ">
-                <div className="flex justify-evenly">
-                    <div className="hover:bg-gray-200 dark:hover:bg-gray-600 p-1 pb-0 items-center rounded-md hover:cursor-pointer">
-                        <Image 
-                            src={`${modo ? "/editar_light.svg" : "/editar_dark.svg"}`}
-                            alt="Editar"
-                            width={30} 
-                            height={30}
-                            priority={true}
-                            onClick={editarLaVenta}
-                        />
+                {existeProducto ? (
+                    <div className="flex justify-evenly">
+                        <div className="hover:bg-gray-200 dark:hover:bg-gray-600 p-1 pb-0 items-center rounded-md hover:cursor-pointer">
+                            <Image 
+                                src={`${modo ? "/editar_light.svg" : "/editar_dark.svg"}`}
+                                alt="Editar"
+                                width={30} 
+                                height={30}
+                                priority={true}
+                                onClick={editarLaVenta}
+                            />
+                        </div>
+                        <div className="hover:bg-gray-200 dark:hover:bg-gray-600 p-1 pb-0 items-center rounded-md hover:cursor-pointer">
+                            <Image 
+                                src={`${modo ? "/delete_light.svg" : "/delete_dark.svg"}`}
+                                alt="Eliminar"
+                                width={30} 
+                                height={30}
+                                priority={true}
+                                className="cursor-pointer"
+                                onClick={eliminarLaVenta}
+                            />
+                        </div>
                     </div>
-                    <div className="hover:bg-gray-200 dark:hover:bg-gray-600 p-1 pb-0 items-center rounded-md hover:cursor-pointer">
-                        <Image 
-                            src={`${modo ? "/delete_light.svg" : "/delete_dark.svg"}`}
-                            alt="Eliminar"
-                            width={30} 
-                            height={30}
-                            priority={true}
-                            className="cursor-pointer"
-                            onClick={eliminarLaVenta}
-                        />
-                    </div>
-                </div>
+
+                ) : "Producto eliminado"}
             </td>
 
         </tr>

@@ -128,6 +128,7 @@ const VentaState = ({children}) => {
     const eliminarVenta = async (id, idProducto, cantidad) => {
         try {
             clienteAxios.delete(`/api/ventas/${id}`, {idProducto, cantidad})
+            
             dispatch({
                 type: ELIMINAR_VENTA,
                 payload: id
