@@ -18,7 +18,8 @@ const ListadoRubros = () => {
         rubroSeleccionado,
         traerRubros,
         editarRubro,
-        limpiarSeleccionado
+        limpiarSeleccionado,
+        mensajeRubro
     } = RubroContext
 
     const [crearNuevo, setCrearNuevo] = useState(false)
@@ -129,6 +130,16 @@ const ListadoRubros = () => {
         })
     } 
 
+    const error = () => {
+        Agregado.fire({  
+            icon: 'error',
+            title: "Error. Ya existe un rubro con ese nombre",
+            background: `${modo ? "#505050" : "white"}`,
+            width: "25%",
+            color: `${modo ? "white" : "#545454"}`,
+        })
+    } 
+
     const onSubmit = async e => {
         e.preventDefault()
 
@@ -153,6 +164,10 @@ const ListadoRubros = () => {
         }
         
         if(!rubroSeleccionado) {
+            const rubroExiste = rubros.filter(rubre => rubre.nombre.toLowerCase() == nombre.toUpperCase())
+            if(rubroExiste) {
+                return error()
+            }
             await agregarRubro(rubro)
             setCrearNuevo(!crearNuevo)
             agregadoExito()
@@ -174,6 +189,9 @@ const ListadoRubros = () => {
         <div className="absolute lg:relative  min-w-full m-0">
             
             <h1 className="font-black dark:text-teal-500 text-3xl sm:text-4xl text-teal-900 text-center mt-2 sm:mt-0 mb-4 ">Listado de rubros</h1>
+            {mensajeRubro ?? (
+                <h3>{mensajeRubro}</h3>
+            )}
             <div className="flex flex-col-reverse sm:flex-row justify-end ">
                 
                 <button

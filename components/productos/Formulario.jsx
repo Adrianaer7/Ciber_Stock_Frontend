@@ -60,6 +60,7 @@ const Formulario = ({productoEditar}) => {
         precio_compra_dolar: productoEditar?.precio_compra_dolar ?? "",
         precio_compra_peso: productoEditar?.precio_compra_peso ?? "",
         rubro: productoEditar?.rubro ?? "",
+        rubroValor: productoEditar?.rubroValor ?? "",
         proveedor: productoEditar?.proveedor ?? "",
         todos_proveedores: productoEditar?.todos_proveedores ?? [],
         factura: productoEditar?.factura ?? "",
@@ -72,7 +73,7 @@ const Formulario = ({productoEditar}) => {
         añadirFaltante: productoEditar?.añadirFaltante ?? false,
         visibilidad: productoEditar?.visibilidad ?? true
     })
-    const {nombre, marca, modelo, codigo, barras, rubro, precio_venta, precio_venta_conocidos, precio_venta_efectivo, precio_venta_tarjeta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, todos_proveedores, factura, garantia, disponibles, notas, faltante, limiteFaltante, añadirFaltante} = producto
+    const {nombre, marca, modelo, codigo, barras, rubro, rubroValor, precio_venta, precio_venta_conocidos, precio_venta_efectivo, precio_venta_tarjeta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, todos_proveedores, factura, garantia, disponibles, notas, faltante, limiteFaltante, añadirFaltante} = producto
 
     
     useEffect(() => {
@@ -95,14 +96,16 @@ const Formulario = ({productoEditar}) => {
     
     //cada vez que escriba en los inputs se realiza el calculo aprox para el precio de la venta
     useEffect(() => {
-        precioVenta(valor_dolar_compra, precio_compra_dolar, precio_compra_peso, rubro)
+        precioVenta(valor_dolar_compra, precio_compra_dolar, precio_compra_peso, rubroValor)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [valor_dolar_compra, precio_compra_dolar, precio_compra_peso, rubro])
+    }, [valor_dolar_compra, precio_compra_dolar, precio_compra_peso, rubroValor])
     
     //lo que vaya selecciondo con el select lo pongo en el producto, cuando cargue el componente, el select carga lo que haya en producto
     useEffect(() => {
         producto.proveedor = proveedorSelect
     }, [proveedorSelect])
+
+   
 
     useEffect(() => {
         producto.visibilidad = visible
@@ -138,6 +141,23 @@ const Formulario = ({productoEditar}) => {
             ...producto,
             [e.target.name]: e.target.value,
         })
+    }
+
+    const onChangeRubro = e => {
+        const rubroEncontrado = rubros.find(rubro => rubro.nombre == e.target.value)
+        if(rubroEncontrado) {
+            setProducto({
+                ...producto,
+                rubro: rubroEncontrado.nombre,
+                rubroValor: rubroEncontrado.rentabilidad
+            })
+        } else {
+            setProducto({
+                ...producto,
+                rubro: "",
+                rubroValor: ""
+            })
+        }
     }
 
     const onChangeNumeros = e => {
@@ -355,6 +375,7 @@ const Formulario = ({productoEditar}) => {
                 if(valorDeVenta) {
                     producto.precio_venta = valorDeVenta
                 }
+                return console.log(producto)
                 await agregarProducto(producto, cantidad, desdeForm)
                 setCantidad("")
                 setProveedorSelect("")
@@ -717,7 +738,7 @@ const Formulario = ({productoEditar}) => {
                                 <div className="col-span-4">
 
                                     <select  
-                                        onChange={onChange} 
+                                        onChange={onChangeRubro} 
                                         className="uppercase text-center mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                         name="rubro"
                                         value={rubro}
@@ -725,7 +746,7 @@ const Formulario = ({productoEditar}) => {
                                         <option value="">--Seleccione--</option>
                                         {rubros.length ? (
                                             rubros.map((rubro, i) => (
-                                                <option key={i} value={rubro.rentabilidad}>{`${rubro.nombre} ${rubro.rentabilidad}%`}</option>
+                                                <option key={i} value={rubro.nombre} >{`${rubro.nombre} ${rubro.rentabilidad}%`}</option>
                                             ))
                                         ) : null }
                                         

@@ -59,8 +59,7 @@ const ListadoProductos = () => {
         precio: "",
     })
     const {precio} = dolarManual
-    let automatico
-    console.log(productos)
+    
     useEffect(() => {
         traerProductos()
         traerGarantias()

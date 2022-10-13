@@ -14,7 +14,8 @@ import {
     ELIMINAR_RUBRO,
     LIMPIAR_RUBRO_SELECCIONADO,
     ELIMINAR_RUBROS,
-    VACIAR_FORMULARIO_RUBRO
+    VACIAR_FORMULARIO_RUBRO,
+    OCULTAR_ALERTA
 } from "../../types/index"
 
 const RubroState = ({children}) => {
@@ -30,16 +31,21 @@ const RubroState = ({children}) => {
 
     //crea un nuevo rubro
     const agregarRubro = async rubro => {
-        try {
-            const {data} = await clienteAxios.post("/api/rubros", rubro)
-            dispatch({
-                type: AGREGAR_RUBRO,
-                payload: data.rubro
-            })
-        } catch (error) {
+        const {data} = await clienteAxios.post("/api/rubros", rubro)
+        if(data.rubro) {
+            try {
+            
+                dispatch({
+                    type: AGREGAR_RUBRO,
+                    payload: data.rubro
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        } else {
             dispatch({
                 type: ERROR_AGREGAR_RUBRO,
-                payload: error.response.data.msg
+                payload: data.msg
             })
             setTimeout(() => {
                 dispatch({

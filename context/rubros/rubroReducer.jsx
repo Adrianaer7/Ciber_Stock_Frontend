@@ -7,6 +7,8 @@ import {
     RUBRO_ACTUAL,
     LIMPIAR_RUBRO_SELECCIONADO,
     VACIAR_FORMULARIO_RUBRO,
+    OCULTAR_ALERTA,
+
 } from "../../types/index"
 
 export default function rubroreducer (state, action) {
@@ -21,6 +23,7 @@ export default function rubroreducer (state, action) {
                 ...state,
                 mensajeRubro: action.payload
             }
+        
         case OBTENER_RUBROS:
             return {
                 ...state,
@@ -46,7 +49,11 @@ export default function rubroreducer (state, action) {
             ...state,
             rubros: state.rubros.filter(rubro => rubro._id !== action.payload)
         }
-        
+        case OCULTAR_ALERTA: 
+            return {
+                ...state,
+                mensajeRubro: null
+            }
         default:
             return state;
     }
