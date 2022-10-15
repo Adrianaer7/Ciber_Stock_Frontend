@@ -46,11 +46,14 @@ const Formulario = ({productoEditar}) => {
 
     const [producto, setProducto] = useState({
         nombre: productoEditar?.nombre ?? "",
-        modelo: productoEditar?.modelo ?? "",
         marca: productoEditar?.marca ?? "",
+        modelo: productoEditar?.modelo ?? "",
         codigo: productoEditar?.codigo ?? "",
         barras: productoEditar?.barras ?? "",
-        valor_dolar_compra: productoEditar?.valor_dolar_compra ?? "",
+        rubro: productoEditar?.rubro ?? "",
+        rubroValor: productoEditar?.rubroValor ?? "",
+        proveedor: productoEditar?.proveedor ?? "",
+        todos_proveedores: productoEditar?.todos_proveedores ?? [],
         precio_venta: productoEditar?.precio_venta ?? 0,
         precio_venta_conocidos: productoEditar?.precio_venta_conocidos ?? 0,
         precio_venta_efectivo: productoEditar?.precio_venta_efectivo ?? 0,
@@ -59,10 +62,7 @@ const Formulario = ({productoEditar}) => {
         precio_venta_cuotas: productoEditar?.precio_venta_cuotas ?? 0,
         precio_compra_dolar: productoEditar?.precio_compra_dolar ?? "",
         precio_compra_peso: productoEditar?.precio_compra_peso ?? "",
-        rubro: productoEditar?.rubro ?? "",
-        rubroValor: productoEditar?.rubroValor ?? "",
-        proveedor: productoEditar?.proveedor ?? "",
-        todos_proveedores: productoEditar?.todos_proveedores ?? [],
+        valor_dolar_compra: productoEditar?.valor_dolar_compra ?? "",
         factura: productoEditar?.factura ?? "",
         garantia: productoEditar?.garantia ?? "",
         fecha_compra: productoEditar?.fecha_compra ?? hoy ?? "",
@@ -375,7 +375,7 @@ const Formulario = ({productoEditar}) => {
                 if(valorDeVenta) {
                     producto.precio_venta = valorDeVenta
                 }
-                return console.log(producto)
+                
                 await agregarProducto(producto, cantidad, desdeForm)
                 setCantidad("")
                 setProveedorSelect("")
@@ -386,10 +386,9 @@ const Formulario = ({productoEditar}) => {
                     codigo: "",
                     barras: "",
                     rubro: "",
+                    rubroValor: "",
                     proveedor: "",
                     todos_proveedores: [],
-                    factura: "",
-                    garantia: "",
                     precio_venta: 0,
                     precio_venta_conocidos: 0,
                     precio_venta_efectivo: 0,
@@ -400,6 +399,8 @@ const Formulario = ({productoEditar}) => {
                     fecha_compra: hoy, 
                     precio_compra_peso: "", 
                     valor_dolar_compra: "", 
+                    factura: "",
+                    garantia: "",
                     notas: "",
                     faltante: false,
                     limiteFaltante: "",

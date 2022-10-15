@@ -165,7 +165,6 @@ const ListadoRubros = () => {
         
         if(!rubroSeleccionado) {
             const rubroExiste = rubros.filter(rubre => rubre.nombre.toLowerCase() == nombre.toUpperCase())
-            
             if(rubroExiste.length) {
                 return error()
             }
