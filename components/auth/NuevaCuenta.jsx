@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
 import Link from "next/link"
 import Alerta from '../productos/Alerta';
@@ -52,7 +52,7 @@ const NuevaCuenta = () => {
             }, 3000);
             return
         }
-
+        
         registrarUsuario(nuevoUsuario)
         setNuevoUsuario({
             nombre: "",

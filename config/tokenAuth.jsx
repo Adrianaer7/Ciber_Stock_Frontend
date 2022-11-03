@@ -6,7 +6,6 @@ const tokenAuth = token => {
     } else {
         //si no existe el token, no permito al usuario que haga una peticion en donde se requiera un auth
         delete clienteAxios.defaults.headers.common["Authorization"]
-        console.log(clienteAxios.defaults.headers.common)
     }
 }
  
