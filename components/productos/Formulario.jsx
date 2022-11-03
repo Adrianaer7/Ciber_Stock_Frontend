@@ -375,7 +375,7 @@ const Formulario = ({productoEditar}) => {
                 if(valorDeVenta) {
                     producto.precio_venta = valorDeVenta
                 }
-                return console.log(producto)
+                
                 await agregarProducto(producto, cantidad, desdeForm)
                 setCantidad("")
                 setProveedorSelect("")
