@@ -5,6 +5,7 @@ import authContext from "../../context/auth/authContext";
 import proveedorContext from "../../context/proveedores/proveedorContext"
 import Image from "next/image"
 import Spinner from "../layout/Spinner";
+import Swal from "sweetalert2";
 
 
 const ListadoProductos = () => {
@@ -185,6 +186,15 @@ const ListadoProductos = () => {
 
     const onSubmit = async e => {
         e.preventDefault()
+        if(dolarManual.precio === "" || dolarManual.precio <= "0") {
+            return Swal.fire({ //le pongo el await para que la siguiente funcion se ejecute cuando quite el modal de error
+                icon: 'error',
+                title: 'Error',
+                color:`${modo ? "white" : "rgb(31 41 55)"}`,
+                background: `${modo ? "rgb(31 41 55)" : "white"}`,
+                html: `${modo ? '<p style="color:#a59ff3">El <b>precio del dolar</b> deben ser un número mayor a 0.</p>' : '<p style="color: #545454">El <b>precio del dolar</b> deben ser un número mayor a 0.</p>'}`,
+            })
+        }
         await editarDolarDB(dolarManual, automatico = false)    //envio manualmente el dolar
         setDolarManual({
             precio: ""
