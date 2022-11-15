@@ -98,7 +98,7 @@ const AuthState = ({children}) => {
             tokenAuth(token)
         }
         try {
-            const {data} = await clienteAxios.get("/api/auth")
+            const {data} = await clienteAxios("/api/auth")
             if(data.usuario) {
                 dispatch({
                     type: USUARIO_AUTENTICADO,

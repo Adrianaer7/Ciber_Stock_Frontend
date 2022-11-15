@@ -4,8 +4,7 @@ import {
     ELIMINAR_PRODUCTO, 
     LIMPIAR_SELECCIONADO, 
     OBTENER_PRODUCTOS, 
-    OCULTAR_ALERTA, 
-    PRODUCTO_ACTUAL, 
+    OCULTAR_ALERTA,  
     FILTRAR_PRODUCTO,
     OBTENER_RUBROS,
     ERROR_AGREGAR_PRODUCTO,
@@ -97,12 +96,6 @@ export default function productoReducer(state, action) {
                 ...state,
                 rubros: []
             }
-        
-        case PRODUCTO_ACTUAL:
-            return {
-                ...state,
-                productoSeleccionado: action.payload
-            }
         case EDITAR_PRODUCTO:
             return {
                 ...state,
@@ -117,7 +110,6 @@ export default function productoReducer(state, action) {
             return {
                 ...state,
                 productos: state.productos.filter(producto => producto._id !== action.payload),   //Va a eliminar al que le demos click
-                productoSeleccionado: null,  //una vez que se elimina el producto, no lo muestro mas en la vista
                 filtrados: state.filtrados.filter(producto => producto._id !== action.payload)  //y tampoco lo muestro cuando lo esté filtrando
             }
         case LIMPIAR_SELECCIONADO:

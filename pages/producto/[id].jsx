@@ -10,7 +10,7 @@ import NoEncontrado from '../../components/productos/NoEncontrado';
 
 
 export async function getServerSideProps({ params: {id} }) {
-  const {data} = await clienteAxios.get(`/api/productos/${id}`)
+  const {data} = await clienteAxios(`/api/productos/${id}`)
   if(data.redireccionar) {  //si es true
     return {notFound: true} //redirecciono a la pagina 404. notFound es una funcion de next
   }

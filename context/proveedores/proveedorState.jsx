@@ -52,7 +52,7 @@ const ProveedorState = ({children}) => {
 
     const traerProveedores = async () => {
         try {
-            const {data} = await clienteAxios.get("/api/proveedores")
+            const {data} = await clienteAxios("/api/proveedores")
             dispatch({
                 type: OBTENER_PROVEEDORES,
                 payload: data.proveedores
@@ -64,7 +64,7 @@ const ProveedorState = ({children}) => {
 
     const proveedorActual = async id => {
         try {
-            const {data} = await clienteAxios.get(`/api/proveedores/${id}`)
+            const {data} = await clienteAxios(`/api/proveedores/${id}`)
             dispatch({
                 type: PROVEEDOR_ACTUAL,
                 payload: data.proveedor

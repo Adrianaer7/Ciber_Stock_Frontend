@@ -165,7 +165,7 @@ const ProductoState = ({children}) => {
     //trae todos los productos creados
     const traerProductos = async () => {
         try {
-            const {data} = await clienteAxios.get("/api/productos")
+            const {data} = await clienteAxios("/api/productos")
             dispatch({
                 type: OBTENER_PRODUCTOS,
                 payload: data.productos
@@ -186,7 +186,7 @@ const ProductoState = ({children}) => {
     //trae todos los rubros creados
     const traerRubros = async () => {
         try {
-            const {data} = await clienteAxios.get("/api/rubros")
+            const {data} = await clienteAxios("/api/rubros")
             dispatch({
                 type: OBTENER_RUBROS,
                 payload: data.rubros
@@ -200,7 +200,7 @@ const ProductoState = ({children}) => {
 
     const traerGarantias = async () => {
         try {
-            const {data} = await clienteAxios.get("/api/garantias")
+            const {data} = await clienteAxios("/api/garantias")
             dispatch({
                 type: OBTENER_GARANTIAS,
                 payload: data.garantias
@@ -434,7 +434,7 @@ const ProductoState = ({children}) => {
 
     const traerDolarBD = async () => {
         try {
-            const {data} = await clienteAxios.get("/api/dolares")
+            const {data} = await clienteAxios("/api/dolares")
             if(!data.dolar[0]) {  //si no existe ningun dolar, creo uno trayendolo de la api
                 traerDolarAPI()
             } else {
@@ -456,7 +456,7 @@ const ProductoState = ({children}) => {
 
     const editarDolarDB = async (dolarManual, automatico) => {
         try {
-            if(!automatico) {
+            if(!automatico) {   //cuando pongo dolar manualmente
                 const {data} = await clienteAxios.put("/api/dolares", {dolarManual, automatico})
                 dispatch({
                     type: EDITAR_DOLAR,
@@ -465,7 +465,7 @@ const ProductoState = ({children}) => {
                         automatico
                     }
                 })
-            } else {
+            } else {    //cuando elimino el dolar manual
                 await clienteAxios.put("/api/dolares", {automatico})
                 traerDolarAPI()
             }
@@ -551,7 +551,7 @@ const ProductoState = ({children}) => {
     
     
     const descargarPDF = async () => {
-        const {data} = await clienteAxios.get("api/descargas")
+        const {data} = await clienteAxios("api/descargas")
         console.log(data)
     }
 

@@ -57,7 +57,7 @@ const RubroState = ({children}) => {
 
     const traerRubros = async () => {
         try {
-            const {data} = await clienteAxios.get("/api/rubros")
+            const {data} = await clienteAxios("/api/rubros")
             dispatch({
                 type: OBTENER_RUBROS,
                 payload: data.rubros
@@ -69,7 +69,7 @@ const RubroState = ({children}) => {
 
     const rubroActual = async id => {
         try {
-            const {data} = await clienteAxios.get(`/api/rubros/${id}`)
+            const {data} = await clienteAxios(`/api/rubros/${id}`)
             dispatch({
                 type: RUBRO_ACTUAL,
                 payload: data.rubro

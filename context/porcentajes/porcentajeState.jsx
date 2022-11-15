@@ -26,7 +26,7 @@ const PorcentajeState = ({children}) => {
 
     const traerPorcentajes = async () => {
         try {
-            const {data} = await clienteAxios.get("/api/porcentajes")
+            const {data} = await clienteAxios("/api/porcentajes")
             dispatch({
                 type: OBTENER_PORCENTAJES,
                 payload: data.porcentajes
@@ -38,7 +38,7 @@ const PorcentajeState = ({children}) => {
 
     const porcentajeActual = async id => {
         try {
-            const {data} = await clienteAxios.get(`/api/porcentajes/${id}`)
+            const {data} = await clienteAxios(`/api/porcentajes/${id}`)
             dispatch({
                 type: PORCENTAJE_ACTUAL,
                 payload: data.porcentaje
