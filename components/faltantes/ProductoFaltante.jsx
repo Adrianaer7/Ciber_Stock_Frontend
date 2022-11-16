@@ -45,7 +45,7 @@ const ProductoFaltante = ({producto, proveedores}) => {
             <td className="p-1 dark:text-gray-50 text-center">{marca ? marca : "-"}</td>
             <td className="p-1 dark:text-gray-50 text-center">{modelo ? modelo : "-"}</td>
             <td className="p-1 dark:text-gray-50 text-center">{rubro ? rubro : "-"}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{proveedoresIguales.length > 0 ? proveedoresIguales.map((prov, i) => <p key={i}>{prov.empresa}</p>): "-"}</td>
+            <td className="p-1 dark:text-gray-50 text-center">{proveedoresIguales.length > 0 ? proveedoresIguales.map((prov, i) => <p key={i}>{`${prov.empresa} (${prov.nombre})`}</p>): "-"}</td>
 
             <td className="p-1 dark:text-gray-50 text-center uppercase">{disponibles && faltante ? <span className="font-bold text-red-600 p-1">{disponibles}</span> : disponibles && !faltante ? disponibles : <span className="font-black text-white bg-red-600 p-1 uppercase">Sin stock</span>}</td>
             <td className="p-1 w-40 mt-2  ">

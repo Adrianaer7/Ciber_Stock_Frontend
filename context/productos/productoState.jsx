@@ -80,7 +80,6 @@ const ProductoState = ({children}) => {
             if( cantidad > 0 && producto.proveedor && producto.garantia) {
                 const {garantia, proveedor, codigo} = producto
                 clienteAxios.post("/api/garantias", {garantia, proveedor, codigo})
-                
             }
             
 
@@ -147,19 +146,12 @@ const ProductoState = ({children}) => {
     const editarProductos = async precio => {
         try {
             if(precio) {
-                const {data} = await clienteAxios.put("/api/productos", {precio})
-                dispatch({
-                    type: PRODUCTOS_CAMBIADOS,
-                    payload: data.productos
-                })
-                data.productos.map(producto => {
-                    editarProducto(producto)
-                })
+                await clienteAxios.put("/api/productos", {precio})   //hago esto para modificar los precios segun el dolar cambia.
+                await traerProductos()
             }
         } catch (error) {
             console.log(error)
         }
-        
     }
 
     //trae todos los productos creados

@@ -4,8 +4,8 @@ import productoContext from "../../context/productos/productoContext"
 import authContext from "../../context/auth/authContext";
 import proveedorContext from "../../context/proveedores/proveedorContext"
 import Image from "next/image"
-import Spinner from "../layout/Spinner";
 import Swal from "sweetalert2";
+//import Spinner from "../layout/Spinner";
 
 
 const ListadoProductos = () => {
@@ -48,7 +48,7 @@ const ListadoProductos = () => {
     const [oculto, setOculto] = useState(false)
     const [escribiendo, setEscribiendo] = useState(false)   //cuando escribo pasa a true
     const [focus, setFocus] = useState(false)   //activar el ring en el buscador
-    const [spinner, setSpinner] = useState(true)
+    //const [spinner, setSpinner] = useState(true)
     const [ordenCodigo, setOrdenCodigo] = useState(false)
     const [ordenNombre, setOrdenNombre] = useState(false)
     const [ordenMarca, setOrdenMarca] = useState(false)
@@ -64,7 +64,6 @@ const ListadoProductos = () => {
     let automatico
 
     useEffect(() => {
-        traerProductos()
         traerGarantias()
         traerProveedores()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,11 +82,11 @@ const ListadoProductos = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dolarBD])
 
-    useEffect(() => {
-        setTimeout(() => {
-            setSpinner(false)
-        }, 1000);
-    }, [])
+    //useEffect(() => {
+    //    setTimeout(() => {
+    //        setSpinner(false)
+    //    }, 1000);
+    //}, [])
 
     useEffect(() => {
         if(filtrando) {
@@ -299,7 +298,7 @@ const ListadoProductos = () => {
                 }
         </div>
     </div>
-    {spinner ? <Spinner/> : (
+    {/*{spinner ? <Spinner/> : ( */}
 
     <table className="top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-none md:rounded-lg dark:bg-gray-900 bg-white ">
         <thead className="bg-blue-800 text-white">
@@ -346,7 +345,7 @@ const ListadoProductos = () => {
         
     </table>
     
-    )}
+    {/* })} */}
     {!filtrados.length && escribiendo ? (
         <div className="mx-auto mt-10 w-1/4">
             <Image

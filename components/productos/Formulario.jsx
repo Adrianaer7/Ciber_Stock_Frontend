@@ -704,7 +704,7 @@ const Formulario = ({productoEditar}) => {
                                         {proveedores.length ? (
                                             <>
                                                 {proveedores.map((proveedor, i) => (
-                                                    <option key={i} value={proveedor._id}>{proveedor.empresa}</option>  //el option envia el id al proveedorselect
+                                                    <option key={i} value={proveedor._id}>{`${proveedor.empresa} (${proveedor.nombre})`}</option>  //el option envia el id al proveedorselect
                                                 ))}
                                             </>
                                         ) : null}
@@ -718,7 +718,7 @@ const Formulario = ({productoEditar}) => {
                                                         
                                                             className="uppercase  mt-2 ml-1 block px-2 rounded-md  bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
                                                         >
-                                                            {proveedor.empresa}
+                                                            {`${proveedor.empresa} (${proveedor.nombre})`}
                                                         </li>
                                                         <button
                                                         

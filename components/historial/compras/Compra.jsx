@@ -30,7 +30,7 @@ const Compra = ({producto, proveedores}) => {
             <td className="p-3 dark:text-gray-50 text-center"><ul>{detalles ? historial.map((historia, i) => <li key={i}>{historia.garantia ? historia.garantia : "-"}</li>) :  "+"}</ul></td>
             <td className="p-3 dark:text-gray-50 text-center"><ul>{detalles ? historial.map((historia, i) => <li key={i}>{historia.barras ? historia.barras : "-"}</li>) :  "+"}</ul></td>
             <td className="p-3 dark:text-gray-50 text-center"><ul>{detalles ? historial.map((historia, i) => <li key={i}>{historia.factura ? historia.factura : "-"}</li>) :  "+"}</ul></td>
-            <td className="p-3 dark:text-gray-50 text-center"><ul>{detalles ? proveedoresIguales.length > 0 ? proveedoresIguales.map((prov, i) => <p key={i}>{prov.empresa}</p>): "-" : "-"}</ul></td>
+            <td className="p-3 dark:text-gray-50 text-center"><ul>{detalles ? proveedoresIguales.length > 0 ? proveedoresIguales.map((prov, i) => <p key={i}>{`${prov.empresa} (${prov.nombre})`}</p>): "-" : "-"}</ul></td>
             <td className="p-3 dark:text-gray-50 text-center"><ul>{detalles ? historial.map((historia, i) => <li key={i}>{historia.valor_dolar_compra ? historia.valor_dolar_compra : "-"}</li>) :  "+"}</ul></td>
             <td className="p-3 dark:text-gray-50 text-center"><ul>{detalles ? historial.map((historia, i) => <li  key={i}>{historia.precio_compra_dolar ? historia.precio_compra_dolar : historia.arsAdolar ? historia.arsAdolar : "-"}</li>) :  "+"}</ul></td>
         </tr>
