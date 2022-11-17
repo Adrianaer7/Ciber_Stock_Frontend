@@ -147,20 +147,20 @@ const ListadoVentas = () => {
                 </div> 
             </div>    
         </div>
-        <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
+        <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-fixed shadow rounded-lg dark:bg-gray-900 bg-white ">
             <thead className="bg-pink-500 text-white">
                 <tr className="hover:cursor-pointer select-none">
-                <th className="p-2 rounded-tl-lg">CODIGO</th>
-                    <th>NOMBRE</th>
-                    <th>MARCA</th>
-                    <th>MODELO</th>
-                    <th>COD BARRAS</th>
-                    <th> VENTA</th>
-                    <th>COTIZACIÓN USD</th>
-                    <th>PRECIO EN USD</th>
-                    <th>PRECIO TARJETA</th>
-                    <th>CANTIDAD</th>
-                    <th className="rounded-tr-lg">ACCIONES</th>
+                <th className="p-2 rounded-tl-lg w-20">CODIGO</th>
+                    <th className="break-words">NOMBRE</th>
+                    <th className="break-words">MARCA</th>
+                    <th className="break-words">MODELO</th>
+                    <th className="break-words">COD BARRAS</th>
+                    <th className="break-words"> VENTA</th>
+                    <th className="break-words">COTIZACIÓN USD</th>
+                    <th className="break-words">PRECIO EN USD</th>
+                    <th className="break-words">PRECIO TARJETA</th>
+                    <th className="w-20">CANTIDAD</th>
+                    <th className="rounded-tr-lg w-32">ACCIONES</th>
                 </tr>
             </thead>
             <tbody>

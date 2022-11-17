@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import productoContext from "../../context/productos/productoContext";
 import faltanteContext from "../../context/faltantes/faltantesContext";
 import ventaContext from "../../context/historial/ventas/ventaContext";
@@ -35,7 +36,8 @@ const Producto = ({producto}) => {
         precio_venta_ahoraDoce,
         precio_venta_cuotas, 
         disponibles,
-        modelo, 
+        modelo,
+        imagen,
         _id, 
         faltante,
         limiteFaltante
@@ -200,20 +202,31 @@ const Producto = ({producto}) => {
 
     return (
         <tr className={`border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 hover:cursor-pointer active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700`}>
-            <td className="p-3 dark:text-gray-50 text-center font-semibold">{codigo}</td>
-            <td className="dark:text-gray-50 p-3 text-center">{nombre}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{marca ? marca : "-"}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{modelo ? modelo : "-"}</td>
-            <td className="dark:text-gray-50 text-center uppercase">{!disponibles ? <span className="bg-red-600 font-black text-white p-1  rounded-sm">Sin stock</span> : disponibles && !faltante && colorFaltante === null || disponibles && colorFaltante === false ? disponibles : disponibles && faltante || disponibles && colorFaltante || disponibles && faltante && colorFaltante === false ? <span className="text-red-600 font-bold">{disponibles}</span> : null}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{todasGarantias.length > 0 ? todasGarantias.map((garantia, i) => (<div key={i}><p key={i} className="font-medium ">{garantia.garantia}</p><p className="mb-1">{garantia.proveedor}</p></div>)) : "-"} </td>
-            <td className="p-2 dark:text-gray-50 text-center  text-lg hover:cursor-pointer ">
+            <td className="p-3 dark:text-gray-50 text-center font-semibold break-words" >{codigo}</td>
+            <td>
+                {imagen 
+                    ?  <Image
+                            src={`/imagenes/${imagen}`}
+                            width={150}
+                            height={150}
+                            objectFit="contain"
+                        />
+                    : null
+                }
+            </td>
+            <td className="dark:text-gray-50 p-3 text-center break-words">{nombre}</td>
+            <td className="p-3 dark:text-gray-50 text-center break-words">{marca ? marca : "-"}</td>
+            <td className="p-3 dark:text-gray-50 text-center break-words">{modelo ? modelo : "-"}</td>
+            <td className="dark:text-gray-50 text-center uppercase break-words">{!disponibles ? <span className="bg-red-600 font-black text-white p-1  rounded-sm">Sin stock</span> : disponibles && !faltante && colorFaltante === null || disponibles && colorFaltante === false ? disponibles : disponibles && faltante || disponibles && colorFaltante || disponibles && faltante && colorFaltante === false ? <span className="text-red-600 font-bold">{disponibles}</span> : null}</td>
+            <td className="p-3 dark:text-gray-50 text-center break-words">{todasGarantias.length > 0 ? todasGarantias.map((garantia, i) => (<div key={i}><p key={i} className="font-medium ">{garantia.garantia}</p><p className="mb-1">{garantia.proveedor}</p></div>)) : "-"} </td>
+            <td className="p-2 dark:text-gray-50 text-center text-lg hover:cursor-pointer break-words">
                 <div className="flex flex-col">
                     <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-3xl font-black " onClick={copiarPrecioTarjeta}>${precio_venta_tarjeta}</p>
                     <p className="pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-2xl font-medium" onClick={copiarPrecioEfectivo}>${precio_venta_efectivo}</p>
                     <p className="mt-4 pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-xl" onClick={copiarPrecioConocidos}>${precio_venta_conocidos}</p>
                 </div>
             </td>
-            <td className="p-2 dark:text-gray-50 text-center  text-lg hover:cursor-pointer ">
+            <td className="p-2 dark:text-gray-50 text-center  text-lg hover:cursor-pointer break-words">
                 <div className="flex flex-col">
                     <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-xl font-normal " onClick={copiarAhoraDoce}>
                         Un pago
@@ -227,29 +240,29 @@ const Producto = ({producto}) => {
                 </div>
             </td>
 
-            <td className="p-3 mt-2 flex flex-col  ">
+            <td className="p-3 mt-2  h-full break-words">
                 <button
                     type="button"
-                    className=" bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 mb-2 w-full cursor-pointer text-black p-2 uppercase font-bold text-xs mr-3 rounded-md"
+                    className=" bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 mb-2 w-full cursor-pointer text-black p-2 uppercase font-bold text-xs  rounded-md"
                     onClick={venderElProducto}
                 >Vender</button>
                 <Link passHref href={`/producto/${_id}`}>
                     <a
                         type="button"
-                        className="bg-blue-600 hover:bg-blue-900 mb-2 w-full cursor-pointer text-white text-center p-2 uppercase font-bold text-xs mr-3 rounded-md"
+                        className="bg-blue-600 hover:bg-blue-900 mb-2 w-full cursor-pointer text-white text-center p-2 uppercase font-bold text-xs  rounded-md"
                         onClick={() => productoActual(producto)}
                     >Detalles</a>
                 </Link>
                 <Link passHref href={`/producto/editar/${_id}`}>
                     <a
                         type="button"
-                        className="bg-green-600 hover:bg-green-900 mb-2 w-full cursor-pointer text-white text-center p-2 uppercase font-bold text-xs mr-3 rounded-md"
+                        className="bg-green-600 hover:bg-green-900 mb-2 w-full cursor-pointer text-white text-center p-2 uppercase font-bold text-xs  rounded-md"
                         onClick={() => productoActual(producto)}
                     >Editar</a>
                 </Link>
                 <button
                     type="button"
-                    className="bg-red-600 hover:bg-red-900  w-full cursor-pointer text-white p-2 uppercase font-bold text-xs mr-3 rounded-md"
+                    className="bg-red-600 hover:bg-red-900  w-full cursor-pointer text-white p-2 uppercase font-bold text-xs  rounded-md"
                     onClick={añadirFaltante}
                 >{!faltante && colorFaltante === null || !faltante && colorFaltante === false || faltante && colorFaltante === false ? "Agregar faltante" : "Quitar faltante"}</button>
                 

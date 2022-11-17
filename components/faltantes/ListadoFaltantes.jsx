@@ -174,17 +174,17 @@ const ListadoFaltantes = () => {
                     </div>  
                 </div>    
         </div>
-        <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
+        <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-fixed shadow rounded-lg dark:bg-gray-900 bg-white ">
             <thead className="bg-red-600 text-white">
                 <tr className="hover:cursor-pointer select-none">
-                    <th  onClick={() => ordenarCodigo()} className="p-2 rounded-tl-lg">CODIGO</th>
-                    <th onClick={() => ordenarNombre()}>NOMBRE</th>
-                    <th onClick={() => ordenarMarca()}>MARCA</th>
-                    <th onClick={() => ordenarModelo()}>MODELO</th>
-                    <th onClick={() => ordenarRubro()}>RUBRO</th>
-                    <th onClick={() => ordenarProveedor()}>PROVEEDOR</th>
-                    <th onClick={() => ordenarDisponibles()}>DISPONIBLES</th>
-                    <th className="rounded-tr-lg">ACCIONES</th>
+                    <th  onClick={() => ordenarCodigo()} className="p-2 rounded-tl-lg w-20">CODIGO</th>
+                    <th onClick={() => ordenarNombre()} className="break-words">NOMBRE</th>
+                    <th onClick={() => ordenarMarca()} className="break-words">MARCA</th>
+                    <th onClick={() => ordenarModelo()} className="break-words">MODELO</th>
+                    <th onClick={() => ordenarRubro()} className="break-words">RUBRO</th>
+                    <th onClick={() => ordenarProveedor()} className="break-words">PROVEEDOR</th>
+                    <th onClick={() => ordenarDisponibles()} className="w-28">DISPONIBLES</th>
+                    <th className="rounded-tr-lg w-40">ACCIONES</th>
                 </tr>
             </thead>
             <tbody> 

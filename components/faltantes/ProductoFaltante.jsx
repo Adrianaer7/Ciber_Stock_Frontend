@@ -40,15 +40,15 @@ const ProductoFaltante = ({producto, proveedores}) => {
 
     return (
         <tr className="border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 hover:cursor-pointer active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700">
-            <td className="p-1 dark:text-gray-50 text-center font-semibold">{codigo}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{nombre ? nombre : "-"}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{marca ? marca : "-"}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{modelo ? modelo : "-"}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{rubro ? rubro : "-"}</td>
-            <td className="p-1 dark:text-gray-50 text-center">{proveedoresIguales.length > 0 ? proveedoresIguales.map((prov, i) => <p key={i}>{`${prov.empresa} (${prov.nombre})`}</p>): "-"}</td>
+            <td className="p-1 dark:text-gray-50 text-center font-semibold break-words">{codigo}</td>
+            <td className="p-1 dark:text-gray-50 text-center break-words">{nombre ? nombre : "-"}</td>
+            <td className="p-1 dark:text-gray-50 text-center break-words">{marca ? marca : "-"}</td>
+            <td className="p-1 dark:text-gray-50 text-center break-words">{modelo ? modelo : "-"}</td>
+            <td className="p-1 dark:text-gray-50 text-center break-words">{rubro ? rubro : "-"}</td>
+            <td className="p-1 dark:text-gray-50 text-center break-words">{proveedoresIguales.length > 0 ? proveedoresIguales.map((prov, i) => <p key={i}>{`${prov.empresa} (${prov.nombre})`}</p>): "-"}</td>
 
             <td className="p-1 dark:text-gray-50 text-center uppercase">{disponibles && faltante ? <span className="font-bold text-red-600 p-1">{disponibles}</span> : disponibles && !faltante ? disponibles : <span className="font-black text-white bg-red-600 p-1 uppercase">Sin stock</span>}</td>
-            <td className="p-1 w-40 mt-2  ">
+            <td className="p-1 w-40 mt-2 break-words ">
                 <div className="flex justify-evenly">
                     <div className="hover:bg-gray-200 dark:hover:bg-gray-600 p-1 pb-0 items-center rounded-md hover:cursor-pointer">
                         <Link passHref href={`/producto/${_id}`}>

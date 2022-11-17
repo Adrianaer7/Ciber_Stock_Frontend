@@ -288,12 +288,12 @@ const ListadoRubros = () => {
             ) 
             }
             
-        <table className="relative top-44 sm:top-44 lg:top-0 lg:w-2/4 mx-auto mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
+        <table className="relative top-44 sm:top-44 lg:top-0 lg:w-2/4 mx-auto mt-5 table-fixed shadow rounded-lg dark:bg-gray-900 bg-white ">
             <thead className="bg-teal-600 text-white">
                 <tr className="hover:cursor-pointer select-none">
-                    <th className="p-2 rounded-tl-lg">Nombre</th>
-                    <th>RENTABILIDAD</th>
-                    <th className="rounded-tr-lg">ACCIONES</th>
+                    <th className="p-2 rounded-tl-lg break-words">NOMBRE</th>
+                    <th className="break-words">RENTABILIDAD</th>
+                    <th className="rounded-tr-lg w-28">ACCIONES</th>
                 </tr>
             </thead>
             <tbody>

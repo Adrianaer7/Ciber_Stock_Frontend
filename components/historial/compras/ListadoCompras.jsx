@@ -122,20 +122,20 @@ const ListadoCompras = () => {
                     </div>  
                 </div>    
         </div>
-        <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-lg dark:bg-gray-900 bg-white ">
+        <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-fixed shadow rounded-lg dark:bg-gray-900 bg-white ">
             <thead className="bg-yellow-500 text-white">
                 <tr className="hover:cursor-pointer select-none">
-                    <th onClick={() => ordenarNombre()} className="p-2 rounded-tl-lg" >NOMBRE</th>
-                    <th onClick={() => ordenarMarca()}>MARCA</th>
-                    <th onClick={() => ordenarModelo()}>MODELO</th>
-                    <th>CANTIDAD</th>
+                    <th onClick={() => ordenarNombre()} className="p-2 rounded-tl-lg break-words" >NOMBRE</th>
+                    <th onClick={() => ordenarMarca()} className="break-words">MARCA</th>
+                    <th onClick={() => ordenarModelo()} className="break-words">MODELO</th>
+                    <th className="w-20">CANTIDAD</th>
                     <th>FECHA DE COMPRA</th>
-                    <th>GARANTÍA</th>
-                    <th>COD BARRAS</th>
-                    <th>FACTURA NRO</th>
-                    <th>PROVEEDOR</th>
-                    <th>VALOR DEL DOLAR</th>
-                    <th className="rounded-tr-lg">PRECIO EN USD</th>
+                    <th className="break-words">GARANTÍA</th>
+                    <th className="break-words">COD BARRAS</th>
+                    <th className="break-words">FACTURA NRO</th>
+                    <th className="break-words">PROVEEDOR</th>
+                    <th className="break-words">VALOR DEL DOLAR</th>
+                    <th className="rounded-tr-lg break-words">PRECIO EN USD</th>
                 </tr>
             </thead>
             <tbody>

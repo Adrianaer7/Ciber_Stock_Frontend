@@ -800,7 +800,7 @@ const Formulario = ({productoEditar}) => {
                         <div>
                             <label 
                                 htmlFor="imagen"
-                                className="p-3 inline-block w-1/4 rounded-md bg-red-200 text-center font-semibold"
+                                className="p-3 mt-6 inline-block w-1/4 rounded-md bg-red-200 text-center font-semibold"
                             >
                                 Subir imagen
                             </label>
@@ -819,6 +819,7 @@ const Formulario = ({productoEditar}) => {
                                 ? <Image 
                                     width={200} 
                                     height={200}
+                                    objectFit="contain"
                                     src={`/imagenes/${imagen}`} 
                                     alt="imagen producto"
                                 />

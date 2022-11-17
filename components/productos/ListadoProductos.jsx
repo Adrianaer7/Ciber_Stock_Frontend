@@ -300,18 +300,19 @@ const ListadoProductos = () => {
     </div>
     {/*{spinner ? <Spinner/> : ( */}
 
-    <table className="top-44 sm:top-44 lg:top-0 w-full mt-5 table-auto shadow rounded-none md:rounded-lg dark:bg-gray-900 bg-white ">
+    <table className="top-44 sm:top-44 lg:top-0 w-full mt-5 table-fixed shadow rounded-none md:rounded-lg dark:bg-gray-900 bg-white ">
         <thead className="bg-blue-800 text-white">
             <tr className="hover:cursor-pointer select-none">
-                <th onClick={() => ordenarCodigo()} className="p-2 md:rounded-tl-lg">CODIGO</th>
-                <th onClick={() => ordenarNombre()}>NOMBRE</th>
-                <th onClick={() => ordenarMarca()}>MARCA</th>
-                <th onClick={() => ordenarModelo()}>MODELO</th>
-                <th onClick={() => ordenarDisponibles()}>DISPONIBLES</th>
-                <th>GARANTÍA</th>
-                <th onClick={() => ordenarPrecio()}>CONTADO</th>
-                <th onClick={() => ordenarPrecio()}>AHORA 12</th>
-                <th className="md:rounded-tr-lg w-40">ACCIONES</th>
+                <th onClick={() => ordenarCodigo()} className="p-2 md:rounded-tl-lg break-words w-20">CODIGO</th>
+                <th onClick={() => ordenarNombre()}>IMAGEN</th>
+                <th onClick={() => ordenarNombre()} className="break-words">NOMBRE</th>
+                <th onClick={() => ordenarMarca()} className="break-words">MARCA</th>
+                <th onClick={() => ordenarModelo()} className="break-words">MODELO</th>
+                <th onClick={() => ordenarDisponibles()} className="break-words w-28">DISPONIBLES</th>
+                <th className="break-words">GARANTÍA</th>
+                <th onClick={() => ordenarPrecio()} className="break-words">CONTADO</th>
+                <th onClick={() => ordenarPrecio()} className="break-words">AHORA 12</th>
+                <th className="md:rounded-tr-lg w-40 break-words">ACCIONES</th>
             </tr>
         </thead>
         <tbody>

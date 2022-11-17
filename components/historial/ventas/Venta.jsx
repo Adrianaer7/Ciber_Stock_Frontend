@@ -132,17 +132,17 @@ const Venta = ({producto}) => {
     return (
 
         <tr className={` border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 hover:cursor-pointer active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700`}>
-            <td className="p-3 dark:text-gray-50 text-center">{codigo}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{nombre}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{!marca ? "-" : marca}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{!modelo ? "-" : modelo}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{!barras ? "-" : barras}</td>
+            <td className="p-3 dark:text-gray-50 text-center w-1">{codigo}</td>
+            <td className="p-3 dark:text-gray-50 text-center break-words">{nombre}</td>
+            <td className="p-3 dark:text-gray-50 text-center break-words">{!marca ? "-" : marca}</td>
+            <td className="p-3 dark:text-gray-50 text-center break-words">{!modelo ? "-" : modelo}</td>
+            <td className="p-3 dark:text-gray-50 text-center break-words">{!barras ? "-" : barras}</td>
             <td className="p-3 dark:text-gray-50 text-center">{!fecha ? "-" : generarFecha(fecha)}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{!dolar ? "-" : `$ ${dolar}`}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{!precioEnDolar ? "-" : `$ ${precioEnDolar}`}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{!precioEnArs ? "-" : `$ ${precioEnArs}`}</td>
-            <td className="p-3 dark:text-gray-50 text-center">{!unidades ? "-" : unidades}</td>
-            <td className="p-1 w-40 mt-2  ">
+            <td className="p-3 dark:text-gray-50 text-center break-words">{!dolar ? "-" : `$ ${dolar}`}</td>
+            <td className="p-3 dark:text-gray-50 text-center break-words">{!precioEnDolar ? "-" : `$ ${precioEnDolar}`}</td>
+            <td className="p-3 dark:text-gray-50 text-center break-words">{!precioEnArs ? "-" : `$ ${precioEnArs}`}</td>
+            <td className="p-3 dark:text-gray-50 text-center w-1">{!unidades ? "-" : unidades}</td>
+            <td className="p-1 mt-2 w-32 ">
                 {existeProducto ? (
                     <div className="flex justify-evenly">
                         <div className="hover:bg-gray-200 dark:hover:bg-gray-600 p-1 pb-0 items-center rounded-md hover:cursor-pointer">
