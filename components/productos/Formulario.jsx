@@ -381,7 +381,7 @@ const Formulario = ({productoEditar}) => {
                 Swal.fire({
                     icon: 'error',
                     title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
-                    html: `${modo ? '<p style="color:white">La <b>imagen</b> debe ser jpg/jpeg/png/webp/avif</p>' : '<p style="color:#545454">La <b>imagen</b> debe ser jpg/jpeg/png/webp/avif</p>'}`,
+                    html: `${modo ? '<p style="color:white">La <b>imagen</b> debe ser <b>jpg/jpeg/png/webp/avif</b></p>' : '<p style="color:#545454">La <b>imagen</b> debe ser <b>jpg/jpeg/png/webp/avif</b></p>'}`,
                     background: `${modo ? "rgb(31 41 55)" : "white"}`,
                 })
                 return
