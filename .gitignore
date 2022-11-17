@@ -34,4 +34,4 @@ variables.env
 .vercel
 iniciar.vbs
 iniciarcliente.bat
-public/imagenes
+/imagenes/
