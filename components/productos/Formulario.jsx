@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from "react"
+import Image from "next/image"
 import productoContext from "../../context/productos/productoContext"
 import authContext from "../../context/auth/authContext"
 import proveedorContext from "../../context/proveedores/proveedorContext"
@@ -9,19 +10,18 @@ import Swal from "sweetalert2"
 import Rubro from "../rubros/Rubro"
 
 const Formulario = ({productoEditar}) => {
-
     const AuthContext = useContext(authContext)
     const {modo, usuario} = AuthContext
-
+    
     const CompraContext = useContext(compraContext)
     const {traerCompras} = CompraContext
-
+    
     const ProveedorContext = useContext(proveedorContext)
     const {traerProveedores, proveedores} = ProveedorContext
-
+    
     const RubroContext = useContext(rubroContext)
     const {rubros, traerRubros} = RubroContext
-
+    
     const productosContext = useContext(productoContext)
     const { 
         productos,
@@ -36,13 +36,16 @@ const Formulario = ({productoEditar}) => {
         precioVenta,
         traerDolarBD,
     } = productosContext
-   
+    
     const [proveedorSelect, setProveedorSelect] = useState(productoEditar?.proveedor ?? "") //dejo el select del formulario cargado con el ultimo proveedor
     const [proveedoresIguales, setProveedoresIguales] = useState([])    //guardo los proveedores que sean iguales a los que hay en todos_proveedores
     const [valorFaltante, setValorFaltante] = useState(productoEditar?.añadirFaltante ?? false)
     const [cantidad, setCantidad] = useState("")
     const [visible, setVisible] = useState(productoEditar?.visibilidad ?? true) //boton para que el producto se vea o no en el listado
+    const [image, setImage] = useState({})
     const desdeForm = true  //con esto me aseguro que los datos que envio para agregar producto/compra o editar producto/compra, vienen desde el formulario, y no se editan en el listado
+    let formData
+    const formatoImagen = ["image/jpg", "image/jpeg", "image/png", "image/webp", "image/avif"]
 
     const [producto, setProducto] = useState({
         nombre: productoEditar?.nombre ?? "",
@@ -67,15 +70,16 @@ const Formulario = ({productoEditar}) => {
         garantia: productoEditar?.garantia ?? "",
         fecha_compra: productoEditar?.fecha_compra ?? hoy ?? "",
         disponibles: productoEditar?.disponibles ?? "",
+        imagen: productoEditar?.imagen ?? "",
         notas: productoEditar?.notas ?? "",
         faltante: productoEditar?.faltante ?? false,
         limiteFaltante: productoEditar?.limiteFaltante ?? "",
         añadirFaltante: productoEditar?.añadirFaltante ?? false,
         visibilidad: productoEditar?.visibilidad ?? true
     })
-    const {nombre, marca, modelo, codigo, barras, rubro, rubroValor, precio_venta, precio_venta_conocidos, precio_venta_efectivo, precio_venta_tarjeta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, todos_proveedores, factura, garantia, disponibles, notas, faltante, limiteFaltante, añadirFaltante} = producto
+    const {nombre, marca, modelo, codigo, barras, rubro, rubroValor, precio_venta, precio_venta_conocidos, precio_venta_efectivo, precio_venta_tarjeta, precio_compra_dolar, fecha_compra, precio_compra_peso, valor_dolar_compra, proveedor, todos_proveedores, factura, garantia, disponibles, notas, faltante, limiteFaltante, añadirFaltante, imagen} = producto
+      
 
-    
     useEffect(() => {
         if(usuario) {   
             traerDolarBD()
@@ -365,7 +369,25 @@ const Formulario = ({productoEditar}) => {
             }
             
         }
-       
+        
+        if(image.name) {
+            
+            const imagenValida = formatoImagen.includes(image.type)
+            if(imagenValida) {
+                formData = new FormData()
+                formData.append("archivo", image)
+                producto.imagen = image.name
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: `${modo ? '<h1 style="color:white">Error</h1>' : '<h1 style="color:#545454">Error</h3>'}`,
+                    html: `${modo ? '<p style="color:white">La <b>imagen</b> debe ser jpg/jpeg/png/webp/avif</p>' : '<p style="color:#545454">La <b>imagen</b> debe ser jpg/jpeg/png/webp/avif</p>'}`,
+                    background: `${modo ? "rgb(31 41 55)" : "white"}`,
+                })
+                return
+            }
+        }
+
         try {
             //si es nuevo producto
             if(!productoEditar) {
@@ -376,8 +398,10 @@ const Formulario = ({productoEditar}) => {
                     producto.precio_venta = valorDeVenta
                 }
                 
-                await agregarProducto(producto, cantidad, desdeForm)
+
+                await agregarProducto(producto, cantidad, desdeForm, formData)
                 setCantidad("")
+                setImage({})
                 setProveedorSelect("")
                 setProducto({
                     nombre: "",
@@ -401,6 +425,7 @@ const Formulario = ({productoEditar}) => {
                     valor_dolar_compra: "", 
                     factura: "",
                     garantia: "",
+                    imagen: "",
                     notas: "",
                     faltante: false,
                     limiteFaltante: "",
@@ -410,7 +435,9 @@ const Formulario = ({productoEditar}) => {
                 traerProductos()
                 await traerCodigos()
                 alertaNuevoCorrecto()
+
             } else {
+
                 //si hay que editar
                 if(cantidad && disponibles) {   //si ya hay stock y quiero agregar mas
                     producto.disponibles = Number(producto.disponibles) + Number(cantidad)
@@ -419,12 +446,15 @@ const Formulario = ({productoEditar}) => {
                         producto.disponibles = Number(cantidad)
                     }
                 }
+
                 if(valorDeVenta) {
                     producto.precio_venta = valorDeVenta
                 }
+
                 producto._id = productoEditar._id
-                await editarProducto(producto, cantidad, desdeForm)
+                await editarProducto(producto, cantidad, desdeForm, formData)
                 setCantidad("")
+                setImage({})
                 setProveedorSelect(producto.proveedor)
                 traerProductos()
                 await traerCodigos()
@@ -766,7 +796,37 @@ const Formulario = ({productoEditar}) => {
                         </div> 
                     </div>
 
-
+                    <div className="mb-4">
+                        <div>
+                            <label 
+                                htmlFor="imagen"
+                                className="p-3 inline-block w-1/4 rounded-md bg-red-200 text-center font-semibold"
+                            >
+                                Subir imagen
+                            </label>
+                            <input 
+                                type="file" 
+                                name="imagen"
+                                id="imagen"
+                                className="hidden"
+                                accept="image/jpeg, image/png, image/jpg, image/webp, image/avif"
+                                onChange={e => setImage(e.target.files[0])}
+                            />
+                            {image.name ? <p className={`${modo && "text-white"}`}>Imagen: {" " + image.name}</p> : null}
+                        </div>
+                        <div className="mt-2">
+                            {imagen 
+                                ? <Image 
+                                    width={200} 
+                                    height={200}
+                                    src={`/imagenes/${imagen}`} 
+                                    alt="imagen producto"
+                                />
+                                : null
+                            }
+                        </div>
+                        
+                    </div>
                     
                     <div className="mb-4">
                         <label htmlFor="notas" className="text-gray-800 dark:text-gray-300 font-bold ">Notas</label>

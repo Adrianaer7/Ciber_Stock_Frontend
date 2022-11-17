@@ -64,10 +64,13 @@ const ProductoState = ({children}) => {
     const [state, dispatch] = useReducer(productoReducer, initialState)
 
     //crea un producto nuevo
-    const agregarProducto = async (producto, cantidad, desdeForm) => {
+    const agregarProducto = async (producto, cantidad, desdeForm, formData) => {
         try {
             //creo el nuevo producto
             const {data} = await clienteAxios.post("/api/productos", producto)
+            if(formData) {
+                await clienteAxios.post("/api/imagenes", formData)
+            }
             dispatch({
                 type: AGREGAR_PRODUCTO,
                 payload: data.producto
@@ -123,9 +126,12 @@ const ProductoState = ({children}) => {
 
 
     //modifico el producto
-    const editarProducto = async (producto, cantidad, desdeForm) => {
+    const editarProducto = async (producto, cantidad, desdeForm, formData) => {
         try {
             const {data} = await clienteAxios.put(`/api/productos/${producto._id}`, {producto, desdeForm})
+            if(formData) {
+                await clienteAxios.post("/api/imagenes", formData)
+            }
             dispatch({
                 type: EDITAR_PRODUCTO,
                 payload: data.producto

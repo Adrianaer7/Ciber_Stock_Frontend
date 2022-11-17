@@ -50,7 +50,7 @@ const Edicion = ({productoEditar}) => {
   return (
     <>
       {coincide ? (
-        <Layout pagina={`Ver - ${productoEditar.nombre}`}>
+        <Layout pagina={`Editar - ${productoEditar.nombre}`}>
           <Formulario
             key={productoEditar._id}
             productoEditar={productoEditar}
