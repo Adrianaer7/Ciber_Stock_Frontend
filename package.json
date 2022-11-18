@@ -8,21 +8,15 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@react-pdf/renderer": "^2.3.0",
     "autoprefixer": "^10.4.2",
     "axios": "^0.25.0",
-    "dotenv": "^14.3.2",
-    "iconv-lite": "^0.6.3",
-    "mongoose": "^6.1.8",
     "next": "^12.1.2",
     "postcss": "^8.4.5",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-modal": "^3.16.1",
     "sweetalert2": "^11.4.8",
-    "tailwindcss": "^3.0.15",
-    "vercel": "^24.1.0",
-    "yup": "^0.32.11"
+    "tailwindcss": "^3.0.15"
   },
   "devDependencies": {
     "eslint": "8.7.0",
