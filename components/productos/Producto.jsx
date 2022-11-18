@@ -14,7 +14,7 @@ const Producto = ({producto}) => {
     const {modo} = AuthContext
 
     const productosContext = useContext(productoContext)
-    const {productoActual, venderProducto, garantias, dolarBD} = productosContext
+    const {productoActual, venderProducto , garantias, dolarBD, mostrarModal} = productosContext
     const ProveedorContext = useContext(proveedorContext)
     const {proveedores} = ProveedorContext
 
@@ -48,6 +48,7 @@ const Producto = ({producto}) => {
     const tarjeta = (nombre + " " + marca + " " + modelo + " " + "$" + Math.round(precio_venta_tarjeta)).trim().replace(/\s\s+/g, ' ')
     const textoUnPago = (nombre + " " + marca + " " + modelo + " " + "Total final ahora 12: " + "$" + Math.round(precio_venta_ahoraDoce)).trim().replace(/\s\s+/g, ' ') + " - " + "Valor de cada cuota: " + "$" + precio_venta_cuotas
 
+
     useEffect(() => {
         const warranty = [] //guardo momentaneamente las garantias
         if(garantias.length > 0) {  //garantias del state
@@ -59,8 +60,6 @@ const Producto = ({producto}) => {
         }
         setTodasGarantias(warranty)
     }, [])
-    
- 
 
     useEffect(() => {
         if(colorFaltante) {
@@ -78,13 +77,14 @@ const Producto = ({producto}) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [colorFaltante])
 
+ 
+
     const Copiado = Swal.mixin({
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
         timer: 3000
     })
-
 
     const venderElProducto = async () => {
         const valor = await Swal.fire({ //modal del input
@@ -146,6 +146,8 @@ const Producto = ({producto}) => {
             }
         }
     }
+
+    
       
 
     const añadirFaltante = () => {
@@ -198,18 +200,25 @@ const Producto = ({producto}) => {
             background: `${modo ? "#505050"  : "white"}`,
           })
     }
+
+    const mostrarElModal = () => {
+        mostrarModal(true)
+        productoActual(producto)
+    }
     
 
     return (
         <tr className={`border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 hover:cursor-pointer active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700`}>
             <td className="p-3 dark:text-gray-50 text-center font-semibold break-words" >{codigo}</td>
-            <td>
+            <td className=" text-center">
                 {imagen 
                     ?  <Image
                             src={`/imagenes/${imagen}`}
-                            width={150}
-                            height={150}
+                            width={100}
+                            height={100}
+                            quality={50}
                             objectFit="contain"
+                            onClick={mostrarElModal}
                         />
                     : null
                 }
@@ -243,26 +252,26 @@ const Producto = ({producto}) => {
             <td className="p-3 mt-2  h-full break-words">
                 <button
                     type="button"
-                    className=" bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 mb-2 w-full cursor-pointer text-black p-2 uppercase font-bold text-xs  rounded-md"
+                    className="block bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 mb-2 w-full cursor-pointer text-black p-2 uppercase font-bold text-xs  rounded-md"
                     onClick={venderElProducto}
                 >Vender</button>
                 <Link passHref href={`/producto/${_id}`}>
                     <a
                         type="button"
-                        className="bg-blue-600 hover:bg-blue-900 mb-2 w-full cursor-pointer text-white text-center p-2 uppercase font-bold text-xs  rounded-md"
+                        className="bg-blue-600 hover:bg-blue-900 mb-2 w-full cursor-pointer text-white text-center p-2 uppercase font-bold text-xs block  rounded-md"
                         onClick={() => productoActual(producto)}
                     >Detalles</a>
                 </Link>
                 <Link passHref href={`/producto/editar/${_id}`}>
                     <a
                         type="button"
-                        className="bg-green-600 hover:bg-green-900 mb-2 w-full cursor-pointer text-white text-center p-2 uppercase font-bold text-xs  rounded-md"
+                        className="bg-green-600 hover:bg-green-900 mb-2 w-full cursor-pointer text-white text-center p-2 uppercase font-bold text-xs block rounded-md"
                         onClick={() => productoActual(producto)}
                     >Editar</a>
                 </Link>
                 <button
                     type="button"
-                    className="bg-red-600 hover:bg-red-900  w-full cursor-pointer text-white p-2 uppercase font-bold text-xs  rounded-md"
+                    className="bg-red-600 hover:bg-red-900  w-full cursor-pointer text-white p-2 uppercase font-bold text-xs block rounded-md"
                     onClick={añadirFaltante}
                 >{!faltante && colorFaltante === null || !faltante && colorFaltante === false || faltante && colorFaltante === false ? "Agregar faltante" : "Quitar faltante"}</button>
                 

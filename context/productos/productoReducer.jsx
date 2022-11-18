@@ -34,6 +34,8 @@ import {
     AGREGAR_GARANTIA,
     CREAR_DOLAR,
     EDITAR_DOLAR,
+    MOSTRAR_MODAL,
+    PRODUCTO_ACTUAL,
 } from "../../types"
 
 export default function productoReducer(state, action) {
@@ -65,6 +67,11 @@ export default function productoReducer(state, action) {
                 ...state,
                 productos: action.payload,
                 filtrados: []
+            }
+        case PRODUCTO_ACTUAL:
+            return {
+                ...state,
+                productoSeleccionado: action.payload
             }
         case OBTENER_CODIGOS:
             return {
@@ -238,6 +245,12 @@ export default function productoReducer(state, action) {
                 filtrados: action.payload ? state.filtrados.sort((a,b) => a.disponibles - b.disponibles) : !action.payload ? state.filtrados.sort((a,b) => b.disponibles - a.disponibles ) : state.filtrados
 
             }
+        case MOSTRAR_MODAL:
+            return {
+                ...state,
+                modal: action.payload ? true : false
+            }
+        
     default:
         return state
     }

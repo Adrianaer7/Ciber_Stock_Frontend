@@ -39,6 +39,7 @@ import {
     AGREGAR_GARANTIA,
     CREAR_DOLAR,
     EDITAR_DOLAR,
+    MOSTRAR_MODAL,
 } from "../../types";
 
 const ProductoState = ({children}) => {
@@ -58,7 +59,8 @@ const ProductoState = ({children}) => {
         valorDeVentaEfectivo: 0,
         valorDeVentaTarjeta: 0,
         dolarBD: "",
-        elDolarAutomatico: null
+        elDolarAutomatico: null,
+        modal: null
     }
 
     const [state, dispatch] = useReducer(productoReducer, initialState)
@@ -410,7 +412,6 @@ const ProductoState = ({children}) => {
         try {
             const url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
             const respuesta = await fetch(url)
-            console.log(respuesta)
             const resultado = await respuesta.json()
             const valor = {precio: Number((resultado[0].casa.venta).replace(",",".")), automatico: true}
             const {data} = await clienteAxios.post("/api/dolares", valor)
@@ -548,7 +549,12 @@ const ProductoState = ({children}) => {
         })
     }
 
-    
+    const mostrarModal = (boolean) => {
+        dispatch({
+            type: MOSTRAR_MODAL,
+            payload: boolean
+        })
+    }
     
     const descargarPDF = async () => {
         const {data} = await clienteAxios("api/descargas")
@@ -578,6 +584,7 @@ const ProductoState = ({children}) => {
                 valorDeVentaTarjeta: state.valorDeVentaTarjeta,
                 dolarBD: state.dolarBD,
                 elDolarAutomatico: state.elDolarAutomatico,
+                modal: state.modal,
                 agregarProducto,
                 traerProductos,
                 traerRubros,
@@ -610,6 +617,7 @@ const ProductoState = ({children}) => {
                 orderModeloFiltrados,
                 orderDisponibles,
                 orderDisponiblesFiltrados,
+                mostrarModal,
                 limpiarApp,
                 descargarPDF
             }}
