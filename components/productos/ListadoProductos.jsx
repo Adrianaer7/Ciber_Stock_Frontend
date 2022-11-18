@@ -257,7 +257,7 @@ const ListadoProductos = () => {
                 
                 
             </div>
-                {dolarBD && 
+                {dolarBD &&
                     <div className=" p-4 pl-0 my-auto text-right w-auto font-bold whitespace-nowrap dark:text-white">
                         {dolarAutomatico ? 
                             (<p>Dolar hoy: 

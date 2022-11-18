@@ -7,6 +7,7 @@ import Image from "next/image";
 
 const ListadoCompras = () => {
 
+   
     const AuthContext = useContext(authContext)
     const {modo, usuarioAutenticado} = AuthContext
 
@@ -33,6 +34,14 @@ const ListadoCompras = () => {
     const [ordenNombre, setOrdenNombre] = useState(false)
     const [ordenMarca, setOrdenMarca] = useState(false)
     const [ordenModelo, setOrdenModelo] = useState(false)
+
+    useEffect(() => {
+        if(navigator.onLine) {
+            console.log("ASD")
+        } else {
+            console.log("fals")
+        }
+    }, [])
 
 
     useEffect(() => {
@@ -129,12 +138,12 @@ const ListadoCompras = () => {
                     <th onClick={() => ordenarMarca()} className="break-words">MARCA</th>
                     <th onClick={() => ordenarModelo()} className="break-words">MODELO</th>
                     <th className="w-20">CANTIDAD</th>
-                    <th>FECHA DE COMPRA</th>
+                    <th>FECHA</th>
                     <th className="break-words">GARANTÍA</th>
                     <th className="break-words">COD BARRAS</th>
                     <th className="break-words">FACTURA NRO</th>
                     <th className="break-words">PROVEEDOR</th>
-                    <th className="break-words">VALOR DEL DOLAR</th>
+                    <th className="break-words">VALOR DOLAR</th>
                     <th className="rounded-tr-lg break-words">PRECIO EN USD</th>
                 </tr>
             </thead>

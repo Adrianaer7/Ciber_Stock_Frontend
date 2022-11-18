@@ -410,6 +410,7 @@ const ProductoState = ({children}) => {
         try {
             const url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
             const respuesta = await fetch(url)
+            console.log(respuesta)
             const resultado = await respuesta.json()
             const valor = {precio: Number((resultado[0].casa.venta).replace(",",".")), automatico: true}
             const {data} = await clienteAxios.post("/api/dolares", valor)
@@ -426,6 +427,7 @@ const ProductoState = ({children}) => {
             }
         } catch (error) {
             console.log(error)
+            await traerProductos()  //por si no hay conexion a internet
         }
     }
 
