@@ -85,23 +85,23 @@ const VerProducto = ({producto, laGarantia, proveedores}) => {
   return (
       <>
         <div className=' lg:w-2/3 mx-auto dark:bg-gray-800 bg-slate-100 flex flex-col gap-4'>
-            <h1 className="font-black text-2xl lg:text-4xl dark:text-blue-300 text-blue-900 text-center">{nombre}</h1>
+            <h1 className="font-black text-2xl lg:text-4xl dark:text-blue-300 text-blue-900 text-center break-words">{nombre}</h1>
             <div className=" overflow-x-auto shadow-md sm:rounded-lg">
                 <table className=" sm:table-fixed w-screen sm:w-full text-sm lg:text-lg  text-gray-500 dark:text-gray-400">
                     <tbody>
                         <tr className="dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2 ">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">NOMBRE</th>
-                            <td className="px-6 py-4 text-left">{nombre}</td>
+                            <td className="px-6 py-4 text-left break-words">{nombre}</td>
                         </tr>
                         
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700  justify-between grid  grid-cols-1 lg:grid-cols-2">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">MARCA</th>
-                            <td className="px-6 py-4 mr-20 text-left">{marca ? marca: "-"}</td>
+                            <td className="px-6 py-4 mr-20 text-left break-words">{marca ? marca: "-"}</td>
                         </tr>
                     
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700  justify-between grid  grid-cols-1 lg:grid-cols-2">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">MODELO</th>
-                            <td className="px-6 py-4 text-left">{modelo ? modelo : "-"}</td>
+                            <td className="px-6 py-4 text-left break-words">{modelo ? modelo : "-"}</td>
                         </tr>
                     
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700  justify-between grid  grid-cols-1 lg:grid-cols-2">
@@ -111,7 +111,7 @@ const VerProducto = ({producto, laGarantia, proveedores}) => {
 
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700  justify-between grid  grid-cols-1 lg:grid-cols-2">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">CÓDIGO DE BARRAS</th>
-                            <td className="px-6 py-4 text-left">{barras ? barras : "-"}</td>
+                            <td className="px-6 py-4 text-left break-words">{barras ? barras : "-"}</td>
                         </tr>
                     
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">
@@ -146,17 +146,17 @@ const VerProducto = ({producto, laGarantia, proveedores}) => {
                     
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">GARANTIAS</th>
-                            <td className="px-6 py-4 text-left">{laGarantia.length > 0 ? laGarantia.map((warranty, i) => <div key={i} className="mb-2"><p key={i} className="inline-block"> Proveedor: {warranty.proveedor}</p><p> Caducidad: {warranty.garantia}</p></div>) : "-"}</td>
+                            <td className="px-6 py-4 text-left break-words">{laGarantia.length > 0 ? laGarantia.map((warranty, i) => <div key={i} className="mb-2"><p key={i} className="inline-block"> Proveedor: {warranty.proveedor}</p><p> Caducidad: {warranty.garantia}</p></div>) : "-"}</td>
                         </tr>
                         
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">PROVEEDORES</th>
-                            <td className="px-6 py-4 text-left">{proveedoresIguales.length > 0 ? proveedoresIguales.map((prov, i) => <p key={i}>{`${prov.empresa} (${prov.nombre})`}</p>): "-"}</td>
+                            <td className="px-6 py-4 text-left break-words">{proveedoresIguales.length > 0 ? proveedoresIguales.map((prov, i) => <p key={i}>{`${prov.empresa} (${prov.nombre})`}</p>): "-"}</td>
                         </tr>
 
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-left">FACTURA DE COMPRA </th>
-                            <td className="px-6 py-4 text-left">{factura ? factura : "-"}</td>
+                            <td className="px-6 py-4 text-left break-words">{factura ? factura : "-"}</td>
                         </tr>
 
                         <tr className=" dark:bg-gray-900 dark:border-gray-700 odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-700 justify-between grid  grid-cols-1 lg:grid-cols-2">

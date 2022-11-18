@@ -67,8 +67,8 @@ const Layout = ({children, pagina}) => {
 
             <div className={`lg:flex md:min-h-screen sm:min-h-screen bg-gray-100 ${oscuro && "dark"}`}>
                 <div className="lg:w-72 bg-blue-900    dark:bg-gray-900 flex flex-col  justify-between lg:justify-start ">
-                    <div className="flex justify-between mt-1 px-5">
-                        <p className="text-white text-2xl md:text-4xl font-black text-center">Hola, {usuario ? <span>{usuario.nombre}</span> : null}</p>
+                    <div className="flex justify-between mt-1 px-5 break-words">
+                        <p className="text-white text-2xl md:text-4xl font-black text-center break-words w-40">{usuario ? <span>{usuario.nombre}</span> : null}</p>
                         <Image 
                             src="/settings-claro.svg"
                             alt="Settings"
