@@ -44,7 +44,6 @@ import {
 
 const ProductoState = ({children}) => {
 
-
     const initialState = {
         productos: [],
         codigos: [],
@@ -410,10 +409,10 @@ const ProductoState = ({children}) => {
 
     const traerDolarAPI = async () => {
         try {
-            const url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
+            const url = "https://mercados.ambito.com//dolar/informal/variacion"
             const respuesta = await fetch(url)
             const resultado = await respuesta.json()
-            const valor = {precio: Number((resultado[0].casa.venta).replace(",",".")), automatico: true}
+            const valor = {precio: Number((resultado.venta).replace(",",".")), automatico: true}
             const {data} = await clienteAxios.post("/api/dolares", valor)
             if(data.dolar) {    //cuando se crea el dolar automatico por 1° vez me devuelve el objeto dolar
                 dispatch({

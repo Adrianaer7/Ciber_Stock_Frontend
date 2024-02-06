@@ -206,7 +206,6 @@ const ListadoProductos = () => {
         limpiarSeleccionado()
     }
 
-    console.log(productoSeleccionado)
 
     const onSubmit = async e => {
         e.preventDefault()
