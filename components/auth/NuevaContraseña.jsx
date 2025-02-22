@@ -40,7 +40,7 @@ const NuevaContraseña = () => {
         }
 
         if(nuevaContraseña != confirmNuevaContraseña) {
-            setMensaje("La contraseñas deben coincidir")
+            setMensaje("Las contraseñas deben coincidir")
             setTimeout(() => {
                 setMensaje("")
             }, 3000);
@@ -100,13 +100,9 @@ const NuevaContraseña = () => {
                     </form>
                 </div>
                 <div className="flex justify-between w-3/4 mx-auto">
-                    <Link href="/">
-                        <a
-                            className="pt-5 hover:text-blue-400 font-medium"
-                        >
-                            Iniciar sesion
-                        </a>
-                    </Link>                   
+                <Link href="/" className="pt-5 hover:text-blue-400 font-medium">
+                    Iniciar sesion
+                </Link>                   
                 </div>
             </div>
         )}

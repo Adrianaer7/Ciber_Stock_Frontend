@@ -34,7 +34,7 @@ const FaltanteState = ({children}) => {
 
     const agregarFaltante = async (id) => {   //modifico el valor de faltante a true y agrego el producto al state
         try {
-            const {data} = await clienteAxios.put(`/api/faltantes/${id}`)
+            const {data} = await clienteAxios.put(`/faltantes/${id}`)
             dispatch({
                 type: AGREGAR_FALTANTE,
                 payload: data.producto
@@ -46,7 +46,7 @@ const FaltanteState = ({children}) => {
 
     const traerFaltantes = async () => {
         try {
-            const {data} = await clienteAxios("/api/faltantes")
+            const {data} = await clienteAxios("/faltantes")
             dispatch({
                 type: TRAER_FALTANTES,
                 payload: data.faltantes
@@ -58,7 +58,7 @@ const FaltanteState = ({children}) => {
 
     const eliminarFaltante = async (id) => {    //modifico el valor de faltante a false y elimino el producto del state
         try {
-            await clienteAxios.put(`/api/faltantes/${id}`)
+            await clienteAxios.put(`/faltantes/${id}`)
             dispatch({
                 type: ELIMINAR_FALTANTE,
                 payload: id

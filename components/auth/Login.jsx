@@ -87,19 +87,11 @@ const Login = () => {
                             </form>
                     </div>
                     <div className="flex flex-col items-center sm:mx-auto sm:justify-between sm:w-3/4 ">
-                        <Link href="/crear-cuenta">
-                            <a
-                                className="pt-5 hover:text-blue-400 font-medium"
-                            >
-                                Crear cuenta
-                            </a>
+                        <Link href="/crear-cuenta" className="pt-5 hover:text-blue-400 font-medium">
+                            Crear cuenta
                         </Link>
-                        <Link href="/olvide-password">
-                            <a
-                                className="pt-5 hover:text-blue-400 font-medium"
-                            >
-                                Olvidé mi contraseña
-                            </a>
+                        <Link href="/olvide-password " className="pt-5 hover:text-blue-400 font-medium">
+                            Olvidé mi contraseña
                         </Link>
                     </div>
                     

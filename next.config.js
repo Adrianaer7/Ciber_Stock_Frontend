@@ -1,4 +1,8 @@
-module.exports = {
+/**
+ * @type {import('next').NextConfig}
+ */
+
+const nextConfig = {
   reactStrictMode: true,
   env: {
     backendURL: process.env.backendURL
@@ -7,3 +11,4 @@ module.exports = {
     formats: ["image/avif", "image/webp"]
   }
 }
+module.exports = nextConfig

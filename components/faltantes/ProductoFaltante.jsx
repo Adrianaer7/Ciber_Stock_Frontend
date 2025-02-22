@@ -19,7 +19,8 @@ const ProductoFaltante = ({producto, proveedores}) => {
     const faltantesContext = useContext(faltanteContext)
     const {eliminarFaltante} = faltantesContext
 
-    const proveedoresIguales = proveedores.filter(prov => todos_proveedores.includes(prov._id))
+    const  proveedoresIguales = proveedores.filter(prov => todos_proveedores.includes(prov._id))
+
 
     const Eliminado = Swal.mixin({
         toast: true,

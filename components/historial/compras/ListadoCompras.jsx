@@ -34,20 +34,25 @@ const ListadoCompras = () => {
     const [ordenNombre, setOrdenNombre] = useState(false)
     const [ordenMarca, setOrdenMarca] = useState(false)
     const [ordenModelo, setOrdenModelo] = useState(false)
-
-    useEffect(() => {
-        if(navigator.onLine) {
-            console.log("ASD")
-        } else {
-            console.log("fals")
-        }
-    }, [])
-
+    const [srcImage, setSrcImage] = useState("/search_dark.svg"); 
 
     useEffect(() => {
         usuarioAutenticado()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
+
+
+    useEffect(() => {
+        setSrcImage(
+          modo && escribiendo
+            ? "/close_dark.svg"
+            : !modo && escribiendo
+            ? "/close_light.svg"
+            : modo && !escribiendo
+            ? "/search_light.svg"
+            : "/search_dark.svg"
+        );
+      }, [modo, escribiendo]);
 
     useEffect(() => {
         traerCompras()
@@ -119,7 +124,7 @@ const ListadoCompras = () => {
                         />
                         <div className="absolute mr-2 -inset-y-1 flex right-0 opacity-40">
                             <Image
-                                src={`${modo && escribiendo ? "/close_dark.svg" : !modo && escribiendo ? "/close_light.svg": modo && !escribiendo ? "/search_light.svg" : "/search_dark.svg"}`}
+                                src={srcImage}
                                 alt="Cerrar"
                                 width={30} 
                                 height={30}

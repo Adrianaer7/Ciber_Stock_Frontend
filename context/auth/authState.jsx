@@ -33,7 +33,7 @@ const AuthState = ({children}) => {
     //Registrar nuevos usuarios
     const registrarUsuario = async datos => {
         try {
-            const {data} = await clienteAxios.post("/api/usuarios", datos)
+            const {data} = await clienteAxios.post("/usuarios", datos)
             dispatch({
                 type: REGISTRO_EXITOSO,
                 payload: data.msg
@@ -49,7 +49,7 @@ const AuthState = ({children}) => {
 
     const olvideContraseña = async email => {
         try {
-            const {data} = await clienteAxios.post("/api/usuarios/olvide-password", {email})
+            const {data} = await clienteAxios.post("/usuarios/olvide-password", {email})
             dispatch({
                 type: SOLICITAR_TOKEN_PASSWORD,
                 payload: data.msg
@@ -63,20 +63,19 @@ const AuthState = ({children}) => {
     }
 
     const cambiarContraseña = async (contraseña, token) => {
-        const url = `/api/usuarios/olvide-password/${token}`
+        const url = `/usuarios/olvide-password/${token}`
         await clienteAxios.post(url, {contraseña})
     }
 
     //Autenticar usuario
     const iniciarSesion = async datos => {  //la uso en login.js
         try {
-            const {data} = await clienteAxios.post("/api/auth", datos)   //envio los datos para que me cree un token
+            const {data} = await clienteAxios.post("/auth", datos)   //envio los datos para que me cree un token
             dispatch({
                 type: LOGIN_EXITOSO,
                 payload: data.token
             })
-            usuarioAutenticado()
-
+            usuarioAutenticado(data.token)
         } catch (error) {
             dispatch({
                 type: LOGIN_ERROR,
@@ -92,13 +91,14 @@ const AuthState = ({children}) => {
     }
 
     //Usuario autenticado
-    const usuarioAutenticado = async () => {
-        const token = localStorage.getItem("token")
+    const usuarioAutenticado = async (token = "") => {
+        if(!token) token = localStorage.getItem("token")
+        
         if(token) {
             tokenAuth(token)
         }
         try {
-            const {data} = await clienteAxios("/api/auth")
+            const {data} = await clienteAxios("/auth")
             if(data.usuario) {
                 dispatch({
                     type: USUARIO_AUTENTICADO,

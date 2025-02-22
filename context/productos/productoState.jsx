@@ -68,9 +68,14 @@ const ProductoState = ({children}) => {
     const agregarProducto = async (producto, cantidad, desdeForm, formData) => {
         try {
             //creo el nuevo producto
-            const {data} = await clienteAxios.post("/api/productos", producto)
+            const {data} = await clienteAxios.post("/productos", producto)
+            console.log(formData)
             if(formData) {
-                await clienteAxios.post("/api/imagenes", formData)
+                await clienteAxios.post("/imagenes", formData, {
+                    headers: {
+                      'Content-Type': 'multipart/form-data' // Asegúrate de establecer el header correcto
+                    }
+                  });
             }
             dispatch({
                 type: AGREGAR_PRODUCTO,
@@ -78,12 +83,12 @@ const ProductoState = ({children}) => {
             })
             //creo la nueva compra
             if(desdeForm && cantidad > 0) {
-                clienteAxios.post("/api/compras", {producto, cantidad, desdeForm})
+                clienteAxios.post("/compras", {producto, cantidad, desdeForm})
             }
             //creo la nueva garantia
             if( cantidad > 0 && producto.proveedor && producto.garantia) {
                 const {garantia, proveedor, codigo} = producto
-                clienteAxios.post("/api/garantias", {garantia, proveedor, codigo})
+                clienteAxios.post("/garantias", {garantia, proveedor, codigo})
             }
             
 
@@ -105,7 +110,7 @@ const ProductoState = ({children}) => {
     const agregarRubro = async nombre => {  //envio el rubro
         try {
             
-            const {data} = await clienteAxios.post("/api/rubros", {nombre})
+            const {data} = await clienteAxios.post("/rubros", {nombre})
             dispatch({
                 type: AGREGAR_RUBRO,
                 payload: data.rubro.nombre
@@ -129,20 +134,20 @@ const ProductoState = ({children}) => {
     //modifico el producto
     const editarProducto = async (producto, cantidad, desdeForm, formData) => {
         try {
-            const {data} = await clienteAxios.put(`/api/productos/${producto._id}`, {producto, desdeForm})
+            const {data} = await clienteAxios.put(`/productos/${producto._id}`, {producto, desdeForm})
             if(formData) {
-                await clienteAxios.post("/api/imagenes", formData)
+                await clienteAxios.post("/imagenes", formData)
             }
             dispatch({
                 type: EDITAR_PRODUCTO,
                 payload: data.producto
             })
             if(desdeForm) {
-                clienteAxios.post("/api/compras", {producto, cantidad, desdeForm})
+                clienteAxios.post("/compras", {producto, cantidad, desdeForm})
             }
             if( cantidad > 0 && producto.proveedor && producto.garantia && desdeForm) {
                 const {garantia, proveedor, codigo} = producto
-                clienteAxios.post("/api/garantias", {garantia, proveedor, codigo})
+                clienteAxios.post("/garantias", {garantia, proveedor, codigo})
             }
             
         } catch (error) {
@@ -153,7 +158,7 @@ const ProductoState = ({children}) => {
     const editarProductos = async precio => {
         try {
             if(precio) {
-                await clienteAxios.put("/api/productos", {precio})   //hago esto para modificar los precios segun el dolar cambia.
+                await clienteAxios.put("/productos", {precio})   //hago esto para modificar los precios segun el dolar cambia.
                 await traerProductos()
             }
         } catch (error) {
@@ -164,7 +169,7 @@ const ProductoState = ({children}) => {
     //trae todos los productos creados
     const traerProductos = async () => {
         try {
-            const {data} = await clienteAxios("/api/productos")
+            const {data} = await clienteAxios("/productos")
             dispatch({
                 type: OBTENER_PRODUCTOS,
                 payload: data.productos
@@ -175,7 +180,7 @@ const ProductoState = ({children}) => {
     }
 
     const traerCodigos = async () => {
-        const {data} = await clienteAxios("/api/codigos")
+        const {data} = await clienteAxios("/codigos")
         dispatch({
             type: OBTENER_CODIGOS,
             payload: data.codigosDisponibles
@@ -185,7 +190,7 @@ const ProductoState = ({children}) => {
     //trae todos los rubros creados
     const traerRubros = async () => {
         try {
-            const {data} = await clienteAxios("/api/rubros")
+            const {data} = await clienteAxios("/rubros")
             dispatch({
                 type: OBTENER_RUBROS,
                 payload: data.rubros
@@ -199,7 +204,7 @@ const ProductoState = ({children}) => {
 
     const traerGarantias = async () => {
         try {
-            const {data} = await clienteAxios("/api/garantias")
+            const {data} = await clienteAxios("/garantias")
             dispatch({
                 type: OBTENER_GARANTIAS,
                 payload: data.garantias
@@ -237,7 +242,7 @@ const ProductoState = ({children}) => {
     //elimino un producto
     const eliminarProducto = async id => {
         try {
-            await clienteAxios.delete(`/api/productos/${id}`)
+            await clienteAxios.delete(`/productos/${id}`)
             dispatch({
                 type: ELIMINAR_PRODUCTO,
                 payload: id
@@ -250,7 +255,7 @@ const ProductoState = ({children}) => {
 
     //eliminar todos los productos
     const eliminarProductos = async () => {
-        await clienteAxios.delete("/api/productos")
+        await clienteAxios.delete("/productos")
         dispatch({
             type: ELIMINAR_PRODUCTOS
         })
@@ -258,7 +263,7 @@ const ProductoState = ({children}) => {
 
     //eliminar todos los rubros
     const eliminarRubros = async () => {
-        await clienteAxios.delete("/api/rubros")
+        await clienteAxios.delete("/rubros")
         dispatch({
             type: ELIMINAR_RUBROS
         })
@@ -413,7 +418,7 @@ const ProductoState = ({children}) => {
             const respuesta = await fetch(url)
             const resultado = await respuesta.json()
             const valor = {precio: Number((resultado.venta).replace(",",".")), automatico: true}
-            const {data} = await clienteAxios.post("/api/dolares", valor)
+            const {data} = await clienteAxios.post("/dolares", valor)
             if(data.dolar) {    //cuando se crea el dolar automatico por 1° vez me devuelve el objeto dolar
                 dispatch({
                     type: CREAR_DOLAR,
@@ -434,7 +439,7 @@ const ProductoState = ({children}) => {
 
     const traerDolarBD = async () => {
         try {
-            const {data} = await clienteAxios("/api/dolares")
+            const {data} = await clienteAxios("/dolares")
             if(!data.dolar[0]) {  //si no existe ningun dolar, creo uno trayendolo de la api
                 traerDolarAPI()
             } else {
@@ -457,7 +462,7 @@ const ProductoState = ({children}) => {
     const editarDolarDB = async (dolarManual, automatico) => {
         try {
             if(!automatico) {   //cuando pongo dolar manualmente
-                const {data} = await clienteAxios.put("/api/dolares", {dolarManual, automatico})
+                const {data} = await clienteAxios.put("/dolares", {dolarManual, automatico})
                 dispatch({
                     type: EDITAR_DOLAR,
                     payload: {
@@ -466,7 +471,7 @@ const ProductoState = ({children}) => {
                     }
                 })
             } else {    //cuando elimino el dolar manual
-                await clienteAxios.put("/api/dolares", {automatico})
+                await clienteAxios.put("/dolares", {automatico})
                 traerDolarAPI()
             }
         } catch (error) {

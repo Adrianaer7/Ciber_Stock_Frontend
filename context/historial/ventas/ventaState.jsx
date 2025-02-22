@@ -32,6 +32,7 @@ const VentaState = ({children}) => {
             barras,
             descripcion,
             dolar: valor_dolar,
+            existeProducto: true,
             precioEnDolar: (precio_venta_tarjeta / valor_dolar).toFixed(2),
             precioEnArs: precio_venta_tarjeta,
             unidades,
@@ -39,7 +40,7 @@ const VentaState = ({children}) => {
         }
         
         try {
-            const {data} = await clienteAxios.post("api/ventas", venta)
+            const {data} = await clienteAxios.post("/ventas", venta)
             dispatch({
                 type: CREAR_VENTA,
                 payload: data.venta
@@ -52,7 +53,7 @@ const VentaState = ({children}) => {
 
     const traerVentas = async () => {
         try {
-            const {data} = await clienteAxios("/api/ventas")
+            const {data} = await clienteAxios("/ventas")
             dispatch({
                 type: TRAER_VENTAS,
                 payload: data.ventas
@@ -65,7 +66,7 @@ const VentaState = ({children}) => {
 
     const editarVenta = async(id, idProducto, cantidad) => {
         try {
-            const {data} = await clienteAxios.put(`/api/ventas/${id}`, {idProducto, cantidad})
+            const {data} = await clienteAxios.put(`/ventas/${id}`, {idProducto, cantidad})
             dispatch({
                 type: EDITAR_VENTA,
                 payload: data.venta
@@ -127,7 +128,7 @@ const VentaState = ({children}) => {
 
     const eliminarVenta = async (id, idProducto, cantidad) => {
         try {
-            clienteAxios.delete(`/api/ventas/${id}`, {idProducto, cantidad})
+            clienteAxios.delete(`/ventas/${id}`, {idProducto, cantidad})
             
             dispatch({
                 type: ELIMINAR_VENTA,

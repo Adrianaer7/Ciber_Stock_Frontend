@@ -27,7 +27,7 @@ const CompraState = ({children}) => {
 
     //agregar compra
     const compraDeProducto = async (producto, cantidad) => {
-        const {data} = await clienteAxios.post("/api/compras", {producto, cantidad}) //envio producto como objeto porque sino no puedo extraer su _id en el backend
+        const {data} = await clienteAxios.post("/compras", {producto, cantidad}) //envio producto como objeto porque sino no puedo extraer su _id en el backend
         dispatch({
             type: CREAR_COMPRA,
             payload: data.compra
@@ -35,7 +35,7 @@ const CompraState = ({children}) => {
     }
 
     const traerCompras = async () => {
-        const {data} = await clienteAxios("/api/compras")
+        const {data} = await clienteAxios("/compras")
         dispatch({
             type: TRAER_COMPRAS,
             payload: data.todas

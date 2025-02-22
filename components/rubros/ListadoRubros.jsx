@@ -168,11 +168,13 @@ const ListadoRubros = () => {
             if(rubroExiste.length) {
                 return error()
             }
+            rubro.rentabilidad = rentabilidadCambiada
             await agregarRubro(rubro)
             setCrearNuevo(!crearNuevo)
             agregadoExito()
         } else { 
             rubro._id = rubroSeleccionado._id
+            rubro.rentabilidad = Number(rubro.rentabilidad)
             editarRubro(rubro)
             await limpiarSeleccionado()
             editadoExito()

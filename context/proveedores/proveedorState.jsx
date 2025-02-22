@@ -32,7 +32,7 @@ const ProveedorState = ({children}) => {
     //crea un nuevo proveedor
     const agregarProveedor = async proveedor => {
         try {
-            const {data} = await clienteAxios.post("/api/proveedores", proveedor)
+            const {data} = await clienteAxios.post("/proveedores", proveedor)
             dispatch({
                 type: AGREGAR_PROVEEDOR,
                 payload: data.proveedor
@@ -52,7 +52,7 @@ const ProveedorState = ({children}) => {
 
     const traerProveedores = async () => {
         try {
-            const {data} = await clienteAxios("/api/proveedores")
+            const {data} = await clienteAxios("/proveedores")
             dispatch({
                 type: OBTENER_PROVEEDORES,
                 payload: data.proveedores
@@ -64,7 +64,7 @@ const ProveedorState = ({children}) => {
 
     const proveedorActual = async id => {
         try {
-            const {data} = await clienteAxios(`/api/proveedores/${id}`)
+            const {data} = await clienteAxios(`/proveedores/${id}`)
             dispatch({
                 type: PROVEEDOR_ACTUAL,
                 payload: data.proveedor
@@ -82,7 +82,7 @@ const ProveedorState = ({children}) => {
 
     const editarProveedor = async proveedor => {
         try {
-            const {data} = await clienteAxios.put(`/api/proveedores/${proveedor._id}`, proveedor)
+            const {data} = await clienteAxios.put(`/proveedores/${proveedor._id}`, proveedor)
             dispatch({
                 type: EDITAR_PROVEEDOR,
                 payload: data.proveedor
@@ -120,7 +120,7 @@ const ProveedorState = ({children}) => {
     
     const eliminarUnProveedor = async id => {
         try {
-            await clienteAxios.delete(`/api/proveedores/${id}`)
+            await clienteAxios.delete(`/proveedores/${id}`)
             dispatch({
                 type: ELIMINAR_PROVEEDOR,
                 payload: id
@@ -132,7 +132,7 @@ const ProveedorState = ({children}) => {
     }
     
     const eliminarProveedores = async () => {
-        await clienteAxios.delete("/api/proveedores")
+        await clienteAxios.delete("/proveedores")
         dispatch({
             type: ELIMINAR_PROVEEDORES
         })

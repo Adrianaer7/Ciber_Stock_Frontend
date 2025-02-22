@@ -21,6 +21,7 @@ const Layout = ({children, pagina}) => {
 
     const router = useRouter()
     const urlActual = router.route
+    const nombrePagina = `Inventario - ${pagina}`
 
     useEffect(() => {
         if(!token) {
@@ -36,16 +37,11 @@ const Layout = ({children, pagina}) => {
         setOscuro(temaLS)
     },[])
 
-    //guardo el tema en LS
-    useEffect(() => {
-        localStorage.setItem("Modo oscuro", JSON.stringify(oscuro))
-        traerTema(oscuro)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[oscuro])
-
+    
     //cambio el estado del tema a oscuro o claro
-    const darkMode = () => {
-        setOscuro(!oscuro)
+    const darkMode = (oscuro) => {
+        localStorage.setItem("Modo oscuro", JSON.stringify(oscuro))
+        setOscuro(oscuro)
     }
 
     const tuerca = () => {
@@ -61,7 +57,7 @@ const Layout = ({children, pagina}) => {
     return (
         <div className="min-h-screen">
             <Head>
-                <title>Inventario - {pagina}</title>
+                <title>{nombrePagina}</title>
                 <link rel="shortcut icon" type="image/x-icon" href={favicon.src}/>
             </Head>
 
@@ -82,7 +78,7 @@ const Layout = ({children, pagina}) => {
                     {panel ?
                         <div className="flex flex-col mt-2 ml-5 py-2">
                             <button
-                                onClick={darkMode}
+                                onClick={() => darkMode(!oscuro)}
                                 className="text-white text-left py-2 hover:text-blue-300 hover:translate-x-3"
                             >
                                 {oscuro ? "Tema claro" : "Tema oscuro"}
@@ -100,45 +96,47 @@ const Layout = ({children, pagina}) => {
                     <nav className="grid grid-cols-4 lg:px-5 mt-4 sm:mt-10 lg:flex lg:flex-col lg:justify-start h-5/6">
                         <ul>
                             <li >
-                                <Link href="/productos">
-                                    <a
-                                        className={`${urlActual === "/productos" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"}  text-sm text-center lg:text-left sm:text-xl lg:text-2xl  block p-2 mt-2 hover:text-blue-300`}
-                                    >   Productos
-                                    </a> 
+                                <Link 
+                                    href="/productos" 
+                                    className={`${urlActual === "/productos" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"}  text-sm text-center lg:text-left sm:text-xl lg:text-2xl  block p-2 mt-2 hover:text-blue-300`}
+                                >
+                                    Productos
                                 </Link>
                             </li>
                             <li >
-                                <Link href="/nuevoproducto">
-                                    <a 
-                                        className={`${urlActual === "/nuevoproducto" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
-                                        onClick={() => limpiarSeleccionado()}
-                                    >   Nuevo Producto
-                                    </a>
+                                <Link 
+                                    href="/nuevoproducto"
+                                    className={`${urlActual === "/nuevoproducto" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
+                                    onClick={() => limpiarSeleccionado()}
+                                >
+                                  Nuevo Producto
                                 </Link>
                             </li>
                             <li >
-                                <Link href="/faltantes">
-                                    <a 
-                                        className={`${urlActual === "/faltantes" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block  p-2 mt-2 hover:text-blue-300`}
-                                        onClick={() => limpiarSeleccionado()}
-                                    >   Faltantes
-                                    </a>
+                                <Link 
+                                href="/faltantes" 
+                                className={`${urlActual === "/faltantes" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block  p-2 mt-2 hover:text-blue-300`}
+                                onClick={() => limpiarSeleccionado()}
+                            >
+                                Faltantes
+                            </Link>
+                            </li>
+                            <li >
+                                <Link 
+                                    href="/compras"
+                                    className={`${urlActual === "/compras" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
+                                    onClick={() => limpiarSeleccionado()}
+                                >
+                                    Compras
                                 </Link>
                             </li>
                             <li >
-                                <Link href="/compras">
-                                    <a 
-                                        className={`${urlActual === "/compras" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
-                                        onClick={() => limpiarSeleccionado()}
-                                    >   Compras</a>
-                                </Link>
-                            </li>
-                            <li >
-                                <Link href="/ventas">
-                                    <a 
-                                        className={`${urlActual === "/ventas" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
-                                        onClick={() => limpiarSeleccionado()}
-                                    >   Ventas</a>
+                                <Link 
+                                    href="/ventas"
+                                    className={`${urlActual === "/ventas" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
+                                    onClick={() => limpiarSeleccionado()}
+                                >
+                                    Ventas
                                 </Link>
                             </li>
                             <li 
@@ -148,30 +146,30 @@ const Layout = ({children, pagina}) => {
                                 {mostrarVarios || urlActual === "/proveedores" || urlActual === "/rubros" || urlActual === "/porcentajes" ? (
                                     <ul className="ml-3">
                                         <li >
-                                            <Link href="/proveedores">
-                                                <a 
-                                                    className={`${urlActual === "/proveedores" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
-                                                    onClick={() => limpiarSeleccionado()}
-                                                >   Proveedores
-                                                </a>
+                                            <Link 
+                                                href="/proveedores"
+                                                className={`${urlActual === "/proveedores" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
+                                                onClick={() => limpiarSeleccionado()}
+                                            >
+                                                Proveedores
                                             </Link>
                                         </li>
                                         <li >
-                                            <Link href="/rubros">
-                                                <a 
-                                                    className={`${urlActual === "/rubros" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
-                                                    onClick={() => limpiarSeleccionado()}
-                                                >   Rubros
-                                                </a>
+                                            <Link 
+                                                href="/rubros"
+                                                className={`${urlActual === "/rubros" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
+                                                onClick={() => limpiarSeleccionado()}
+                                            >
+                                                Rubros
                                             </Link>
                                         </li>
                                         <li >
-                                            <Link href="/porcentajes">
-                                                <a 
-                                                    className={`${urlActual === "/porcentajes" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
-                                                    onClick={() => limpiarSeleccionado()}
-                                                >   Porcentajes
-                                                </a>
+                                            <Link 
+                                                href="/porcentajes"
+                                                className={`${urlActual === "/porcentajes" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
+                                                onClick={() => limpiarSeleccionado()}
+                                            > 
+                                              Porcentajes
                                             </Link>
                                         </li>
                                     </ul>

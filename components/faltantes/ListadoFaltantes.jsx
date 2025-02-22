@@ -12,7 +12,6 @@ const ListadoFaltantes = () => {
 
     const ProveedorContext = useContext(proveedorContext)
     const {traerProveedores, proveedores} = ProveedorContext
-
     const faltantesContext = useContext(faltanteContext)
 
     const {
@@ -46,12 +45,26 @@ const ListadoFaltantes = () => {
     const [ordenRubro, setOrdenRubro] = useState(false)
     const [ordenProveedor, setOrdenProveedor] = useState(false)
     const [ordenDisponibles, setOrdenDisponibles] = useState(false)
+    const [srcImage, setSrcImage] = useState("/search_dark.svg")
+
 
 
     useEffect(() => {
         usuarioAutenticado()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
+
+    useEffect(() => {
+        const newSrc = modo && escribiendo
+          ? "/close_dark.svg"
+          : !modo && escribiendo
+          ? "/close_light.svg"
+          : modo && !escribiendo
+          ? "/search_light.svg"
+          : "/search_dark.svg";
+      
+        setSrcImage(newSrc);
+      }, [modo, escribiendo]);
 
     useEffect(() => {
         traerFaltantes()
@@ -162,7 +175,7 @@ const ListadoFaltantes = () => {
                         />
                         <div className="absolute mr-2 -inset-y-1 flex right-0 opacity-40">
                             <Image
-                                src={`${modo && escribiendo ? "/close_dark.svg" : !modo && escribiendo ? "/close_light.svg": modo && !escribiendo ? "/search_light.svg" : "/search_dark.svg"}`}
+                                src={srcImage}
                                 alt="Cerrar"
                                 width={30} 
                                 height={30}

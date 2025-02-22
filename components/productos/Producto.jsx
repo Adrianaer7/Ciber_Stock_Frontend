@@ -217,7 +217,8 @@ const Producto = ({producto}) => {
                             width={100}
                             height={100}
                             quality={50}
-                            objectFit="contain"
+                            alt="img"
+                            style={{ objectFit: 'contain', width: 'auto', height: 'auto' }}
                             onClick={mostrarElModal}
                         />
                     : null
@@ -255,19 +256,23 @@ const Producto = ({producto}) => {
                     className="block bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 mb-2 w-full cursor-pointer text-black p-2 uppercase font-bold text-xs  rounded-md"
                     onClick={venderElProducto}
                 >Vender</button>
-                <Link passHref href={`/producto/${_id}`}>
-                    <a
-                        type="button"
-                        className="bg-blue-600 hover:bg-blue-900 mb-2 w-full cursor-pointer text-white text-center p-2 uppercase font-bold text-xs block  rounded-md"
-                        onClick={() => productoActual(producto)}
-                    >Detalles</a>
+                <Link 
+                    passHref 
+                    href={`/producto/${_id}`}
+                    type="button"
+                    className="bg-blue-600 hover:bg-blue-900 mb-2 w-full cursor-pointer text-white text-center p-2 uppercase font-bold text-xs block  rounded-md"
+                    onClick={() => productoActual(producto)}
+                >
+                    Detalles
                 </Link>
-                <Link passHref href={`/producto/editar/${_id}`}>
-                    <a
-                        type="button"
-                        className="bg-green-600 hover:bg-green-900 mb-2 w-full cursor-pointer text-white text-center p-2 uppercase font-bold text-xs block rounded-md"
-                        onClick={() => productoActual(producto)}
-                    >Editar</a>
+                <Link 
+                    passHref 
+                    href={`/producto/editar/${_id}`}
+                    type="button"
+                    className="bg-green-600 hover:bg-green-900 mb-2 w-full cursor-pointer text-white text-center p-2 uppercase font-bold text-xs block rounded-md"
+                    onClick={() => productoActual(producto)}
+                >
+                    Editar
                 </Link>
                 <button
                     type="button"

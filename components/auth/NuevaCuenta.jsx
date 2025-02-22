@@ -44,16 +44,19 @@ const NuevaCuenta = () => {
             }, 3000);
             return
         }
-
         if(password != confirmar) {
-            setError("La contraseñas deben coincidir")
+            setError("Las contraseñas deben coincidir")
             setTimeout(() => {
                 setError("")
             }, 3000);
             return
         }
         
-        registrarUsuario(nuevoUsuario)
+        registrarUsuario({
+            nombre,
+            email,
+            password
+        })
         setNuevoUsuario({
             nombre: "",
             email: "",
@@ -138,19 +141,11 @@ const NuevaCuenta = () => {
                     </form>
                 </div>
                 <div className="flex flex-col items-center sm:mx-auto sm:justify-between sm:w-3/4 ">
-                    <Link href="/">
-                        <a
-                            className="pt-5 hover:text-blue-400 font-medium"
-                        >
-                            Ya tengo cuenta
-                        </a>
-                    </Link>
-                    <Link href="/olvide-password">
-                        <a
-                            className="pt-5 hover:text-blue-400 font-medium"
-                        >
-                            Olvidé mi contraseña
-                        </a>
+                <Link href="/" className="pt-5 hover:text-blue-400 font-medium">
+                    Ya tengo cuenta
+                </Link>
+                    <Link href="/olvide-password" className="pt-5 hover:text-blue-400 font-medium">
+                        Olvidé mi contraseña
                     </Link>
                    
                 </div>

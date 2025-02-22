@@ -31,7 +31,7 @@ const RubroState = ({children}) => {
 
     //crea un nuevo rubro
     const agregarRubro = async rubro => {
-        const {data} = await clienteAxios.post("/api/rubros", rubro)
+        const {data} = await clienteAxios.post("/rubros", rubro)
         if(data.rubro) {
             try {
             
@@ -57,7 +57,7 @@ const RubroState = ({children}) => {
 
     const traerRubros = async () => {
         try {
-            const {data} = await clienteAxios("/api/rubros")
+            const {data} = await clienteAxios("/rubros")
             dispatch({
                 type: OBTENER_RUBROS,
                 payload: data.rubros
@@ -69,7 +69,7 @@ const RubroState = ({children}) => {
 
     const rubroActual = async id => {
         try {
-            const {data} = await clienteAxios(`/api/rubros/${id}`)
+            const {data} = await clienteAxios(`/rubros/${id}`)
             dispatch({
                 type: RUBRO_ACTUAL,
                 payload: data.rubro
@@ -87,7 +87,7 @@ const RubroState = ({children}) => {
 
     const editarRubro = async rubro => {
         try {
-            const {data} = await clienteAxios.put(`/api/rubros/${rubro._id}`, rubro)
+            const {data} = await clienteAxios.put(`/rubros/${rubro._id}`, rubro)
             dispatch({
                 type: EDITAR_RUBRO,
                 payload: data.rubro
@@ -100,7 +100,7 @@ const RubroState = ({children}) => {
     
     const eliminarUnRubro = async id => {
         try {
-            await clienteAxios.delete(`/api/rubros/${id}`)
+            await clienteAxios.delete(`/rubros/${id}`)
             dispatch({
                 type: ELIMINAR_RUBRO,
                 payload: id
@@ -112,7 +112,7 @@ const RubroState = ({children}) => {
     }
     
     const eliminarRubros = async () => {
-        await clienteAxios.delete("/api/rubros")
+        await clienteAxios.delete("/rubros")
         dispatch({
             type: ELIMINAR_RUBROS
         })

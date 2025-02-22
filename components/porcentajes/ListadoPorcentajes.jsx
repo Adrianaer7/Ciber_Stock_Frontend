@@ -157,6 +157,7 @@ const ListadoPorcentajes = () => {
             agregadoExito()
         } else { 
             porcentaje._id = porcentajeSeleccionado._id
+            porcentaje.comision = Number(porcentaje.comision)
             editarPorcentaje(porcentaje)
             await limpiarSeleccionado()
             editadoExito()

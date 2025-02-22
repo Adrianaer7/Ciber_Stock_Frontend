@@ -66,19 +66,11 @@ const OlvidePassword = () => {
                         </form>
                 </div>
                 <div className="flex flex-col items-center sm:mx-auto sm:justify-between sm:w-3/4">
-                    <Link href="/">
-                        <a
-                            className="pt-5 hover:text-blue-400 font-medium"
-                        >
-                            Iniciar Sesión
-                        </a>
+                    <Link href="/" className="pt-5 hover:text-blue-400 font-medium">
+                        Iniciar Sesión
                     </Link>
-                    <Link href="/crear-cuenta">
-                        <a
-                            className="pt-5 hover:text-blue-400 font-medium"
-                        >
-                            Registrarme
-                        </a>
+                    <Link href="/crear-cuenta" className="pt-5 hover:text-blue-400 font-medium">
+                        Registrarme
                     </Link>
                 </div>
         </div>

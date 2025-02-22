@@ -33,7 +33,8 @@ const ListadoProveedores = () => {
     const [ordenEmpresa, setOrdenEmpresa] = useState(false)
     const [crearNuevo, setCrearNuevo] = useState(false)
     const [editar, setEditar] = useState(proveedorSeleccionado ? true : false)
-    
+    const [srcImage, setSrcImage] = useState("/search_dark.svg")
+
     const [proveedor, setProveedor] = useState({
         nombre: "",
         empresa: "",
@@ -48,6 +49,21 @@ const ListadoProveedores = () => {
         usuarioAutenticado()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
+
+    useEffect(() => {
+        if (modo !== undefined && escribiendo !== undefined) {
+          setSrcImage(
+            modo && escribiendo
+              ? "/close_dark.svg"
+              : !modo && escribiendo
+              ? "/close_light.svg"
+              : modo && !escribiendo
+              ? "/search_light.svg"
+              : "/search_dark.svg"
+          );
+        }
+      }, [modo, escribiendo]);
+    
 
     useEffect(() => {
         traerProveedores()
@@ -224,7 +240,7 @@ const ListadoProveedores = () => {
                     />
                     <div className="absolute mr-2 -inset-y-1 flex right-0 opacity-40">
                         <Image
-                            src={`${modo && escribiendo ? "/close_dark.svg" : !modo && escribiendo ? "/close_light.svg": modo && !escribiendo ? "/search_light.svg" : "/search_dark.svg"}`}
+                            src={srcImage}
                             alt="Cerrar"
                             width={30} 
                             height={30}

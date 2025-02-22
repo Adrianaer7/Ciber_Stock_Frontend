@@ -30,6 +30,7 @@ const Venta = ({producto}) => {
         existeProducto
     } = producto
 
+
     const Copiado = Swal.mixin({
         toast: true,
         position: 'top-end',

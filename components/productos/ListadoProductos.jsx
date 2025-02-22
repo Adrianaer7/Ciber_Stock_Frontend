@@ -396,7 +396,7 @@ const ListadoProductos = () => {
                     height={800}
                     quality={100}
                     alt="imagen producto"
-                    objectFit="contain"
+                    style={{ objectFit: 'contain' }}
                 />
                 <button onClick={ocultarModal}></button>
                 

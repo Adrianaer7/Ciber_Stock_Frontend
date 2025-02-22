@@ -9,7 +9,7 @@ import NoEncontrado from "../../../components/productos/NoEncontrado";
 
 
 export async function getServerSideProps({ params: {url} }) {
-  const {data} = await clienteAxios(`/api/productos/${url}`)
+  const {data} = await clienteAxios(`/productos/${url}`)
   if(data.redireccionar) {
     return {notFound: true}
   }
