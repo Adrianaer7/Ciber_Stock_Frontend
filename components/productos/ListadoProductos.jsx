@@ -5,6 +5,7 @@ import authContext from "../../context/auth/authContext";
 import proveedorContext from "../../context/proveedores/proveedorContext"
 import Image from "next/image"
 import Swal from "sweetalert2";
+import iniciarSocket from "../../config/socket.config";
 //import Spinner from "../layout/Spinner";
 import Modal from "react-modal"
 
@@ -26,7 +27,7 @@ Modal.setAppElement('#__next');
 const ListadoProductos = () => {
 
     const AuthContext = useContext(authContext)
-    const {modo} = AuthContext
+    const {modo, usuario} = AuthContext
     
     const ProveedorContext = useContext(proveedorContext)
     const {traerProveedores} = ProveedorContext
@@ -84,16 +85,22 @@ const ListadoProductos = () => {
     useEffect(() => {
         traerGarantias()
         traerProveedores()
+        limpiarSeleccionado()
+        traerDolarBD()
+        const socket = iniciarSocket(usuario.token);
+        socket.on('product-updated', () => {
+            traerProductos()
+            traerGarantias()
+            traerProveedores()
+            limpiarSeleccionado()
+            traerDolarBD()
+          });
+        return () => {
+            socket.disconnect(); // Desconectar al desmontar
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
    
-
-
-    useEffect(() => {
-        limpiarSeleccionado()
-        traerDolarBD()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
 
     useEffect(() => {
         editarProductos(dolarBD)

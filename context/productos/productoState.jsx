@@ -69,7 +69,6 @@ const ProductoState = ({children}) => {
         try {
             //creo el nuevo producto
             const {data} = await clienteAxios.post("/productos", producto)
-            console.log(formData)
             if(formData) {
                 await clienteAxios.post("/imagenes", formData, {
                     headers: {
@@ -364,7 +363,7 @@ const ProductoState = ({children}) => {
     }
 
     const precioVenta = (valor1, valor2, valor3, valor4) => {   //valor_dolar_compra, precio_compra_dolar, precio_compra_peso, rentabilidad
-        if(valor1>0 && valor2>0 && valor4 && valor3 === "") {
+        if(valor1>0 && valor2>0 && valor4 && !valor3) {
             const val1 = parseFloat(valor1) //precio compra dolar
             const val2 = parseFloat(valor2) //valor dolar compra
             const res1 = (val1 * val2) * (parseInt(Math.round(parseFloat(valor4)))+100)   //redondeo el porcentaje y convierto a integer el resultado de la operacion
@@ -385,7 +384,7 @@ const ProductoState = ({children}) => {
             limpiarPrecioVenta()
         }
         
-        if(valor1>0 && valor4 && valor3>0 && valor2==="") {
+        if(valor1>0 && valor4 && valor3>0 && !valor2) {
             const val3 = parseFloat(valor3) //valor peso compra
             const res3 = (val3 * (parseInt(Math.round(parseFloat(valor4)))+100) / 100)
             if(res3) {

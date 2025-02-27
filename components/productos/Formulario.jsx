@@ -409,7 +409,6 @@ const Formulario = ({ productoEditar }) => {
                 } else {
                     producto.disponibles = 0
                 }
-                console.log(producto.disponibles)
                 if (valorDeVenta) {
                     producto.precio_venta = Number(valorDeVenta)
                 }
@@ -434,10 +433,10 @@ const Formulario = ({ productoEditar }) => {
                     precio_venta_tarjeta: 0,
                     precio_venta_ahoraDoce: 0,
                     precio_venta_cuotas: 0,
-                    precio_compra_dolar: "",
+                    precio_compra_dolar: 0,
                     fecha_compra: hoy,
-                    precio_compra_peso: "",
-                    valor_dolar_compra: "",
+                    precio_compra_peso: 0,
+                    valor_dolar_compra: 0,
                     factura: "",
                     garantia: "",
                     imagen: "",
