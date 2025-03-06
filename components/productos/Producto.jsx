@@ -24,7 +24,7 @@ const Producto = ({producto}) => {
     const ventasContext = useContext(ventaContext)
     const {agregarVenta} = ventasContext
     
-    const [colorFaltante, setColorFaltante] = useState(null)
+    const [colorFaltante, setColorFaltante] = useState(producto.faltante)
     const [todasGarantias, setTodasGarantias] = useState([])
     const {
         nombre, 
@@ -62,20 +62,9 @@ const Producto = ({producto}) => {
     }, [])
 
     useEffect(() => {
-        if(colorFaltante) {
-            agregarFaltante(_id)
-        }
-        if(colorFaltante === false) {
-            eliminarFaltante(_id)
-            Copiado.fire({
-                icon: 'error',
-                title: 'Quitado de faltantes',
-                background: `${modo ? "#505050"  : "white"}`,
-                color: `${modo ? "white" : "#545454"}`,
-              })
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [colorFaltante])
+        setColorFaltante(faltante)
+    }, [producto])
+
 
  
 
@@ -124,6 +113,7 @@ const Producto = ({producto}) => {
             }
             await venderProducto(producto, unidades)
             await agregarVenta(producto, dolarBD, unidades, hoy)
+            setColorFaltante(true)
             await Copiado.fire({    //luego de descontar de la bd, muestro alerta de venta correcta
                 icon: 'success',
                 title: `${unidades > 1 ? "Se vendieron " + unidades + " unidades de" + nombre : "Se vendió " + unidades + " unidad de " + nombre }`,
@@ -136,7 +126,7 @@ const Producto = ({producto}) => {
             if(limiteFaltante !== null) {
                 resta = disponibles - unidades  //obtengo cuantas unidades me quedan
             }
-            if(resta <= limiteFaltante && !faltante) { //si el producto que vendi entró a faltantes, muestro alerta luego de la alerta de vendido
+            if(resta <= limiteFaltante) { //si el producto que vendi entró a faltantes, muestro alerta luego de la alerta de vendido
                 Copiado.fire({
                     icon: 'success',
                     title: 'Agregado a faltante',
@@ -150,16 +140,25 @@ const Producto = ({producto}) => {
     
       
 
-    const añadirFaltante = () => {
-        Copiado.fire({
-            icon: 'success',
-            title: 'Agregado a faltante',
-            color: `${modo ? "white" : "#545454"}`,
-            background: `${modo ? "#505050"  : "white"}`,
-          })
-        setColorFaltante(!colorFaltante)
-        if(colorFaltante === null && faltante) {
+    const cambiarFaltante = () => {
+        if(colorFaltante) {
+            eliminarFaltante(_id)
             setColorFaltante(false)
+            Copiado.fire({
+                icon: 'error',
+                title: 'Quitado de faltantes',
+                background: `${modo ? "#505050"  : "white"}`,
+                color: `${modo ? "white" : "#545454"}`,
+              })   
+        } else {
+            agregarFaltante(_id)
+            setColorFaltante(true)
+            Copiado.fire({
+                icon: 'success',
+                title: 'Agregado a faltante',
+                color: `${modo ? "white" : "#545454"}`,
+                background: `${modo ? "#505050"  : "white"}`,
+            })
         }
     }
     
@@ -277,8 +276,8 @@ const Producto = ({producto}) => {
                 <button
                     type="button"
                     className="bg-red-600 hover:bg-red-900  w-full cursor-pointer text-white p-2 uppercase font-bold text-xs block rounded-md"
-                    onClick={añadirFaltante}
-                >{!faltante && colorFaltante === null || !faltante && colorFaltante === false || faltante && colorFaltante === false ? "Agregar faltante" : "Quitar faltante"}</button>
+                    onClick={cambiarFaltante}
+                >{ !colorFaltante || !faltante ? "Agregar faltante" : "Quitar faltante"}</button>
                 
             </td>
         </tr>

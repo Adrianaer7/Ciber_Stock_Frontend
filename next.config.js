@@ -3,7 +3,7 @@
  */
 
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   env: {
     backendURL: process.env.backendURL
   },

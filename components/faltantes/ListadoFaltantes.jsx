@@ -4,11 +4,12 @@ import faltanteContext from "../../context/faltantes/faltantesContext";
 import proveedorContext from "../../context/proveedores/proveedorContext";
 import authContext from "../../context/auth/authContext";
 import Image from "next/image";
+import iniciarSocket from "../../config/socket.config";
 
 const ListadoFaltantes = () => {
 
     const AuthContext = useContext(authContext)
-    const {modo, usuarioAutenticado} = AuthContext
+    const {modo, usuarioAutenticado, usuario} = AuthContext
 
     const ProveedorContext = useContext(proveedorContext)
     const {traerProveedores, proveedores} = ProveedorContext
@@ -69,6 +70,14 @@ const ListadoFaltantes = () => {
     useEffect(() => {
         traerFaltantes()
         traerProveedores()
+        const socket = iniciarSocket(usuario.token);
+        socket.on('product-updated', () => {
+            traerFaltantes()
+            traerProveedores()
+        });
+        return () => {
+            socket.disconnect(); // Desconectar al desmontar
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
