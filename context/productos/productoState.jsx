@@ -3,46 +3,43 @@ import productoContext from "./productoContext"
 import productoReducer from "./productoReducer";
 import clienteAxios from "../../config/axios"
 import {
-    AGREGAR_PRODUCTO, 
-    AGREGAR_RUBRO, 
-    EDITAR_PRODUCTO, 
-    ELIMINAR_PRODUCTO, 
-    ELIMINAR_PRODUCTOS, 
-    ELIMINAR_RUBROS, 
-    ERROR_AGREGAR_PRODUCTO, 
-    ERROR_AGREGAR_RUBRO, 
-    FILTRAR_PRODUCTO, 
-    LIMPIAR_APP, 
-    LIMPIAR_SELECCIONADO, 
-    LIMPIAR_VENTA, 
-    OBTENER_CODIGOS, 
-    OBTENER_PRODUCTOS, 
-    OBTENER_RUBROS, 
-    OCULTAR_ALERTA, 
-    ORDENAR_CODIGO, 
-    ORDENAR_CODIGO_FILTRADO, 
-    ORDENAR_DISPONIBLES, 
-    ORDENAR_DISPONIBLES_FILTRADO, 
-    ORDENAR_MARCA, 
-    ORDENAR_MARCA_FILTRADO, 
-    ORDENAR_MODELO, 
-    ORDENAR_MODELO_FILTRADO, 
-    ORDENAR_NOMBRE, 
-    ORDENAR_NOMBRE_FILTRADO, 
-    ORDENAR_PRECIO, 
-    ORDENAR_PRECIO_FILTRADO, 
+    AGREGAR_PRODUCTO,
+    AGREGAR_RUBRO,
+    EDITAR_PRODUCTO,
+    ELIMINAR_PRODUCTO,
+    ELIMINAR_PRODUCTOS,
+    ELIMINAR_RUBROS,
+    ERROR_AGREGAR_PRODUCTO,
+    ERROR_AGREGAR_RUBRO,
+    FILTRAR_PRODUCTO,
+    LIMPIAR_APP,
+    LIMPIAR_SELECCIONADO,
+    LIMPIAR_VENTA,
+    OBTENER_CODIGOS,
+    OBTENER_PRODUCTOS,
+    OBTENER_RUBROS,
+    OCULTAR_ALERTA,
+    ORDENAR_CODIGO,
+    ORDENAR_CODIGO_FILTRADO,
+    ORDENAR_DISPONIBLES,
+    ORDENAR_DISPONIBLES_FILTRADO,
+    ORDENAR_MARCA,
+    ORDENAR_MARCA_FILTRADO,
+    ORDENAR_MODELO,
+    ORDENAR_MODELO_FILTRADO,
+    ORDENAR_NOMBRE,
+    ORDENAR_NOMBRE_FILTRADO,
+    ORDENAR_PRECIO,
+    ORDENAR_PRECIO_FILTRADO,
     PRECIO_VENTA_EFECTIVO,
-    PRODUCTOS_CAMBIADOS, 
     PRODUCTO_ACTUAL,
-    TRAER_DOLAR_BD,
     OBTENER_GARANTIAS,
-    AGREGAR_GARANTIA,
     CREAR_DOLAR,
     EDITAR_DOLAR,
     MOSTRAR_MODAL,
 } from "../../types";
 
-const ProductoState = ({children}) => {
+const ProductoState = ({ children }) => {
 
     const initialState = {
         productos: [],
@@ -68,48 +65,48 @@ const ProductoState = ({children}) => {
     const agregarProducto = async (producto, cantidad, desdeForm, formData) => {
         try {
             //creo el nuevo producto
-            const {data} = await clienteAxios.post("/productos", producto)
-            if(formData) {
+            const { data } = await clienteAxios.post("/productos", producto)
+            if (formData) {
                 await clienteAxios.post("/imagenes", formData, {
                     headers: {
-                      'Content-Type': 'multipart/form-data' // Asegúrate de establecer el header correcto
+                        'Content-Type': 'multipart/form-data' // Asegúrate de establecer el header correcto
                     }
-                  });
+                });
             }
             dispatch({
                 type: AGREGAR_PRODUCTO,
                 payload: data.producto
             })
             //creo la nueva compra
-            if(desdeForm && cantidad > 0) {
-                clienteAxios.post("/compras", {producto, cantidad, desdeForm})
+            if (desdeForm && cantidad > 0) {
+                clienteAxios.post("/compras", { producto, cantidad, desdeForm })
             }
             //creo la nueva garantia
-            if( cantidad > 0 && producto.proveedor && producto.garantia) {
-                const {garantia, proveedor, codigo} = producto
-                clienteAxios.post("/garantias", {garantia, proveedor, codigo})
+            if (cantidad > 0 && producto.proveedor && producto.garantia) {
+                const { garantia, proveedor, codigo } = producto
+                clienteAxios.post("/garantias", { garantia, proveedor, codigo })
             }
-            
+
 
         } catch (error) {
-           dispatch({
-               type: ERROR_AGREGAR_PRODUCTO,
-               payload: error.response.data.msg
-           })
+            dispatch({
+                type: ERROR_AGREGAR_PRODUCTO,
+                payload: error.response.data.msg
+            })
 
-           setTimeout(() => {
-               dispatch({
-                   type: OCULTAR_ALERTA
-               })
-           }, 3000);
+            setTimeout(() => {
+                dispatch({
+                    type: OCULTAR_ALERTA
+                })
+            }, 3000);
         }
     }
 
     //crea un nuevo rubro
     const agregarRubro = async nombre => {  //envio el rubro
         try {
-            
-            const {data} = await clienteAxios.post("/rubros", {nombre})
+
+            const { data } = await clienteAxios.post("/rubros", { nombre })
             dispatch({
                 type: AGREGAR_RUBRO,
                 payload: data.rubro.nombre
@@ -119,36 +116,36 @@ const ProductoState = ({children}) => {
                 type: ERROR_AGREGAR_RUBRO,
                 payload: error.response.data.msg
             })
-        setTimeout(() => {
-            dispatch({
-                type: OCULTAR_ALERTA
-            })
-        }, 3000);
+            setTimeout(() => {
+                dispatch({
+                    type: OCULTAR_ALERTA
+                })
+            }, 3000);
         }
     }
 
-    
+
 
 
     //modifico el producto
     const editarProducto = async (producto, cantidad, desdeForm, formData) => {
         try {
-            const {data} = await clienteAxios.put(`/productos/${producto._id}`, {producto, desdeForm})
-            if(formData) {
+            const { data } = await clienteAxios.put(`/productos/${producto._id}`, { producto, desdeForm })
+            if (formData) {
                 await clienteAxios.post("/imagenes", formData)
             }
             dispatch({
                 type: EDITAR_PRODUCTO,
                 payload: data.producto
             })
-            if(desdeForm) {
-                clienteAxios.post("/compras", {producto, cantidad, desdeForm})
+            if (desdeForm) {
+                clienteAxios.post("/compras", { producto, cantidad, desdeForm })
             }
-            if( cantidad > 0 && producto.proveedor && producto.garantia && desdeForm) {
-                const {garantia, proveedor, codigo} = producto
-                clienteAxios.post("/garantias", {garantia, proveedor, codigo})
+            if (cantidad > 0 && producto.proveedor && producto.garantia && desdeForm) {
+                const { garantia, proveedor, codigo } = producto
+                clienteAxios.post("/garantias", { garantia, proveedor, codigo })
             }
-            
+
         } catch (error) {
             console.log(error)
         }
@@ -156,8 +153,7 @@ const ProductoState = ({children}) => {
 
     const editarProductos = async precio => {
         try {
-            if(precio) {
-                await clienteAxios.put("/productos", {precio})   //hago esto para modificar los precios segun el dolar cambia.
+            if (precio) {
                 await traerProductos()
             }
         } catch (error) {
@@ -168,7 +164,7 @@ const ProductoState = ({children}) => {
     //trae todos los productos creados
     const traerProductos = async () => {
         try {
-            const {data} = await clienteAxios("/productos")
+            const { data } = await clienteAxios("/productos")
             dispatch({
                 type: OBTENER_PRODUCTOS,
                 payload: data.productos
@@ -179,7 +175,7 @@ const ProductoState = ({children}) => {
     }
 
     const traerCodigos = async () => {
-        const {data} = await clienteAxios("/codigos")
+        const { data } = await clienteAxios("/codigos")
         dispatch({
             type: OBTENER_CODIGOS,
             payload: data.codigosDisponibles
@@ -189,7 +185,7 @@ const ProductoState = ({children}) => {
     //trae todos los rubros creados
     const traerRubros = async () => {
         try {
-            const {data} = await clienteAxios("/rubros")
+            const { data } = await clienteAxios("/rubros")
             dispatch({
                 type: OBTENER_RUBROS,
                 payload: data.rubros
@@ -199,11 +195,11 @@ const ProductoState = ({children}) => {
         }
     }
 
-    
+
 
     const traerGarantias = async () => {
         try {
-            const {data} = await clienteAxios("/garantias")
+            const { data } = await clienteAxios("/garantias")
             dispatch({
                 type: OBTENER_GARANTIAS,
                 payload: data.garantias
@@ -225,7 +221,7 @@ const ProductoState = ({children}) => {
         }
     }
 
-    
+
 
     //saco el producto seleccionado del state cuando no estoy en la vista propia
     const limpiarSeleccionado = () => {
@@ -249,7 +245,7 @@ const ProductoState = ({children}) => {
         } catch (error) {
             console.log(error)
         }
-        
+
     }
 
     //eliminar todos los productos
@@ -268,78 +264,78 @@ const ProductoState = ({children}) => {
         })
     }
 
-    
+
     //filtro en el listado segun propiedades del producto
     const filtro = (palabras, stock, oculto) => {
         let filtrados = []
         let resultado
         const incluyeTodas = (descripcion) => {
             return !palabras
-                    .split(' ') //creo un array y a cada palabra la pongo en un array
-                    .some(p => !descripcion.includes(p))    //.some() devuelve true si encuentra algun producto que en la descripcion que tenga las mismas palabras que el array de palabras, sin importar el orden del array. Si !(niego) palabras y descripcion, me va a devolver true cuando encuentre el producto que contenga en la descripcion alguna de las palabras que hay en el array de palabras, sin importar el orden.
+                .split(' ') //creo un array y a cada palabra la pongo en un array
+                .some(p => !descripcion.includes(p))    //.some() devuelve true si encuentra algun producto que en la descripcion que tenga las mismas palabras que el array de palabras, sin importar el orden del array. Si !(niego) palabras y descripcion, me va a devolver true cuando encuentre el producto que contenga en la descripcion alguna de las palabras que hay en el array de palabras, sin importar el orden.
         }
-        
+
         state.productos.map(producto => {
-            const {descripcion, disponibles, visibilidad} = producto
-            if(palabras) {
-                if(!stock && !oculto) { //no checkeo nada -----
-                    if(visibilidad) {   //muestro todos los visibles
+            const { descripcion, disponibles, visibilidad } = producto
+            if (palabras) {
+                if (!stock && !oculto) { //no checkeo nada -----
+                    if (visibilidad) {   //muestro todos los visibles
                         resultado = incluyeTodas(descripcion)
-                        if(resultado) {
+                        if (resultado) {
                             filtrados = [...filtrados, producto]
                         }
                     }
-                    
+
                 }
-                if(stock && !oculto) {  //checkeo stock ----
-                    if(disponibles > 0 && visibilidad) {
+                if (stock && !oculto) {  //checkeo stock ----
+                    if (disponibles > 0 && visibilidad) {
                         resultado = incluyeTodas(descripcion)
-                        if(resultado) {
-                            filtrados = [...filtrados, producto]
-                        }
-                    }
-                } 
-                if(!stock && oculto) {  //checkeo oculto ----
-                    if(!visibilidad) {
-                        resultado = incluyeTodas(descripcion)
-                        if(resultado) {
+                        if (resultado) {
                             filtrados = [...filtrados, producto]
                         }
                     }
                 }
-                if(stock && oculto) {   //checkeo stock y oculto
-                    if(disponibles > 0 && !visibilidad) {
+                if (!stock && oculto) {  //checkeo oculto ----
+                    if (!visibilidad) {
                         resultado = incluyeTodas(descripcion)
-                        if(resultado) {
+                        if (resultado) {
                             filtrados = [...filtrados, producto]
                         }
                     }
                 }
-            
-            } else {   
-                if(!stock && !oculto) {
-                    if(visibilidad) {
+                if (stock && oculto) {   //checkeo stock y oculto
+                    if (disponibles > 0 && !visibilidad) {
+                        resultado = incluyeTodas(descripcion)
+                        if (resultado) {
+                            filtrados = [...filtrados, producto]
+                        }
+                    }
+                }
+
+            } else {
+                if (!stock && !oculto) {
+                    if (visibilidad) {
                         filtrados = [...filtrados, producto]
                     }
                 }
-                if(stock && !oculto) {  //checkeo stock ----
-                    if(disponibles > 0 && visibilidad) {
-                        filtrados = [...filtrados, producto]
-                    }
-                } 
-                if(!stock && oculto) {  //checkeo oculto ----
-                    if(!visibilidad) {
+                if (stock && !oculto) {  //checkeo stock ----
+                    if (disponibles > 0 && visibilidad) {
                         filtrados = [...filtrados, producto]
                     }
                 }
-                if(stock && oculto) {   //checkeo stock y oculto
-                    if(disponibles > 0 && !visibilidad) {
+                if (!stock && oculto) {  //checkeo oculto ----
+                    if (!visibilidad) {
+                        filtrados = [...filtrados, producto]
+                    }
+                }
+                if (stock && oculto) {   //checkeo stock y oculto
+                    if (disponibles > 0 && !visibilidad) {
                         filtrados = [...filtrados, producto]
                     }
                 }
             }
         })
-        
+
         try {
             dispatch({
                 type: FILTRAR_PRODUCTO,
@@ -363,12 +359,12 @@ const ProductoState = ({children}) => {
     }
 
     const precioVenta = (valor1, valor2, valor3, valor4) => {   //valor_dolar_compra, precio_compra_dolar, precio_compra_peso, rentabilidad
-        if(valor1>0 && valor2>0 && valor4 && !valor3) {
+        if (valor1 > 0 && valor2 > 0 && valor4 && !valor3) {
             const val1 = parseFloat(valor1) //precio compra dolar
             const val2 = parseFloat(valor2) //valor dolar compra
-            const res1 = (val1 * val2) * (parseInt(Math.round(parseFloat(valor4)))+100)   //redondeo el porcentaje y convierto a integer el resultado de la operacion
+            const res1 = (val1 * val2) * (parseInt(Math.round(parseFloat(valor4))) + 100)   //redondeo el porcentaje y convierto a integer el resultado de la operacion
             const res3 = Number((res1 / 100).toFixed(2))
-            if(res3) {
+            if (res3) {
                 try {
                     dispatch({
                         type: PRECIO_VENTA_EFECTIVO,
@@ -383,11 +379,11 @@ const ProductoState = ({children}) => {
         } else {
             limpiarPrecioVenta()
         }
-        
-        if(valor1>0 && valor4 && valor3>0 && !valor2) {
+
+        if (valor1 > 0 && valor4 && valor3 > 0 && !valor2) {
             const val3 = parseFloat(valor3) //valor peso compra
-            const res3 = (val3 * (parseInt(Math.round(parseFloat(valor4)))+100) / 100)
-            if(res3) {
+            const res3 = (val3 * (parseInt(Math.round(parseFloat(valor4))) + 100) / 100)
+            if (res3) {
                 try {
                     dispatch({
                         type: PRECIO_VENTA_EFECTIVO,
@@ -410,68 +406,38 @@ const ProductoState = ({children}) => {
         })
     }
 
-
-    const traerDolarAPI = async () => {
-        try {
-            const url = "https://mercados.ambito.com//dolar/informal/variacion"
-            const respuesta = await fetch(url)
-            const resultado = await respuesta.json()
-            const valor = {precio: Number((resultado.venta).replace(",",".")), automatico: true}
-            const {data} = await clienteAxios.post("/dolares", valor)
-            if(data.dolar) {    //cuando se crea el dolar automatico por 1° vez me devuelve el objeto dolar
-                dispatch({
-                    type: CREAR_DOLAR,
-                    payload: data.dolar.precio
-                })
-            } else {    //si ya está creado el dolar automatico, y tiene el mismo valor que el que le quiero pasar, no me devuelve "dolar", sino el precio
-                dispatch({
-                    type: CREAR_DOLAR,
-                    payload: data.precio
-                })
-            }
-        } catch (error) {
-            console.log(error)
-            await traerProductos()  //por si no hay conexion a internet
-        }
-    }
-
-
     const traerDolarBD = async () => {
         try {
-            const {data} = await clienteAxios("/dolares")
-            if(!data.dolar[0]) {  //si no existe ningun dolar, creo uno trayendolo de la api
-                traerDolarAPI()
-            } else {
-                const {dolar} = data
-                if(dolar[0].automatico) {   //si ya existe el un dolar automatico creado, le envio el nuevo valor
-                    traerDolarAPI()
-                } else {    //si existe un dolar pero no es automatico, solamente me traigo el valor que haya en la bd
-                    dispatch({
-                        type: TRAER_DOLAR_BD,
-                        payload: data.dolar[0].precio
-                    })
-                }
-            }
+            const { data } = await clienteAxios("/dolares")
+            dispatch({
+                type: CREAR_DOLAR,
+                payload: data.precio
+            })
         } catch (error) {
             console.log(error)
         }
-        
     }
 
     const editarDolarDB = async (dolarManual, automatico) => {
         try {
-            if(!automatico) {   //cuando pongo dolar manualmente
-                const {data} = await clienteAxios.put("/dolares", {dolarManual, automatico})
+            if (!automatico) {   //cuando pongo dolar manualmente
+                const { data } = await clienteAxios.put("/dolares", { dolarManual, automatico })
                 dispatch({
                     type: EDITAR_DOLAR,
                     payload: {
-                        precio: data.dolar.precio,
+                        precio: data.precio,
                         automatico
                     }
                 })
             } else {    //cuando elimino el dolar manual
-                await clienteAxios.put("/dolares", {automatico})
-                traerDolarAPI()
+                const { data } =  await clienteAxios.put("/dolares", { automatico })
+                dispatch({
+                    type: EDITAR_DOLAR,
+                    payload: {
+                        precio: data.precio,
+                        automatico
+                    }
+                })
             }
         } catch (error) {
             console.log(error)
@@ -520,7 +486,7 @@ const ProductoState = ({children}) => {
             payload: ordenCodigo
         })
     }
-    
+
     const orderPrecioFiltrados = (ordenPrecio) => {
         dispatch({
             type: ORDENAR_PRECIO_FILTRADO,
@@ -558,9 +524,9 @@ const ProductoState = ({children}) => {
             payload: boolean
         })
     }
-    
+
     const descargarPDF = async () => {
-        const {data} = await clienteAxios("api/descargas")
+        const { data } = await clienteAxios("api/descargas")
         console.log(data)
     }
 
@@ -569,7 +535,7 @@ const ProductoState = ({children}) => {
             type: LIMPIAR_APP
         })
     }
-    
+
     return (
         <productoContext.Provider
             value={{
@@ -604,7 +570,6 @@ const ProductoState = ({children}) => {
                 eliminarRubros,
                 precioVenta,
                 limpiarPrecioVenta,
-                traerDolarAPI,
                 traerDolarBD,
                 editarDolarDB,
                 editarProductos,
