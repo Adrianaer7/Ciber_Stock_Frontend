@@ -27,7 +27,7 @@ Modal.setAppElement('#__next');
 const ListadoProductos = () => {
 
     const AuthContext = useContext(authContext)
-    const {modo, usuario} = AuthContext
+    const {modo, token} = AuthContext
     
     const ProveedorContext = useContext(proveedorContext)
     const {traerProveedores} = ProveedorContext
@@ -87,7 +87,7 @@ const ListadoProductos = () => {
         traerProveedores()
         limpiarSeleccionado()
         traerDolarBD()
-        const socket = iniciarSocket(usuario.token);
+        const socket = iniciarSocket(token);
         socket.on('product-updated', () => {
             traerProductos()
             traerGarantias()

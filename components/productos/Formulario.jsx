@@ -7,7 +7,6 @@ import compraContext from "../../context/historial/compras/compraContext"
 import rubroContext from "../../context/rubros/rubroContext"
 import { hoy } from "../../helpers"
 import Swal from "sweetalert2"
-import Rubro from "../rubros/Rubro"
 
 const Formulario = ({ productoEditar }) => {
     const AuthContext = useContext(authContext)
@@ -26,13 +25,11 @@ const Formulario = ({ productoEditar }) => {
     const {
         productos,
         codigos,
-        productoSeleccionado,
         agregarProducto,
         editarProducto,
         traerProductos,
         traerCodigos,
         valorDeVenta,
-        limpiarPrecioVenta,
         precioVenta,
         traerDolarBD,
     } = productosContext

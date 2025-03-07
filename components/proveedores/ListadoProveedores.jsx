@@ -4,11 +4,12 @@ import proveedorContext from "../../context/proveedores/proveedorContext";
 import authContext from "../../context/auth/authContext";
 import Image from "next/image";
 import Swal from "sweetalert2";
-
+import iniciarSocket from "../../config/socket.config";
+ 
 const ListadoProveedores = () => {
 
     const AuthContext = useContext(authContext)
-    const {modo, usuarioAutenticado} = AuthContext
+    const {modo, usuarioAutenticado, token} = AuthContext
 
      
 
@@ -68,6 +69,14 @@ const ListadoProveedores = () => {
     useEffect(() => {
         traerProveedores()
         limpiarSeleccionado()
+        const socket = iniciarSocket(token);
+        socket.on('product-updated', () => {
+            traerProveedores()
+            limpiarSeleccionado()
+          });
+        return () => {
+            socket.disconnect(); // Desconectar al desmontar
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

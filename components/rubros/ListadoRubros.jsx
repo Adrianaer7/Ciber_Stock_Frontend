@@ -3,11 +3,12 @@ import Rubro from "./Rubro";
 import rubroContext from "../../context/rubros/rubroContext";
 import authContext from "../../context/auth/authContext";
 import Swal from "sweetalert2";
+import iniciarSocket from "../../config/socket.config";
 
 const ListadoRubros = () => {
 
     const AuthContext = useContext(authContext)
-    const {modo, usuarioAutenticado} = AuthContext
+    const {modo, usuarioAutenticado, token} = AuthContext
 
      
 
@@ -39,6 +40,13 @@ const ListadoRubros = () => {
 
     useEffect(() => {
         traerRubros()
+        const socket = iniciarSocket(token);
+        socket.on('rubros-updated', () => {
+            traerRubros()
+        });
+        return () => {
+            socket.disconnect(); // Desconectar al desmontar
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])    
 

@@ -9,7 +9,7 @@ import iniciarSocket from "../../config/socket.config";
 const ListadoFaltantes = () => {
 
     const AuthContext = useContext(authContext)
-    const {modo, usuarioAutenticado, usuario} = AuthContext
+    const {modo, usuarioAutenticado, token} = AuthContext
 
     const ProveedorContext = useContext(proveedorContext)
     const {traerProveedores, proveedores} = ProveedorContext
@@ -70,7 +70,7 @@ const ListadoFaltantes = () => {
     useEffect(() => {
         traerFaltantes()
         traerProveedores()
-        const socket = iniciarSocket(usuario.token);
+        const socket = iniciarSocket(token);
         socket.on('product-updated', () => {
             traerFaltantes()
             traerProveedores()

@@ -4,12 +4,13 @@ import compraContext from "../../../context/historial/compras/compraContext";
 import proveedorContext from "../../../context/proveedores/proveedorContext";
 import authContext from "../../../context/auth/authContext";
 import Image from "next/image";
+import iniciarSocket from "../../../config/socket.config";
 
 const ListadoCompras = () => {
 
    
     const AuthContext = useContext(authContext)
-    const {modo, usuarioAutenticado} = AuthContext
+    const {modo, usuarioAutenticado, token} = AuthContext
 
     const ProvedorContext = useContext(proveedorContext)
     const {traerProveedores, proveedores} = ProvedorContext
@@ -57,6 +58,14 @@ const ListadoCompras = () => {
     useEffect(() => {
         traerCompras()
         traerProveedores()
+        const socket = iniciarSocket(token);
+        socket.on('purchase-updated', () => {
+            traerCompras()
+            traerProveedores()
+        });
+        return () => {
+            socket.disconnect(); // Desconectar al desmontar
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
