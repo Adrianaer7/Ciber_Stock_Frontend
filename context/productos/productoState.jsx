@@ -411,7 +411,10 @@ const ProductoState = ({ children }) => {
             const { data } = await clienteAxios("/dolares")
             dispatch({
                 type: CREAR_DOLAR,
-                payload: data.precio
+                payload: {
+                    precio: data.precio,
+                    automatico: data.automatico
+                }
             })
         } catch (error) {
             console.log(error)

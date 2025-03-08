@@ -28,7 +28,7 @@ const Edicion = ({productoEditar}) => {
   const productosContext = useContext(productoContext)
   const {productoActual} = productosContext
 
-  const [coincide, setCoincide] = useState(true)
+  const [coincide, setCoincide] = useState(null)
 
   //Autentico al usuario y agrego el producto actual al state
   useEffect(() => {
@@ -38,11 +38,13 @@ const Edicion = ({productoEditar}) => {
 
   //Cuando me autentique, verifico que el producto que traigo es el del usuario que está logueado
   useEffect(() => {
-    if(usuario) {
-      productoActual(productoEditar)
-      if(productoEditar.creador !== usuario._id){
+    if(usuario && coincide === null) {
+      if(productoEditar.creador !== usuario._id) {
         setCoincide(false)
-      }  
+      } else {
+        setCoincide(true)
+        productoActual(productoActual)
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usuario])
@@ -56,7 +58,7 @@ const Edicion = ({productoEditar}) => {
             productoEditar={productoEditar}
           />
         </Layout>
-      ): <NoEncontrado/>
+      ): coincide=== false ?? <NoEncontrado/>
       }
     </>
   )

@@ -29,7 +29,7 @@ const Ver = ({producto}) => {
   const ProveedorContext = useContext(proveedorContext)
   const {traerProveedores, proveedores} = ProveedorContext
 
-  const [coincide, setCoincide] = useState(true)
+  const [coincide, setCoincide] = useState(null)
   const [todasGarantias, setTodasGarantias] = useState([])
 
   const router = useRouter()
@@ -43,14 +43,17 @@ const Ver = ({producto}) => {
   
   //Cuando me autentique, verifico que el producto que traigo es el del usuario que está logueado
   useEffect(() => {
-  if(usuario) {
-    productoActual(producto)
-    if(producto.creador !== usuario._id) {
-      setCoincide(false)
+    if(usuario && coincide === null) {
+      if(producto.creador !== usuario._id) {
+        setCoincide(false)
+      } else {
+        setCoincide(true)
+        productoActual(producto)
+        traerGarantias()
+        traerProveedores()
+      }
     }
-    traerGarantias()
-    traerProveedores()
-  }
+  
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usuario])
 
@@ -76,7 +79,7 @@ const Ver = ({producto}) => {
             proveedores={proveedores}
           />
         </Layout>
-      ): <NoEncontrado/>
+      ): coincide=== false ?? <NoEncontrado/>
       }
     </>
   )

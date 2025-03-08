@@ -7,10 +7,11 @@ import compraContext from "../../context/historial/compras/compraContext"
 import rubroContext from "../../context/rubros/rubroContext"
 import { hoy } from "../../helpers"
 import Swal from "sweetalert2"
+import iniciarSocket from "../../config/socket.config"
 
 const Formulario = ({ productoEditar }) => {
     const AuthContext = useContext(authContext)
-    const { modo, usuario } = AuthContext
+    const { modo, usuario, token } = AuthContext
 
     const CompraContext = useContext(compraContext)
     const { traerCompras } = CompraContext
@@ -84,15 +85,27 @@ const Formulario = ({ productoEditar }) => {
             traerCodigos()
             traerCompras()
             traerRubros()
+            traerProductos()
+            const socket = iniciarSocket(token);
+            socket.on('product-updated', () => {
+                traerDolarBD()
+                traerProveedores()
+                traerCodigos()
+                traerCompras()
+                traerRubros()
+                traerProductos()
+            });
+            socket.on('rubros-updated', () => {
+                traerRubros()
+            });
+            return () => {
+                socket.disconnect(); // Desconectar al desmontar
+            };
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [usuario, productos])    //cuando cambie cualquiera de las 2 se ejecuta el useefect
+    }, [])
 
-    useEffect(() => {
-        if (usuario) {
-            traerProductos()
-        }
-    }, [usuario])
+
 
 
     //cada vez que escriba en los inputs se realiza el calculo aprox para el precio de la venta

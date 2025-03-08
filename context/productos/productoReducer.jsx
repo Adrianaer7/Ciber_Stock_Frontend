@@ -155,8 +155,8 @@ export default function productoReducer(state, action) {
         case CREAR_DOLAR:
             return {
                 ...state,
-                dolarBD: action.payload,
-                elDolarAutomatico: true
+                dolarBD: action.payload.precio,
+                elDolarAutomatico: action.payload.automatico
             }
         case EDITAR_DOLAR:
             return {
