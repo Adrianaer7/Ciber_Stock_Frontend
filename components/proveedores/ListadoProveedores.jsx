@@ -5,6 +5,7 @@ import authContext from "../../context/auth/authContext";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import iniciarSocket from "../../config/socket.config";
+import mostarAlerta from "../../config/alerts";
  
 const ListadoProveedores = () => {
 
@@ -218,7 +219,8 @@ const ListadoProveedores = () => {
             agregadoExito()
         } else { 
             proveedor._id = proveedorSeleccionado._id
-            editarProveedor(proveedor)
+            const error = await editarProveedor(proveedor)
+            if(error) return mostarAlerta(error, modo)
             await limpiarSeleccionado()
             editadoExito()
         }
@@ -339,7 +341,7 @@ const ListadoProveedores = () => {
                                     type="email"
                                     name="email"
                                     autoComplete="off"
-                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 lowercase rounded-md border-none active:ring-1 shadow-sm"
+                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 rounded-md border-none active:ring-1 shadow-sm"
                                     placeholder="correo@correo.com"
                                     value={email}
                                     onChange={onChange}
@@ -419,7 +421,7 @@ const ListadoProveedores = () => {
                                     type="email"
                                     name="email"
                                     autoComplete="off"
-                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 lowercase rounded-md border-none active:ring-1 shadow-sm"
+                                    className="bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300 uppercase w-full p-2 rounded-md border-none active:ring-1 shadow-sm"
                                     placeholder="correo@correo.com"
                                     value={email}
                                     onChange={onChange}

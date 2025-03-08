@@ -4,6 +4,7 @@ import { generarFecha } from '../../helpers';
 import productoContext from "../../context/productos/productoContext";
 import authContext from "../../context/auth/authContext";
 import Swal from "sweetalert2";
+import mostarAlerta from "../../config/alerts";
 
 
 const VerProducto = ({producto, laGarantia, proveedores}) => {
@@ -52,7 +53,8 @@ const VerProducto = ({producto, laGarantia, proveedores}) => {
     })
 
     const eliminar = async () => {
-        eliminarProducto(_id)
+        const error = eliminarProducto(_id)
+        if(error) return mostarAlerta(error, modo)
         router.push("/productos")
     } 
 

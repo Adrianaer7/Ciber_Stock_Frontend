@@ -40,7 +40,8 @@ const FaltanteState = ({children}) => {
                 payload: data.producto
             })
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
+            return error.response.data.msg
         }
     }
 

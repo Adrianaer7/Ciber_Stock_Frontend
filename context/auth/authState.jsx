@@ -39,10 +39,16 @@ const AuthState = ({children}) => {
                 payload: data.msg
             })
         } catch (error) {
+            console.log(error.response.data)
             dispatch({
                 type: REGISTRO_ERROR,
                 payload: error.response.data.msg
-            })            
+            })
+            setTimeout(() => {
+                dispatch({
+                    type: OCULTAR_ALERTA,
+                })
+            }, 3000);         
         }
         
     }
@@ -64,7 +70,20 @@ const AuthState = ({children}) => {
 
     const cambiarContraseña = async (contraseña, token) => {
         const url = `/usuarios/olvide-password/${token}`
-        await clienteAxios.post(url, {contraseña})
+        try {
+            await clienteAxios.post(url, {contraseña})
+        } catch (error) {
+            console.log(error.response.data)
+            dispatch({
+                type: REGISTRO_ERROR,
+                payload: error.response.data.msg
+            })
+            setTimeout(() => {
+                dispatch({
+                    type: OCULTAR_ALERTA,
+                })
+            }, 3000); 
+        }
     }
 
     //Autenticar usuario

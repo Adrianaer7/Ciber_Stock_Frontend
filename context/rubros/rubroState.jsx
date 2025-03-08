@@ -31,28 +31,34 @@ const RubroState = ({children}) => {
 
     //crea un nuevo rubro
     const agregarRubro = async rubro => {
-        const {data} = await clienteAxios.post("/rubros", rubro)
-        if(data.rubro) {
-            try {
-            
+        try {
+            const {data} = await clienteAxios.post("/rubros", rubro)
+            if(data.rubro) {
+                try {
+                
+                    dispatch({
+                        type: AGREGAR_RUBRO,
+                        payload: data.rubro
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
+            } else {
                 dispatch({
-                    type: AGREGAR_RUBRO,
-                    payload: data.rubro
+                    type: ERROR_AGREGAR_RUBRO,
+                    payload: data.msg
                 })
-            } catch (error) {
-                console.log(error)
+                setTimeout(() => {
+                    dispatch({
+                        type: OCULTAR_ALERTA
+                    })
+                }, 3000);
             }
-        } else {
-            dispatch({
-                type: ERROR_AGREGAR_RUBRO,
-                payload: data.msg
-            })
-            setTimeout(() => {
-                dispatch({
-                    type: OCULTAR_ALERTA
-                })
-            }, 3000);
-        }
+            } catch (error) {
+                console.log(error.response.data)
+                return error.response.data.msg
+            }
+        
     }
 
     const traerRubros = async () => {
@@ -75,7 +81,8 @@ const RubroState = ({children}) => {
                 payload: data.rubro
             })
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
+            return error.response.data.msg
         }
     }
 
@@ -93,7 +100,8 @@ const RubroState = ({children}) => {
                 payload: data.rubro
             })
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
+            return error.response.data.msg
         }
     }
 
@@ -107,7 +115,8 @@ const RubroState = ({children}) => {
             })  
             
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
+            return error.response.data.msg
         }
     }
     

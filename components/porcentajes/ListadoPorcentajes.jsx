@@ -3,6 +3,7 @@ import Porcentaje from "./Porcentaje";
 import porcentajeContext from "../../context/porcentajes/porcentajeContext";
 import authContext from "../../context/auth/authContext";
 import Swal from "sweetalert2";
+import mostarAlerta from "../../config/alerts";
 
 const ListadoPorcentajes = () => {
 
@@ -158,7 +159,8 @@ const ListadoPorcentajes = () => {
         } else { 
             porcentaje._id = porcentajeSeleccionado._id
             porcentaje.comision = Number(porcentaje.comision)
-            editarPorcentaje(porcentaje)
+            const error = await editarPorcentaje(porcentaje)
+            if(error) return mostarAlerta(error, modo)
             await limpiarSeleccionado()
             editadoExito()
         }

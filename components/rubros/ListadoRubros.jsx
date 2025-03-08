@@ -4,6 +4,7 @@ import rubroContext from "../../context/rubros/rubroContext";
 import authContext from "../../context/auth/authContext";
 import Swal from "sweetalert2";
 import iniciarSocket from "../../config/socket.config";
+import mostarAlerta from "../../config/alerts";
 
 const ListadoRubros = () => {
 
@@ -177,13 +178,15 @@ const ListadoRubros = () => {
                 return error()
             }
             rubro.rentabilidad = rentabilidadCambiada
-            await agregarRubro(rubro)
+            const error = await agregarRubro(rubro)
+            if(error) return mostarAlerta(error, modo)
             setCrearNuevo(!crearNuevo)
             agregadoExito()
         } else { 
             rubro._id = rubroSeleccionado._id
             rubro.rentabilidad = Number(rubro.rentabilidad)
-            editarRubro(rubro)
+            const error = await editarRubro(rubro)
+            if(error) return mostarAlerta(error, modo)
             await limpiarSeleccionado()
             editadoExito()
         }

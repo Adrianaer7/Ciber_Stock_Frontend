@@ -3,6 +3,7 @@ import { useContext } from "react"
 import authContext from "../../context/auth/authContext";
 import rubroContext from "../../context/rubros/rubroContext";
 import Swal from "sweetalert2";
+import mostarAlerta from "../../config/alerts";
 
 const Rubro = ({rubro, crearNuevo}) => {
     
@@ -14,6 +15,11 @@ const Rubro = ({rubro, crearNuevo}) => {
 
     const {_id, nombre, rentabilidad} = rubro
     
+
+    const editarRubro= async () => {
+        const error = await rubroActual(_id)
+        if(error) return mostarAlerta(error, modo)
+    }
 
     const Eliminado = Swal.mixin({
         toast: true,
@@ -37,9 +43,10 @@ const Rubro = ({rubro, crearNuevo}) => {
             confirmButtonColor: '#d33',
             cancelButtonText:'<p>Cancelar</p>',
             background: `${modo ? "rgb(31 41 55)" : "white"}`,
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                eliminarUnRubro(_id)
+                const error = await eliminarUnRubro(_id)
+                if(error) return mostarAlerta(error, modo)
                 Eliminado.fire({
                     icon: 'success',
                     title: "Se eliminó correctamente",
@@ -66,7 +73,7 @@ const Rubro = ({rubro, crearNuevo}) => {
                             width={30} 
                             height={30}
                             priority={true}
-                            onClick={() => rubroActual(_id)}
+                            onClick={editarRubro}
                             />
                     </div>
                     <div className={` hover:bg-gray-200 dark:hover:bg-gray-600 p-1 pb-0 items-center rounded-md hover:cursor-pointer`}>

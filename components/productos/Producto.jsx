@@ -8,6 +8,7 @@ import authContext from "../../context/auth/authContext";
 import proveedorContext from "../../context/proveedores/proveedorContext"
 import { hoy } from "../../helpers";
 import Swal from "sweetalert2";
+import mostarAlerta from "../../config/alerts";
 
 const Producto = ({producto}) => {
     const AuthContext = useContext(authContext)
@@ -111,8 +112,10 @@ const Producto = ({producto}) => {
                 })
                 return venderElProducto()
             }
-            await venderProducto(producto, unidades)
-            await agregarVenta(producto, dolarBD, unidades, hoy)
+            let error = await venderProducto(producto, unidades)
+            if (error) return mostarAlerta(error, modo)
+            error = await agregarVenta(producto, dolarBD, unidades, hoy)
+            if(error) return mostarAlerta(error, modo)
             setColorFaltante(true)
             await Copiado.fire({    //luego de descontar de la bd, muestro alerta de venta correcta
                 icon: 'success',
@@ -151,7 +154,8 @@ const Producto = ({producto}) => {
                 color: `${modo ? "white" : "#545454"}`,
               })   
         } else {
-            agregarFaltante(_id)
+            const error = agregarFaltante(_id)
+            if(error) return mostarAlerta(error, modo)
             setColorFaltante(true)
             Copiado.fire({
                 icon: 'success',

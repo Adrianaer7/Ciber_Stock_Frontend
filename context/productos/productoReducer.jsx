@@ -7,7 +7,6 @@ import {
     OCULTAR_ALERTA,  
     FILTRAR_PRODUCTO,
     OBTENER_RUBROS,
-    ERROR_AGREGAR_PRODUCTO,
     ERROR_AGREGAR_RUBRO,
     AGREGAR_RUBRO,
     OBTENER_CODIGOS,
@@ -49,12 +48,6 @@ export default function productoReducer(state, action) {
             return {
                 ...state,
                 rubros: [...state.rubros, action.payload]
-            }
-        
-        case ERROR_AGREGAR_PRODUCTO:
-            return {
-                ...state,
-                mensajeCodigo: action.payload
             }
         case ERROR_AGREGAR_RUBRO:
             return {
@@ -127,7 +120,6 @@ export default function productoReducer(state, action) {
         case OCULTAR_ALERTA: 
             return {
                 ...state,
-                mensajeCodigo: null,
                 mensajeRubro: null,
             }
         case FILTRAR_PRODUCTO:
@@ -170,7 +162,6 @@ export default function productoReducer(state, action) {
             productos: [],
             productoSeleccionado: null,
             mensajeRubro: null,
-            mensajeCodigo: null,
             filtrados: [], 
             rubros: [],
             valorDeVenta: "",

@@ -2,6 +2,7 @@ import { useContext } from "react"
 import Image from "next/image";
 import authContext from "../../context/auth/authContext";
 import porcentajeContext from "../../context/porcentajes/porcentajeContext";
+import mostarAlerta from "../../config/alerts";
 
 const Porcentaje = ({porcentaje}) => {
     
@@ -13,6 +14,10 @@ const Porcentaje = ({porcentaje}) => {
 
     const {_id, nombre, comision} = porcentaje
 
+    const editarPorcentaje = async () => {
+        const error = await porcentajeActual(_id)
+        if(error) return mostarAlerta(error,modo)
+    }
 
   return (
       <tr className="border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700">
@@ -28,7 +33,7 @@ const Porcentaje = ({porcentaje}) => {
                             width={30} 
                             height={30}
                             priority={true}
-                            onClick={() => porcentajeActual(_id)}
+                            onClick={editarPorcentaje}
                             />
                     </div>
                     

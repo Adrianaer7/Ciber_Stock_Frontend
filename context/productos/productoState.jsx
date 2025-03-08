@@ -9,7 +9,6 @@ import {
     ELIMINAR_PRODUCTO,
     ELIMINAR_PRODUCTOS,
     ELIMINAR_RUBROS,
-    ERROR_AGREGAR_PRODUCTO,
     ERROR_AGREGAR_RUBRO,
     FILTRAR_PRODUCTO,
     LIMPIAR_APP,
@@ -46,7 +45,6 @@ const ProductoState = ({ children }) => {
         codigos: [],
         productoSeleccionado: null,
         mensajeRubro: null,
-        mensajeCodigo: null,
         filtrados: [],
         rubros: [],
         garantias: [],
@@ -89,16 +87,8 @@ const ProductoState = ({ children }) => {
 
 
         } catch (error) {
-            dispatch({
-                type: ERROR_AGREGAR_PRODUCTO,
-                payload: error.response.data.msg
-            })
-
-            setTimeout(() => {
-                dispatch({
-                    type: OCULTAR_ALERTA
-                })
-            }, 3000);
+            console.log(error.response.data)
+            return error.response.data.msg
         }
     }
 
@@ -147,7 +137,8 @@ const ProductoState = ({ children }) => {
             }
 
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
+            return error.response.data.msg
         }
     }
 
@@ -243,7 +234,8 @@ const ProductoState = ({ children }) => {
                 payload: id
             })
         } catch (error) {
-            console.log(error)
+            console.log(error.reponse.data)
+            return error.response.data.msg
         }
 
     }
@@ -354,7 +346,8 @@ const ProductoState = ({ children }) => {
         try {
             editarProducto(producto)
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
+            return error.response.data.msg
         }
     }
 
@@ -545,7 +538,6 @@ const ProductoState = ({ children }) => {
                 productos: state.productos,
                 codigos: state.codigos,
                 productoSeleccionado: state.productoSeleccionado,
-                mensajeCodigo: state.mensajeCodigo,
                 mensajeRubro: state.mensajeRubro,
                 filtrados: state.filtrados,
                 rubros: state.rubros,

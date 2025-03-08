@@ -3,6 +3,7 @@ import { useContext } from "react"
 import authContext from "../../context/auth/authContext";
 import proveedorContext from "../../context/proveedores/proveedorContext";
 import Swal from "sweetalert2";
+import mostarAlerta from "../../config/alerts";
 
 const Proveedor = ({proveedor, crearNuevo}) => {
     
@@ -14,6 +15,10 @@ const Proveedor = ({proveedor, crearNuevo}) => {
 
     const {_id, nombre, empresa, telPersonal, telEmpresa, email} = proveedor
     
+    const editarProveedor = async () => {
+        const error = await proveedorActual(_id)
+        if(error) return mostarAlerta(error, modo)
+    }
 
     const Eliminado = Swal.mixin({
         toast: true,
@@ -35,9 +40,10 @@ const Proveedor = ({proveedor, crearNuevo}) => {
             confirmButtonColor: '#d33',
             cancelButtonText:'<p>Cancelar</p>',
             background: `${modo ? "rgb(31 41 55)" : "white"}`,
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                eliminarUnProveedor(_id)
+                const error = await eliminarUnProveedor(_id)
+                if(error) return mostarAlerta(error, modo)
                 Eliminado.fire({
                     icon: 'success',
                     title: "Se eliminó correctamente",
@@ -67,7 +73,7 @@ const Proveedor = ({proveedor, crearNuevo}) => {
                             width={30} 
                             height={30}
                             priority={true}
-                            onClick={() => proveedorActual(_id)}
+                            onClick={editarProveedor}
                             />
                     </div>
                     <div className="hover:bg-gray-200 dark:hover:bg-gray-600 p-1 pb-0 items-center rounded-md hover:cursor-pointer">

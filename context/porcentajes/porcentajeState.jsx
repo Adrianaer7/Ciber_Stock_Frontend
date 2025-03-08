@@ -44,7 +44,8 @@ const PorcentajeState = ({children}) => {
                 payload: data.porcentaje
             })
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
+            return error.response.data.msg
         }
     }
 
@@ -62,7 +63,8 @@ const PorcentajeState = ({children}) => {
                 payload: data.porcentaje
             })
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
+            return error.response.data.msg
         }
     }
 

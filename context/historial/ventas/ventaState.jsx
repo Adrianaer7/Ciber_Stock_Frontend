@@ -46,7 +46,8 @@ const VentaState = ({children}) => {
                 payload: data.venta
             })
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
+            return error.response.data.msg
         }
 
     }
@@ -72,7 +73,8 @@ const VentaState = ({children}) => {
                 payload: data.venta
             })
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
+            return error.response.data.msg
         }
         
     }
@@ -135,7 +137,8 @@ const VentaState = ({children}) => {
                 payload: id
             })
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
+            return error.response.data.msg
         }
     }   
 

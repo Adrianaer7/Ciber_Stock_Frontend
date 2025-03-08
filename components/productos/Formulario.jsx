@@ -8,6 +8,7 @@ import rubroContext from "../../context/rubros/rubroContext"
 import { hoy } from "../../helpers"
 import Swal from "sweetalert2"
 import iniciarSocket from "../../config/socket.config"
+import mostarAlerta from "../../config/alerts"
 
 const Formulario = ({ productoEditar }) => {
     const AuthContext = useContext(authContext)
@@ -423,7 +424,8 @@ const Formulario = ({ productoEditar }) => {
                     producto.precio_venta = Number(valorDeVenta)
                 }
 
-                await agregarProducto(producto, cantidad, desdeForm, formData)
+                const error = await agregarProducto(producto, cantidad, desdeForm, formData)
+                if(error) return mostarAlerta(error, modo)
                 setCantidad("")
                 setImage({})
                 setProveedorSelect("")
@@ -477,7 +479,8 @@ const Formulario = ({ productoEditar }) => {
 
                 producto._id = productoEditar._id
                 producto.creado = new Date(producto.creado)
-                await editarProducto(producto, cantidad, desdeForm, formData)
+                const error = await editarProducto(producto, cantidad, desdeForm, formData)
+                if(error) return mostarAlerta(error, modo) 
                 setCantidad("")
                 setImage({})
                 setProveedorSelect(producto.proveedor)

@@ -5,6 +5,7 @@ import ventaContext from "../../../context/historial/ventas/ventaContext";
 import authContext from "../../../context/auth/authContext";
 import { generarFecha} from "../../../helpers";
 import Swal from "sweetalert2";
+import mostarAlerta from "../../../config/alerts";
 
 const Venta = ({producto}) => {
 
@@ -82,7 +83,8 @@ const Venta = ({producto}) => {
                 return editarLaVenta()
             }
             if(unidades == cantidad) {
-                await eliminarVenta(_id, idProducto, unidades)
+                const error = await eliminarVenta(_id, idProducto, unidades)
+                if(error) return mostarAlerta(error, modo)
                 return Eliminado.fire({
                     icon: 'success',
                     title: `Se devolvió ${nombre} correctamente`,
@@ -91,7 +93,8 @@ const Venta = ({producto}) => {
                     color: `${modo ? "white" : "#545454"}`,
                 })
             }
-            await editarVenta(_id, idProducto, cantidad)
+            const error = await editarVenta(_id, idProducto, cantidad)
+            if(error) return mostarAlerta(error, modo)
             await Copiado.fire({    //luego de descontar de la bd, muestro alerta de venta correcta
                 icon: 'success',
                 title: `${unidades > 1 ? "Se devolvieron " + unidades + " unidades de " + nombre : "Se devolvieron " + unidades + " unidades de " + nombre }`,
@@ -115,9 +118,10 @@ const Venta = ({producto}) => {
             confirmButtonColor: '#d33',
             cancelButtonText:'<p>Cancelar</p>',
             background: `${modo ? "rgb(31 41 55)" : "white"}`,
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                eliminarVenta(_id, idProducto, unidades)
+                const error = await eliminarVenta(_id, idProducto, unidades)
+                if(error) return mostarAlerta(error, modo)
                 Eliminado.fire({
                     icon: 'success',
                     title: "Se eliminó la venta correctamente",

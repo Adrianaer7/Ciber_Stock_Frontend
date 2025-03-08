@@ -70,7 +70,8 @@ const ProveedorState = ({children}) => {
                 payload: data.proveedor
             })
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
+            return error.response.data.msg
         }
     }
 
@@ -88,7 +89,8 @@ const ProveedorState = ({children}) => {
                 payload: data.proveedor
             })
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
+            return error.response.data.msg
         }
     }
 
@@ -127,7 +129,8 @@ const ProveedorState = ({children}) => {
             })  
             
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
+            return error.response.data.msg
         }
     }
     
