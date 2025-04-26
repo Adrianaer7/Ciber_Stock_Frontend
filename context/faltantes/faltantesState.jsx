@@ -3,27 +3,27 @@ import clienteAxios from "../../config/axios"
 import faltantesReducer from "./faltantesReducer"
 import faltantesContext from "./faltantesContext"
 
-import { 
-    AGREGAR_FALTANTE, 
-    ELIMINAR_FALTANTE, 
-    FILTRO_FALTANTE, 
-    ORDENAR_CODIGO_FALTANTE, 
-    ORDENAR_CODIGO_FALTANTE_FILTRADO, 
-    ORDENAR_DISPONIBLES_FALTANTE, 
-    ORDENAR_DISPONIBLES_FALTANTE_FILTRADO, 
-    ORDENAR_MARCA_FALTANTE, 
-    ORDENAR_MARCA_FALTANTE_FILTRADO, 
-    ORDENAR_MODELO_FALTANTE, 
-    ORDENAR_NOMBRE_FALTANTE, 
-    ORDENAR_NOMBRE_FALTANTE_FILTRADO, 
-    ORDENAR_PROVEEDOR_FALTANTE, 
-    ORDENAR_PROVEEDOR_FALTANTE_FILTRADO, 
-    ORDENAR_RUBRO_FALTANTE, 
-    ORDENAR_RUBRO_FALTANTE_FILTRADO, 
-    TRAER_FALTANTES 
+import {
+    AGREGAR_FALTANTE,
+    ELIMINAR_FALTANTE,
+    FILTRO_FALTANTE,
+    ORDENAR_CODIGO_FALTANTE,
+    ORDENAR_CODIGO_FALTANTE_FILTRADO,
+    ORDENAR_DISPONIBLES_FALTANTE,
+    ORDENAR_DISPONIBLES_FALTANTE_FILTRADO,
+    ORDENAR_MARCA_FALTANTE,
+    ORDENAR_MARCA_FALTANTE_FILTRADO,
+    ORDENAR_MODELO_FALTANTE,
+    ORDENAR_NOMBRE_FALTANTE,
+    ORDENAR_NOMBRE_FALTANTE_FILTRADO,
+    ORDENAR_PROVEEDOR_FALTANTE,
+    ORDENAR_PROVEEDOR_FALTANTE_FILTRADO,
+    ORDENAR_RUBRO_FALTANTE,
+    ORDENAR_RUBRO_FALTANTE_FILTRADO,
+    TRAER_FALTANTES
 } from "../../types"
 
-const FaltanteState = ({children}) => {
+const FaltanteState = ({ children }) => {
 
     const initialState = {
         faltantes: [],
@@ -34,7 +34,7 @@ const FaltanteState = ({children}) => {
 
     const agregarFaltante = async (id) => {   //modifico el valor de faltante a true y agrego el producto al state
         try {
-            const {data} = await clienteAxios.put(`/faltantes/${id}`)
+            const { data } = await clienteAxios.put(`/faltantes/${id}`)
             dispatch({
                 type: AGREGAR_FALTANTE,
                 payload: data.producto
@@ -47,7 +47,7 @@ const FaltanteState = ({children}) => {
 
     const traerFaltantes = async () => {
         try {
-            const {data} = await clienteAxios("/faltantes")
+            const { data } = await clienteAxios("/faltantes")
             dispatch({
                 type: TRAER_FALTANTES,
                 payload: data.faltantes
@@ -67,8 +67,8 @@ const FaltanteState = ({children}) => {
         } catch (error) {
             console.log(error)
         }
-    }    
-    
+    }
+
     const filtroFaltante = (palabras) => {
         if (!palabras) return;
 
@@ -77,11 +77,11 @@ const FaltanteState = ({children}) => {
                 .split(' ')
                 .every(p => descripcion.includes(p));
         };
-    
+
         const filtrados = state.faltantes.filter(({ descripcion }) =>
             incluyeTodas(descripcion, palabras)
         );
-    
+
         try {
             dispatch({
                 type: FILTRO_FALTANTE,
@@ -176,34 +176,34 @@ const FaltanteState = ({children}) => {
             payload: ordenDisponibles
         })
     }
-  return (
-      <faltantesContext.Provider
-        value={{
-            faltantes: state.faltantes,
-            filtrados: state.filtrados,
-            agregarFaltante,
-            traerFaltantes,
-            eliminarFaltante,
-            orderCodigo,
-            orderCodigoFiltrados,
-            orderNombre,
-            orderNombreFiltrados,
-            orderMarca,
-            orderMarcaFiltrados,
-            orderModelo,
-            orderModeloFiltrados,
-            orderRubro,
-            orderRubroFiltrados,
-            orderProveedor,
-            orderProveedorFiltrados,
-            orderDisponibles,
-            orderDisponiblesFiltrados,
-            filtroFaltante
-        }}
-      >
-          {children}
-      </faltantesContext.Provider>
-  )
+    return (
+        <faltantesContext.Provider
+            value={{
+                faltantes: state.faltantes,
+                filtrados: state.filtrados,
+                agregarFaltante,
+                traerFaltantes,
+                eliminarFaltante,
+                orderCodigo,
+                orderCodigoFiltrados,
+                orderNombre,
+                orderNombreFiltrados,
+                orderMarca,
+                orderMarcaFiltrados,
+                orderModelo,
+                orderModeloFiltrados,
+                orderRubro,
+                orderRubroFiltrados,
+                orderProveedor,
+                orderProveedorFiltrados,
+                orderDisponibles,
+                orderDisponiblesFiltrados,
+                filtroFaltante
+            }}
+        >
+            {children}
+        </faltantesContext.Provider>
+    )
 }
 
 export default FaltanteState

@@ -3,7 +3,7 @@ import NoEncontrado from "../components/productos/NoEncontrado"
 
 const NotFound = () => {
     return (
-        <NoEncontrado/>
+        <NoEncontrado />
     )
 }
 

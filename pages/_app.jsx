@@ -15,13 +15,13 @@ function MyApp({ Component, pageProps }) {
         <FaltanteState>
           <CompraState>
             <VentaState>
-            <ProveedorState>
-              <RubroState>
-                <PorcentajeState>
-                  <Component {...pageProps} />
-                </PorcentajeState>
-              </RubroState>
-            </ProveedorState>
+              <ProveedorState>
+                <RubroState>
+                  <PorcentajeState>
+                    <Component {...pageProps} />
+                  </PorcentajeState>
+                </RubroState>
+              </ProveedorState>
             </VentaState>
           </CompraState>
         </FaltanteState>

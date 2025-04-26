@@ -5,10 +5,10 @@ const Ventas = () => {
 
   return (
     <>
-        <Layout pagina="Ventas">
-          <ListadoVentas/>
-        </Layout>      
-    </>        
+      <Layout pagina="Ventas">
+        <ListadoVentas />
+      </Layout>
+    </>
   )
 }
 

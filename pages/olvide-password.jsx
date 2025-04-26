@@ -6,17 +6,17 @@ import authContext from "../context/auth/authContext";
 const ResetPassword = () => {
 
     const AuthContext = useContext(authContext)
-    const {token, ocultarAlerta} = AuthContext
+    const { token, ocultarAlerta } = AuthContext
 
     const router = useRouter()
 
 
     useEffect(() => {
-        if(token) {
+        if (token) {
             router.push("/productos")
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[token]) 
+    }, [token])
 
     useEffect(() => {
         ocultarAlerta()
@@ -26,7 +26,7 @@ const ResetPassword = () => {
 
     return (
         <div className="md:flex md:min-h-screen sm:min-h-screen h-screen overflow-y-auto bg-slate-100">
-            <OlvidePassword/>
+            <OlvidePassword />
         </div>
     );
 };

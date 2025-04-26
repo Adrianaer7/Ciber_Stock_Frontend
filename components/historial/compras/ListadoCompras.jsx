@@ -106,7 +106,7 @@ const ListadoCompras = () => {
         filtroCompra(e.target.value.toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))  //envio al productoState
     }
 
-    
+
     return (
         <>
             <div className="absolute lg:relative min-w-full m-0">

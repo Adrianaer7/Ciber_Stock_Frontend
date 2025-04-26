@@ -365,7 +365,7 @@ const ListadoProductos = () => {
                 </div>
             )}
 
-            {modal && ( 
+            {modal && (
                 <Modal
                     isOpen={modal}
                     style={customStyles}

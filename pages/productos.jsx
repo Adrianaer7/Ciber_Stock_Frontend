@@ -6,19 +6,19 @@ import { useContext, useEffect } from "react"
 const Productos = () => {
 
     const AuthContext = useContext(authContext)
-    const {usuarioAutenticado, usuario} = AuthContext
+    const { usuarioAutenticado, usuario } = AuthContext
 
     useEffect(() => {
-      usuarioAutenticado()
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+        usuarioAutenticado()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
 
     return (
         <Layout
-           pagina="Todos los productos" 
+            pagina="Todos los productos"
         >
-            {usuario && <ListadoProductos/>}
+            {usuario && <ListadoProductos />}
         </Layout>
     )
 }

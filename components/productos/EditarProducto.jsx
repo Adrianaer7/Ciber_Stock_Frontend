@@ -4,7 +4,7 @@ const EditarProducto = () => {
 
     return (
         <div>
-            <Formulario/>
+            <Formulario />
         </div>
     )
 }

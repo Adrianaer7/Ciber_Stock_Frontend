@@ -7,10 +7,10 @@ import clienteAxios from "../../config/axios";
 import {
     AGREGAR_PROVEEDOR,
     ERROR_AGREGAR_PROVEEDOR,
-    OBTENER_PROVEEDORES, 
+    OBTENER_PROVEEDORES,
     EDITAR_PROVEEDOR,
     FILTRO_PROVEEDOR,
-    ELIMINAR_PROVEEDOR, 
+    ELIMINAR_PROVEEDOR,
     ELIMINAR_PROVEEDORES,
     ORDENAR_EMPRESA_PROVEEDOR,
     ORDENAR_EMPRESA_PROVEEDOR_FILTRADO,
@@ -18,7 +18,7 @@ import {
     LIMPIAR_PROVEEDOR_SELECCIONADO
 } from "../../types/index"
 
-const ProveedorState = ({children}) => {
+const ProveedorState = ({ children }) => {
 
     const initialState = {
         proveedores: [],
@@ -32,7 +32,7 @@ const ProveedorState = ({children}) => {
     //crea un nuevo proveedor
     const agregarProveedor = async proveedor => {
         try {
-            const {data} = await clienteAxios.post("/proveedores", proveedor)
+            const { data } = await clienteAxios.post("/proveedores", proveedor)
             dispatch({
                 type: AGREGAR_PROVEEDOR,
                 payload: data.proveedor
@@ -52,7 +52,7 @@ const ProveedorState = ({children}) => {
 
     const traerProveedores = async () => {
         try {
-            const {data} = await clienteAxios("/proveedores")
+            const { data } = await clienteAxios("/proveedores")
             dispatch({
                 type: OBTENER_PROVEEDORES,
                 payload: data.proveedores
@@ -64,7 +64,7 @@ const ProveedorState = ({children}) => {
 
     const proveedorActual = async id => {
         try {
-            const {data} = await clienteAxios(`/proveedores/${id}`)
+            const { data } = await clienteAxios(`/proveedores/${id}`)
             dispatch({
                 type: PROVEEDOR_ACTUAL,
                 payload: data.proveedor
@@ -83,7 +83,7 @@ const ProveedorState = ({children}) => {
 
     const editarProveedor = async proveedor => {
         try {
-            const {data} = await clienteAxios.put(`/proveedores/${proveedor._id}`, proveedor)
+            const { data } = await clienteAxios.put(`/proveedores/${proveedor._id}`, proveedor)
             dispatch({
                 type: EDITAR_PROVEEDOR,
                 payload: data.proveedor
@@ -94,10 +94,10 @@ const ProveedorState = ({children}) => {
         }
     }
 
-    
+
     const filtroProveedor = (palabras) => {
         if (!palabras) return;
-    
+
         const incluyeTodas = (datos, palabras) => {
             return palabras
                 .split(' ')
@@ -106,7 +106,7 @@ const ProveedorState = ({children}) => {
         const filtrados = state.proveedores.filter(({ datos }) =>
             incluyeTodas(datos, palabras)
         );
-    
+
         try {
             dispatch({
                 type: FILTRO_PROVEEDOR,
@@ -116,22 +116,22 @@ const ProveedorState = ({children}) => {
             console.log(error);
         }
     };
-    
-    
+
+
     const eliminarUnProveedor = async id => {
         try {
             await clienteAxios.delete(`/proveedores/${id}`)
             dispatch({
                 type: ELIMINAR_PROVEEDOR,
                 payload: id
-            })  
-            
+            })
+
         } catch (error) {
             console.log(error.response.data)
             return error.response.data.msg
         }
     }
-    
+
     const eliminarProveedores = async () => {
         await clienteAxios.delete("/proveedores")
         dispatch({
@@ -140,7 +140,7 @@ const ProveedorState = ({children}) => {
     }
     const orderEmpresa = (ordenEmpresa) => {
         dispatch({
-            type:ORDENAR_EMPRESA_PROVEEDOR,
+            type: ORDENAR_EMPRESA_PROVEEDOR,
             payload: ordenEmpresa
         })
     }

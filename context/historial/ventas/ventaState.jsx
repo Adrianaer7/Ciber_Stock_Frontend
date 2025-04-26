@@ -1,4 +1,4 @@
-import {useReducer } from "react"
+import { useReducer } from "react"
 import ventaContext from "./ventaContext"
 import ventaReducer from "./ventaReducer"
 import clienteAxios from "../../../config/axios"
@@ -11,7 +11,7 @@ import {
 } from "../../../types/index"
 
 
-const VentaState = ({children}) => {
+const VentaState = ({ children }) => {
 
     const initialState = {
         ventas: [],
@@ -21,7 +21,7 @@ const VentaState = ({children}) => {
     const [state, dispatch] = useReducer(ventaReducer, initialState)
 
     const agregarVenta = async (producto, valor_dolar, unidades, fecha) => {
-        const {_id, codigo, nombre, marca, modelo, barras, precio_venta_tarjeta, precio_venta_pesos, descripcion } = producto
+        const { _id, codigo, nombre, marca, modelo, barras, precio_venta_tarjeta, precio_venta_pesos, descripcion } = producto
 
         const venta = {
             idProducto: _id,
@@ -38,9 +38,9 @@ const VentaState = ({children}) => {
             unidades,
             fecha
         }
-        
+
         try {
-            const {data} = await clienteAxios.post("/ventas", venta)
+            const { data } = await clienteAxios.post("/ventas", venta)
             dispatch({
                 type: CREAR_VENTA,
                 payload: data.venta
@@ -54,7 +54,7 @@ const VentaState = ({children}) => {
 
     const traerVentas = async () => {
         try {
-            const {data} = await clienteAxios("/ventas")
+            const { data } = await clienteAxios("/ventas")
             dispatch({
                 type: TRAER_VENTAS,
                 payload: data.ventas
@@ -62,12 +62,12 @@ const VentaState = ({children}) => {
         } catch (error) {
             console.log(error)
         }
-        
+
     }
 
-    const editarVenta = async(id, idProducto, cantidad) => {
+    const editarVenta = async (id, idProducto, cantidad) => {
         try {
-            const {data} = await clienteAxios.put(`/ventas/${id}`, {idProducto, cantidad})
+            const { data } = await clienteAxios.put(`/ventas/${id}`, { idProducto, cantidad })
             dispatch({
                 type: EDITAR_VENTA,
                 payload: data.venta
@@ -76,14 +76,14 @@ const VentaState = ({children}) => {
             console.log(error.response.data)
             return error.response.data.msg
         }
-        
+
     }
 
     const filtroVenta = (palabras, fechaDesde, fechaHasta) => {
         // Si no hay ni palabras ni fechas, limpiamos los resultados
         const sinPalabras = !palabras || palabras.trim() === '';
         const sinFechas = !fechaDesde || !fechaHasta;
-    
+
         if (sinPalabras && sinFechas) {
             dispatch({
                 type: FILTRO_VENTA,
@@ -91,24 +91,24 @@ const VentaState = ({children}) => {
             });
             return;
         }
-    
+
         const incluyeTodas = (descripcion) => {
             return palabras
                 ?.split(' ')
                 .every(p => descripcion.includes(p));
         };
-    
+
         const enRangoDeFechas = (fecha) => {
             if (sinFechas || fechaDesde > fechaHasta) return true;
             return fecha >= fechaDesde && fecha <= fechaHasta;
         };
-    
+
         const filtradas = state.ventas.filter(({ descripcion, fecha }) => {
             const pasaFiltroTexto = sinPalabras ? true : incluyeTodas(descripcion);
             const pasaFiltroFecha = enRangoDeFechas(fecha);
             return pasaFiltroTexto && pasaFiltroFecha;
         });
-    
+
         try {
             dispatch({
                 type: FILTRO_VENTA,
@@ -118,13 +118,13 @@ const VentaState = ({children}) => {
             console.log(error);
         }
     };
-    
-    
+
+
 
     const eliminarVenta = async (id, idProducto, cantidad) => {
         try {
-            clienteAxios.delete(`/ventas/${id}`, {idProducto, cantidad})
-            
+            clienteAxios.delete(`/ventas/${id}`, { idProducto, cantidad })
+
             dispatch({
                 type: ELIMINAR_VENTA,
                 payload: id
@@ -133,24 +133,24 @@ const VentaState = ({children}) => {
             console.log(error.response.data)
             return error.response.data.msg
         }
-    }   
+    }
 
 
-  return (
-    <ventaContext.Provider
-        value={{
-            ventas: state.ventas,
-            filtradas: state.filtradas,
-            agregarVenta,
-            traerVentas,
-            editarVenta,
-            filtroVenta,
-            eliminarVenta
-        }}
-    >
-        {children}
-    </ventaContext.Provider>
-  )
+    return (
+        <ventaContext.Provider
+            value={{
+                ventas: state.ventas,
+                filtradas: state.filtradas,
+                agregarVenta,
+                traerVentas,
+                editarVenta,
+                filtroVenta,
+                eliminarVenta
+            }}
+        >
+            {children}
+        </ventaContext.Provider>
+    )
 }
 
 export default VentaState;

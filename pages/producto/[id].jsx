@@ -9,42 +9,42 @@ import VerProducto from '../../components/productos/VerProducto';
 import NoEncontrado from '../../components/productos/NoEncontrado';
 
 
-export async function getServerSideProps({ params: {id} }) {
-  const {data} = await clienteAxios(`/productos/${id}`)
-  if(data.redireccionar) {  //si es true
-    return {notFound: true} //redirecciono a la pagina 404. notFound es una funcion de next
+export async function getServerSideProps({ params: { id } }) {
+  const { data } = await clienteAxios(`/productos/${id}`)
+  if (data.redireccionar) {  //si es true
+    return { notFound: true } //redirecciono a la pagina 404. notFound es una funcion de next
   }
   const producto = data.producto
-  return { props: { producto }}
+  return { props: { producto } }
 }
 
 
-const Ver = ({producto}) => { 
+const Ver = ({ producto }) => {
   const AuthContext = useContext(authContext)
-  const {usuarioAutenticado, usuario} = AuthContext
-  
+  const { usuarioAutenticado, usuario } = AuthContext
+
   const productosContext = useContext(productoContext)
-  const {productoActual, traerGarantias, garantias} = productosContext 
+  const { productoActual, traerGarantias, garantias } = productosContext
 
   const ProveedorContext = useContext(proveedorContext)
-  const {traerProveedores, proveedores} = ProveedorContext
+  const { traerProveedores, proveedores } = ProveedorContext
 
   const [coincide, setCoincide] = useState(null)
   const [todasGarantias, setTodasGarantias] = useState([])
 
   const router = useRouter()
-  const {id} = router.query
+  const { id } = router.query
 
   //Autentico al usuario y agrego el producto actual al state
   useEffect(() => {
     usuarioAutenticado()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
-  
+  }, [])
+
   //Cuando me autentique, verifico que el producto que traigo es el del usuario que está logueado
   useEffect(() => {
-    if(usuario && coincide === null) {
-      if(producto.creador !== usuario._id) {
+    if (usuario && coincide === null) {
+      if (producto.creador !== usuario._id) {
         setCoincide(false)
       } else {
         setCoincide(true)
@@ -53,17 +53,17 @@ const Ver = ({producto}) => {
         traerProveedores()
       }
     }
-  
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usuario])
 
   useEffect(() => {
     const warranty = [] //guardo momentaneamente las garantias
-    if(garantias.length > 0) {  //garantias del state
-        const garantiasProducto = garantias.find(garantia => garantia.idProducto == id)    //garantia que contiene id de este producto
-        if(garantiasProducto) {
-            garantiasProducto.detalles.map(todas => proveedores.map(proveedor => todas.proveedor.includes(proveedor._id) && warranty.push({proveedor: proveedor.empresa, garantia: todas.caducidad})))
-        }
+    if (garantias.length > 0) {  //garantias del state
+      const garantiasProducto = garantias.find(garantia => garantia.idProducto == id)    //garantia que contiene id de este producto
+      if (garantiasProducto) {
+        garantiasProducto.detalles.map(todas => proveedores.map(proveedor => todas.proveedor.includes(proveedor._id) && warranty.push({ proveedor: proveedor.empresa, garantia: todas.caducidad })))
+      }
     }
     setTodasGarantias(warranty)
   }, [garantias, proveedores])
@@ -79,7 +79,7 @@ const Ver = ({producto}) => {
             proveedores={proveedores}
           />
         </Layout>
-      ): coincide=== false ?? <NoEncontrado/>
+      ) : coincide === false ?? <NoEncontrado />
       }
     </>
   )

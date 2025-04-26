@@ -8,25 +8,25 @@ import NoEncontrado from "../../../components/productos/NoEncontrado";
 
 
 
-export async function getServerSideProps({ params: {url} }) {
-  const {data} = await clienteAxios(`/productos/${url}`)
-  if(data.redireccionar) {
-    return {notFound: true}
+export async function getServerSideProps({ params: { url } }) {
+  const { data } = await clienteAxios(`/productos/${url}`)
+  if (data.redireccionar) {
+    return { notFound: true }
   }
   const productoEditar = data.producto
-  return { props: { productoEditar }}
+  return { props: { productoEditar } }
 }
 
 
 
-const Edicion = ({productoEditar}) => {
-  
+const Edicion = ({ productoEditar }) => {
+
 
   const AuthContext = useContext(authContext)
-  const {usuarioAutenticado, usuario} = AuthContext
+  const { usuarioAutenticado, usuario } = AuthContext
 
   const productosContext = useContext(productoContext)
-  const {productoActual} = productosContext
+  const { productoActual } = productosContext
 
   const [coincide, setCoincide] = useState(null)
 
@@ -38,8 +38,8 @@ const Edicion = ({productoEditar}) => {
 
   //Cuando me autentique, verifico que el producto que traigo es el del usuario que está logueado
   useEffect(() => {
-    if(usuario && coincide === null) {
-      if(productoEditar.creador !== usuario._id) {
+    if (usuario && coincide === null) {
+      if (productoEditar.creador !== usuario._id) {
         setCoincide(false)
       } else {
         setCoincide(true)
@@ -58,7 +58,7 @@ const Edicion = ({productoEditar}) => {
             productoEditar={productoEditar}
           />
         </Layout>
-      ): coincide=== false ?? <NoEncontrado/>
+      ) : coincide === false ?? <NoEncontrado />
       }
     </>
   )

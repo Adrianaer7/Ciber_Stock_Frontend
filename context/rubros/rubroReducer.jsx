@@ -3,7 +3,7 @@ import {
     ERROR_AGREGAR_RUBRO,
     OBTENER_RUBROS,
     EDITAR_RUBRO,
-    ELIMINAR_RUBRO, 
+    ELIMINAR_RUBRO,
     RUBRO_ACTUAL,
     LIMPIAR_RUBRO_SELECCIONADO,
     VACIAR_FORMULARIO_RUBRO,
@@ -11,8 +11,8 @@ import {
 
 } from "../../types/index"
 
-export default function rubroreducer (state, action) {
-    switch(action.type) {
+export default function rubroreducer(state, action) {
+    switch (action.type) {
         case AGREGAR_RUBRO:
             return {
                 ...state,
@@ -23,7 +23,7 @@ export default function rubroreducer (state, action) {
                 ...state,
                 mensajeRubro: action.payload
             }
-        
+
         case OBTENER_RUBROS:
             return {
                 ...state,
@@ -44,12 +44,12 @@ export default function rubroreducer (state, action) {
                 ...state,
                 rubros: state.rubros.map(rubro => rubro._id === action.payload._id ? action.payload : rubro)
             }
-        case ELIMINAR_RUBRO: 
-        return {
-            ...state,
-            rubros: state.rubros.filter(rubro => rubro._id !== action.payload)
-        }
-        case OCULTAR_ALERTA: 
+        case ELIMINAR_RUBRO:
+            return {
+                ...state,
+                rubros: state.rubros.filter(rubro => rubro._id !== action.payload)
+            }
+        case OCULTAR_ALERTA:
             return {
                 ...state,
                 mensajeRubro: null

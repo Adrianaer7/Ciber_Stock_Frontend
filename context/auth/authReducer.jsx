@@ -1,4 +1,4 @@
-import { 
+import {
     USUARIO_AUTENTICADO,
     REGISTRO_ERROR,
     LOGIN_EXITOSO,
@@ -18,7 +18,7 @@ export default function authReducer(state, action) {
         case REGISTRO_EXITOSO:
             return {
                 ...state,
-                mensaje: action.payload   
+                mensaje: action.payload
             }
         case LOGIN_EXITOSO:
             localStorage.setItem("token", action.payload)
@@ -27,9 +27,9 @@ export default function authReducer(state, action) {
                 token: action.payload,
                 autenticado: true
             }
-        
-       
-        case SOLICITAR_TOKEN_PASSWORD: 
+
+
+        case SOLICITAR_TOKEN_PASSWORD:
         case SOLICITAR_TOKEN_PASSWORD_ERROR:
             return {
                 ...state,
@@ -62,7 +62,7 @@ export default function authReducer(state, action) {
                 ...state,
                 modo: action.payload
             }
-            
+
         case LIMPIAR_STATE:
             localStorage.removeItem("token")
             return {

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState} from "react"
+import { useContext, useEffect, useState } from "react"
 import Head from "next/head"
 import Link from "next/link"
 import Image from "next/image"
@@ -7,13 +7,13 @@ import authContext from "../../context/auth/authContext"
 import productoContext from "../../context/productos/productoContext"
 import favicon from "../../public/favicon.ico"
 
-const Layout = ({children, pagina}) => {
+const Layout = ({ children, pagina }) => {
 
     const AuthContext = useContext(authContext)
-    const {usuario, cerrarSesion, token, traerTema} = AuthContext
+    const { usuario, cerrarSesion, token, traerTema } = AuthContext
 
     const productosContext = useContext(productoContext)
-    const {limpiarSeleccionado, limpiarApp} = productosContext
+    const { limpiarSeleccionado, limpiarApp } = productosContext
 
     const [oscuro, setOscuro] = useState(false)
     const [panel, setPanel] = useState(false)
@@ -24,20 +24,20 @@ const Layout = ({children, pagina}) => {
     const nombrePagina = `Inventario - ${pagina}`
 
     useEffect(() => {
-        if(!token) {
+        if (!token) {
             router.push("/")
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[token])
+    }, [token])
 
 
     //traigo el tema del LS
     useEffect(() => {
         const temaLS = JSON.parse(localStorage.getItem("Modo oscuro")) ?? false
         setOscuro(temaLS)
-    },[])
+    }, [])
 
-    
+
     //cambio el estado del tema a oscuro o claro
     const darkMode = (oscuro) => {
         localStorage.setItem("Modo oscuro", JSON.stringify(oscuro))
@@ -58,17 +58,17 @@ const Layout = ({children, pagina}) => {
         <div className="min-h-screen">
             <Head>
                 <title>{nombrePagina}</title>
-                <link rel="shortcut icon" type="image/x-icon" href={favicon.src}/>
+                <link rel="shortcut icon" type="image/x-icon" href={favicon.src} />
             </Head>
 
             <div className={`lg:flex md:min-h-screen sm:min-h-screen bg-gray-100 ${oscuro && "dark"}`}>
                 <div className="lg:w-72 bg-blue-900    dark:bg-gray-900 flex flex-col  justify-between lg:justify-start ">
                     <div className="flex justify-between mt-1 px-5 break-words">
                         <p className="text-white text-2xl md:text-4xl font-black text-center break-words w-40">{usuario ? <span>{usuario.nombre}</span> : null}</p>
-                        <Image 
+                        <Image
                             src="/settings-claro.svg"
                             alt="Settings"
-                            width={30} 
+                            width={30}
                             height={30}
                             priority={true}
                             className="cursor-pointer"
@@ -88,41 +88,41 @@ const Layout = ({children, pagina}) => {
                                 className="text-white text-left py-2 hover:text-blue-300 hover:translate-x-3"
                             >
                                 Cerrar sesión
-                            </button> 
+                            </button>
                         </div>
-                        
-                    : null}
-                    
+
+                        : null}
+
                     <nav className="grid grid-cols-4 lg:px-5 mt-4 sm:mt-10 lg:flex lg:flex-col lg:justify-start h-5/6">
                         <ul>
                             <li >
-                                <Link 
-                                    href="/productos" 
+                                <Link
+                                    href="/productos"
                                     className={`${urlActual === "/productos" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"}  text-sm text-center lg:text-left sm:text-xl lg:text-2xl  block p-2 mt-2 hover:text-blue-300`}
                                 >
                                     Productos
                                 </Link>
                             </li>
                             <li >
-                                <Link 
+                                <Link
                                     href="/nuevoproducto"
                                     className={`${urlActual === "/nuevoproducto" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
                                     onClick={() => limpiarSeleccionado()}
                                 >
-                                  Nuevo Producto
+                                    Nuevo Producto
                                 </Link>
                             </li>
                             <li >
-                                <Link 
-                                href="/faltantes" 
-                                className={`${urlActual === "/faltantes" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block  p-2 mt-2 hover:text-blue-300`}
-                                onClick={() => limpiarSeleccionado()}
-                            >
-                                Faltantes
-                            </Link>
+                                <Link
+                                    href="/faltantes"
+                                    className={`${urlActual === "/faltantes" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block  p-2 mt-2 hover:text-blue-300`}
+                                    onClick={() => limpiarSeleccionado()}
+                                >
+                                    Faltantes
+                                </Link>
                             </li>
                             <li >
-                                <Link 
+                                <Link
                                     href="/compras"
                                     className={`${urlActual === "/compras" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
                                     onClick={() => limpiarSeleccionado()}
@@ -131,7 +131,7 @@ const Layout = ({children, pagina}) => {
                                 </Link>
                             </li>
                             <li >
-                                <Link 
+                                <Link
                                     href="/ventas"
                                     className={`${urlActual === "/ventas" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
                                     onClick={() => limpiarSeleccionado()}
@@ -139,14 +139,14 @@ const Layout = ({children, pagina}) => {
                                     Ventas
                                 </Link>
                             </li>
-                            <li 
+                            <li
                                 className="lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300 hover:cursor-pointer"
                                 onClick={() => setMostrarVarios(!mostrarVarios)}
                             > Varios
                                 {mostrarVarios || urlActual === "/proveedores" || urlActual === "/rubros" || urlActual === "/porcentajes" ? (
                                     <ul className="ml-3">
                                         <li >
-                                            <Link 
+                                            <Link
                                                 href="/proveedores"
                                                 className={`${urlActual === "/proveedores" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
                                                 onClick={() => limpiarSeleccionado()}
@@ -155,7 +155,7 @@ const Layout = ({children, pagina}) => {
                                             </Link>
                                         </li>
                                         <li >
-                                            <Link 
+                                            <Link
                                                 href="/rubros"
                                                 className={`${urlActual === "/rubros" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
                                                 onClick={() => limpiarSeleccionado()}
@@ -164,25 +164,25 @@ const Layout = ({children, pagina}) => {
                                             </Link>
                                         </li>
                                         <li >
-                                            <Link 
+                                            <Link
                                                 href="/porcentajes"
                                                 className={`${urlActual === "/porcentajes" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
                                                 onClick={() => limpiarSeleccionado()}
-                                            > 
-                                              Porcentajes
+                                            >
+                                                Porcentajes
                                             </Link>
                                         </li>
                                     </ul>
-                                ): null}
+                                ) : null}
                             </li>
                         </ul>
-                    </nav> 
+                    </nav>
                 </div>
-                
+
                 <div className=" lg:w-full lg:p-10 h-screen  dark:bg-gray-800 overflow-x-auto ">
-                    {children}      
+                    {children}
                 </div>
-                
+
             </div>
         </div>
     )

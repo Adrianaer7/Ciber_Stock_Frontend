@@ -18,7 +18,7 @@ import {
     OCULTAR_ALERTA
 } from "../../types/index"
 
-const RubroState = ({children}) => {
+const RubroState = ({ children }) => {
 
     const initialState = {
         rubros: [],
@@ -32,10 +32,10 @@ const RubroState = ({children}) => {
     //crea un nuevo rubro
     const agregarRubro = async rubro => {
         try {
-            const {data} = await clienteAxios.post("/rubros", rubro)
-            if(data.rubro) {
+            const { data } = await clienteAxios.post("/rubros", rubro)
+            if (data.rubro) {
                 try {
-                
+
                     dispatch({
                         type: AGREGAR_RUBRO,
                         payload: data.rubro
@@ -54,16 +54,16 @@ const RubroState = ({children}) => {
                     })
                 }, 3000);
             }
-            } catch (error) {
-                console.log(error.response.data)
-                return error.response.data.msg
-            }
-        
+        } catch (error) {
+            console.log(error.response.data)
+            return error.response.data.msg
+        }
+
     }
 
     const traerRubros = async () => {
         try {
-            const {data} = await clienteAxios("/rubros")
+            const { data } = await clienteAxios("/rubros")
             dispatch({
                 type: OBTENER_RUBROS,
                 payload: data.rubros
@@ -75,7 +75,7 @@ const RubroState = ({children}) => {
 
     const rubroActual = async id => {
         try {
-            const {data} = await clienteAxios(`/rubros/${id}`)
+            const { data } = await clienteAxios(`/rubros/${id}`)
             dispatch({
                 type: RUBRO_ACTUAL,
                 payload: data.rubro
@@ -94,7 +94,7 @@ const RubroState = ({children}) => {
 
     const editarRubro = async rubro => {
         try {
-            const {data} = await clienteAxios.put(`/rubros/${rubro._id}`, rubro)
+            const { data } = await clienteAxios.put(`/rubros/${rubro._id}`, rubro)
             dispatch({
                 type: EDITAR_RUBRO,
                 payload: data.rubro
@@ -105,28 +105,28 @@ const RubroState = ({children}) => {
         }
     }
 
-    
+
     const eliminarUnRubro = async id => {
         try {
             await clienteAxios.delete(`/rubros/${id}`)
             dispatch({
                 type: ELIMINAR_RUBRO,
                 payload: id
-            })  
-            
+            })
+
         } catch (error) {
             console.log(error.response.data)
             return error.response.data.msg
         }
     }
-    
+
     const eliminarRubros = async () => {
         await clienteAxios.delete("/rubros")
         dispatch({
             type: ELIMINAR_RUBROS
         })
     }
-    
+
 
     return (
         <rubroContext.Provider

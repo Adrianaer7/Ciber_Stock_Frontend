@@ -1,10 +1,10 @@
-import { 
-    AGREGAR_PRODUCTO, 
-    EDITAR_PRODUCTO, 
-    ELIMINAR_PRODUCTO, 
-    LIMPIAR_SELECCIONADO, 
-    OBTENER_PRODUCTOS, 
-    OCULTAR_ALERTA,  
+import {
+    AGREGAR_PRODUCTO,
+    EDITAR_PRODUCTO,
+    ELIMINAR_PRODUCTO,
+    LIMPIAR_SELECCIONADO,
+    OBTENER_PRODUCTOS,
+    OCULTAR_ALERTA,
     FILTRAR_PRODUCTO,
     OBTENER_RUBROS,
     ERROR_AGREGAR_RUBRO,
@@ -38,7 +38,7 @@ import {
 } from "../../types"
 
 export default function productoReducer(state, action) {
-    switch(action.type) {   
+    switch (action.type) {
         case AGREGAR_PRODUCTO:
             return {
                 ...state,
@@ -54,7 +54,7 @@ export default function productoReducer(state, action) {
                 ...state,
                 mensajeRubro: action.payload
             }
-        
+
         case OBTENER_PRODUCTOS:
             return {
                 ...state,
@@ -86,7 +86,7 @@ export default function productoReducer(state, action) {
                 ...state,
                 garantias: action.payload
             }
-        case ELIMINAR_PRODUCTOS: 
+        case ELIMINAR_PRODUCTOS:
             return {
                 ...state,
                 productos: []
@@ -102,10 +102,10 @@ export default function productoReducer(state, action) {
                 productos: state.productos.map(producto => producto._id === action.payload._id ? action.payload : producto)
             }
         case PRODUCTOS_CAMBIADOS:
-        return {
-            ...state,
-            productos: state.productos !== action.payload ? action.payload : productos
-        }
+            return {
+                ...state,
+                productos: state.productos !== action.payload ? action.payload : productos
+            }
         case ELIMINAR_PRODUCTO:
             return {
                 ...state,
@@ -116,8 +116,8 @@ export default function productoReducer(state, action) {
             return {
                 ...state,
                 productoSeleccionado: null
-            }        
-        case OCULTAR_ALERTA: 
+            }
+        case OCULTAR_ALERTA:
             return {
                 ...state,
                 mensajeRubro: null,
@@ -125,7 +125,7 @@ export default function productoReducer(state, action) {
         case FILTRAR_PRODUCTO:
             return {
                 ...state,
-                filtrados : action.payload
+                filtrados: action.payload
 
             }
         case PRECIO_VENTA_EFECTIVO:
@@ -156,84 +156,84 @@ export default function productoReducer(state, action) {
                 dolarBD: action.payload.precio,
                 elDolarAutomatico: action.payload.automatico
             }
-        case LIMPIAR_APP: 
+        case LIMPIAR_APP:
             return {
-            ...state,
-            productos: [],
-            productoSeleccionado: null,
-            mensajeRubro: null,
-            filtrados: [], 
-            rubros: [],
-            valorDeVenta: "",
-            dolarBD: "",
+                ...state,
+                productos: [],
+                productoSeleccionado: null,
+                mensajeRubro: null,
+                filtrados: [],
+                rubros: [],
+                valorDeVenta: "",
+                dolarBD: "",
             }
         case ORDENAR_CODIGO:
             return {
                 ...state,
                 //ordeno el state segun numero. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor. La sintaxis de comparar numeros y letras es un poco diferente
-                productos: action.payload ? state.productos.sort((a,b) => b.codigo - a.codigo) : !action.payload ? state.productos.sort((a,b) => a.codigo - b.codigo ) : state.productos
+                productos: action.payload ? state.productos.sort((a, b) => b.codigo - a.codigo) : !action.payload ? state.productos.sort((a, b) => a.codigo - b.codigo) : state.productos
             }
         case ORDENAR_PRECIO:
             return {
                 ...state,
-                productos: action.payload ? state.productos.sort((a,b) => b.precio_venta_conocidos - a.precio_venta_conocidos) : !action.payload ? state.productos.sort((a,b) => a.precio_venta_conocidos - b.precio_venta_conocidos ) : state.productos
+                productos: action.payload ? state.productos.sort((a, b) => b.precio_venta_conocidos - a.precio_venta_conocidos) : !action.payload ? state.productos.sort((a, b) => a.precio_venta_conocidos - b.precio_venta_conocidos) : state.productos
             }
         case ORDENAR_NOMBRE:
             return {
                 ...state,
                 //ordeno el state segun letra. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor.
-                productos: action.payload ? state.productos.sort((a,b) => b.nombre > a.nombre ? 1 : -1 ) : !action.payload ? state.productos.sort((a,b) => a.nombre > b.nombre ? 1 : -1 ) : state.productos
+                productos: action.payload ? state.productos.sort((a, b) => b.nombre > a.nombre ? 1 : -1) : !action.payload ? state.productos.sort((a, b) => a.nombre > b.nombre ? 1 : -1) : state.productos
             }
         case ORDENAR_MARCA:
-                return {
-                    ...state,
-                    //ordeno el state segun letra. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor.
-                    productos: action.payload ? state.productos.sort((a,b) => b.marca > a.marca ? 1 : -1 ) : !action.payload ? state.productos.sort((a,b) => a.marca > b.marca ? 1 : -1 ) : state.productos
-                }
+            return {
+                ...state,
+                //ordeno el state segun letra. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor.
+                productos: action.payload ? state.productos.sort((a, b) => b.marca > a.marca ? 1 : -1) : !action.payload ? state.productos.sort((a, b) => a.marca > b.marca ? 1 : -1) : state.productos
+            }
         case ORDENAR_MODELO:
-                return {
-                    ...state,
-                    productos: action.payload ? state.productos.sort((a,b) => b.modelo > a.modelo ? 1 : -1 ) : !action.payload ? state.productos.sort((a,b) => a.modelo > b.modelo ? 1 : -1 ) : state.productos
-                }
+            return {
+                ...state,
+                productos: action.payload ? state.productos.sort((a, b) => b.modelo > a.modelo ? 1 : -1) : !action.payload ? state.productos.sort((a, b) => a.modelo > b.modelo ? 1 : -1) : state.productos
+            }
         case ORDENAR_DISPONIBLES:
             return {
                 ...state,
-                productos: action.payload ? state.productos.sort((a,b) => b.disponibles - a.disponibles) : !action.payload ? state.productos.sort((a,b) => a.disponibles - b.disponibles ) : state.productos
+                productos: action.payload ? state.productos.sort((a, b) => b.disponibles - a.disponibles) : !action.payload ? state.productos.sort((a, b) => a.disponibles - b.disponibles) : state.productos
             }
         case ORDENAR_CODIGO_FILTRADO:
             return {
                 ...state,
-                filtrados: action.payload ? state.filtrados.sort((a,b) => b.codigo - a.codigo) : !action.payload ? state.filtrados.sort((a,b) => a.codigo - b.codigo ) : state.filtrados
+                filtrados: action.payload ? state.filtrados.sort((a, b) => b.codigo - a.codigo) : !action.payload ? state.filtrados.sort((a, b) => a.codigo - b.codigo) : state.filtrados
 
             }
         case ORDENAR_PRECIO_FILTRADO:
             return {
                 ...state,
-                filtrados: action.payload ? state.filtrados.sort((a,b) => a.precio_venta_conocidos - b.precio_venta_conocidos) : !action.payload ? state.filtrados.sort((a,b) => b.precio_venta_conocidos - a.precio_venta_conocidos ) : state.filtrados
+                filtrados: action.payload ? state.filtrados.sort((a, b) => a.precio_venta_conocidos - b.precio_venta_conocidos) : !action.payload ? state.filtrados.sort((a, b) => b.precio_venta_conocidos - a.precio_venta_conocidos) : state.filtrados
 
             }
         case ORDENAR_NOMBRE_FILTRADO:
             return {
                 ...state,
-                filtrados: action.payload ? state.filtrados.sort((a,b) => a.nombre > b.nombre ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => b.nombre > a.nombre ? 1 : -1) : state.filtrados
+                filtrados: action.payload ? state.filtrados.sort((a, b) => a.nombre > b.nombre ? 1 : -1) : !action.payload ? state.filtrados.sort((a, b) => b.nombre > a.nombre ? 1 : -1) : state.filtrados
 
             }
         case ORDENAR_MARCA_FILTRADO:
             return {
                 ...state,
-                filtrados: action.payload ? state.filtrados.sort((a,b) => b.marca > a.marca ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => a.marca > b.marca ? 1 : -1) : state.filtrados
+                filtrados: action.payload ? state.filtrados.sort((a, b) => b.marca > a.marca ? 1 : -1) : !action.payload ? state.filtrados.sort((a, b) => a.marca > b.marca ? 1 : -1) : state.filtrados
 
             }
         case ORDENAR_MODELO_FILTRADO:
             return {
                 ...state,
-                filtrados: action.payload ? state.filtrados.sort((a,b) => a.modelo > b.modelo ? 1 : -1) : !action.payload ? state.filtrados.sort((a,b) => b.modelo > a.modelo ? 1 : -1) : state.filtrados
+                filtrados: action.payload ? state.filtrados.sort((a, b) => a.modelo > b.modelo ? 1 : -1) : !action.payload ? state.filtrados.sort((a, b) => b.modelo > a.modelo ? 1 : -1) : state.filtrados
 
             }
         case ORDENAR_DISPONIBLES_FILTRADO:
             return {
                 ...state,
-                filtrados: action.payload ? state.filtrados.sort((a,b) => a.disponibles - b.disponibles) : !action.payload ? state.filtrados.sort((a,b) => b.disponibles - a.disponibles ) : state.filtrados
+                filtrados: action.payload ? state.filtrados.sort((a, b) => a.disponibles - b.disponibles) : !action.payload ? state.filtrados.sort((a, b) => b.disponibles - a.disponibles) : state.filtrados
 
             }
         case MOSTRAR_MODAL:
@@ -241,8 +241,8 @@ export default function productoReducer(state, action) {
                 ...state,
                 modal: action.payload ? true : false
             }
-        
-    default:
-        return state
+
+        default:
+            return state
     }
 }

@@ -425,7 +425,7 @@ const Formulario = ({ productoEditar }) => {
                 }
 
                 const error = await agregarProducto(producto, cantidad, desdeForm, formData)
-                if(error) return mostarAlerta(error, modo)
+                if (error) return mostarAlerta(error, modo)
                 setCantidad("")
                 setImage({})
                 setProveedorSelect("")
@@ -480,7 +480,7 @@ const Formulario = ({ productoEditar }) => {
                 producto._id = productoEditar._id
                 producto.creado = new Date(producto.creado)
                 const error = await editarProducto(producto, cantidad, desdeForm, formData)
-                if(error) return mostarAlerta(error, modo) 
+                if (error) return mostarAlerta(error, modo)
                 setCantidad("")
                 setImage({})
                 setProveedorSelect(producto.proveedor)

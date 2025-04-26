@@ -1,4 +1,4 @@
-import {useReducer } from "react"
+import { useReducer } from "react"
 import compraContext from "./compraContext"
 import compraReducer from "./compraReducer"
 import clienteAxios from "../../../config/axios"
@@ -16,7 +16,7 @@ import {
 } from "../../../types/index"
 
 
-const CompraState = ({children}) => {
+const CompraState = ({ children }) => {
 
     const initialState = {
         compras: [],
@@ -27,7 +27,7 @@ const CompraState = ({children}) => {
 
     //agregar compra
     const compraDeProducto = async (producto, cantidad) => {
-        const {data} = await clienteAxios.post("/compras", {producto, cantidad}) //envio producto como objeto porque sino no puedo extraer su _id en el backend
+        const { data } = await clienteAxios.post("/compras", { producto, cantidad }) //envio producto como objeto porque sino no puedo extraer su _id en el backend
         dispatch({
             type: CREAR_COMPRA,
             payload: data.compra
@@ -35,7 +35,7 @@ const CompraState = ({children}) => {
     }
 
     const traerCompras = async () => {
-        const {data} = await clienteAxios("/compras")
+        const { data } = await clienteAxios("/compras")
         dispatch({
             type: TRAER_COMPRAS,
             payload: data.todas
@@ -44,18 +44,18 @@ const CompraState = ({children}) => {
 
     const filtroCompra = (palabras) => {
         if (!palabras) return;
-    
+
         const incluyeTodas = (descripcion, palabras) => {
             const descripcionUpper = descripcion.toUpperCase();
             return palabras
                 .split(' ')
                 .every(p => descripcionUpper.includes(p));
         };
-    
+
         const filtrados = state.compras.filter(({ descripcion }) =>
             incluyeTodas(descripcion, palabras)
         );
-    
+
         try {
             dispatch({
                 type: FILTRO_COMPRA,
@@ -65,9 +65,9 @@ const CompraState = ({children}) => {
             console.log(error);
         }
     };
-    
 
-    
+
+
     const orderNombre = (ordenNombre) => {
         dispatch({
             type: ORDENAR_NOMBRE_COMPRA,
@@ -86,9 +86,9 @@ const CompraState = ({children}) => {
             payload: ordenModelo
         })
     }
-    
 
-   
+
+
     const orderNombreFiltrados = (orderNombre) => {
         dispatch({
             type: ORDENAR_NOMBRE_COMPRA_FILTRADO,
@@ -107,28 +107,28 @@ const CompraState = ({children}) => {
             payload: ordenModelo
         })
     }
-   
 
 
-  return (
-    <compraContext.Provider
-        value={{
-            compras: state.compras,
-            filtrados: state.filtrados,
-            compraDeProducto,
-            traerCompras,
-            orderNombre,
-            orderNombreFiltrados,
-            orderMarca,
-            orderMarcaFiltrados,
-            orderModelo,
-            orderModeloFiltrados,
-            filtroCompra
-        }}
-    >
-        {children}
-    </compraContext.Provider>
-  )
+
+    return (
+        <compraContext.Provider
+            value={{
+                compras: state.compras,
+                filtrados: state.filtrados,
+                compraDeProducto,
+                traerCompras,
+                orderNombre,
+                orderNombreFiltrados,
+                orderMarca,
+                orderMarcaFiltrados,
+                orderModelo,
+                orderModeloFiltrados,
+                filtroCompra
+            }}
+        >
+            {children}
+        </compraContext.Provider>
+    )
 }
 
 export default CompraState

@@ -5,7 +5,7 @@ const Porcentajes = () => {
 
   return (
     <Layout>
-      <ListadoPorcentajes/>
+      <ListadoPorcentajes />
     </Layout>
   )
 }

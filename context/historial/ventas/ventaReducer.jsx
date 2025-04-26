@@ -1,15 +1,15 @@
-import { 
+import {
     CREAR_VENTA,
     EDITAR_VENTA,
     FILTRO_VENTA,
     ELIMINAR_VENTA,
     TRAER_VENTAS,
 
- } from "../../../types/index"
+} from "../../../types/index"
 
-export default function ventareducer (state, action) {
-    switch(action.type) {
-        case CREAR_VENTA: 
+export default function ventareducer(state, action) {
+    switch (action.type) {
+        case CREAR_VENTA:
             return {
                 ...state,
                 ventas: [...state.ventas, action.payload]
@@ -29,7 +29,7 @@ export default function ventareducer (state, action) {
                 ...state,
                 ventas: state.ventas.map(venta => venta._id === action.payload._id ? action.payload : venta)
             }
-        case FILTRO_VENTA: 
+        case FILTRO_VENTA:
             return {
                 ...state,
                 filtradas: action.payload

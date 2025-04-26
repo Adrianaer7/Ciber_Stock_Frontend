@@ -1,9 +1,9 @@
 import Formulario from "./Formulario"
 
 const ProductoNuevo = () => {
-    
-    return (   
-        <Formulario/>
+
+    return (
+        <Formulario />
     )
 }
 

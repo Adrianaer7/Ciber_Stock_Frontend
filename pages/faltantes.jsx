@@ -5,10 +5,10 @@ const Faltantes = () => {
 
   return (
     <>
-        <Layout pagina="Faltantes">
-          <ListadoFaltantes/>
-        </Layout>      
-    </>        
+      <Layout pagina="Faltantes">
+        <ListadoFaltantes />
+      </Layout>
+    </>
   )
 }
 

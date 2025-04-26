@@ -11,7 +11,7 @@ import {
     LIMPIAR_PORCENTAJE_SELECCIONADO,
 } from "../../types/index"
 
-const PorcentajeState = ({children}) => {
+const PorcentajeState = ({ children }) => {
 
     const initialState = {
         porcentajes: [],
@@ -26,7 +26,7 @@ const PorcentajeState = ({children}) => {
 
     const traerPorcentajes = async () => {
         try {
-            const {data} = await clienteAxios("/porcentajes")
+            const { data } = await clienteAxios("/porcentajes")
             dispatch({
                 type: OBTENER_PORCENTAJES,
                 payload: data.porcentajes
@@ -38,7 +38,7 @@ const PorcentajeState = ({children}) => {
 
     const porcentajeActual = async id => {
         try {
-            const {data} = await clienteAxios(`/porcentajes/${id}`)
+            const { data } = await clienteAxios(`/porcentajes/${id}`)
             dispatch({
                 type: PORCENTAJE_ACTUAL,
                 payload: data.porcentaje
@@ -57,7 +57,7 @@ const PorcentajeState = ({children}) => {
 
     const editarPorcentaje = async porcentaje => {
         try {
-            const {data} = await clienteAxios.put(`/porcentajes/${porcentaje._id}`, porcentaje)
+            const { data } = await clienteAxios.put(`/porcentajes/${porcentaje._id}`, porcentaje)
             dispatch({
                 type: EDITAR_PORCENTAJE,
                 payload: data.porcentaje
@@ -68,8 +68,8 @@ const PorcentajeState = ({children}) => {
         }
     }
 
-    
-   
+
+
 
     return (
         <porcentajeContext.Provider

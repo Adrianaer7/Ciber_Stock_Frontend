@@ -4,7 +4,7 @@ import ListadoCompras from "../components/historial/compras/ListadoCompras"
 const compras = () => {
   return (
     <Layout pagina="Compras">
-        <ListadoCompras/>
+      <ListadoCompras />
     </Layout>
   )
 }

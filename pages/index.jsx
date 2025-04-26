@@ -5,17 +5,17 @@ import { useRouter } from 'next/router';
 
 const Index = () => {
 
-  
+
   const AuthContext = useContext(authContext)
-  const {token, ocultarAlerta} = AuthContext
-  
+  const { token, ocultarAlerta } = AuthContext
+
   const router = useRouter()
 
   useEffect(() => {
-      if(token) {
-        router.push("/productos")
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (token) {
+      router.push("/productos")
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token])
 
 
@@ -27,7 +27,7 @@ const Index = () => {
 
   return (
     <div className="md:flex md:min-h-screen sm:min-h-screen h-screen overflow-y-auto bg-slate-100">
-      <Login/>
+      <Login />
     </div>
   );
 };

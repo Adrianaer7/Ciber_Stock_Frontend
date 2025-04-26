@@ -7,7 +7,7 @@ import authContext from '../../context/auth/authContext';
 const NuevaCuenta = () => {
 
     const AuthContext = useContext(authContext)
-    const {mensaje, registrarUsuario} = AuthContext
+    const { mensaje, registrarUsuario } = AuthContext
 
     const [nuevoUsuario, setNuevoUsuario] = useState({
         nombre: "",
@@ -17,19 +17,19 @@ const NuevaCuenta = () => {
     })
     const [error, setError] = useState()
 
-    const {nombre, email, password, confirmar} = nuevoUsuario
+    const { nombre, email, password, confirmar } = nuevoUsuario
 
     const onChange = e => {
         setNuevoUsuario({
             ...nuevoUsuario,
-            [e.target.name] : e.target.value
+            [e.target.name]: e.target.value
         })
     }
 
     const onSubmit = e => {
         e.preventDefault()
 
-        if(nombre.trim() === "" || email.trim() === "" || password.trim() === ""  || confirmar === "") {
+        if (nombre.trim() === "" || email.trim() === "" || password.trim() === "" || confirmar === "") {
             setError("Todos los campos son obligatorios")
             setTimeout(() => {
                 setError("")
@@ -37,21 +37,21 @@ const NuevaCuenta = () => {
             return
         }
 
-        if(password.length < 6) {
+        if (password.length < 6) {
             setError("La contraseña debe tener al menos 6 caracteres")
             setTimeout(() => {
                 setError("")
             }, 3000);
             return
         }
-        if(password != confirmar) {
+        if (password != confirmar) {
             setError("Las contraseñas deben coincidir")
             setTimeout(() => {
                 setError("")
             }, 3000);
             return
         }
-        
+
         registrarUsuario({
             nombre,
             email,
@@ -66,17 +66,17 @@ const NuevaCuenta = () => {
     }
 
     return (
-        <>    
-        <Head>
-            <title>Crear cuenta</title>
-        </Head>
+        <>
+            <Head>
+                <title>Crear cuenta</title>
+            </Head>
 
-        <div className='sm:w-3/5 xl:w-2/5 sm:mx-auto mr-1 ml-1 my-10 sm:my-32 '>
-            <h1 className="font-black text-4xl text-center text-blue-900 dark:text-blue-300">Nueva cuenta</h1>
-            <p className="mt-3 text-center text-black">Llena los siguientes campos para crear una cuenta</p>
-            {mensaje ? <Alerta>{mensaje}</Alerta> : error ? <Alerta>{error}</Alerta> : null}
+            <div className='sm:w-3/5 xl:w-2/5 sm:mx-auto mr-1 ml-1 my-10 sm:my-32 '>
+                <h1 className="font-black text-4xl text-center text-blue-900 dark:text-blue-300">Nueva cuenta</h1>
+                <p className="mt-3 text-center text-black">Llena los siguientes campos para crear una cuenta</p>
+                {mensaje ? <Alerta>{mensaje}</Alerta> : error ? <Alerta>{error}</Alerta> : null}
                 <div className='bg-white  mt-10 px-5 pb-3 rounded-md shadow-md md:w-3/4 mx-auto'>
-                    <form 
+                    <form
                         className="mt-10"
                         onSubmit={onSubmit}
                     >
@@ -131,7 +131,7 @@ const NuevaCuenta = () => {
                                 value={confirmar}
                                 onChange={onChange}
                             />
-                        </div>                             
+                        </div>
 
                         <input
                             type="submit"
@@ -141,16 +141,16 @@ const NuevaCuenta = () => {
                     </form>
                 </div>
                 <div className="flex flex-col items-center sm:mx-auto sm:justify-between sm:w-3/4 ">
-                <Link href="/" className="pt-5 hover:text-blue-400 font-medium">
-                    Ya tengo cuenta
-                </Link>
+                    <Link href="/" className="pt-5 hover:text-blue-400 font-medium">
+                        Ya tengo cuenta
+                    </Link>
                     <Link href="/olvide-password" className="pt-5 hover:text-blue-400 font-medium">
                         Olvidé mi contraseña
                     </Link>
-                   
+
                 </div>
-        </div>
-    </>        
+            </div>
+        </>
     )
 }
 

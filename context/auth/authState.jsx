@@ -4,8 +4,8 @@ import authReducer from "./authReducer";
 import clienteAxios from "../../config/axios"
 import tokenAuth from "../../config/tokenAuth";
 
-import { 
-    USUARIO_AUTENTICADO ,
+import {
+    USUARIO_AUTENTICADO,
     REGISTRO_ERROR,
     LIMPIAR_STATE,
     LOGIN_EXITOSO,
@@ -17,10 +17,10 @@ import {
     GUARDAR_TEMA
 } from "../../types";
 
-const AuthState = ({children}) => {
+const AuthState = ({ children }) => {
     //Definir un state inicial
     const initialState = {
-        token:  typeof window !== "undefined" ? localStorage.getItem("token") : "",  //una vez que me logeo, al recargar la pagina, el token del state inicia con el valor del token que hay en localstorage
+        token: typeof window !== "undefined" ? localStorage.getItem("token") : "",  //una vez que me logeo, al recargar la pagina, el token del state inicia con el valor del token que hay en localstorage
         autenticado: null,
         usuario: null,
         mensaje: null,
@@ -33,7 +33,7 @@ const AuthState = ({children}) => {
     //Registrar nuevos usuarios
     const registrarUsuario = async datos => {
         try {
-            const {data} = await clienteAxios.post("/usuarios", datos)
+            const { data } = await clienteAxios.post("/usuarios", datos)
             dispatch({
                 type: REGISTRO_EXITOSO,
                 payload: data.msg
@@ -48,14 +48,14 @@ const AuthState = ({children}) => {
                 dispatch({
                     type: OCULTAR_ALERTA,
                 })
-            }, 3000);         
+            }, 3000);
         }
-        
+
     }
 
     const olvideContraseña = async email => {
         try {
-            const {data} = await clienteAxios.post("/usuarios/olvide-password", {email})
+            const { data } = await clienteAxios.post("/usuarios/olvide-password", { email })
             dispatch({
                 type: SOLICITAR_TOKEN_PASSWORD,
                 payload: data.msg
@@ -71,7 +71,7 @@ const AuthState = ({children}) => {
     const cambiarContraseña = async (contraseña, token) => {
         const url = `/usuarios/olvide-password/${token}`
         try {
-            await clienteAxios.post(url, {contraseña})
+            await clienteAxios.post(url, { contraseña })
         } catch (error) {
             console.log(error.response.data)
             dispatch({
@@ -82,14 +82,14 @@ const AuthState = ({children}) => {
                 dispatch({
                     type: OCULTAR_ALERTA,
                 })
-            }, 3000); 
+            }, 3000);
         }
     }
 
     //Autenticar usuario
     const iniciarSesion = async datos => {  //la uso en login.js
         try {
-            const {data} = await clienteAxios.post("/auth", datos)   //envio los datos para que me cree un token
+            const { data } = await clienteAxios.post("/auth", datos)   //envio los datos para que me cree un token
             dispatch({
                 type: LOGIN_EXITOSO,
                 payload: data.token
@@ -111,20 +111,20 @@ const AuthState = ({children}) => {
 
     //Usuario autenticado
     const usuarioAutenticado = async (token = "") => {
-        if(!token) token = localStorage.getItem("token")
-        
-        if(token) {
+        if (!token) token = localStorage.getItem("token")
+
+        if (token) {
             tokenAuth(token)
         }
         try {
-            const {data} = await clienteAxios("/auth")
-            if(data.usuario) {
+            const { data } = await clienteAxios("/auth")
+            if (data.usuario) {
                 dispatch({
                     type: USUARIO_AUTENTICADO,
                     payload: data.usuario
                 })
             }
-            
+
         } catch (error) {
             console.log(error)
             dispatch({
@@ -147,14 +147,14 @@ const AuthState = ({children}) => {
         })
     }
 
-    const traerTema = tema =>{
+    const traerTema = tema => {
         dispatch({
             type: GUARDAR_TEMA,
             payload: tema
         })
     }
 
-    return ( 
+    return (
         <authContext.Provider
             value={{
                 token: state.token,
@@ -175,7 +175,7 @@ const AuthState = ({children}) => {
         >
             {children}
         </authContext.Provider>
-     );
+    );
 }
- 
+
 export default AuthState;

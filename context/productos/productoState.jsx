@@ -272,7 +272,7 @@ const ProductoState = ({ children }) => {
 
             // Filtro por palabras
             if (!incluyeTodas(descripcion, palabras)) return false  //retorno false solo en caso que no encuentre coincidencias con las palabras ingresadas, entonces sigue con el siguiente producto del array
-    
+
             // Filtro por stock y visibilidad
             const cumpleStock = stock ? disponibles > 0 : true  //siempre va a devolver true a menos que stock sea true y disponibles sea 0
             const cumpleVisibilidad = oculto ? !visibilidad : visibilidad
@@ -283,7 +283,7 @@ const ProductoState = ({ children }) => {
 
             return cumpleStock && cumpleVisibilidad //si los dos son true, agrega el producto al array filtrados
         })
-    
+
         try {
             dispatch({
                 type: FILTRAR_PRODUCTO,
@@ -293,7 +293,7 @@ const ProductoState = ({ children }) => {
             console.log(error)
         }
     }
-    
+
 
     //quito disponibilidad del producto
     const venderProducto = async (producto, unidades) => {
@@ -381,7 +381,7 @@ const ProductoState = ({ children }) => {
                     }
                 })
             } else {    //cuando elimino el dolar manual
-                const { data } =  await clienteAxios.put("/dolares", { automatico })
+                const { data } = await clienteAxios.put("/dolares", { automatico })
                 dispatch({
                     type: EDITAR_DOLAR,
                     payload: {

@@ -4,7 +4,7 @@ import {
     OBTENER_PROVEEDORES,
     EDITAR_PROVEEDOR,
     FILTRO_PROVEEDOR,
-    ELIMINAR_PROVEEDOR, 
+    ELIMINAR_PROVEEDOR,
     ELIMINAR_PROVEEDORES,
     ORDENAR_EMPRESA_PROVEEDOR,
     ORDENAR_EMPRESA_PROVEEDOR_FILTRADO,
@@ -12,8 +12,8 @@ import {
     LIMPIAR_PROVEEDOR_SELECCIONADO
 } from "../../types/index"
 
-export default function proveedorreducer (state, action) {
-    switch(action.type) {
+export default function proveedorreducer(state, action) {
+    switch (action.type) {
         case AGREGAR_PROVEEDOR:
             return {
                 ...state,
@@ -49,11 +49,11 @@ export default function proveedorreducer (state, action) {
                 ...state,
                 proveedoresFiltrados: action.payload
             }
-        case ELIMINAR_PROVEEDOR: 
-        return {
-            ...state,
-            proveedores: state.proveedores.filter(proveedor => proveedor._id !== action.payload)
-        }
+        case ELIMINAR_PROVEEDOR:
+            return {
+                ...state,
+                proveedores: state.proveedores.filter(proveedor => proveedor._id !== action.payload)
+            }
         case ELIMINAR_PROVEEDORES:
             return {
                 ...state,
@@ -63,13 +63,13 @@ export default function proveedorreducer (state, action) {
             return {
                 ...state,
                 //ordeno el state segun letra. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor.
-                proveedores: action.payload ? state.proveedores.sort((a,b) => b.empresa > a.empresa ? 1 : -1 ) : !action.payload ? state.proveedores.sort((a,b) => a.empresa > b.empresa ? 1 : -1 ) : state.proveedores
+                proveedores: action.payload ? state.proveedores.sort((a, b) => b.empresa > a.empresa ? 1 : -1) : !action.payload ? state.proveedores.sort((a, b) => a.empresa > b.empresa ? 1 : -1) : state.proveedores
             }
         case ORDENAR_EMPRESA_PROVEEDOR_FILTRADO:
             return {
                 ...state,
                 //ordeno el state segun letra. El primer payload es false(por default el state está asi), entonces devuelve el objeto arreglado de menor a mayor, y si es true lo devuelve de mayor a menor.
-                proveedores: action.payload ? state.proveedores.sort((a,b) => b.empresa > a.empresa ? 1 : -1 ) : !action.payload ? state.proveedores.sort((a,b) => a.empresa > b.empresa ? 1 : -1 ) : state.proveedores
+                proveedores: action.payload ? state.proveedores.sort((a, b) => b.empresa > a.empresa ? 1 : -1) : !action.payload ? state.proveedores.sort((a, b) => a.empresa > b.empresa ? 1 : -1) : state.proveedores
             }
         default:
             return state;

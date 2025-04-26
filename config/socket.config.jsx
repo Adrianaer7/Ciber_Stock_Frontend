@@ -7,10 +7,10 @@ const iniciarSocket = (token) => {
             authentication: token
         }
     });
-    
+
     const socket = manager.socket('/');   //ejecuta el handleConnection
     socket?.removeAllListeners();
     return socket
-} 
+}
 
 export default iniciarSocket
