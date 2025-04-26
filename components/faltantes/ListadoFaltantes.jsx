@@ -9,19 +9,19 @@ import iniciarSocket from "../../config/socket.config";
 const ListadoFaltantes = () => {
 
     const AuthContext = useContext(authContext)
-    const {modo, usuarioAutenticado, token} = AuthContext
+    const { modo, usuarioAutenticado, token } = AuthContext
 
     const ProveedorContext = useContext(proveedorContext)
-    const {traerProveedores, proveedores} = ProveedorContext
+    const { traerProveedores, proveedores } = ProveedorContext
     const faltantesContext = useContext(faltanteContext)
 
     const {
-        faltantes, 
-        traerFaltantes, 
-        filtroFaltante, 
+        faltantes,
+        traerFaltantes,
+        filtroFaltante,
         filtrados,
         orderCodigo,
-        orderCodigoFiltrados, 
+        orderCodigoFiltrados,
         orderNombre,
         orderNombreFiltrados,
         orderMarca,
@@ -36,7 +36,7 @@ const ListadoFaltantes = () => {
         orderDisponiblesFiltrados,
     } = faltantesContext
 
-    const [filtrando, setFiltrando] = useState("") 
+    const [filtrando, setFiltrando] = useState("")
     const [escribiendo, setEscribiendo] = useState(false)
     const [focus, setFocus] = useState(false)
     const [ordenCodigo, setOrdenCodigo] = useState(false)
@@ -53,19 +53,19 @@ const ListadoFaltantes = () => {
     useEffect(() => {
         usuarioAutenticado()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    }, [])
 
     useEffect(() => {
         const newSrc = modo && escribiendo
-          ? "/close_dark.svg"
-          : !modo && escribiendo
-          ? "/close_light.svg"
-          : modo && !escribiendo
-          ? "/search_light.svg"
-          : "/search_dark.svg";
-      
+            ? "/close_dark.svg"
+            : !modo && escribiendo
+                ? "/close_light.svg"
+                : modo && !escribiendo
+                    ? "/search_light.svg"
+                    : "/search_dark.svg";
+
         setSrcImage(newSrc);
-      }, [modo, escribiendo]);
+    }, [modo, escribiendo]);
 
     useEffect(() => {
         traerFaltantes()
@@ -82,58 +82,58 @@ const ListadoFaltantes = () => {
     }, [])
 
     useEffect(() => {
-        if(filtrando) {
+        if (filtrando) {
             orderCodigoFiltrados(ordenCodigo)
         }
         orderCodigo(ordenCodigo)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[ordenCodigo])
+    }, [ordenCodigo])
     useEffect(() => {
-        if(filtrando) {
+        if (filtrando) {
             orderNombreFiltrados(ordenNombre)
         }
         orderNombre(ordenNombre)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ordenNombre])
     useEffect(() => {
-        if(filtrando) {
+        if (filtrando) {
             orderMarcaFiltrados(ordenMarca)
         }
         orderMarca(ordenMarca)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ordenMarca])
     useEffect(() => {
-        if(filtrando) {
+        if (filtrando) {
             orderModeloFiltrados(ordenModelo)
         }
         orderModelo(ordenModelo)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ordenModelo])
     useEffect(() => {
-        if(filtrando) {
+        if (filtrando) {
             orderRubroFiltrados(ordenRubro)
         }
         orderRubro(ordenRubro)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ordenRubro])
     useEffect(() => {
-        if(filtrando) {
+        if (filtrando) {
             orderProveedorFiltrados(ordenProveedor)
         }
         orderProveedor(ordenProveedor)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ordenProveedor])
     useEffect(() => {
-        if(filtrando) {
+        if (filtrando) {
             orderDisponiblesFiltrados(ordenDisponibles)
         }
         orderDisponibles(ordenDisponibles)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ordenDisponibles])
-    
+
 
     useEffect(() => {
-        if(filtrando) {
+        if (filtrando) {
             setEscribiendo(true)
         } else {
             setEscribiendo(false)
@@ -167,89 +167,85 @@ const ListadoFaltantes = () => {
         setOrdenDisponibles(!ordenDisponibles)
     }
 
-  return (
-    <>   
-        <div className="absolute lg:relative min-w-full m-0">
-            <h1 className="font-black dark:text-red-500 text-3xl sm:text-4xl text-red-500 text-center mt-2 sm:mt-0 mb-4 ">Listado de faltantes</h1>
-            <div className="flex flex-col-reverse sm:flex-row justify-between ">
-                <div className={`${focus && "ring-2"} relative my-auto p-2 w-full sm:w-2/6 xl:w-2/6 shadow dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 bg-white rounded-md md:rounded-lg`}>
-                        <input 
-                            type="text" 
+    return (
+        <>
+            <div className="absolute lg:relative min-w-full m-0">
+                <h1 className="font-black dark:text-red-500 text-3xl sm:text-4xl text-red-500 text-center mt-2 sm:mt-0 mb-4 ">Listado de faltantes</h1>
+                <div className="flex flex-col-reverse sm:flex-row justify-between ">
+                    <div className={`${focus && "ring-2"} relative my-auto p-2 w-full sm:w-2/6 xl:w-2/6 shadow dark:bg-gray-900 focus:outline-none focus:ring focus:border-blue-300 dark:text-gray-50 bg-white rounded-md md:rounded-lg`}>
+                        <input
+                            type="text"
                             className="w-10/12 xl:w-11/12 p-2 focus:outline-none dark:bg-transparent"
                             placeholder="Buscar algún faltante"
                             onChange={onChangeFiltro}
                             value={filtrando}
-                            onFocus={()=> setFocus(true)}
-                            onBlur={()=> setFocus(false)}
+                            onFocus={() => setFocus(true)}
+                            onBlur={() => setFocus(false)}
                         />
                         <div className="absolute mr-2 -inset-y-1 flex right-0 opacity-40">
                             <Image
                                 src={srcImage}
                                 alt="Cerrar"
-                                width={30} 
+                                width={30}
                                 height={30}
                                 priority={true}
                                 className="cursor-pointer"
                                 onClick={escribiendo ? () => setFiltrando("") : null}
                             />
-                        </div> 
-                    </div>  
-                </div>    
-        </div>
-        <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-fixed shadow rounded-lg dark:bg-gray-900 bg-white ">
-            <thead className="bg-red-600 text-white">
-                <tr className="hover:cursor-pointer select-none">
-                    <th  onClick={() => ordenarCodigo()} className="p-2 rounded-tl-lg w-20">CODIGO</th>
-                    <th onClick={() => ordenarNombre()} className="break-words">NOMBRE</th>
-                    <th onClick={() => ordenarMarca()} className="break-words">MARCA</th>
-                    <th onClick={() => ordenarModelo()} className="break-words">MODELO</th>
-                    <th onClick={() => ordenarRubro()} className="break-words">RUBRO</th>
-                    <th onClick={() => ordenarProveedor()} className="break-words">PROVEEDOR</th>
-                    <th onClick={() => ordenarDisponibles()} className="w-28">DISPONIBLES</th>
-                    <th className="rounded-tr-lg w-40">ACCIONES</th>
-                </tr>
-            </thead>
-            <tbody> 
-                {!filtrados.length && escribiendo 
-                ? null 
-                : filtrados.length && escribiendo ?(
-                    <>
-                        {filtrados.map(producto => (
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-fixed shadow rounded-lg dark:bg-gray-900 bg-white ">
+                <thead className="bg-red-600 text-white">
+                    <tr className="hover:cursor-pointer select-none">
+                        <th onClick={() => ordenarCodigo()} className="p-2 rounded-tl-lg w-20">CODIGO</th>
+                        <th onClick={() => ordenarNombre()} className="break-words">NOMBRE</th>
+                        <th onClick={() => ordenarMarca()} className="break-words">MARCA</th>
+                        <th onClick={() => ordenarModelo()} className="break-words">MODELO</th>
+                        <th onClick={() => ordenarRubro()} className="break-words">RUBRO</th>
+                        <th onClick={() => ordenarProveedor()} className="break-words">PROVEEDOR</th>
+                        <th onClick={() => ordenarDisponibles()} className="w-28">DISPONIBLES</th>
+                        <th className="rounded-tr-lg w-40">ACCIONES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {filtrados.length > 0 ? (   //si estoy filtrando y hay resultados
+                        filtrados.map(producto => (
                             <ProductoFaltante
                                 key={producto._id}
                                 producto={producto}
                                 proveedores={proveedores}
                             />
-                        ))}
-                    </>)
-                : (
-                <>
-                    {faltantes.map(producto => (
-                        <ProductoFaltante
-                            key={producto._id}
-                            producto={producto}
-                            proveedores={proveedores}
-                        />
-                    ))}
-                </>
-                )}  
-            </tbody>
-        </table>
-        {!filtrados.length && escribiendo ? (
-            <div className="mx-auto mt-10 w-1/4">
-                <Image
-                    className="max-w-sm"
-                    src="/lupanoencontrado.png"
-                    alt="NoEncontrada"
-                    width={400} 
-                    height={400}
-                    priority={true}
-                />
-                <p className={`${modo && "text-white" } text-center text-2xl`}>No hay resultados</p>
-            </div>) 
-        : null}
-    </>
-  )
+                        ))
+                    ) : !escribiendo ? (    //si no estoy filtrando
+                        faltantes.map(producto => (
+                            <ProductoFaltante
+                                key={producto._id}
+                                producto={producto}
+                                proveedores={proveedores}
+                            />
+                        ))
+                    ) : null}
+                </tbody>
+            </table>
+            {!filtrados.length && escribiendo && (  //si estoy filtrando y no hay resultados
+                <div className="mx-auto mt-10 w-1/4">
+                    <Image
+                        className="max-w-sm"
+                        src="/lupanoencontrado.png"
+                        alt="NoEncontrada"
+                        width={400}
+                        height={400}
+                        priority={true}
+                    />
+                    <p className={`${modo ? "text-white" : ""} text-center text-2xl`}>
+                        No hay resultados
+                    </p>
+                </div>
+            )}
+        </>
+    )
 }
 
 export default ListadoFaltantes

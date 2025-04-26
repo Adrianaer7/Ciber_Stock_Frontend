@@ -36,15 +36,15 @@ const ListadoVentas = () => {
 
     useEffect(() => {
         const newSrc = modo && escribiendo
-          ? "/close_dark.svg"
-          : !modo && escribiendo
-          ? "/close_light.svg"
-          : modo && !escribiendo
-          ? "/search_light.svg"
-          : "/search_dark.svg";
-      
+            ? "/close_dark.svg"
+            : !modo && escribiendo
+                ? "/close_light.svg"
+                : modo && !escribiendo
+                    ? "/search_light.svg"
+                    : "/search_dark.svg";
+
         setSrcImage(newSrc);
-      }, [modo, escribiendo]);
+    }, [modo, escribiendo]);
 
     useEffect(() => {
         traerVentas()
@@ -177,56 +177,26 @@ const ListadoVentas = () => {
                     </tr>
                 </thead>
                 <tbody>
-            
-            {!filtradas.length && escribiendo 
-                ? null  
-                : !filtradas.length && fechaDesde && fechaHasta 
-                ? null
-                :filtradas.length && !escribiendo ?(
-                    <>
-                        {filtradas.map(producto => (
+                    {filtradas.length > 0 ? (   //si estoy filtrando y hay resultados
+                        filtradas.map(producto => (
                             <Venta
                                 key={producto._id}
                                 producto={producto}
                             />
-                        ))}
-                    </>)
-                : filtradas.length && escribiendo ?(
-                    <>
-                        {filtradas.map(producto => (
+                        ))
+                    ) : (!escribiendo && (!fechaDesde || !fechaHasta)) ? ( //si no estoy filtrando
+                        ventas.map(producto => (
                             <Venta
                                 key={producto._id}
                                 producto={producto}
                             />
-                        ))}
-                    </>)
-                : (
-                <>
-                    {ventas.map(producto => (
-                        <Venta
-                            key={producto._id}
-                            producto={producto}
-                        />
-                    ))}
-                </>
-                )}  
-                
-            </tbody>
+                        ))
+                    ) : null}
+                </tbody>
             </table>
-            {!filtradas.length && escribiendo ? (
-                <div className="mx-auto mt-10 w-1/4">
-                    <Image
-                        className="max-w-sm"
-                        src="/lupanoencontrado.png"
-                        alt="NoEncontrada"
-                        width={400}
-                        height={400}
-                        priority={true}
-                    />
-                    <p className={`${modo && "text-white"} text-center text-2xl`}>No hay resultados</p>
-                </div>
 
-            ) : !filtradas.length && fechaDesde && fechaHasta ? (
+            {/* lupa */}
+            {!filtradas.length && (escribiendo || (fechaDesde && fechaHasta)) && (  //si estoy filtrando y no hay resultados
                 <div className="mx-auto mt-10 w-1/4">
                     <Image
                         className="max-w-sm"
@@ -236,9 +206,11 @@ const ListadoVentas = () => {
                         height={400}
                         priority={true}
                     />
-                    <p className={`${modo && "text-white"} text-center text-2xl`}>No hay resultados</p>
-                </div>)
-                : null}
+                    <p className={`${modo ? "text-white" : ""} text-center text-2xl`}>
+                        No hay resultados
+                    </p>
+                </div>
+            )}
         </>
     )
 }
