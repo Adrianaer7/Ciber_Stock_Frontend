@@ -145,27 +145,6 @@ const ListadoFaltantes = () => {
         filtroFaltante(e.target.value.toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
     }
 
-    const ordenarCodigo = () => {
-        setOrdenCodigo(!ordenCodigo)
-    }
-    const ordenarNombre = () => {
-        setOrdenNombre(!ordenNombre)
-    }
-    const ordenarMarca = () => {
-        setOrdenMarca(!ordenMarca)
-    }
-    const ordenarModelo = () => {
-        setOrdenModelo(!ordenModelo)
-    }
-    const ordenarRubro = () => {
-        setOrdenRubro(!ordenRubro)
-    }
-    const ordenarProveedor = () => {
-        setOrdenProveedor(!ordenProveedor)
-    }
-    const ordenarDisponibles = () => {
-        setOrdenDisponibles(!ordenDisponibles)
-    }
 
     return (
         <>
@@ -199,13 +178,13 @@ const ListadoFaltantes = () => {
             <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-fixed shadow rounded-lg dark:bg-gray-900 bg-white ">
                 <thead className="bg-red-600 text-white">
                     <tr className="hover:cursor-pointer select-none">
-                        <th onClick={() => ordenarCodigo()} className="p-2 rounded-tl-lg w-20">CODIGO</th>
-                        <th onClick={() => ordenarNombre()} className="break-words">NOMBRE</th>
-                        <th onClick={() => ordenarMarca()} className="break-words">MARCA</th>
-                        <th onClick={() => ordenarModelo()} className="break-words">MODELO</th>
-                        <th onClick={() => ordenarRubro()} className="break-words">RUBRO</th>
-                        <th onClick={() => ordenarProveedor()} className="break-words">PROVEEDOR</th>
-                        <th onClick={() => ordenarDisponibles()} className="w-28">DISPONIBLES</th>
+                        <th onClick={() => setOrdenCodigo(!ordenCodigo)} className="p-2 rounded-tl-lg w-20">CODIGO</th>
+                        <th onClick={() => setOrdenNombre(!ordenNombre)} className="break-words">NOMBRE</th>
+                        <th onClick={() => setOrdenMarca(!ordenMarca)} className="break-words">MARCA</th>
+                        <th onClick={() => setOrdenModelo(!ordenModelo)} className="break-words">MODELO</th>
+                        <th onClick={() => setOrdenRubro(!ordenRubro)} className="break-words">RUBRO</th>
+                        <th onClick={() => setOrdenProveedor(!ordenProveedor)} className="break-words">PROVEEDOR</th>
+                        <th onClick={() => setOrdenDisponibles(!ordenDisponibles)} className="w-28">DISPONIBLES</th>
                         <th className="rounded-tr-lg w-40">ACCIONES</th>
                     </tr>
                 </thead>

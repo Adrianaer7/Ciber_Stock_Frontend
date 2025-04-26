@@ -440,9 +440,9 @@ const ListadoProveedores = () => {
 
             <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-fixed shadow rounded-lg dark:bg-gray-900 bg-white ">
                 <thead className="bg-emerald-600 text-white">
-                    <tr onClick={() => ordenarEmpresa()} className="hover:cursor-pointer select-none">
+                    <tr className="hover:cursor-pointer select-none">
                         <th className="p-2 rounded-tl-lg break-words">NOMBRE Y APELLIDO</th>
-                        <th className="break-words">EMPRESA</th>
+                        <th onClick={() => setOrdenEmpresa(!ordenEmpresa)} className="break-words">EMPRESA</th>
                         <th className="break-words">TEL. PERSONAL</th>
                         <th className="break-words">TEL. EMPRESA</th>
                         <th className="break-words">EMAIL</th>

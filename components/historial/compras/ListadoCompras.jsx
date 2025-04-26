@@ -106,16 +106,7 @@ const ListadoCompras = () => {
         filtroCompra(e.target.value.toUpperCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))  //envio al productoState
     }
 
-    const ordenarNombre = () => {
-        setOrdenNombre(!ordenNombre)
-    }
-    const ordenarMarca = () => {
-        setOrdenMarca(!ordenMarca)
-    }
-    const ordenarModelo = () => {
-        setOrdenModelo(!ordenModelo)
-    }
-
+    
     return (
         <>
             <div className="absolute lg:relative min-w-full m-0">
@@ -148,9 +139,9 @@ const ListadoCompras = () => {
             <table className="relative top-44 sm:top-44 lg:top-0 w-full mt-5 table-fixed shadow rounded-lg dark:bg-gray-900 bg-white ">
                 <thead className="bg-yellow-500 text-white">
                     <tr className="hover:cursor-pointer select-none">
-                        <th onClick={() => ordenarNombre()} className="p-2 rounded-tl-lg break-words" >NOMBRE</th>
-                        <th onClick={() => ordenarMarca()} className="break-words">MARCA</th>
-                        <th onClick={() => ordenarModelo()} className="break-words">MODELO</th>
+                        <th onClick={() => setOrdenNombre(!ordenNombre)} className="p-2 rounded-tl-lg break-words" >NOMBRE</th>
+                        <th onClick={() => setOrdenMarca(!ordenMarca)} className="break-words">MARCA</th>
+                        <th onClick={() => setOrdenModelo(!ordenModelo)} className="break-words">MODELO</th>
                         <th className="w-20">CANTIDAD</th>
                         <th>FECHA</th>
                         <th className="break-words">GARANTÍA</th>
