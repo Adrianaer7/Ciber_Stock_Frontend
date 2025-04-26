@@ -458,6 +458,7 @@ const Formulario = ({ productoEditar }) => {
                     añadirFaltante: false,
                     visibilidad: true
                 })
+                setVisible(true)
                 traerProductos()
                 await traerCodigos()
                 alertaNuevoCorrecto()
