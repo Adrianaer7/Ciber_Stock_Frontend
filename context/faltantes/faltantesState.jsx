@@ -70,30 +70,27 @@ const FaltanteState = ({children}) => {
     }    
     
     const filtroFaltante = (palabras) => {
-        let filtrados = []
-        state.faltantes.map(faltante => {
-            const {descripcion} = faltante
-            const incluyeTodas = () => {
-                return !palabras
-                        .split(' ')
-                        .some(p => !descripcion.includes(p))    //.some() comprueba si al menos 1 elemento cumple con la concidion.
-            }
-            
-            const resultado = incluyeTodas()
-            if(resultado) {
-                filtrados = [...filtrados, faltante]
-            }
-        })
+        if (!palabras) return;
+
+        const incluyeTodas = (descripcion, palabras) => {
+            return palabras
+                .split(' ')
+                .every(p => descripcion.includes(p));
+        };
+    
+        const filtrados = state.faltantes.filter(({ descripcion }) =>
+            incluyeTodas(descripcion, palabras)
+        );
+    
         try {
             dispatch({
                 type: FILTRO_FALTANTE,
                 payload: filtrados
-            })
+            });
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-        
-    }
+    };
 
     const orderCodigo = (ordenCodigo) => {
         dispatch({

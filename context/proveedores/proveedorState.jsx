@@ -95,30 +95,28 @@ const ProveedorState = ({children}) => {
     }
 
     
-    const filtroProveedor = palabras => {
-        let filtrados = []
-        state.proveedores.map(proveedor => {
-            const {datos} = proveedor
-                const incluyeTodas = () => {
-                return !palabras
-                        .split(' ')
-                        .some(p => !datos.includes(p))    //.some() comprueba si al menos 1 elemento cumple con la concidion.
-            }
-            
-            const resultado = incluyeTodas()
-            if(resultado) {
-                filtrados = [...filtrados, proveedor]
-            }
-        })
+    const filtroProveedor = (palabras) => {
+        if (!palabras) return;
+    
+        const incluyeTodas = (datos, palabras) => {
+            return palabras
+                .split(' ')
+                .every(p => datos.includes(p));
+        };
+        const filtrados = state.proveedores.filter(({ datos }) =>
+            incluyeTodas(datos, palabras)
+        );
+    
         try {
             dispatch({
                 type: FILTRO_PROVEEDOR,
                 payload: filtrados
-            })
+            });
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-    }
+    };
+    
     
     const eliminarUnProveedor = async id => {
         try {

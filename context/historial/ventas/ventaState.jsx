@@ -80,53 +80,46 @@ const VentaState = ({children}) => {
     }
 
     const filtroVenta = (palabras, fechaDesde, fechaHasta) => {
-        let filtradas = []
-        const incluyeTodas = (descripcion) => {
-            return !palabras
-                    .split(' ')
-                    .some(p => !descripcion.includes(p))    //.some() comprueba si al menos 1 elemento cumple con la concidion.
+        // Si no hay ni palabras ni fechas, limpiamos los resultados
+        const sinPalabras = !palabras || palabras.trim() === '';
+        const sinFechas = !fechaDesde || !fechaHasta;
+    
+        if (sinPalabras && sinFechas) {
+            dispatch({
+                type: FILTRO_VENTA,
+                payload: []
+            });
+            return;
         }
-        state.ventas.map(venta => {
-            const {descripcion, fecha} = venta
-            if(palabras) {
-                if(fechaDesde && fechaHasta) {
-                    if(fechaDesde <= fechaHasta) {
-                        if(fecha >= fechaDesde && fecha <= fechaHasta) {
-                            const resultado = incluyeTodas(descripcion)
-                            if(resultado) {
-                                filtradas = [...filtradas, venta]
-                            }
-                        }
-                    }
-                } else {
-                    const resultado = incluyeTodas(descripcion)
-                    if(resultado) {
-                        filtradas = [...filtradas, venta]
-                    }
-                }
-            } else {
-                if(fechaDesde && fechaHasta) {
-                    if(fechaDesde <= fechaHasta) {
-                        if(fecha >= fechaDesde && fecha <= fechaHasta) {
-                            const resultado = incluyeTodas(descripcion)
-                            if(resultado) {
-                                filtradas = [...filtradas, venta]
-                            }
-                        }
-                    }
-                }
-            }
-        })
+    
+        const incluyeTodas = (descripcion) => {
+            return palabras
+                ?.split(' ')
+                .every(p => descripcion.includes(p));
+        };
+    
+        const enRangoDeFechas = (fecha) => {
+            if (sinFechas || fechaDesde > fechaHasta) return true;
+            return fecha >= fechaDesde && fecha <= fechaHasta;
+        };
+    
+        const filtradas = state.ventas.filter(({ descripcion, fecha }) => {
+            const pasaFiltroTexto = sinPalabras ? true : incluyeTodas(descripcion);
+            const pasaFiltroFecha = enRangoDeFechas(fecha);
+            return pasaFiltroTexto && pasaFiltroFecha;
+        });
+    
         try {
             dispatch({
                 type: FILTRO_VENTA,
                 payload: filtradas
-            })
+            });
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-        
-    }
+    };
+    
+    
 
     const eliminarVenta = async (id, idProducto, cantidad) => {
         try {

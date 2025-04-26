@@ -42,32 +42,30 @@ const CompraState = ({children}) => {
         })
     }
 
-    const filtroCompra = palabras => {
-        let filtrados = []
-        state.compras.map(compra => {
-            const {descripcion} = compra
-
-            const incluyeTodas = () => {
-                return !palabras
-                        .split(' ')
-                        .some(p => !descripcion.includes(p))    //.some() comprueba si al menos 1 elemento cumple con la concidion.
-            }
-            
-            const resultado = incluyeTodas()
-            if(resultado) {
-                filtrados = [...filtrados, compra]
-            }
-        })
+    const filtroCompra = (palabras) => {
+        if (!palabras) return;
+    
+        const incluyeTodas = (descripcion, palabras) => {
+            const descripcionUpper = descripcion.toUpperCase();
+            return palabras
+                .split(' ')
+                .every(p => descripcionUpper.includes(p));
+        };
+    
+        const filtrados = state.compras.filter(({ descripcion }) =>
+            incluyeTodas(descripcion, palabras)
+        );
+    
         try {
             dispatch({
                 type: FILTRO_COMPRA,
                 payload: filtrados
-            })
+            });
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-        
-    }
+    };
+    
 
     
     const orderNombre = (ordenNombre) => {

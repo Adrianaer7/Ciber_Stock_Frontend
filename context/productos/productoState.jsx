@@ -259,75 +259,31 @@ const ProductoState = ({ children }) => {
 
     //filtro en el listado segun propiedades del producto
     const filtro = (palabras, stock, oculto) => {
-        let filtrados = []
-        let resultado
-        const incluyeTodas = (descripcion) => {
-            return !palabras
-                .split(' ') //creo un array y a cada palabra la pongo en un array
-                .some(p => !descripcion.includes(p))    //.some() devuelve true si encuentra algun producto que en la descripcion que tenga las mismas palabras que el array de palabras, sin importar el orden del array. Si !(niego) palabras y descripcion, me va a devolver true cuando encuentre el producto que contenga en la descripcion alguna de las palabras que hay en el array de palabras, sin importar el orden.
+
+        const incluyeTodas = (descripcion, palabras) => {
+            if (!palabras) return true
+            const palabrasArray = palabras.split(' ')
+            // Verificamos que *todas* las palabras del input estén incluidas en la descripción
+            return palabrasArray.every(p => descripcion.includes(p))   //si encuentra devuelve true
         }
 
-        state.productos.map(producto => {
+        const filtrados = state.productos.filter(producto => {
             const { descripcion, disponibles, visibilidad } = producto
-            if (palabras) {
-                if (!stock && !oculto) { //no checkeo nada -----
-                    if (visibilidad) {   //muestro todos los visibles
-                        resultado = incluyeTodas(descripcion)
-                        if (resultado) {
-                            filtrados = [...filtrados, producto]
-                        }
-                    }
 
-                }
-                if (stock && !oculto) {  //checkeo stock ----
-                    if (disponibles > 0 && visibilidad) {
-                        resultado = incluyeTodas(descripcion)
-                        if (resultado) {
-                            filtrados = [...filtrados, producto]
-                        }
-                    }
-                }
-                if (!stock && oculto) {  //checkeo oculto ----
-                    if (!visibilidad) {
-                        resultado = incluyeTodas(descripcion)
-                        if (resultado) {
-                            filtrados = [...filtrados, producto]
-                        }
-                    }
-                }
-                if (stock && oculto) {   //checkeo stock y oculto
-                    if (disponibles > 0 && !visibilidad) {
-                        resultado = incluyeTodas(descripcion)
-                        if (resultado) {
-                            filtrados = [...filtrados, producto]
-                        }
-                    }
-                }
+            // Filtro por palabras
+            if (!incluyeTodas(descripcion, palabras)) return false  //retorno false solo en caso que no encuentre coincidencias con las palabras ingresadas, entonces sigue con el siguiente producto del array
+    
+            // Filtro por stock y visibilidad
+            const cumpleStock = stock ? disponibles > 0 : true  //siempre va a devolver true a menos que stock sea true y disponibles sea 0
+            const cumpleVisibilidad = oculto ? !visibilidad : visibilidad
+            //si oculto es true y visibilidad true, devuelvo false, entonces este producto está como visible y no lo agrego al array
+            //si oculto es true y visibilidad false, devuelvo true, entonces este producto está invisible y lo agrego al array
+            //si oculto es false y visibilidad true, devuelvo true, entonces este producto está visible y lo agrego al array
+            //si oculto es false y visibilidad false, devuelvo false, entonces este producto está invisible y no lo agrego al array
 
-            } else {
-                if (!stock && !oculto) {
-                    if (visibilidad) {
-                        filtrados = [...filtrados, producto]
-                    }
-                }
-                if (stock && !oculto) {  //checkeo stock ----
-                    if (disponibles > 0 && visibilidad) {
-                        filtrados = [...filtrados, producto]
-                    }
-                }
-                if (!stock && oculto) {  //checkeo oculto ----
-                    if (!visibilidad) {
-                        filtrados = [...filtrados, producto]
-                    }
-                }
-                if (stock && oculto) {   //checkeo stock y oculto
-                    if (disponibles > 0 && !visibilidad) {
-                        filtrados = [...filtrados, producto]
-                    }
-                }
-            }
+            return cumpleStock && cumpleVisibilidad //si los dos son true, agrega el producto al array filtrados
         })
-
+    
         try {
             dispatch({
                 type: FILTRAR_PRODUCTO,
@@ -337,8 +293,7 @@ const ProductoState = ({ children }) => {
             console.log(error)
         }
     }
-
-
+    
 
     //quito disponibilidad del producto
     const venderProducto = async (producto, unidades) => {
