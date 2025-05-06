@@ -122,7 +122,7 @@ const ListadoVentas = () => {
                             ) : null
                             : null}
                         <div>
-                            <label htmlFor="fechaHasta" className="font-bold">Fecha desde</label>
+                            <label htmlFor="fechaHasta" className={` dark:text-white text-gray-500 font-bold`}>Fecha desde</label>
                             <input
                                 type="date"
                                 autoComplete="off"
@@ -135,7 +135,7 @@ const ListadoVentas = () => {
                             />
                         </div>
                         <div>
-                            <label htmlFor="fechaHasta" className="font-bold">Fecha hasta</label>
+                            <label htmlFor="fechaHasta" className="font-bold dark:text-white text-gray-500">Fecha hasta</label>
                             <input
                                 type="date"
                                 autoComplete="off"

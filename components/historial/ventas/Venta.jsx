@@ -136,7 +136,7 @@ const Venta = ({ producto }) => {
 
     return (
 
-        <tr className={` border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 hover:cursor-pointer active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700`}>
+        <tr className={`  dark:last:border-none  hover:bg-gray-50 hover:cursor-pointer active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700`}>
             <td className="p-3 dark:text-gray-50 text-center w-1">{codigo}</td>
             <td className="p-3 dark:text-gray-50 text-center break-words">{nombre}</td>
             <td className="p-3 dark:text-gray-50 text-center break-words">{!marca ? "-" : marca}</td>

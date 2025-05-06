@@ -15,7 +15,7 @@ const Layout = ({ children, pagina }) => {
     const productosContext = useContext(productoContext)
     const { limpiarSeleccionado, limpiarApp } = productosContext
 
-    const [oscuro, setOscuro] = useState(false)
+    const [oscuro, setOscuro] = useState(null)
     const [panel, setPanel] = useState(false)
     const [mostrarVarios, setMostrarVarios] = useState(false)
 
@@ -33,9 +33,18 @@ const Layout = ({ children, pagina }) => {
 
     //traigo el tema del LS
     useEffect(() => {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         const temaLS = JSON.parse(localStorage.getItem("Modo oscuro")) ?? false
-        setOscuro(temaLS)
-    }, [])
+        if(temaLS !== mediaQuery.matches){
+            localStorage.setItem("Modo oscuro", JSON.stringify(mediaQuery.matches))
+            setOscuro(mediaQuery.matches)
+        } else {
+            setOscuro(temaLS)
+        }
+    }, []) 
+
+    //traigo el tema del sistema
+
 
 
     //cambio el estado del tema a oscuro o claro
@@ -77,12 +86,12 @@ const Layout = ({ children, pagina }) => {
                     </div>
                     {panel ?
                         <div className="flex flex-col mt-2 ml-5 py-2">
-                            <button
+                            {/* <button
                                 onClick={() => darkMode(!oscuro)}
                                 className="text-white text-left py-2 hover:text-blue-300 hover:translate-x-3"
                             >
                                 {oscuro ? "Tema claro" : "Tema oscuro"}
-                            </button>
+                            </button> */}
                             <button
                                 onClick={vaciarStates}
                                 className="text-white text-left py-2 hover:text-blue-300 hover:translate-x-3"
@@ -98,7 +107,7 @@ const Layout = ({ children, pagina }) => {
                             <li >
                                 <Link
                                     href="/productos"
-                                    className={`${urlActual === "/productos" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"}  text-sm text-center lg:text-left sm:text-xl lg:text-2xl  block p-2 mt-2 hover:text-blue-300`}
+                                    className={`${urlActual === "/productos" ? "lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md text-white " : "text-white"}  text-sm text-center lg:text-left sm:text-xl lg:text-2xl  block p-2 mt-2 hover:text-blue-300`}
                                 >
                                     Productos
                                 </Link>
@@ -106,7 +115,7 @@ const Layout = ({ children, pagina }) => {
                             <li >
                                 <Link
                                     href="/nuevoproducto"
-                                    className={`${urlActual === "/nuevoproducto" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
+                                    className={`${urlActual === "/nuevoproducto" ? "lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
                                     onClick={() => limpiarSeleccionado()}
                                 >
                                     Nuevo Producto
@@ -115,7 +124,7 @@ const Layout = ({ children, pagina }) => {
                             <li >
                                 <Link
                                     href="/faltantes"
-                                    className={`${urlActual === "/faltantes" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block  p-2 mt-2 hover:text-blue-300`}
+                                    className={`${urlActual === "/faltantes" ? "lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block  p-2 mt-2 hover:text-blue-300`}
                                     onClick={() => limpiarSeleccionado()}
                                 >
                                     Faltantes
@@ -124,7 +133,7 @@ const Layout = ({ children, pagina }) => {
                             <li >
                                 <Link
                                     href="/compras"
-                                    className={`${urlActual === "/compras" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
+                                    className={`${urlActual === "/compras" ? "lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
                                     onClick={() => limpiarSeleccionado()}
                                 >
                                     Compras
@@ -133,14 +142,14 @@ const Layout = ({ children, pagina }) => {
                             <li >
                                 <Link
                                     href="/ventas"
-                                    className={`${urlActual === "/ventas" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
+                                    className={`${urlActual === "/ventas" ? "lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
                                     onClick={() => limpiarSeleccionado()}
                                 >
                                     Ventas
                                 </Link>
                             </li>
                             <li
-                                className="lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300 hover:cursor-pointer"
+                                className="lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300 hover:cursor-pointer"
                                 onClick={() => setMostrarVarios(!mostrarVarios)}
                             > Varios
                                 {mostrarVarios || urlActual === "/proveedores" || urlActual === "/rubros" || urlActual === "/porcentajes" ? (
@@ -148,7 +157,7 @@ const Layout = ({ children, pagina }) => {
                                         <li >
                                             <Link
                                                 href="/proveedores"
-                                                className={`${urlActual === "/proveedores" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
+                                                className={`${urlActual === "/proveedores" ? "lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
                                                 onClick={() => limpiarSeleccionado()}
                                             >
                                                 Proveedores
@@ -157,7 +166,7 @@ const Layout = ({ children, pagina }) => {
                                         <li >
                                             <Link
                                                 href="/rubros"
-                                                className={`${urlActual === "/rubros" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
+                                                className={`${urlActual === "/rubros" ? "lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
                                                 onClick={() => limpiarSeleccionado()}
                                             >
                                                 Rubros
@@ -166,7 +175,7 @@ const Layout = ({ children, pagina }) => {
                                         <li >
                                             <Link
                                                 href="/porcentajes"
-                                                className={`${urlActual === "/porcentajes" ? "lg:bg-blue-300 lg:border-none border-b-gray-300 border-b-2 lg:bg-opacity-10 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
+                                                className={`${urlActual === "/porcentajes" ? "lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
                                                 onClick={() => limpiarSeleccionado()}
                                             >
                                                 Porcentajes

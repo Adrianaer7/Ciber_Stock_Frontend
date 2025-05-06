@@ -60,7 +60,7 @@ const Rubro = ({ rubro, crearNuevo }) => {
 
 
     return (
-        <tr className="border-b dark:border-b-gray-800 dark:last:border-none  hover:bg-gray-50 active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700">
+        <tr className=" dark:last:border-none  hover:bg-gray-50 active:bg-gray-100 dark:active:bg-gray-800 dark:hover:bg-gray-700">
             <td className="p-1 dark:text-gray-50 text-center break-words">{nombre ? nombre : "-"}</td>
             <td className="p-1 dark:text-gray-50 text-center break-words">{rentabilidad ? rentabilidad : "0"}%</td>
             <td className="p-1 w-32 mt-2">
