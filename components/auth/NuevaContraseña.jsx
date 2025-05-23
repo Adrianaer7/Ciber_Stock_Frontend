@@ -57,7 +57,7 @@ const NuevaContraseña = () => {
         <>
             {cambiada ? (<ContraseñaCambiada />) : (
                 <div className='w-2/4 mx-auto my-32 '>
-                    <h1 className="font-black text-4xl text-center text-blue-900 dark:text-blue-300">Nueva Contraseña</h1>
+                    <h1 className="font-black text-4xl text-center text-blue-900 ">Nueva Contraseña</h1>
                     <p className="mt-3 text-center text-black">Llena el campo para cambiar tu contraseña</p>
                     {mensaje && <Alerta>{mensaje}</Alerta>}
                     <div className='bg-white  mt-10 px-5 pb-3 rounded-md shadow-md md:w-3/4 mx-auto'>
@@ -95,11 +95,11 @@ const NuevaContraseña = () => {
                             <input
                                 type="submit"
                                 value="Guardar nueva contraseña"
-                                className="mt-5 w-full bg-blue-800 dark:bg-blue-500 p-3 text-white uppercase font-bold text-lg rounded-md cursor-pointer"
+                                className="mt-5 w-full bg-blue-800  p-3 text-white uppercase font-bold text-lg rounded-md cursor-pointer"
                             />
                         </form>
                     </div>
-                    <div className="flex justify-between w-3/4 mx-auto">
+                    <div className="flex justify-center w-3/4 mx-auto">
                         <Link href="/" className="pt-5 hover:text-blue-400 font-medium">
                             Iniciar sesion
                         </Link>

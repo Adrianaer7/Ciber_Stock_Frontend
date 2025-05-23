@@ -36,7 +36,7 @@ const OlvidePassword = () => {
             </Head>
 
             <div className='sm:w-3/5 xl:w-2/5 sm:mx-auto mr-1 ml-1 my-10 sm:my-32 '>
-                <h1 className="font-black text-4xl text-center text-blue-900 dark:text-blue-300">Reestablece tu contraseña</h1>
+                <h1 className="font-black text-4xl text-center text-blue-900">Reestablece tu contraseña</h1>
                 <p className="mt-3 text-center text-black">Recupera tu contraseña para no perder tus datos</p>
                 {mensaje ? <Alerta>{mensaje}</Alerta> : error ? <Alerta>{error}</Alerta> : null}
                 <div className='bg-white  mt-10 px-5 pb-3 rounded-md shadow-md md:w-3/4 mx-auto'>
@@ -61,7 +61,7 @@ const OlvidePassword = () => {
                         <input
                             type="submit"
                             value="Recuperar contraseña"
-                            className="mt-5 w-full bg-blue-800 dark:bg-blue-500 p-3 text-white uppercase font-bold text-lg rounded-md cursor-pointer"
+                            className="mt-5 w-full bg-blue-800  p-3 text-white uppercase font-bold text-lg rounded-md cursor-pointer"
                         />
                     </form>
                 </div>

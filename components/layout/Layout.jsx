@@ -107,7 +107,7 @@ const Layout = ({ children, pagina }) => {
                             <li >
                                 <Link
                                     href="/productos"
-                                    className={`${urlActual === "/productos" ? "lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md text-white " : "text-white"}  text-sm text-center lg:text-left sm:text-xl lg:text-2xl  block p-2 mt-2 hover:text-blue-300`}
+                                    className={`${urlActual === "/productos" ? "lg:bg-blue-950 dark:lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md text-white " : "text-white"}  text-sm text-center lg:text-left sm:text-xl lg:text-2xl  block p-2 mt-2 hover:text-blue-300`}
                                 >
                                     Productos
                                 </Link>
@@ -115,7 +115,7 @@ const Layout = ({ children, pagina }) => {
                             <li >
                                 <Link
                                     href="/nuevoproducto"
-                                    className={`${urlActual === "/nuevoproducto" ? "lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
+                                    className={`${urlActual === "/nuevoproducto" ? "lg:bg-blue-950 dark:lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
                                     onClick={() => limpiarSeleccionado()}
                                 >
                                     Nuevo Producto
@@ -124,7 +124,7 @@ const Layout = ({ children, pagina }) => {
                             <li >
                                 <Link
                                     href="/faltantes"
-                                    className={`${urlActual === "/faltantes" ? "lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block  p-2 mt-2 hover:text-blue-300`}
+                                    className={`${urlActual === "/faltantes" ? "lg:bg-blue-950 dark:lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block  p-2 mt-2 hover:text-blue-300`}
                                     onClick={() => limpiarSeleccionado()}
                                 >
                                     Faltantes
@@ -133,7 +133,7 @@ const Layout = ({ children, pagina }) => {
                             <li >
                                 <Link
                                     href="/compras"
-                                    className={`${urlActual === "/compras" ? "lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
+                                    className={`${urlActual === "/compras" ? "lg:bg-blue-950 dark:lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
                                     onClick={() => limpiarSeleccionado()}
                                 >
                                     Compras
@@ -142,7 +142,7 @@ const Layout = ({ children, pagina }) => {
                             <li >
                                 <Link
                                     href="/ventas"
-                                    className={`${urlActual === "/ventas" ? "lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
+                                    className={`${urlActual === "/ventas" ? "lg:bg-blue-950 dark:lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-xl lg:text-2xl block p-2 mt-2 hover:text-blue-300`}
                                     onClick={() => limpiarSeleccionado()}
                                 >
                                     Ventas
@@ -157,7 +157,7 @@ const Layout = ({ children, pagina }) => {
                                         <li >
                                             <Link
                                                 href="/proveedores"
-                                                className={`${urlActual === "/proveedores" ? "lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
+                                                className={`${urlActual === "/proveedores" ? "lg:bg-blue-950 dark:lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
                                                 onClick={() => limpiarSeleccionado()}
                                             >
                                                 Proveedores
@@ -166,7 +166,7 @@ const Layout = ({ children, pagina }) => {
                                         <li >
                                             <Link
                                                 href="/rubros"
-                                                className={`${urlActual === "/rubros" ? "lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
+                                                className={`${urlActual === "/rubros" ? "lg:bg-blue-950 dark:lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
                                                 onClick={() => limpiarSeleccionado()}
                                             >
                                                 Rubros
@@ -175,7 +175,7 @@ const Layout = ({ children, pagina }) => {
                                         <li >
                                             <Link
                                                 href="/porcentajes"
-                                                className={`${urlActual === "/porcentajes" ? "lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
+                                                className={`${urlActual === "/porcentajes" ? "lg:bg-blue-950 dark:lg:bg-cyan-950 lg:border-none border-b-gray-300 border-b-2 lg:rounded-md  text-white" : "text-white"} text-sm text-center lg:text-left sm:text-md lg:text-lg block p-2 mt-2 hover:text-blue-300`}
                                                 onClick={() => limpiarSeleccionado()}
                                             >
                                                 Porcentajes

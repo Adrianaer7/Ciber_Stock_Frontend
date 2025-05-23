@@ -44,7 +44,7 @@ const Login = () => {
             </Head>
 
             <div className='sm:w-3/5 xl:w-2/5 sm:mx-auto mr-1 ml-1 my-10 sm:my-32 '>
-                <h1 className="font-black text-4xl text-center text-blue-900 dark:text-blue-300">Ingresar</h1>
+                <h1 className="font-black text-4xl text-center text-blue-900 ">Ingresar</h1>
                 <p className="mt-3 text-center text-black">Llena los siguientes campos para iniciar sesion con tu cuenta</p>
                 {mensaje ? <Alerta>{mensaje}</Alerta> : error ? <Alerta>{error}</Alerta> : null}
                 <div className='bg-white  mt-10 px-5 pb-3 rounded-md shadow-md md:w-3/4 mx-auto'>
