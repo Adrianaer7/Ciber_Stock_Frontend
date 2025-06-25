@@ -51,16 +51,24 @@ const Producto = ({ producto }) => {
 
 
     useEffect(() => {
-        const warranty = [] //guardo momentaneamente las garantias
-        if (garantias.length > 0) {  //garantias del state
-            const garantiasProducto = garantias.find(garantia => garantia.idProducto == _id)    //garantia que contiene id de este producto
-            if (garantiasProducto) {
+        if (!garantias.length) return setTodasGarantias([])
 
-                garantiasProducto.detalles.map(todas => proveedores.map(proveedor => todas.proveedor.includes(proveedor._id) && warranty.push({ proveedor: proveedor.empresa, garantia: todas.caducidad })))
-            }
-        }
-        setTodasGarantias(warranty)
-    }, [])
+        const garantiasProducto = garantias.filter(g => g.idProducto === _id);
+
+        const warranty = garantiasProducto.flatMap(g =>
+            g.detalles.flatMap(todas =>
+                proveedores
+                    .filter(proveedor => todas.proveedor.includes(proveedor._id))
+                    .map(proveedor => ({
+                        proveedor: proveedor.empresa,
+                        garantia: todas.caducidad
+                    }))
+            )
+        );
+
+        setTodasGarantias(warranty);
+    }, []);
+
 
     useEffect(() => {
         setColorFaltante(faltante)
@@ -230,8 +238,49 @@ const Producto = ({ producto }) => {
             <td className="dark:text-gray-50 p-3 text-center break-words">{nombre}</td>
             <td className="p-3 dark:text-gray-50 text-center break-words">{marca ? marca : "-"}</td>
             <td className="p-3 dark:text-gray-50 text-center break-words">{modelo ? modelo : "-"}</td>
-            <td className="dark:text-gray-50 text-center uppercase break-words">{!disponibles ? <span className="bg-red-600 font-black text-white p-1  rounded-sm">Sin stock</span> : disponibles && !faltante && colorFaltante === null || disponibles && colorFaltante === false ? disponibles : disponibles && faltante || disponibles && colorFaltante || disponibles && faltante && colorFaltante === false ? <span className="text-red-600 font-bold">{disponibles}</span> : null}</td>
-            <td className="p-3 dark:text-gray-50 text-center break-words">{todasGarantias.length > 0 ? todasGarantias.map((garantia, i) => (<div key={i}><p key={i} className="font-medium ">{garantia.garantia}</p><p className="mb-1">{garantia.proveedor}</p></div>)) : "-"} </td>
+            <td className="dark:text-gray-50 text-center uppercase break-words">
+                {
+                    !disponibles 
+                        ? 
+                            <span className="bg-red-600 font-black text-white p-1  rounded-sm">
+                                Sin stock
+                            </span> 
+                        :  
+                            disponibles && !faltante && colorFaltante === null || disponibles && colorFaltante === false 
+                                ? 
+                                    disponibles 
+                                : 
+                                    disponibles && faltante || disponibles && colorFaltante || disponibles && faltante && colorFaltante === false 
+                                    ? 
+                                        <span className="text-red-600 font-bold">
+                                            {disponibles}
+                                        </span> 
+                                    : null
+                }
+            </td>
+            <td className="p-3 dark:text-gray-50 text-center break-words">
+                {
+                    todasGarantias.length > 0 
+                        ? 
+                            todasGarantias.map((garantia, i) => (
+                                <div 
+                                    key={i}
+                                >
+                                    <p 
+                                        key={i} 
+                                        className="font-medium "
+                                    >   
+                                        {garantia.garantia}
+                                    </p>
+                                    <p className="mb-1">
+                                        {garantia.proveedor}
+                                    </p>
+                                </div>
+                            )) 
+                        :
+                            "-"
+                } 
+            </td>
             <td className="p-2 dark:text-gray-50 text-center text-lg hover:cursor-pointer break-words">
                 <div className="flex flex-col">
                     <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-3xl font-black " onClick={copiarPrecioTarjeta}>${precio_venta_tarjeta}</p>
