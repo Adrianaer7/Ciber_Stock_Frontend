@@ -48,7 +48,11 @@ const ProductoFaltante = ({ producto, proveedores }) => {
             <td className="p-1 dark:text-gray-50 text-center break-words">{rubro ? rubro : "-"}</td>
             <td className="p-1 dark:text-gray-50 text-center break-words">{proveedoresIguales.length > 0 ? proveedoresIguales.map((prov, i) => <p key={i}>{`${prov.empresa} (${prov.nombre})`}</p>) : "-"}</td>
 
-            <td className="p-1 dark:text-gray-50 text-center uppercase">{disponibles && faltante ? <span className="font-bold text-red-600 p-1">{disponibles}</span> : disponibles && !faltante ? disponibles : <span className="font-black text-white bg-red-600 p-1 uppercase rounded-sm">Sin stock</span>}</td>
+            <td className="p-1 dark:text-gray-50 text-center uppercase">{disponibles && faltante ? 
+                                <span className="font-bold text-red-600 p-1">{disponibles}</span> : 
+                                disponibles && !faltante ? 
+                                disponibles : 
+                                <span className="font-black text-white bg-red-600 p-1 uppercase rounded-sm">Sin stock</span>}</td>
             <td className="p-1 w-40 mt-2 break-words ">
                 <div className="flex justify-evenly">
                     <div className="hover:bg-gray-200 dark:hover:bg-gray-600 p-1 pb-0 items-center rounded-md hover:cursor-pointer">

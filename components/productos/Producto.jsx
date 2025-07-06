@@ -151,9 +151,9 @@ const Producto = ({ producto }) => {
 
 
 
-    const cambiarFaltante = () => {
+    const cambiarFaltante = async () => {
         if (colorFaltante) {
-            eliminarFaltante(_id)
+            await eliminarFaltante(_id)
             setColorFaltante(false)
             Copiado.fire({
                 icon: 'error',
@@ -162,7 +162,7 @@ const Producto = ({ producto }) => {
                 color: `${modo ? "white" : "#545454"}`,
             })
         } else {
-            const error = agregarFaltante(_id)
+            const error = await agregarFaltante(_id)
             if (error) return mostarAlerta(error, modo)
             setColorFaltante(true)
             Copiado.fire({
