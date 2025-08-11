@@ -46,10 +46,9 @@ const CompraState = ({ children }) => {
         if (!palabras) return;
 
         const incluyeTodas = (descripcion, palabras) => {
-            const descripcionUpper = descripcion.toUpperCase();
             return palabras
                 .split(' ')
-                .every(p => descripcionUpper.includes(p));
+                .every(p => descripcion.includes(p));
         };
 
         const filtrados = state.compras.filter(({ descripcion }) =>
