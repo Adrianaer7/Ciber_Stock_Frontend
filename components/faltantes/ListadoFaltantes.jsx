@@ -71,12 +71,12 @@ const ListadoFaltantes = () => {
         traerFaltantes()
         traerProveedores()
         const socket = iniciarSocket(token);
-        socket.on('product-updated', () => {
+        socket?.on('product-updated', () => {
             traerFaltantes()
             traerProveedores()
         });
         return () => {
-            socket.disconnect(); // Desconectar al desmontar
+            socket?.disconnect(); // Desconectar al desmontar
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

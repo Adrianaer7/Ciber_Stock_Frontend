@@ -1,5 +1,4 @@
-import { useState, useContext, useEffect } from "react"
-import Image from "next/image"
+import { useState, useContext, useEffect, useRef } from "react"
 import productoContext from "../../context/productos/productoContext"
 import authContext from "../../context/auth/authContext"
 import proveedorContext from "../../context/proveedores/proveedorContext"
@@ -42,9 +41,47 @@ const Formulario = ({ productoEditar }) => {
     const [cantidad, setCantidad] = useState("")
     const [visible, setVisible] = useState(productoEditar?.visibilidad ?? true) //boton para que el producto se vea o no en el listado
     const [image, setImage] = useState({})
+    const [previewTemp, setPreviewTemp] = useState("")
+    const inputImagenRef = useRef(null)
+    const previewTempRef = useRef("")
     const desdeForm = true  //con esto me aseguro que los datos que envio para agregar producto/compra o editar producto/compra, vienen desde el formulario, y no se editan en el listado
     let formData
     const formatoImagen = ["image/jpg", "image/jpeg", "image/png", "image/webp", "image/avif"]
+
+    const revocarPreviewTemp = () => {
+        if (previewTempRef.current) {
+            URL.revokeObjectURL(previewTempRef.current)
+            previewTempRef.current = ""
+        }
+    }
+
+    const seleccionarImagen = e => {
+        const file = e.target.files?.[0]
+        if (!file) return
+        setProducto(prev => ({ ...prev, imagen: "" }))
+        setImage(file)
+        revocarPreviewTemp()
+        const url = URL.createObjectURL(file)
+        previewTempRef.current = url
+        setPreviewTemp(url)
+        e.target.value = ""
+    }
+
+    const limpiarImagenTemporal = () => {
+        revocarPreviewTemp()
+        setPreviewTemp("")
+        setImage({})
+        if (inputImagenRef.current) inputImagenRef.current.value = ""
+    }
+
+    const limpiarImagenProducto = () => {
+        limpiarImagenTemporal()
+        setProducto(prev => ({ ...prev, imagen: "" }))
+    }
+
+    useEffect(() => {
+        return () => revocarPreviewTemp()
+    }, [])
 
     const [producto, setProducto] = useState({
         nombre: productoEditar?.nombre ?? "",
@@ -88,7 +125,7 @@ const Formulario = ({ productoEditar }) => {
             traerRubros()
             traerProductos()
             const socket = iniciarSocket(token);
-            socket.on('product-updated', () => {
+            socket?.on('product-updated', () => {
                 traerDolarBD()
                 traerProveedores()
                 traerCodigos()
@@ -96,11 +133,11 @@ const Formulario = ({ productoEditar }) => {
                 traerRubros()
                 traerProductos()
             });
-            socket.on('rubros-updated', () => {
+            socket?.on('rubros-updated', () => {
                 traerRubros()
             });
             return () => {
-                socket.disconnect(); // Desconectar al desmontar
+                socket?.disconnect(); // Desconectar al desmontar
             };
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -427,7 +464,7 @@ const Formulario = ({ productoEditar }) => {
                 const error = await agregarProducto(producto, cantidad, desdeForm, formData)
                 if (error) return mostarAlerta(error, modo)
                 setCantidad("")
-                setImage({})
+                limpiarImagenTemporal()
                 setProveedorSelect("")
                 setProducto({
                     nombre: "",
@@ -483,7 +520,8 @@ const Formulario = ({ productoEditar }) => {
                 const error = await editarProducto(producto, cantidad, desdeForm, formData)
                 if (error) return mostarAlerta(error, modo)
                 setCantidad("")
-                setImage({})
+                limpiarImagenTemporal()
+                setProducto(prev => ({ ...prev, imagen: producto.imagen || "" }))
                 setProveedorSelect(producto.proveedor)
                 traerProductos()
                 await traerCodigos()
@@ -733,85 +771,76 @@ const Formulario = ({ productoEditar }) => {
                             </div>
                         </div>
 
-                        <div>
-                            <div className="grid grid-cols-9">
-                                <label htmlFor="cantidad" className="text-gray-800 dark:text-gray-300 font-bold  col-span-1 col-start-1">Cant.</label>
-                                <label htmlFor="selectp" className="text-gray-800 dark:text-gray-300 font-bold  col-span-4 col-start-2 col-end-4">Proveedores</label>
-                                <label htmlFor="rubro" className="text-gray-800 dark:text-gray-300 font-bold  col-span-4 col-start-6 col-end-9">Rubro</label>
+                        <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
+                            <div className="md:col-span-2">
+                                <label htmlFor="cantidad" className="text-gray-800 dark:text-gray-300 font-bold">Cant.</label>
+                                <input
+                                    type="tel"
+                                    autoComplete="off"
+                                    className="text-center mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300"
+                                    id="cantidad"
+                                    name="cantidad"
+                                    value={cantidad}
+                                    onChange={e => setCantidad(e.target.value)}
+                                />
                             </div>
-                            <div className="grid grid-cols-9 gap-1">
-                                <div className="col-span-1">
-                                    <input
-                                        type="tel"
-                                        autoComplete="off"
-                                        className={`text-center mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300`}
-                                        id="cantidad"
-                                        name="cantidad"
-                                        value={cantidad}
-                                        onChange={e => setCantidad(e.target.value)}
-                                    />
-                                </div>
 
-                                <div className="col-span-4">
-                                    <select
-                                        id="selectp"
-                                        className="uppercase text-center mt-2 w-full block col-span-4 p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                        value={proveedorSelect} //tomo el valor de proveedor, si no existe se modifica con el option
-                                        onChange={onChangeProveedorSelect}
-                                    >
-                                        <option value="" className="uppercase">-- Seleccione --</option>
-                                        {proveedores.length ? (
-                                            <>
-                                                {proveedores.map((proveedor, i) => (
-                                                    <option key={i} value={proveedor._id}>{`${proveedor.empresa} (${proveedor.nombre})`}</option>  //el option envia el id al proveedorselect
-                                                ))}
-                                            </>
-                                        ) : null}
-                                    </select>
-                                    {todos_proveedores.length ? (
-                                        <>
-                                            <ul>
-                                                {proveedoresIguales.map((proveedor, i) => (
-                                                    <div className="flex " key={i}>
-                                                        <li
+                            <div className="md:col-span-5">
+                                <label htmlFor="selectp" className="text-gray-800 dark:text-gray-300 font-bold">Proveedores</label>
+                                <select
+                                    id="selectp"
+                                    className="uppercase mt-2 w-full block p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300"
+                                    value={proveedorSelect}
+                                    onChange={onChangeProveedorSelect}
+                                >
+                                    <option value="">-- Seleccione --</option>
+                                    {proveedores.map((proveedor) => (
+                                        <option key={proveedor._id} value={proveedor._id}>
+                                            {`${proveedor.empresa} (${proveedor.nombre})`}
+                                        </option>
+                                    ))}
+                                </select>
 
-                                                            className="uppercase  mt-2 ml-1 block px-2 rounded-md  bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                                        >
-                                                            {`${proveedor.empresa} (${proveedor.nombre})`}
-                                                        </li>
-                                                        <button
+                                {proveedoresIguales.length > 0 && (
+                                    <ul className="mt-2 flex flex-wrap gap-2">
+                                        {proveedoresIguales.map((proveedor) => (
+                                            <li
+                                                key={proveedor._id}
+                                                className="inline-flex items-center gap-2 max-w-full px-3 py-1.5 rounded-md bg-gray-100 dark:bg-gray-800 text-sm text-gray-800 dark:text-gray-100"
+                                            >
+                                                <span className="uppercase truncate">
+                                                    {`${proveedor.empresa} (${proveedor.nombre})`}
+                                                </span>
+                                                <button
+                                                    type="button"
+                                                    aria-label={`Quitar ${proveedor.empresa}`}
+                                                    className="shrink-0 w-6 h-6 leading-none rounded-full bg-gray-200 hover:bg-red-500 hover:text-white dark:bg-gray-700 dark:hover:bg-red-600 cursor-pointer"
+                                                    onClick={() => eliminarProveedor(proveedor._id)}
+                                                >
+                                                    ×
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </div>
 
-                                                            type="button"
-                                                            className="uppercase text-center mt-2 ml-1 block px-2 text-gray-600  h-50 rounded-full bg-gray-50 hover:bg-gray-200 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                                            value={proveedor._id}
-                                                            onClick={e => eliminarProveedor(e.target.value)}
-                                                        >
-                                                            X
-                                                        </button>
-                                                    </div>
-                                                ))}
-
-                                            </ul>
-                                        </>
-                                    ) : null}
-                                </div>
-                                <div className="col-span-4">
-
-                                    <select
-                                        onChange={onChangeRubro}
-                                        className="uppercase text-center mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:autofill:bg-orange-700 dark:text-white focus:outline-none  focus:ring-1 focus:ring-blue-300"
-                                        name="rubro"
-                                        value={rubro}
-                                    >
-                                        <option value="">--Seleccione--</option>
-                                        {rubros.length ? (
-                                            rubros.map((rubro, i) => (
-                                                <option key={i} value={rubro.nombre} >{`${rubro.nombre} ${rubro.rentabilidad}%`}</option>
-                                            ))
-                                        ) : null}
-
-                                    </select>
-                                </div>
+                            <div className="md:col-span-5">
+                                <label htmlFor="rubro" className="text-gray-800 dark:text-gray-300 font-bold">Rubro</label>
+                                <select
+                                    id="rubro"
+                                    onChange={onChangeRubro}
+                                    className="uppercase mt-2 block w-full p-3 rounded-md bg-gray-50 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-300"
+                                    name="rubro"
+                                    value={rubro}
+                                >
+                                    <option value="">-- Seleccione --</option>
+                                    {rubros.map((item) => (
+                                        <option key={item._id || item.nombre} value={item.nombre}>
+                                            {`${item.nombre} ${item.rentabilidad}%`}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                         </div>
                         <div className="mb-4">
@@ -826,50 +855,58 @@ const Formulario = ({ productoEditar }) => {
                     </div>
 
                     <div className="mb-4">
-                        <div>
+                        <div className="mt-4">
                             <label
                                 htmlFor="imagen"
-                                className="p-3 mt-6 inline-block w-1/4 rounded-md bg-red-200 text-center font-semibold"
+                                className="p-3 inline-block w-1/4 rounded-md bg-red-200 text-center font-semibold cursor-pointer"
                             >
                                 Subir imagen
                             </label>
                             <input
+                                ref={inputImagenRef}
                                 type="file"
                                 name="imagen"
                                 id="imagen"
                                 className="hidden"
                                 accept="image/jpeg, image/png, image/jpg, image/webp, image/avif"
-                                onChange={e => setImage(e.target.files[0])}
+                                onChange={seleccionarImagen}
                             />
-                            {image.name ? <p className={`${modo && "text-white"}`}>Imagen: {" " + image.name}</p> : null}
                         </div>
-                        <div className="mt-2">
-                            {imagen ? (
-                                <div>
-                                    <Image
-                                        width={200}
-                                        height={200}
-                                        style={{ objectFit: 'contain' }}
-                                        src={`/imagenes/${imagen}`}
-                                        alt="imagen producto"
+                        <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-md">
+                            {previewTemp ? (
+                                <div className="relative aspect-square overflow-hidden rounded-md">
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img
+                                        src={previewTemp}
+                                        alt="Temporal"
+                                        className="h-full w-full object-cover"
                                     />
-                                    <div className="mt-2 w-full">
-                                        <button
-
-                                            type="button"
-                                            name="imagen"
-                                            className="p-3 mt-6 w-1/4  rounded-md bg-red-200 text-center font-semibold"
-
-                                            value=""
-                                            onClick={onChange}
-                                        >
-                                            Eliminar imagen
-                                        </button>
-                                    </div>
+                                    <button
+                                        type="button"
+                                        className="absolute top-1 right-1 flex items-center justify-center w-6 h-6 text-sm text-white bg-red-500 rounded-full cursor-pointer"
+                                        onClick={limpiarImagenTemporal}
+                                    >
+                                        X
+                                    </button>
+                                </div>
+                            ) : imagen ? (
+                                <div className="relative aspect-square overflow-hidden rounded-md">
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img
+                                        src={`/imagenes/${encodeURIComponent(imagen)}`}
+                                        alt="Producto"
+                                        className="h-full w-full object-cover"
+                                    />
+                                    <button
+                                        type="button"
+                                        className="absolute top-1 right-1 flex items-center justify-center w-6 h-6 text-sm text-white bg-red-500 rounded-full cursor-pointer"
+                                        onClick={limpiarImagenProducto}
+                                    >
+                                        X
+                                    </button>
                                 </div>
                             ) : null}
                         </div>
-
                     </div>
 
                     <div className="mb-4">

@@ -42,11 +42,11 @@ const ListadoRubros = () => {
     useEffect(() => {
         traerRubros()
         const socket = iniciarSocket(token);
-        socket.on('rubros-updated', () => {
+        socket?.on('rubros-updated', () => {
             traerRubros()
         });
         return () => {
-            socket.disconnect(); // Desconectar al desmontar
+            socket?.disconnect(); // Desconectar al desmontar
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

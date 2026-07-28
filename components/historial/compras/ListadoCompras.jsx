@@ -59,12 +59,12 @@ const ListadoCompras = () => {
         traerCompras()
         traerProveedores()
         const socket = iniciarSocket(token);
-        socket.on('purchase-updated', () => {
+        socket?.on('purchase-updated', () => {
             traerCompras()
             traerProveedores()
         });
         return () => {
-            socket.disconnect(); // Desconectar al desmontar
+            socket?.disconnect(); // Desconectar al desmontar
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

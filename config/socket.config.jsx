@@ -7,17 +7,17 @@ const iniciarSocket = (token) => {
     try {
         if (!backendURL || !token) return null
 
+        // En el browser, extraHeaders no funciona; hay que usar auth.
+        // El servidor también acepta headers.authentication por compatibilidad.
         const manager = new Manager(backendURL.toString(), {
             withCredentials: true,
             autoConnect: true,
-            reconnectionAttempts: 3,
-            extraHeaders: {
-                authentication: token
-            }
+            reconnectionAttempts: 5,
+            auth: { token },
         });
 
         const socket = manager.socket('/');
-        socket?.removeAllListeners();
+        socket.removeAllListeners();
         socket.on("connect_error", (err) => {
             console.warn("Socket no disponible:", err.message)
         })

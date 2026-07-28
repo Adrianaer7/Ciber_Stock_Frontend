@@ -124,10 +124,16 @@ const AuthState = ({ children }) => {
                 })
             }
         } catch (error) {
-            dispatch({
-                type: LOGIN_ERROR,
-                payload: mensajeAxios(error)
-            })
+            // Solo cerrar sesión si el token es inválido (401).
+            // Un 429/red no debe borrar la cookie al navegar entre páginas.
+            if (error?.response?.status === 401) {
+                dispatch({
+                    type: LOGIN_ERROR,
+                    payload: mensajeAxios(error, "Sesión expirada")
+                })
+            } else {
+                console.warn("No se pudo validar la sesión:", mensajeAxios(error))
+            }
         }
     }
 

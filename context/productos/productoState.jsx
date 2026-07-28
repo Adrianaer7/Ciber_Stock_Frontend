@@ -66,11 +66,14 @@ const ProductoState = ({ children }) => {
             //creo el nuevo producto
             const { data } = await clienteAxios.post("/productos", producto)
             if (formData) {
-                await clienteAxios.post("/imagenes", formData, {
+                const { data: dataImagen } = await clienteAxios.post("/imagenes", formData, {
                     headers: {
-                        'Content-Type': 'multipart/form-data' // Asegúrate de establecer el header correcto
+                        'Content-Type': 'multipart/form-data'
                     }
                 });
+                // el servidor renombra el archivo; sincronizar el nombre real
+                producto.imagen = dataImagen.imagen
+                data.producto.imagen = dataImagen.imagen
             }
             dispatch({
                 type: AGREGAR_PRODUCTO,
@@ -122,7 +125,10 @@ const ProductoState = ({ children }) => {
         try {
             const { data } = await clienteAxios.put(`/productos/${producto._id}`, { producto, desdeForm })
             if (formData) {
-                await clienteAxios.post("/imagenes", formData)
+                const { data: dataImagen } = await clienteAxios.post("/imagenes", formData)
+                // el servidor renombra el archivo; sincronizar el nombre real
+                producto.imagen = dataImagen.imagen
+                data.producto.imagen = dataImagen.imagen
             }
             dispatch({
                 type: EDITAR_PRODUCTO,

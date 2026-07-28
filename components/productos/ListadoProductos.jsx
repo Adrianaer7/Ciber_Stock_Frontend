@@ -88,7 +88,7 @@ const ListadoProductos = () => {
         limpiarSeleccionado()
         traerDolarBD()
         const socket = iniciarSocket(token);
-        socket.on('product-updated', () => {
+        socket?.on('product-updated', () => {
             traerProductos()
             traerGarantias()
             traerProveedores()
@@ -96,7 +96,7 @@ const ListadoProductos = () => {
             traerDolarBD()
         });
         return () => {
-            socket.disconnect(); // Desconectar al desmontar
+            socket?.disconnect(); // Desconectar al desmontar
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

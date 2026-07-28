@@ -71,12 +71,12 @@ const ListadoProveedores = () => {
         traerProveedores()
         limpiarSeleccionado()
         const socket = iniciarSocket(token);
-        socket.on('product-updated', () => {
+        socket?.on('product-updated', () => {
             traerProveedores()
             limpiarSeleccionado()
         });
         return () => {
-            socket.disconnect(); // Desconectar al desmontar
+            socket?.disconnect(); // Desconectar al desmontar
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
