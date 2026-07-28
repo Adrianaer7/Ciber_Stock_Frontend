@@ -477,7 +477,7 @@ const ProductoState = ({ children }) => {
     }
 
     const descargarPDF = async () => {
-        const { data } = await clienteAxios("api/descargas")
+        const { data } = await clienteAxios("/descargas")
         console.log(data)
     }
 

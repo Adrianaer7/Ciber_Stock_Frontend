@@ -24,7 +24,7 @@ const AuthState = ({ children }) => {
         autenticado: null,
         usuario: null,
         mensaje: null,
-        modo: typeof window !== "undefined" ? localStorage.getItem("Modo oscuro") : ""
+        modo: typeof window !== "undefined" ? JSON.parse(localStorage.getItem("Modo oscuro") ?? "false") : false
     }
 
     //Definir el reducer

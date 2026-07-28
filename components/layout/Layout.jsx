@@ -30,27 +30,23 @@ const Layout = ({ children, pagina }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token])
 
-
     //traigo el tema del LS
     useEffect(() => {
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        const temaLS = JSON.parse(localStorage.getItem("Modo oscuro")) ?? false
-        if(temaLS !== mediaQuery.matches){
-            localStorage.setItem("Modo oscuro", JSON.stringify(mediaQuery.matches))
-            setOscuro(mediaQuery.matches)
-        } else {
-            setOscuro(temaLS)
-        }
-    }, []) 
+        const temaLS = JSON.parse(localStorage.getItem("Modo oscuro") ?? "false")
+        setOscuro(temaLS)
+    }, [])
 
-    //traigo el tema del sistema
-
-
+    //guardo el tema en LS y en el context
+    useEffect(() => {
+        if (oscuro === null) return
+        localStorage.setItem("Modo oscuro", JSON.stringify(oscuro))
+        traerTema(oscuro)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [oscuro])
 
     //cambio el estado del tema a oscuro o claro
-    const darkMode = (oscuro) => {
-        localStorage.setItem("Modo oscuro", JSON.stringify(oscuro))
-        setOscuro(oscuro)
+    const darkMode = () => {
+        setOscuro(prev => !prev)
     }
 
     const tuerca = () => {
@@ -70,7 +66,7 @@ const Layout = ({ children, pagina }) => {
                 <link rel="shortcut icon" type="image/x-icon" href={favicon.src} />
             </Head>
 
-            <div className={`lg:flex md:min-h-screen sm:min-h-screen bg-gray-100 ${oscuro && "dark"}`}>
+            <div className={`lg:flex md:min-h-screen sm:min-h-screen bg-gray-100 ${oscuro ? "dark" : ""}`}>
                 <div className="lg:w-72 bg-blue-900    dark:bg-gray-900 flex flex-col  justify-between lg:justify-start ">
                     <div className="flex justify-between mt-1 px-5 break-words">
                         <p className="text-white text-2xl md:text-4xl font-black text-center break-words w-40">{usuario ? <span>{usuario.nombre}</span> : null}</p>
@@ -86,12 +82,12 @@ const Layout = ({ children, pagina }) => {
                     </div>
                     {panel ?
                         <div className="flex flex-col mt-2 ml-5 py-2">
-                            {/* <button
-                                onClick={() => darkMode(!oscuro)}
+                            <button
+                                onClick={darkMode}
                                 className="text-white text-left py-2 hover:text-blue-300 hover:translate-x-3"
                             >
                                 {oscuro ? "Tema claro" : "Tema oscuro"}
-                            </button> */}
+                            </button>
                             <button
                                 onClick={vaciarStates}
                                 className="text-white text-left py-2 hover:text-blue-300 hover:translate-x-3"

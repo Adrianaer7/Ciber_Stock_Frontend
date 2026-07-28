@@ -4,6 +4,7 @@
 
 const nextConfig = {
   reactStrictMode: false,
+  devIndicators: false,
   env: {
     backendURL: process.env.backendURL
   },

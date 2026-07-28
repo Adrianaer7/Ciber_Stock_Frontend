@@ -249,7 +249,7 @@ const ListadoProveedores = () => {
                             onFocus={() => setFocus(true)}
                             onBlur={() => setFocus(false)}
                         />
-                        <div className="absolute mr-2 -inset-y-1 flex right-0 opacity-40">
+                        <div className="absolute mr-2 inset-y-0 flex items-center right-0 opacity-40">
                             <Image
                                 src={srcImage}
                                 alt="Cerrar"
@@ -257,6 +257,7 @@ const ListadoProveedores = () => {
                                 height={30}
                                 priority={true}
                                 className="cursor-pointer"
+                                style={{ width: 30, height: 30 }}
                                 onClick={escribiendo ? () => setFiltrando("") : null}
                             />
                         </div>
@@ -472,7 +473,7 @@ const ListadoProveedores = () => {
             {!proveedoresFiltrados.length && escribiendo && (   //si estoy filtrando y no hay resultados
                 <div className="mx-auto mt-10 w-1/4">
                     <Image
-                        className="max-w-sm"
+                        className="max-w-sm h-auto"
                         src="/lupanoencontrado.png"
                         alt="NoEncontrada"
                         width={400}
