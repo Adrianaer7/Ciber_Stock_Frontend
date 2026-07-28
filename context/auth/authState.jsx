@@ -1,9 +1,10 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import authContext from "./authContext";
 import authReducer from "./authReducer";
 import clienteAxios from "../../config/axios"
 import tokenAuth from "../../config/tokenAuth";
 import { mensajeAxios } from "../../helpers/axiosError";
+import { syncAuthCookieFromStorage } from "../../helpers/authCookie";
 
 import {
     USUARIO_AUTENTICADO,
@@ -28,6 +29,11 @@ const AuthState = ({ children }) => {
     }
 
     const [state, dispatch] = useReducer(authReducer, initialState)
+
+    // Sincroniza cookie para middleware (sesiones ya abiertas en localStorage)
+    useEffect(() => {
+        syncAuthCookieFromStorage()
+    }, [])
 
     const registrarUsuario = async datos => {
         try {

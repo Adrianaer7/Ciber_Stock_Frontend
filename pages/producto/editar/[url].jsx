@@ -6,22 +6,38 @@ import productoContext from "../../../context/productos/productoContext";
 import authContext from "../../../context/auth/authContext";
 import NoEncontrado from "../../../components/productos/NoEncontrado";
 
+export async function getServerSideProps(context) {
+  const { url } = context.params
+  const token = context.req.cookies?.token
 
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    }
+  }
 
-export async function getServerSideProps({ params: { url } }) {
-  const { data } = await clienteAxios(`/productos/${url}`)
-  if (data.redireccionar) {
+  try {
+    const { data } = await clienteAxios(`/productos/${url}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+
+    if (data.redireccionar) {
+      return { notFound: true }
+    }
+
+    return { props: { productoEditar: data.producto } }
+  } catch (error) {
+    if (error?.response?.status === 401 || error?.response?.status === 403) {
+      return { notFound: true }
+    }
     return { notFound: true }
   }
-  const productoEditar = data.producto
-  return { props: { productoEditar } }
 }
 
-
-
 const Edicion = ({ productoEditar }) => {
-
-
   const AuthContext = useContext(authContext)
   const { usuarioAutenticado, usuario } = AuthContext
 
@@ -30,13 +46,11 @@ const Edicion = ({ productoEditar }) => {
 
   const [coincide, setCoincide] = useState(null)
 
-  //Autentico al usuario y agrego el producto actual al state
   useEffect(() => {
     usuarioAutenticado()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  //Cuando me autentique, verifico que el producto que traigo es el del usuario que está logueado
   useEffect(() => {
     if (usuario && coincide === null) {
       if (productoEditar.creador !== usuario._id) {
@@ -63,6 +77,5 @@ const Edicion = ({ productoEditar }) => {
     </>
   )
 };
-
 
 export default Edicion;

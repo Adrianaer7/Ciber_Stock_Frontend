@@ -9,13 +9,35 @@ import VerProducto from '../../components/productos/VerProducto';
 import NoEncontrado from '../../components/productos/NoEncontrado';
 
 
-export async function getServerSideProps({ params: { id } }) {
-  const { data } = await clienteAxios(`/productos/${id}`)
-  if (data.redireccionar) {  //si es true
-    return { notFound: true } //redirecciono a la pagina 404. notFound es una funcion de next
+export async function getServerSideProps(context) {
+  const { id } = context.params
+  const token = context.req.cookies?.token
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    }
   }
-  const producto = data.producto
-  return { props: { producto } }
+
+  try {
+    const { data } = await clienteAxios(`/productos/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+
+    if (data.redireccionar) {
+      return { notFound: true }
+    }
+
+    return { props: { producto: data.producto } }
+  } catch (error) {
+    if (error?.response?.status === 401 || error?.response?.status === 403) {
+      return { notFound: true }
+    }
+    return { notFound: true }
+  }
 }
 
 
@@ -35,13 +57,11 @@ const Ver = ({ producto }) => {
   const router = useRouter()
   const { id } = router.query
 
-  //Autentico al usuario y agrego el producto actual al state
   useEffect(() => {
     usuarioAutenticado()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  //Cuando me autentique, verifico que el producto que traigo es el del usuario que está logueado
   useEffect(() => {
     if (usuario && coincide === null) {
       if (producto.creador !== usuario._id) {
@@ -58,15 +78,15 @@ const Ver = ({ producto }) => {
   }, [usuario])
 
   useEffect(() => {
-    const warranty = [] //guardo momentaneamente las garantias
-    if (garantias.length > 0) {  //garantias del state
-      const garantiasProducto = garantias.find(garantia => garantia.idProducto == id)    //garantia que contiene id de este producto
+    const warranty = []
+    if (garantias.length > 0) {
+      const garantiasProducto = garantias.find(garantia => garantia.idProducto == id)
       if (garantiasProducto) {
         garantiasProducto.detalles.map(todas => proveedores.map(proveedor => todas.proveedor.includes(proveedor._id) && warranty.push({ proveedor: proveedor.empresa, garantia: todas.caducidad })))
       }
     }
     setTodasGarantias(warranty)
-  }, [garantias, proveedores])
+  }, [garantias, proveedores, id])
 
   return (
     <>

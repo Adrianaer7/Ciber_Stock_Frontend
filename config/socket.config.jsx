@@ -1,10 +1,13 @@
 import { Manager } from 'socket.io-client';
 
+const backendURL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || process.env.backendURL
+
 const iniciarSocket = (token) => {
     try {
-        if (!process.env.backendURL || !token) return null
+        if (!backendURL || !token) return null
 
-        const manager = new Manager(process.env.backendURL.toString(), {
+        const manager = new Manager(backendURL.toString(), {
             withCredentials: true,
             autoConnect: true,
             reconnectionAttempts: 3,

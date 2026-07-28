@@ -1,7 +1,10 @@
 import axios from "axios"
 
+const backendURL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || process.env.backendURL
+
 const clienteAxios = axios.create({
-    baseURL: `${process.env.backendURL}/api`
+  baseURL: `${backendURL}/api`
 })
 
-export default clienteAxios;
+export default clienteAxios

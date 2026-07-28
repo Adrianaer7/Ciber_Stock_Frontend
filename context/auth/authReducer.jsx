@@ -10,8 +10,7 @@ import {
     SOLICITAR_TOKEN_PASSWORD_ERROR,
     GUARDAR_TEMA
 } from "../../types";
-
-
+import { clearAuthCookie, setAuthCookie } from "../../helpers/authCookie";
 
 export default function authReducer(state, action) {
     switch (action.type) {
@@ -22,12 +21,12 @@ export default function authReducer(state, action) {
             }
         case LOGIN_EXITOSO:
             localStorage.setItem("token", action.payload)
+            setAuthCookie(action.payload)
             return {
                 ...state,
                 token: action.payload,
                 autenticado: true
             }
-
 
         case SOLICITAR_TOKEN_PASSWORD:
         case SOLICITAR_TOKEN_PASSWORD_ERROR:
@@ -37,7 +36,8 @@ export default function authReducer(state, action) {
             }
         case REGISTRO_ERROR:
         case LOGIN_ERROR:
-            localStorage.removeItem("token")    //se elimina el token generado al querer iniciar sesion o crear usuario con datos incorrectos
+            localStorage.removeItem("token")
+            clearAuthCookie()
             return {
                 ...state,
                 token: null,
@@ -65,6 +65,7 @@ export default function authReducer(state, action) {
 
         case LIMPIAR_STATE:
             localStorage.removeItem("token")
+            clearAuthCookie()
             return {
                 ...state,
                 token: null,
