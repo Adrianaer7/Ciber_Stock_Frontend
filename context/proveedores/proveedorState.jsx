@@ -2,6 +2,7 @@ import { useReducer } from "react";
 import proveedorContext from "../proveedores/proveedorContext"
 import proveedorReducer from "../proveedores/proveedorReducer"
 import clienteAxios from "../../config/axios";
+import { mensajeAxios } from "../../helpers/axiosError";
 
 
 import {
@@ -15,7 +16,8 @@ import {
     ORDENAR_EMPRESA_PROVEEDOR,
     ORDENAR_EMPRESA_PROVEEDOR_FILTRADO,
     PROVEEDOR_ACTUAL,
-    LIMPIAR_PROVEEDOR_SELECCIONADO
+    LIMPIAR_PROVEEDOR_SELECCIONADO,
+    OCULTAR_ALERTA
 } from "../../types/index"
 
 const ProveedorState = ({ children }) => {
@@ -40,7 +42,7 @@ const ProveedorState = ({ children }) => {
         } catch (error) {
             dispatch({
                 type: ERROR_AGREGAR_PROVEEDOR,
-                payload: error.response.data.msg
+                payload: mensajeAxios(error, "Error al agregar proveedor")
             })
             setTimeout(() => {
                 dispatch({
@@ -70,8 +72,7 @@ const ProveedorState = ({ children }) => {
                 payload: data.proveedor
             })
         } catch (error) {
-            console.log(error.response.data)
-            return error.response.data.msg
+            return mensajeAxios(error)
         }
     }
 
@@ -89,8 +90,7 @@ const ProveedorState = ({ children }) => {
                 payload: data.proveedor
             })
         } catch (error) {
-            console.log(error.response.data)
-            return error.response.data.msg
+            return mensajeAxios(error)
         }
     }
 
@@ -127,8 +127,7 @@ const ProveedorState = ({ children }) => {
             })
 
         } catch (error) {
-            console.log(error.response.data)
-            return error.response.data.msg
+            return mensajeAxios(error)
         }
     }
 

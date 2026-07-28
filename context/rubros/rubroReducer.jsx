@@ -6,7 +6,6 @@ import {
     ELIMINAR_RUBRO,
     RUBRO_ACTUAL,
     LIMPIAR_RUBRO_SELECCIONADO,
-    VACIAR_FORMULARIO_RUBRO,
     OCULTAR_ALERTA,
 
 } from "../../types/index"

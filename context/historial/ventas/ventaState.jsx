@@ -2,6 +2,7 @@ import { useReducer } from "react"
 import ventaContext from "./ventaContext"
 import ventaReducer from "./ventaReducer"
 import clienteAxios from "../../../config/axios"
+import { mensajeAxios } from "../../../helpers/axiosError"
 
 import {
     CREAR_VENTA,
@@ -46,8 +47,7 @@ const VentaState = ({ children }) => {
                 payload: data.venta
             })
         } catch (error) {
-            console.log(error.response.data)
-            return error.response.data.msg
+            return mensajeAxios(error)
         }
 
     }
@@ -73,8 +73,7 @@ const VentaState = ({ children }) => {
                 payload: data.venta
             })
         } catch (error) {
-            console.log(error.response.data)
-            return error.response.data.msg
+            return mensajeAxios(error)
         }
 
     }
@@ -123,15 +122,14 @@ const VentaState = ({ children }) => {
 
     const eliminarVenta = async (id, idProducto, cantidad) => {
         try {
-            clienteAxios.delete(`/ventas/${id}`, { idProducto, cantidad })
+            await clienteAxios.delete(`/ventas/${id}`, { data: { idProducto, cantidad } })
 
             dispatch({
                 type: ELIMINAR_VENTA,
                 payload: id
             })
         } catch (error) {
-            console.log(error.response.data)
-            return error.response.data.msg
+            return mensajeAxios(error)
         }
     }
 

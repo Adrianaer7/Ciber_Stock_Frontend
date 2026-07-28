@@ -79,7 +79,7 @@ const Ver = ({ producto }) => {
             proveedores={proveedores}
           />
         </Layout>
-      ) : coincide === false ?? <NoEncontrado />
+      ) : coincide === false ? <NoEncontrado /> : null
       }
     </>
   )

@@ -1,5 +1,6 @@
 import { useReducer } from "react"
 import clienteAxios from "../../config/axios"
+import { mensajeAxios } from "../../helpers/axiosError"
 import faltantesReducer from "./faltantesReducer"
 import faltantesContext from "./faltantesContext"
 
@@ -40,8 +41,7 @@ const FaltanteState = ({ children }) => {
                 payload: data.producto
             })
         } catch (error) {
-            console.log(error.response.data)
-            return error.response.data.msg
+            return mensajeAxios(error)
         }
     }
 

@@ -2,6 +2,7 @@ import { useReducer } from "react";
 import productoContext from "./productoContext"
 import productoReducer from "./productoReducer";
 import clienteAxios from "../../config/axios"
+import { mensajeAxios } from "../../helpers/axiosError"
 import {
     AGREGAR_PRODUCTO,
     AGREGAR_RUBRO,
@@ -87,8 +88,7 @@ const ProductoState = ({ children }) => {
 
 
         } catch (error) {
-            console.log(error.response.data)
-            return error.response.data.msg
+            return mensajeAxios(error)
         }
     }
 
@@ -104,7 +104,7 @@ const ProductoState = ({ children }) => {
         } catch (error) {
             dispatch({
                 type: ERROR_AGREGAR_RUBRO,
-                payload: error.response.data.msg
+                payload: mensajeAxios(error)
             })
             setTimeout(() => {
                 dispatch({
@@ -137,8 +137,7 @@ const ProductoState = ({ children }) => {
             }
 
         } catch (error) {
-            console.log(error.response.data)
-            return error.response.data.msg
+            return mensajeAxios(error)
         }
     }
 
@@ -234,8 +233,7 @@ const ProductoState = ({ children }) => {
                 payload: id
             })
         } catch (error) {
-            console.log(error.reponse.data)
-            return error.response.data.msg
+            return mensajeAxios(error)
         }
 
     }
@@ -301,8 +299,7 @@ const ProductoState = ({ children }) => {
         try {
             editarProducto(producto)
         } catch (error) {
-            console.log(error.response.data)
-            return error.response.data.msg
+            return mensajeAxios(error)
         }
     }
 

@@ -25,21 +25,28 @@ const CompraState = ({ children }) => {
 
     const [state, dispatch] = useReducer(compraReducer, initialState)
 
-    //agregar compra
     const compraDeProducto = async (producto, cantidad) => {
-        const { data } = await clienteAxios.post("/compras", { producto, cantidad }) //envio producto como objeto porque sino no puedo extraer su _id en el backend
-        dispatch({
-            type: CREAR_COMPRA,
-            payload: data.compra
-        })
+        try {
+            const { data } = await clienteAxios.post("/compras", { producto, cantidad })
+            dispatch({
+                type: CREAR_COMPRA,
+                payload: data.compra
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const traerCompras = async () => {
-        const { data } = await clienteAxios("/compras")
-        dispatch({
-            type: TRAER_COMPRAS,
-            payload: data.todas
-        })
+        try {
+            const { data } = await clienteAxios("/compras")
+            dispatch({
+                type: TRAER_COMPRAS,
+                payload: data.todas
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const filtroCompra = (palabras) => {

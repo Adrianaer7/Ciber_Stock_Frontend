@@ -3,6 +3,7 @@ import authContext from "./authContext";
 import authReducer from "./authReducer";
 import clienteAxios from "../../config/axios"
 import tokenAuth from "../../config/tokenAuth";
+import { mensajeAxios } from "../../helpers/axiosError";
 
 import {
     USUARIO_AUTENTICADO,
@@ -18,19 +19,16 @@ import {
 } from "../../types";
 
 const AuthState = ({ children }) => {
-    //Definir un state inicial
     const initialState = {
-        token: typeof window !== "undefined" ? localStorage.getItem("token") : "",  //una vez que me logeo, al recargar la pagina, el token del state inicia con el valor del token que hay en localstorage
+        token: typeof window !== "undefined" ? localStorage.getItem("token") : "",
         autenticado: null,
         usuario: null,
         mensaje: null,
         modo: typeof window !== "undefined" ? JSON.parse(localStorage.getItem("Modo oscuro") ?? "false") : false
     }
 
-    //Definir el reducer
     const [state, dispatch] = useReducer(authReducer, initialState)
 
-    //Registrar nuevos usuarios
     const registrarUsuario = async datos => {
         try {
             const { data } = await clienteAxios.post("/usuarios", datos)
@@ -39,10 +37,9 @@ const AuthState = ({ children }) => {
                 payload: data.msg
             })
         } catch (error) {
-            console.log(error.response.data)
             dispatch({
                 type: REGISTRO_ERROR,
-                payload: error.response.data.msg
+                payload: mensajeAxios(error, "No se pudo registrar el usuario")
             })
             setTimeout(() => {
                 dispatch({
@@ -50,7 +47,6 @@ const AuthState = ({ children }) => {
                 })
             }, 3000);
         }
-
     }
 
     const olvideContraseña = async email => {
@@ -63,7 +59,7 @@ const AuthState = ({ children }) => {
         } catch (error) {
             dispatch({
                 type: SOLICITAR_TOKEN_PASSWORD_ERROR,
-                payload: error.response.data.msg
+                payload: mensajeAxios(error, "No se pudo solicitar el cambio de contraseña")
             })
         }
     }
@@ -73,10 +69,9 @@ const AuthState = ({ children }) => {
         try {
             await clienteAxios.post(url, { contraseña })
         } catch (error) {
-            console.log(error.response.data)
             dispatch({
                 type: REGISTRO_ERROR,
-                payload: error.response.data.msg
+                payload: mensajeAxios(error, "No se pudo cambiar la contraseña")
             })
             setTimeout(() => {
                 dispatch({
@@ -86,10 +81,9 @@ const AuthState = ({ children }) => {
         }
     }
 
-    //Autenticar usuario
-    const iniciarSesion = async datos => {  //la uso en login.js
+    const iniciarSesion = async datos => {
         try {
-            const { data } = await clienteAxios.post("/auth", datos)   //envio los datos para que me cree un token
+            const { data } = await clienteAxios.post("/auth", datos)
             dispatch({
                 type: LOGIN_EXITOSO,
                 payload: data.token
@@ -98,7 +92,7 @@ const AuthState = ({ children }) => {
         } catch (error) {
             dispatch({
                 type: LOGIN_ERROR,
-                payload: error.response.data.msg
+                payload: mensajeAxios(error, "No se pudo iniciar sesión")
             })
         }
 
@@ -109,7 +103,6 @@ const AuthState = ({ children }) => {
         }, 3000);
     }
 
-    //Usuario autenticado
     const usuarioAutenticado = async (token = "") => {
         if (!token) token = localStorage.getItem("token")
 
@@ -124,17 +117,14 @@ const AuthState = ({ children }) => {
                     payload: data.usuario
                 })
             }
-
         } catch (error) {
-            console.log(error)
             dispatch({
-                type: LOGIN_ERROR
+                type: LOGIN_ERROR,
+                payload: mensajeAxios(error)
             })
         }
-
     }
 
-    //Cerrar sesion
     const cerrarSesion = () => {
         dispatch({
             type: LIMPIAR_STATE,
@@ -167,7 +157,6 @@ const AuthState = ({ children }) => {
                 cambiarContraseña,
                 iniciarSesion,
                 usuarioAutenticado,
-                olvideContraseña,
                 cerrarSesion,
                 traerTema,
                 ocultarAlerta

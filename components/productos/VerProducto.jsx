@@ -53,7 +53,7 @@ const VerProducto = ({ producto, laGarantia, proveedores }) => {
     })
 
     const eliminar = async () => {
-        const error = eliminarProducto(_id)
+        const error = await eliminarProducto(_id)
         if (error) return mostarAlerta(error, modo)
         router.push("/productos")
     }
@@ -200,7 +200,7 @@ const VerProducto = ({ producto, laGarantia, proveedores }) => {
                 </div>
                 <button
                     type="button"
-                    className="bg-red-600 hover:bg-red-900  sm:w-1/4 text-white p-4 uppercase font-bold my-4 mx-auto block rounded-md"
+                    className="bg-red-600 hover:bg-red-900 sm:w-1/4 text-white p-4 uppercase font-bold my-4 mx-auto block rounded-md cursor-pointer"
                     onClick={eliminarElProducto}
                 >Eliminar Producto
                 </button>

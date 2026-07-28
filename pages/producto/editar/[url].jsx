@@ -43,7 +43,7 @@ const Edicion = ({ productoEditar }) => {
         setCoincide(false)
       } else {
         setCoincide(true)
-        productoActual(productoActual)
+        productoActual(productoEditar)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,7 +58,7 @@ const Edicion = ({ productoEditar }) => {
             productoEditar={productoEditar}
           />
         </Layout>
-      ) : coincide === false ?? <NoEncontrado />
+      ) : coincide === false ? <NoEncontrado /> : null
       }
     </>
   )

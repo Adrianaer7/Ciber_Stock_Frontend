@@ -1,7 +1,8 @@
 import { useReducer } from "react";
 import rubroContext from "../rubros/rubroContext"
 import rubroReducer from "../rubros/rubroReducer"
-import clienteAxios from "../../config/axios";
+import clienteAxios from "../../config/axios"
+import { mensajeAxios } from "../../helpers/axiosError";
 
 
 import {
@@ -14,7 +15,6 @@ import {
     ELIMINAR_RUBRO,
     LIMPIAR_RUBRO_SELECCIONADO,
     ELIMINAR_RUBROS,
-    VACIAR_FORMULARIO_RUBRO,
     OCULTAR_ALERTA
 } from "../../types/index"
 
@@ -55,8 +55,7 @@ const RubroState = ({ children }) => {
                 }, 3000);
             }
         } catch (error) {
-            console.log(error.response.data)
-            return error.response.data.msg
+            return mensajeAxios(error)
         }
 
     }
@@ -81,8 +80,7 @@ const RubroState = ({ children }) => {
                 payload: data.rubro
             })
         } catch (error) {
-            console.log(error.response.data)
-            return error.response.data.msg
+            return mensajeAxios(error)
         }
     }
 
@@ -100,8 +98,7 @@ const RubroState = ({ children }) => {
                 payload: data.rubro
             })
         } catch (error) {
-            console.log(error.response.data)
-            return error.response.data.msg
+            return mensajeAxios(error)
         }
     }
 
@@ -115,8 +112,7 @@ const RubroState = ({ children }) => {
             })
 
         } catch (error) {
-            console.log(error.response.data)
-            return error.response.data.msg
+            return mensajeAxios(error)
         }
     }
 

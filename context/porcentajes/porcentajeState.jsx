@@ -1,7 +1,8 @@
 import { useReducer } from "react";
 import porcentajeContext from "../porcentajes/porcentajeContext"
 import porcentajeReducer from "../porcentajes/porcentajeReducer"
-import clienteAxios from "../../config/axios";
+import clienteAxios from "../../config/axios"
+import { mensajeAxios } from "../../helpers/axiosError";
 
 
 import {
@@ -44,8 +45,7 @@ const PorcentajeState = ({ children }) => {
                 payload: data.porcentaje
             })
         } catch (error) {
-            console.log(error.response.data)
-            return error.response.data.msg
+            return mensajeAxios(error)
         }
     }
 
@@ -63,8 +63,7 @@ const PorcentajeState = ({ children }) => {
                 payload: data.porcentaje
             })
         } catch (error) {
-            console.log(error.response.data)
-            return error.response.data.msg
+            return mensajeAxios(error)
         }
     }
 
