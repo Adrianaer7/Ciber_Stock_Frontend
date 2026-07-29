@@ -12,3 +12,7 @@ export const generarId = () => {
 }
 //genero fecha de hoy, para dejar el input listo
 export const hoy = new Date(Date.now()).toISOString().slice(0, 10);
+
+export const formatImport = (pesos) => {
+    return new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(Number(pesos) || 0)
+}

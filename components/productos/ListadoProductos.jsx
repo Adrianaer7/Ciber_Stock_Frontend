@@ -311,42 +311,43 @@ const ListadoProductos = () => {
             </div>
             {/*{spinner ? <Spinner/> : ( */}
 
-            <table className="top-44 sm:top-44 lg:top-0 w-full mt-5 table-fixed shadow rounded-none md:rounded-lg dark:bg-gray-900 bg-white ">
-                <thead className="bg-blue-800 text-white">
-                    <tr className="hover:cursor-pointer select-none">
-                        <th onClick={() => setOrdenCodigo(!ordenCodigo)} className="p-2 md:rounded-tl-lg break-words w-20">CODIGO</th>
-                        <th className="w-32">IMAGEN</th>
-                        <th onClick={() => setOrdenNombre(!ordenNombre)} className="break-words">NOMBRE</th>
-                        <th onClick={() => setOrdenMarca(!ordenMarca)} className="break-words">MARCA</th>
-                        <th onClick={() => setOrdenModelo(!ordenModelo)} className="break-words">MODELO</th>
-                        <th onClick={() => setOrdenDisponibles(!ordenDisponibles)} className="break-words w-28">DISPONIBLES</th>
-                        <th className="break-words">GARANTÍA</th>
-                        <th onClick={() => setOrdenPrecio(!ordenPrecio)} className="break-words">CONTADO</th>
-                        <th onClick={() => setOrdenPrecio(!ordenPrecio)} className="break-words">AHORA 12</th>
-                        <th className="md:rounded-tr-lg w-40 break-words">ACCIONES</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filtrados.length > 0 ? (   //si estoy filtrando y hay resultados
-                        filtrados.map(producto => (
-                            <Producto
-                                key={producto._id}
-                                producto={producto}
-                            />
-                        ))
-                    ) : !escribiendo ? ( //si no estoy escribiendo y no filtro nada, muestro todos los productos que cumplen la condicion de visibilidad
-                        productos
-                            .filter(producto => producto.visibilidad)
-                            .map(producto => (
+            <div className="mt-5 overflow-x-auto">
+                <table className="min-w-[1100px] w-full table-fixed shadow rounded-none md:rounded-lg dark:bg-gray-900 bg-white">
+                    <thead className="bg-blue-800 text-white">
+                        <tr className="hover:cursor-pointer select-none">
+                            <th onClick={() => setOrdenCodigo(!ordenCodigo)} className="p-2 md:rounded-tl-lg w-16">CODIGO</th>
+                            <th className="w-24">IMAGEN</th>
+                            <th onClick={() => setOrdenNombre(!ordenNombre)} className="p-2">NOMBRE</th>
+                            <th onClick={() => setOrdenMarca(!ordenMarca)} className="p-2 w-28">MARCA</th>
+                            <th onClick={() => setOrdenModelo(!ordenModelo)} className="p-2 w-28">MODELO</th>
+                            <th onClick={() => setOrdenDisponibles(!ordenDisponibles)} className="p-2 w-24">DISP.</th>
+                            <th className="p-2 w-28">GARANTÍA</th>
+                            <th onClick={() => setOrdenPrecio(!ordenPrecio)} className="p-2 w-36">CONTADO</th>
+                            <th onClick={() => setOrdenPrecio(!ordenPrecio)} className="p-2 w-36">AHORA 12</th>
+                            <th className="md:rounded-tr-lg p-2 w-36">ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filtrados.length > 0 ? (   //si estoy filtrando y hay resultados
+                            filtrados.map(producto => (
                                 <Producto
                                     key={producto._id}
                                     producto={producto}
                                 />
                             ))
-                    ) : null}
-                </tbody>
-
-            </table>
+                        ) : !escribiendo ? ( //si no estoy escribiendo y no filtro nada, muestro todos los productos que cumplen la condicion de visibilidad
+                            productos
+                                .filter(producto => producto.visibilidad)
+                                .map(producto => (
+                                    <Producto
+                                        key={producto._id}
+                                        producto={producto}
+                                    />
+                                ))
+                        ) : null}
+                    </tbody>
+                </table>
+            </div>
 
 
             {/* lupa */}

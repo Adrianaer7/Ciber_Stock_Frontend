@@ -6,7 +6,7 @@ import faltanteContext from "../../context/faltantes/faltantesContext";
 import ventaContext from "../../context/historial/ventas/ventaContext";
 import authContext from "../../context/auth/authContext";
 import proveedorContext from "../../context/proveedores/proveedorContext"
-import { hoy } from "../../helpers";
+import { hoy, formatImport } from "../../helpers";
 import Swal from "sweetalert2";
 import mostarAlerta from "../../config/alerts";
 
@@ -281,24 +281,23 @@ const Producto = ({ producto }) => {
                             "-"
                 } 
             </td>
-            <td className="p-2 dark:text-gray-50 text-center text-lg hover:cursor-pointer break-words">
-                <div className="flex flex-col">
-                    <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-3xl font-black " onClick={copiarPrecioTarjeta}>${precio_venta_tarjeta}</p>
-                    <p className="pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-2xl font-medium" onClick={copiarPrecioEfectivo}>${precio_venta_efectivo}</p>
-                    <p className="mt-4 pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-xl" onClick={copiarPrecioConocidos}>${precio_venta_conocidos}</p>
+            <td className="p-2 dark:text-gray-50 text-center text-lg hover:cursor-pointer whitespace-nowrap">
+                <div className="flex flex-col items-center">
+                    <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-2xl font-black" onClick={copiarPrecioTarjeta}>{formatImport(precio_venta_tarjeta)}</p>
+                    <p className="pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-2xl font-medium" onClick={copiarPrecioEfectivo}>{formatImport(precio_venta_efectivo)}</p>
+                    <p className="mt-4 pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-xl" onClick={copiarPrecioConocidos}>{formatImport(precio_venta_conocidos)}</p>
                 </div>
             </td>
-            <td className="p-2 dark:text-gray-50 text-center  text-lg hover:cursor-pointer break-words">
-                <div className="flex flex-col">
-                    <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-xl font-normal " onClick={copiarAhoraDoce}>
+            <td className="p-2 dark:text-gray-50 text-center text-lg hover:cursor-pointer whitespace-nowrap">
+                <div className="flex flex-col items-center">
+                    <p className="mb-4 pb-2 pt-2 px-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-xl font-normal" onClick={copiarAhoraDoce}>
                         Un pago
-                        <span className="block font-black text-3xl">${precio_venta_ahoraDoce}</span>
+                        <span className="block font-black text-2xl">{formatImport(precio_venta_ahoraDoce)}</span>
                     </p>
-                    <p className="pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-xl font-normal " onClick={copiarAhoraDoce}>
+                    <p className="pb-2 pt-2 hover:rounded-md hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 text-xl font-normal" onClick={copiarAhoraDoce}>
                         12 cuotas de:
-                        <span className="block font-black text-2xl">${precio_venta_cuotas}</span>
+                        <span className="block font-black text-2xl">{formatImport(precio_venta_cuotas)}</span>
                     </p>
-
                 </div>
             </td>
 
